@@ -11,19 +11,15 @@
 <script>
 export default {
   data() {
-    return {
-      isLogout: false,
-    };
+    return {};
   },
 
   methods: {
     confirm() {
-      this.isLogout = true;
       this.$emit("confirm");
       this.$emit("close");
     },
     close() {
-      this.isLogout = false;
       this.$emit("close");
     },
   },

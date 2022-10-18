@@ -4,7 +4,7 @@
     <template #ModalSlot="{ closeModal }">
       <logout-form
         @close="closeModal"
-        @confirm="this.isLogout = true"
+        @confirm="this.logout"
       ></logout-form>
     </template>
   </modal>
@@ -19,8 +19,7 @@ export default {
   data() {
     return {
       isModalOpen: false,
-      isLogout: false,
-    };
+     };
   },
 
   methods: {
@@ -34,12 +33,6 @@ export default {
     },
   },
   watch: {
-    isLogout() {
-      if (this.isLogout === true) {
-        this.logout();
-        console.log("сработал вотчер на логаут");
-      }
-    },
   },
 };
 </script>

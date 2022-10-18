@@ -40,10 +40,6 @@ export default {
   },
 
   computed: {
-    /*     authenticatedUser() {
-      let result = JSON.parse(sessionStorage.getItem("authenticatedUser"));
-      return result;
-    }, */
   },
   watch: {},
 };
