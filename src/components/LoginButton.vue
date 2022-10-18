@@ -10,7 +10,9 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import LoginForm from "@/components/LoginForm.vue";
+
 export default {
+  name: "LoginButton",
   components: { Modal, LoginForm },
   data() {
     return {
