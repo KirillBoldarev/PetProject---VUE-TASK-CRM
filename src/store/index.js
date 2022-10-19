@@ -1,14 +1,21 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import authenticate from "./modules/authenticate";
 
 export default createStore({
-  state: {
+  /*  state: {
+    authenticatedUser: {},
+    isAuthenticated: false,
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
+    authenticateCurrentUser() {
+      this.state.isAuthenticated = true;
+      console.log("state.isAuthenticated", this.state.isAuthenticated);
+    },
+    info() {
+      console.log("СРАБОТАЛА МУТАЦИЯ В СТОРЕ");
+    },
   },
-  actions: {
-  },
-  modules: {
-  }
-})
+  actions: {}, */
+  modules: { authenticate },
+});

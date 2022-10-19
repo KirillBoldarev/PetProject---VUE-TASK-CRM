@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <header-layout></header-layout>
+    <button @click="test">test</button>
     <main>
       <router-view></router-view>
     </main>
@@ -15,6 +16,11 @@ export default {
 
   data() {
     return {};
+  },
+  methods: {
+    test() {
+      this.$store.commit("info");
+    },
   },
 };
 </script>

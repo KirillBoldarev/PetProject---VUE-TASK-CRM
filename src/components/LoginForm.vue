@@ -41,7 +41,7 @@
       </div>
 
       <div class="form__group">
-        <button @click="this.authenticate" class="form__button" type="submit">
+        <button @click.prevent="this.authenticate" class="form__button" type="submit">
           Войти в систему
         </button>
         <a href="#" class="switch">У меня нет аккаунта!</a>
@@ -67,16 +67,14 @@ export default {
     authenticate(event) {
       let find = this.userList.find((user) => user.email === this.email);
       if (find == undefined) {
-        event.preventDefault();
         this.invalidEmail = true;
         return;
       }
       if (find.password !== this.password) {
-        event.preventDefault();
         this.invalidPassword = true;
       } else {
         this.foundedUser = find;
-        console.log(this.foundedUser);
+        this.$store.commit("authenticateCurrentUser", this.foundedUser);
         sessionStorage.setItem(
           "authenticatedUser",
           JSON.stringify(this.foundedUser)
@@ -92,6 +90,10 @@ export default {
         return [];
       }
       return userList;
+    },
+
+    checkForAuthenticate() {
+      return this.$state.getters.checkForAuthenticate;
     },
   },
 };
