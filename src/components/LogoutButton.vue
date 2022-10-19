@@ -4,7 +4,7 @@
     <template #ModalSlot="{ closeModal }">
       <logout-form
         @close="closeModal"
-        @confirm="this.logout"
+        @confirm="closeModal"
       ></logout-form>
     </template>
   </modal>
@@ -23,10 +23,6 @@ export default {
   },
 
   methods: {
-    logout() {
-      this.$emit("close");
-      this.$emit("logout");
-    },
 
     openModal() {
       this.isModalOpen = true;

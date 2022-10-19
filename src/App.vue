@@ -2,6 +2,7 @@
   <div class="container">
     <header-layout></header-layout>
     <button @click="test">test</button>
+    <button @click="testtwo">test two</button>
     <main>
       <router-view></router-view>
     </main>
@@ -20,6 +21,10 @@ export default {
   methods: {
     test() {
       this.$store.commit("info");
+    },
+    testtwo() {
+      console.log('isAuthenticated :', this.$store.state.authenticate.isAuthenticated);
+      console.log('authenticatedUser :', this.$store.state.authenticate.authenticatedUser);
     },
   },
 };

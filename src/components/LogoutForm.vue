@@ -16,7 +16,7 @@ export default {
 
   methods: {
     confirm() {
-      this.$emit("confirm");
+      this.$store.commit("logoutCurrentUser");
       this.$emit("close");
     },
     close() {

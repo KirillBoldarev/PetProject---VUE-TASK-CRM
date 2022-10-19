@@ -41,7 +41,11 @@
       </div>
 
       <div class="form__group">
-        <button @click.prevent="this.authenticate" class="form__button" type="submit">
+        <button
+          @click.prevent="this.authenticate"
+          class="form__button"
+          type="submit"
+        >
           Войти в систему
         </button>
         <a href="#" class="switch">У меня нет аккаунта!</a>
@@ -79,6 +83,7 @@ export default {
           "authenticatedUser",
           JSON.stringify(this.foundedUser)
         );
+        this.$emit("close");
       }
     },
   },

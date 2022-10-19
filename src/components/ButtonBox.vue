@@ -1,10 +1,10 @@
 <template>
   <div class="buttonbox">
-    <div v-if="this.authenticatedUser" class="buttonbox--authenticated">
+    <div v-if="this.isAuthenticated === true" class="buttonbox--authenticated">
       <button class="buttonbox__button">Profile</button>
-      <logout-button @logout="this.logout"></logout-button>
+      <logout-button></logout-button>
     </div>
-    <div v-if="!this.authenticatedUser" class="buttonbox--guest">
+    <div v-if="this.isAuthenticated === false" class="buttonbox--guest">
       <registration-button></registration-button>
       <login-button></login-button>
     </div>
@@ -26,20 +26,14 @@ export default {
     };
   },
 
-  created() {
-    this.authenticatedUser = JSON.parse(
-      sessionStorage.getItem("authenticatedUser")
-    );
-  },
+  /* v-if="this.$store.state.authenticate.isAuthenticated === true" */
 
-  methods: {
-    logout() {
-      sessionStorage.removeItem("authenticatedUser");
-      this.authenticatedUser = null;
-    },
-  },
+  methods: {},
 
   computed: {
+    isAuthenticated() {
+      return this.$store.getters.checkForAuthenticate;
+    },
   },
   watch: {},
 };

@@ -13,22 +13,21 @@ export default {
   },
   mutations: {
     authenticateCurrentUser(state, user) {
-      this.state.authenticatedUser = user;
+      state.authenticatedUser = user;
       console.log(
-        "this.state.authenticatedUser :",
-        this.state.authenticatedUser
+        "this.$store.state.authenticate.authenticatedUser :",
+        state.authenticatedUser
       );
-      this.state.isAuthenticated = true;
-      console.log("state.isAuthenticated", this.state.isAuthenticated);
+      state.isAuthenticated = true;
+      console.log(
+        " this.$store.state.authenticate.isAuthenticated:",
+        state.isAuthenticated
+      );
     },
     logoutCurrentUser(state) {
-      this.state.isAuthenticated = false;
-      this.state.authenticatedUser = {};
+      state.isAuthenticated = false;
+      state.authenticatedUser = {};
       console.log("де-аутентификация прошла успешно");
-    },
-    info() {
-      console.log("this.authenticatedUser :", this.state.authenticatedUser);
-      console.log("this.isAuthenticated :", this.state.isAuthenticated);
     },
   },
   actions: {},

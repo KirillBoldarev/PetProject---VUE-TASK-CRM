@@ -95,6 +95,7 @@ export default {
         email: this.email,
         phone: this.phone,
         password: this.password,
+        id: Math.random().toString(36).substring(2, 7),
       };
     },
 
