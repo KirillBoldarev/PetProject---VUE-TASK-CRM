@@ -2,7 +2,7 @@
   <button @click="openModal" class="button">Профиль пользователя</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <profile-form @close="closeModal"></profile-form>
+      <profile-form @close="closeModal" :importUser="getAuthUser"></profile-form>
     </template>
   </modal>
 </template>
@@ -25,10 +25,16 @@ export default {
       this.isModalOpen = true;
     },
   },
+  computed: {
+    getAuthUser() {
+      let user = this.$store.getters.authenticatedUser;
+      return user;
+    },
+  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .button {
   position: relative;
   display: inline-block;

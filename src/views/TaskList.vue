@@ -1,5 +1,5 @@
 <template>
-  <div class="title">User's tasks management</div>
+  <h2>Управление задачами пользователя</h2>
   <div class="tasks">
     <div
       v-for="task in tasks"
@@ -11,14 +11,14 @@
         v-if="task.isCompleted === true"
         @click="task.isCompleted = !task.isCompleted"
         class="icon--mini"
-        src="@/icons/check-mark2.png"
+        src="@/icons/check.png"
         alt=""
       />
       <img
         v-if="task.isCompleted === false"
         @click="task.isCompleted = !task.isCompleted"
         class="icon--mini"
-        src="@/icons/not-checked.png"
+        src="@/icons/notСheck.png"
         alt=""
       />
       <div class="task__container">
@@ -30,7 +30,7 @@
           >
         </div>
         <img
-          src="@/icons/trash-bin.png"
+          src="@/icons/trash.png"
           class="icon"
           @click="this.tasks.splice(this.tasks.indexOf(task), 1)"
         />
@@ -45,7 +45,7 @@
       v-model="newTaskName"
       @keypress.ctrl.enter="addTask"
     />
-    <img src="@/icons/check-mark.png" class="icon" @click="addTask" />
+    <img src="@/icons/WILLBEDELETED.png" class="icon" @click="addTask" />
   </div>
 </template>
 

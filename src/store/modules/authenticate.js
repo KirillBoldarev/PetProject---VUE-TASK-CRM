@@ -23,6 +23,16 @@ export default {
       state.authenticatedUser = {};
       sessionStorage.removeItem("authenticatedUserId");
     },
+    updateAuthUser(state) {
+      let id = sessionStorage.getItem("authenticatedUserId");
+      if (id) {
+        let userList = JSON.parse(localStorage.getItem("userList"));
+        if (userList) {
+          state.authenticatedUser = userList.find((user) => user.id === id);
+          state.isAuthenticated = true;
+        }
+      }
+    },
   },
   actions: {},
 };

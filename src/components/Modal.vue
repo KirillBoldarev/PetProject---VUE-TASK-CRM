@@ -1,26 +1,26 @@
 <template>
   <div @click="this.closeModal()" v-if="isOpen === true" class="backdrop">
     <div @click.stop class="modal">
-      
-        <slot
-          name="ModalSlot"
-          :closeModal="closeModal"
-          :confirm="confirm"
+      <slot
+        class="modal__slot"
+        name="ModalSlot"
+        :closeModal="closeModal"
+        :confirm="confirm"
+      >
+        <button
+          class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          @click="this.closeModal()"
         >
-          <button
-            class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            @click="this.closeModal()"
-          >
-            Отмена
-          </button>
-          &nbsp;
-          <button
-            class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            @click="confirm"
-          >
-            ОК
-          </button>
-        </slot>
+          Отмена
+        </button>
+        &nbsp;
+        <button
+          class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          @click="confirm"
+        >
+          ОК
+        </button>
+      </slot>
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .modal {
   top: 75px;
   padding: 20px;
@@ -73,6 +73,9 @@ export default {
   z-index: 101;
   background-color: white;
   border-radius: 10px;
+  max-height: 80%;
+
+  
 }
 .popup h1 {
   text-align: center;

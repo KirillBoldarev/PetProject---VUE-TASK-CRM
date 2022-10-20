@@ -73,15 +73,14 @@ export default {
     registerUser() {
       let user = this.userData;
       if (!JSON.parse(localStorage.getItem("userList"))) {
-        console.log("Единственный юзер");
         localStorage.setItem("userList", JSON.stringify([user]));
         this.$emit("close");
       } else {
-        console.log("не единственный юзер");
         localStorage.setItem(
           "userList",
           JSON.stringify([...this.userList, user])
         );
+        this.$store.commit("updateUserList");
         this.$emit("close");
       }
     },

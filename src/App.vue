@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     test() {
-      this.$store.commit("info");
+      console.log("store.userlist :", this.$store.state.userList.userList);
     },
     testtwo() {
       console.log(
@@ -32,27 +32,19 @@ export default {
         this.$store.state.authenticate.authenticatedUser
       );
     },
-    restoreAuthUser() {
-      let id = sessionStorage.getItem("authenticatedUserId");
-      if (id) {
-        let userList = JSON.parse(localStorage.getItem("userList"));
-        this.$store.commit(
-          "authenticateCurrentUser",
-          userList.find((user) => user.id === id)
-        );
-      }
-    },
   },
 
   created() {
-    this.restoreAuthUser();
+    this.$store.commit("updateAuthUser");
+    this.$store.commit("updateUserList");
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   max-width: 1400px;
   margin: 0 auto;
+  padding: 5px;
 }
 </style>

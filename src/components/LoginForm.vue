@@ -69,7 +69,7 @@ export default {
   },
 
   methods: {
-    authenticate(event) {
+    authenticate() {
       let find = this.userList.find((user) => user.email === this.email);
       if (find == undefined) {
         this.invalidEmail = true;
@@ -94,9 +94,6 @@ export default {
       return userList;
     },
 
-    checkForAuthenticate() {
-      return this.$state.getters.checkForAuthenticate;
-    },
   },
 };
 </script>

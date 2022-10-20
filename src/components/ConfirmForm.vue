@@ -1,6 +1,6 @@
 <template>
-  <section id="logoutForm" class="container">
-    <h2>Вы действительно хотите выйти из системы</h2>
+  <section id="confirmForm" class="container">
+    <h2>Вы уверены ?</h2>
     <div class="button__container">
       <button @click="confirm" class="button__ok">Да</button>
       <button @click="close" class="button__cancel">Нет</button>
@@ -10,13 +10,14 @@
 
 <script>
 export default {
+  name: "ConfirmForm",
   data() {
     return {};
   },
 
   methods: {
     confirm() {
-      this.$store.commit("logoutCurrentUser");
+      this.$emit("confirm");
       this.$emit("close");
     },
     close() {
@@ -27,6 +28,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h2 {
+  text-align: center;
+  font-size: 24;
+  font-weight: 700;
+}
 .button__container {
   display: flex;
   flex-direction: row;

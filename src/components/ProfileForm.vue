@@ -1,93 +1,128 @@
 <template>
   <section id="profileForm" class="container">
-    <h2>Профиль пользователя</h2>
-    <p>Ваши персональные данные:</p>
-    <form class="form">
-      <div class="row">
-        <div class="form__group">
-          <label
-            v-if="this.invalidEmail === false"
-            class="form__label"
-            for="email"
-            >Имя</label
-          >
-          <input
-            v-model="firstName"
-            class="form__input"
-            type="firtstName"
-            name="firstName"
+    <div class="header">
+      <h2 class="header__title">Профиль пользователя</h2>
+      <div class="header__tooltipBox">
+        <div class="header__tooltipItem">
+          <img
+            @click="this.editMode = !this.editMode"
+            class="icon"
+            src="@/icons/edit.png"
+            alt=""
           />
+          <span> Редактировать</span>
         </div>
-
-        <div class="form__group">
-          <label class="form__label" for="secondName">Фамилия</label>
-          <input
-            v-model="secondName"
-            class="form__input"
-            type="text"
-            name="secondName"
+        <div class="header__tooltipItem">
+          <img
+            @click="this.taskListMode = !this.taskListMode"
+            class="icon"
+            src="@/icons/toDoList.png"
+            alt=""
           />
+          <span> Задачи</span>
         </div>
       </div>
+    </div>
 
-      <div class="row">
+    <div class="main">
+      <h3>Ваши персональные данные:</h3>
+      <form class="form">
+        <div class="row">
+          <div class="form__group">
+            <label
+              v-if="this.invalidEmail === false"
+              class="form__label"
+              for="email"
+              >Имя</label
+            >
+            <input
+              v-model="firstName"
+              class="form__input"
+              type="firtstName"
+              name="firstName"
+              :disabled="editMode === false"
+            />
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="secondName">Фамилия</label>
+            <input
+              v-model="secondName"
+              class="form__input"
+              type="text"
+              name="secondName"
+              :disabled="editMode === false"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form__group">
+            <label
+              v-if="this.invalidEmail === false"
+              class="form__label"
+              for="email"
+              >Электронная почта</label
+            >
+            <label
+              v-if="this.invalidEmail === true"
+              class="form__invalid"
+              for="email"
+              >Введена не верная электронная почта!</label
+            >
+            <input
+              v-model="email"
+              class="form__input"
+              type="email"
+              name="email"
+              :disabled="editMode === false"
+            />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="phone">Номер телефона</label>
+            <input
+              v-model="phone"
+              class="form__input"
+              type="text"
+              name="phone"
+              :disabled="editMode === false"
+            />
+          </div>
+        </div>
+
         <div class="form__group">
           <label
-            v-if="this.invalidEmail === false"
+            v-if="this.invalidPassword === false"
             class="form__label"
-            for="email"
-            >Электронная почта</label
+            for="password"
+            >Пароль</label
           >
           <label
-            v-if="this.invalidEmail === true"
+            v-if="this.invalidPassword === true"
             class="form__invalid"
-            for="email"
-            >Введена не верная электронная почта!</label
+            for="password"
+            >Введен не верный пароль!</label
           >
           <input
-            v-model="email"
+            v-model="password"
             class="form__input"
-            type="email"
-            name="email"
+            type="password"
+            name="password"
+            :disabled="editMode === false"
           />
         </div>
+
         <div class="form__group">
-          <label class="form__label" for="phone">Номер телефона</label>
-          <input v-model="phone" class="form__input" type="text" name="phone" />
+          <button
+            @click.prevent="this.updateUserData"
+            class="form__button"
+            type="submit"
+          >
+            Принять
+          </button>
         </div>
-      </div>
-
-      <div class="form__group">
-        <label
-          v-if="this.invalidPassword === false"
-          class="form__label"
-          for="password"
-          >Пароль</label
-        >
-        <label
-          v-if="this.invalidPassword === true"
-          class="form__invalid"
-          for="password"
-          >Введен не верный пароль!</label
-        >
-        <input
-          v-model="password"
-          class="form__input"
-          type="password"
-          name="password"
-        />
-      </div>
-
-      <div class="form__group">
-        <button
-          @click.prevent="this.authenticate"
-          class="form__button"
-          type="submit"
-        >
-          Принять
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </section>
 </template>
 
@@ -97,44 +132,111 @@ export default {
   name: "ProfileForm",
   data() {
     return {
+      firstName: "",
+      secondName: "",
       email: "",
+      phone: "",
       password: "",
+      id: "",
       invalidEmail: false,
       invalidPassword: false,
-      isOpenTaskList:false,
+      isOpenTaskList: false,
+      editMode: false,
+      taskListMode: false,
     };
   },
 
-  methods: {},
-
-  computed: {
-    userList() {
-      let userList = JSON.parse(localStorage.getItem("userList"));
-      if (userList === null || Array.isArray(userList) === false) {
-        return [];
-      }
-      return userList;
-    },
-
-    checkForAuthenticate() {
-      return this.$state.getters.checkForAuthenticate;
+  props: {
+    importUser: {
+      type: Object,
     },
   },
+  created() {
+    this.importUserdata();
+  },
+  methods: {
+    importUserdata() {
+      this.firstName = this.importUser.firstName;
+      this.secondName = this.importUser.secondName;
+      this.email = this.importUser.email;
+      this.phone = this.importUser.phone;
+      this.password = this.importUser.password;
+      this.id = this.importUser.id;
+    },
+    updateUserData() {
+      let userList = JSON.parse(localStorage.getItem("userList"));
+      userList.forEach((user) => {
+        if (user.id === this.id) {
+          user.firstName = this.firstName;
+          user.secondName = this.secondName;
+          user.email = this.email;
+          user.phone = this.phone;
+          user.password = this.password;
+        }
+        localStorage.setItem("userList", JSON.stringify(userList));
+        this.$emit("close");
+        this.$store.commit("updateAuthUser");
+      });
+    },
+  },
+
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  text-align: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 750px;
 }
-p {
-  text-align: center;
+
+.header {
+  display: flex;
+  flex: 0 0 20%;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+  }
+
+  &__tooltipBox {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    gap: 20px;
+  }
+
+  &__tooltipItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
 }
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 20%;
+  gap: 20px;
+  overflow-y: scroll;
+  padding: 5px;
+  max-height: 600px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 10px;
+  max-height: 100%;
 
   &__group {
     display: flex;
@@ -154,19 +256,40 @@ p {
     color: red;
     text-decoration: underline;
   }
+}
 
-  .row {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-  }
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 34px;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--mini {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
   }
 }
 </style>

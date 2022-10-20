@@ -2,34 +2,32 @@
   <button @click="openModal()" class="button">Выйти из системы</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <logout-form
-        @close="closeModal"
-        @confirm="closeModal"
-      ></logout-form>
+      <confirm-form @close="closeModal" @confirm="logout"></confirm-form>
     </template>
   </modal>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
-import LogoutForm from "@/components/LogoutForm.vue";
+import ConfirmForm from "@/components/ConfirmForm.vue";
 export default {
-  components: { Modal, LogoutForm },
+  components: { Modal, ConfirmForm },
 
   data() {
     return {
       isModalOpen: false,
-     };
+    };
   },
 
   methods: {
-
+    logout() {
+      this.$store.commit("logoutCurrentUser");
+    },
     openModal() {
       this.isModalOpen = true;
     },
   },
-  watch: {
-  },
+  watch: {},
 };
 </script>
 

@@ -24,15 +24,16 @@ export default {
   data() {
     return {
       headerLinks: [
-        { name: "Home page", url: "/" },
-        { name: "Task management", url: "/tasks" },
+        { name: "Главная", url: "/" },
+        { name: "Управление задачами", url: "/tasks" },
+        { name: "Список пользователей", url: "/users" },
       ],
     };
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .header {
   display: flex;
   flex-direction: row;
