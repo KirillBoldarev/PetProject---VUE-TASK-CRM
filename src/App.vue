@@ -23,9 +23,29 @@ export default {
       this.$store.commit("info");
     },
     testtwo() {
-      console.log('isAuthenticated :', this.$store.state.authenticate.isAuthenticated);
-      console.log('authenticatedUser :', this.$store.state.authenticate.authenticatedUser);
+      console.log(
+        "isAuthenticated :",
+        this.$store.state.authenticate.isAuthenticated
+      );
+      console.log(
+        "authenticatedUser :",
+        this.$store.state.authenticate.authenticatedUser
+      );
     },
+    restoreAuthUser() {
+      let id = sessionStorage.getItem("authenticatedUserId");
+      if (id) {
+        let userList = JSON.parse(localStorage.getItem("userList"));
+        this.$store.commit(
+          "authenticateCurrentUser",
+          userList.find((user) => user.id === id)
+        );
+      }
+    },
+  },
+
+  created() {
+    this.restoreAuthUser();
   },
 };
 </script>

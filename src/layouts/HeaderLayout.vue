@@ -37,14 +37,24 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: rgb(175, 165, 165);
+  height: 100px;
 
   &__navigation {
     display: flex;
     flex-direction: row;
     gap: 30px;
     padding: 10px;
+    text-align: center;
+    justify-content: center;
+  }
+  &__link {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   }
   &__buttonbox {
     display: flex;

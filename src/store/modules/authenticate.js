@@ -14,20 +14,14 @@ export default {
   mutations: {
     authenticateCurrentUser(state, user) {
       state.authenticatedUser = user;
-      console.log(
-        "this.$store.state.authenticate.authenticatedUser :",
-        state.authenticatedUser
-      );
       state.isAuthenticated = true;
-      console.log(
-        " this.$store.state.authenticate.isAuthenticated:",
-        state.isAuthenticated
-      );
+      sessionStorage.setItem("authenticatedUserId", state.authenticatedUser.id);
     },
+
     logoutCurrentUser(state) {
       state.isAuthenticated = false;
       state.authenticatedUser = {};
-      console.log("де-аутентификация прошла успешно");
+      sessionStorage.removeItem("authenticatedUserId");
     },
   },
   actions: {},

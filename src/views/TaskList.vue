@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="container__add-task-box">
+  <div class="row">
     <input
       name="newTask"
       type="text"
@@ -65,7 +65,7 @@ export default {
     };
   },
   methods: {
-    addTask: function () {
+    addTask() {
       if (!this.newTaskName == "") {
         this.tasks.push({
           name: this.newTaskName,
@@ -88,7 +88,7 @@ export default {
   margin: 10px auto;
   width: 80%;
   border-radius: 30px;
-  padding: 15px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.5);
   height: auto;
 
@@ -116,7 +116,12 @@ export default {
   }
 }
 
-
+.row {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+}
 
 .icon {
   font-size: 34px;

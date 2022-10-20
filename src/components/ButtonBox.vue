@@ -1,8 +1,15 @@
 <template>
   <div class="buttonbox">
     <div v-if="this.isAuthenticated === true" class="buttonbox--authenticated">
-      <button class="buttonbox__button">Profile</button>
-      <logout-button></logout-button>
+      <div class="column">
+        <div class="greeting">
+          {{ this.greeting }}
+        </div>
+        <div class="row">
+          <profile-button></profile-button>
+          <logout-button></logout-button>
+        </div>
+      </div>
     </div>
     <div v-if="this.isAuthenticated === false" class="buttonbox--guest">
       <registration-button></registration-button>
@@ -15,9 +22,10 @@
 import RegistrationButton from "@/components/RegistrationButton.vue";
 import LoginButton from "@/components/LoginButton.vue";
 import LogoutButton from "@/components/LogoutButton.vue";
+import ProfileButton from "@/components/ProfileButton.vue";
 
 export default {
-  components: { RegistrationButton, LoginButton, LogoutButton },
+  components: { RegistrationButton, LoginButton, LogoutButton, ProfileButton },
   name: "ButtonBox",
 
   data() {
@@ -26,20 +34,23 @@ export default {
     };
   },
 
-  /* v-if="this.$store.state.authenticate.isAuthenticated === true" */
-
   methods: {},
 
   computed: {
     isAuthenticated() {
       return this.$store.getters.checkForAuthenticate;
     },
+
+    greeting() {
+      let message = `Приветствуем, ${this.$store.getters.authenticatedUser.firstName} ${this.$store.getters.authenticatedUser.secondName}!`;
+      return message;
+    },
   },
   watch: {},
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .buttonbox {
   display: flex;
   flex-direction: row;
@@ -86,6 +97,21 @@ export default {
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset,
         0 2px 3px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.1);
     }
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .greeting {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18;
   }
 }
 </style>

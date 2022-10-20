@@ -56,6 +56,7 @@
 
 <script>
 export default {
+  components: {},
   name: "LoginForm",
   data() {
     return {
@@ -79,10 +80,6 @@ export default {
       } else {
         this.foundedUser = find;
         this.$store.commit("authenticateCurrentUser", this.foundedUser);
-        sessionStorage.setItem(
-          "authenticatedUser",
-          JSON.stringify(this.foundedUser)
-        );
         this.$emit("close");
       }
     },
