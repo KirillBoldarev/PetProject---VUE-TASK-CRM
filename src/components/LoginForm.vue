@@ -80,6 +80,7 @@ export default {
       } else {
         this.foundedUser = find;
         this.$store.commit("authenticateCurrentUser", this.foundedUser);
+        this.$store.commit("updateTaskList");
         this.$emit("close");
       }
     },
@@ -93,7 +94,6 @@ export default {
       }
       return userList;
     },
-
   },
 };
 </script>

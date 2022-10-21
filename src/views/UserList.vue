@@ -10,7 +10,7 @@
         <div class="userlist__header-item">Активные задачи</div>
         <div class="userlist__header-item">Действия</div>
       </div>
-      <div v-for="user in userList" :key="user.id" class="userlist__record">
+      <div v-for="user in users" :key="user.id" class="userlist__record">
         <div class="userlist__record-item">
           {{ user.firstName }} {{ user.secondName }}
         </div>
@@ -38,29 +38,30 @@
 export default {
   data() {
     return {
-
+      users: [],
     };
+  },
+
+  created() {
+    this.users = JSON.parse(localStorage.getItem("userList"));
   },
 
   computed: {
     userList() {
-      return this.$store.state.users.userList;
+      return this.$store.getters.getUserList;
     },
   },
 
   methods: {
     deleteCurrentUser(user) {
-      let filteredUserList = this.userList.filter(
-        (users) => users.id !== user.id
-      );
-      localStorage.setItem("userList", JSON.stringify(filteredUserList));
+      this.users = this.users.filter((users) => users.id !== user.id);
+      localStorage.setItem("userList", JSON.stringify(this.users));
       this.$store.commit("updateUserList");
     },
   },
-
   watch: {
-    usersData() {
-      this.users = this.usersData;
+    userList() {
+      this.users = JSON.parse(localStorage.getItem("userList"));
     },
   },
 };
@@ -77,7 +78,7 @@ export default {
   &__header {
     display: grid;
     grid-template-columns: 1fr 0.2fr 1fr 1fr 1fr 1fr;
-    gap: 15px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
     height: auto;
@@ -108,7 +109,7 @@ export default {
   &__record {
     display: grid;
     grid-template-columns: 1fr 0.2fr 1fr 1fr 1fr 1fr;
-    gap: 15px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
     height: auto;
@@ -140,7 +141,7 @@ export default {
   width: 30px;
   height: 30px;
   cursor: pointer;
-  margin: 5px 10px;
+  margin: 5px 5px;
 }
 
 h2 {

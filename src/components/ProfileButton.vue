@@ -36,32 +36,42 @@ export default {
 
 <style lang="scss" scoped>
 .button {
+  font-family: Hack, monospace;
+  background: #0f0f6d;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.75rem;
+  border: 0;
+  transition: all 0.5s;
+  border-radius: 10px;
+  width: auto;
   position: relative;
-  display: inline-block;
-  font-size: 90%;
-  font-weight: 700;
-  color: rgb(209, 209, 217);
-  text-decoration: none;
-  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-  padding: 0.5em 1em;
-  outline: none;
-  border-radius: 3px;
-  background: linear-gradient(rgb(110, 112, 120), rgb(81, 81, 86))
-    rgb(110, 112, 120);
-  box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 3px 5px rgba(0, 1, 6, 0.5),
-    0 0 1px 1px rgba(0, 1, 6, 0.2);
-  transition: 0.2s ease-in-out;
 
-  &:hover:not(:active) {
-    background: linear-gradient(rgb(126, 126, 134), rgb(70, 71, 76))
-      rgb(126, 126, 134);
+  &::after {
+    content: "";
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 400;
+    position: absolute;
+    left: 85%;
+    top: 31%;
+    right: 5%;
+    bottom: 0;
+    opacity: 0;
   }
-  &:active {
-    top: 1px;
-    background: linear-gradient(rgb(76, 77, 82), rgb(56, 57, 62))
-      rgb(76, 77, 82);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset,
-      0 2px 3px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    background: #2b2bff;
+    transition: all 0.5s;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px #0000ff61;
+    padding: 0.75rem 1.75rem 0.75rem 0.75rem;
+
+    &::after {
+      opacity: 1;
+      transition: all 0.5s;
+    }
   }
 }
+
 </style>

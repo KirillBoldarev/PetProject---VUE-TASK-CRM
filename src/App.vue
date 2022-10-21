@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <header-layout></header-layout>
-    <button @click="test">test</button>
-    <button @click="testtwo">test two</button>
+    <!-- <button @click="test">test</button>
+    <button @click="testtwo">test two</button> -->
     <main>
       <router-view></router-view>
     </main>
@@ -18,25 +18,12 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    test() {
-      console.log("store.userlist :", this.$store.state.userList.userList);
-    },
-    testtwo() {
-      console.log(
-        "isAuthenticated :",
-        this.$store.state.authenticate.isAuthenticated
-      );
-      console.log(
-        "authenticatedUser :",
-        this.$store.state.authenticate.authenticatedUser
-      );
-    },
-  },
+  methods: {},
 
   created() {
     this.$store.commit("updateAuthUser");
     this.$store.commit("updateUserList");
+    this.$store.commit("updateTaskList");
   },
 };
 </script>

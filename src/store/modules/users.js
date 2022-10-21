@@ -4,17 +4,16 @@ export default {
   },
 
   getters: {
-
+    getUserList(state) {
+      return state.userList;
+    },
   },
   mutations: {
-
-    
-    
     updateUserList(state) {
-        let userList = JSON.parse(localStorage.getItem("userList"));
-        if (userList) {
-           state.userList = userList;
-        }
+      let userList = JSON.parse(localStorage.getItem("userList"));
+      if (userList) {
+        state.userList = userList;
+      }
     },
   },
   actions: {},

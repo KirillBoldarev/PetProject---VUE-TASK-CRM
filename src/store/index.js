@@ -1,7 +1,8 @@
 import { createStore } from "vuex";
-import authenticate from "./modules/authenticate";
+import authentication from "./modules/authentication";
 import users from "./modules/users";
+import tasks from "./modules/tasks";
 
 export default createStore({
-  modules: { authenticate, users },
+  modules: { authentication, users, tasks },
 });

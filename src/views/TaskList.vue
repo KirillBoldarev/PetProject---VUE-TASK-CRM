@@ -1,6 +1,5 @@
 <template>
-  <h2>Управление задачами пользователя</h2>
-  <div class="tasks">
+  <!--   <div class="tasks">
     <div
       v-for="task in tasks"
       class="task"
@@ -36,52 +35,198 @@
         />
       </div>
     </div>
-  </div>
-  <div class="row">
-    <input
-      name="newTask"
-      type="text"
-      placeholder="Название задачи"
-      v-model="newTaskName"
-      @keypress.ctrl.enter="addTask"
-    />
-    <img src="@/icons/WILLBEDELETED.png" class="icon" @click="addTask" />
+  </div> -->
+
+  <div class="container">
+    <h2>Управление личными задачами <add-task-button></add-task-button></h2>
+    <div class="tasklist">
+      <div class="tasklist__header">
+        <div class="tasklist__header-item">Состояние</div>
+        <div class="tasklist__header-item">Отправитель</div>
+        <div class="tasklist__header-item">Описание задачи</div>
+        <div class="tasklist__header-item">Действия</div>
+      </div>
+      <div v-for="task in tasks" :key="task.id" class="tasklist__record">
+        <div class="tasklist__record-item">
+          <img
+            v-if="task.isCompleted === true"
+            @click="completeTask(task)"
+            class="icon--mini"
+            src="@/icons/check.png"
+            alt=""
+          />
+          <img
+            v-if="task.isCompleted === false"
+            @click="completeTask(task)"
+            class="icon--mini"
+            src="@/icons/notСheck.png"
+            alt=""
+          />
+        </div>
+        <div class="tasklist__record-item">
+          {{ this.getSenderName(task.sender) }}
+        </div>
+        <div class="tasklist__record-item">{{ task.description }}</div>
+        <div class="tasklist__record-item">
+          <img class="icon" src="@/icons/plus.png" alt="" />
+          <img class="icon" src="@/icons/redirect.png" alt="" />
+          <img class="icon" src="@/icons/edit.png" alt="" />
+          <img
+            @click="deleteTask(task)"
+            class="icon"
+            src="@/icons/trash.png"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import AddTaskButton from "@/components/AddTaskButton.vue";
+
 export default {
-  name: "componentTask",
+  name: "TaskList",
+
+  components: {
+    AddTaskButton,
+  },
+
   data() {
     return {
-      newTaskName: "",
-      tasks: [
-        {
-          id: "123",
-          name: "Create ToDo task in VueJS",
-          isCompleted: false,
-        },
-      ],
+      isModalOpen: false,
+      tasks: [],
     };
   },
+
+  created() {
+    this.tasks = this.personalTasks;
+  },
+
   methods: {
-    addTask() {
-      if (!this.newTaskName == "") {
-        this.tasks.push({
-          name: this.newTaskName,
-          isCompleted: false,
-          id: Math.random().toString(36).substring(2, 7),
-        });
-        this.newTaskName = "";
+    getSenderName(senderId) {
+      let sender = this.userList.find((user) => user.id === senderId);
+      if (!sender) {
+        return "Пользователь был удален";
       } else {
-        return;
+        let message = `${sender.firstName} ${sender.secondName}`;
+        return message;
       }
+    },
+
+    deleteTask(item) {
+      let filteredTasks = this.taskList.filter((task) => task.id !== item.id);
+      localStorage.setItem("taskList", JSON.stringify(filteredTasks));
+      this.$store.commit("updateTaskList");
+    },
+
+    completeTask(item) {
+      let updatedTasks = this.taskList;
+      updatedTasks.forEach((task) => {
+        if (task.id === item.id) {
+          item.isCompleted = !item.isCompleted;
+          localStorage.setItem("taskList", JSON.stringify(updatedTasks));
+          this.$store.commit("updateTaskList");
+        }
+      });
+    },
+  },
+
+  computed: {
+    userList() {
+      return JSON.parse(localStorage.getItem("userList"));
+    },
+    taskList() {
+      return this.$store.getters.getTaskList;
+    },
+
+    personalTasks() {
+      if (!this.taskList) {
+        return [];
+      } else {
+        let currentUserId = this.$store.getters.authenticatedUser.id;
+        return this.taskList.filter((task) => task.executor === currentUserId);
+      }
+    },
+  },
+
+  watch: {
+    taskList() {
+      this.tasks = this.personalTasks;
     },
   },
 };
 </script>
 
 <style lang="scss">
+.tasklist {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 3fr 1fr;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+  }
+
+  &__header-item {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    min-height: 100%;
+    gap: 10px;
+
+    &:first-child {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  }
+
+  &__record {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 3fr 1fr;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+  }
+
+  &__record-item {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    min-height: 100%;
+
+    &:first-child {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+  }
+}
+
 .task {
   display: flex;
   align-items: center;

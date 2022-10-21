@@ -16,7 +16,7 @@
           <img
             @click="this.taskListMode = !this.taskListMode"
             class="icon"
-            src="@/icons/toDoList.png"
+            src="@/icons/task.png"
             alt=""
           />
           <span> Задачи</span>
