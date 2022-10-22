@@ -1,44 +1,12 @@
 <template>
-  <!--   <div class="tasks">
-    <div
-      v-for="task in tasks"
-      class="task"
-      :class="{ completed: task.isCompleted === true }"
-      :key="task.name"
-    >
-      <img
-        v-if="task.isCompleted === true"
-        @click="task.isCompleted = !task.isCompleted"
-        class="icon--mini"
-        src="@/icons/check.png"
-        alt=""
-      />
-      <img
-        v-if="task.isCompleted === false"
-        @click="task.isCompleted = !task.isCompleted"
-        class="icon--mini"
-        src="@/icons/notСheck.png"
-        alt=""
-      />
-      <div class="task__container">
-        <div class="task__data">
-          <span
-            :class="{ lineThrougth: task.isCompleted === true }"
-            class="task__data"
-            >{{ task.name }}</span
-          >
-        </div>
-        <img
-          src="@/icons/trash.png"
-          class="icon"
-          @click="this.tasks.splice(this.tasks.indexOf(task), 1)"
-        />
-      </div>
-    </div>
-  </div> -->
-
   <div class="container">
-    <h2>Управление личными задачами <add-task-button></add-task-button></h2>
+    <div class="header">
+      <h2>Управление личными задачами</h2>
+      <add-task-button
+        :target="this.$store.state.authentication.authenticatedUser"
+      ></add-task-button>
+      <label for="">Добавить задачу</label>
+    </div>
     <div class="tasklist">
       <div class="tasklist__header">
         <div class="tasklist__header-item">Состояние</div>
@@ -48,35 +16,22 @@
       </div>
       <div v-for="task in tasks" :key="task.id" class="tasklist__record">
         <div class="tasklist__record-item">
-          <img
-            v-if="task.isCompleted === true"
-            @click="completeTask(task)"
-            class="icon--mini"
-            src="@/icons/check.png"
-            alt=""
-          />
-          <img
-            v-if="task.isCompleted === false"
-            @click="completeTask(task)"
-            class="icon--mini"
-            src="@/icons/notСheck.png"
-            alt=""
-          />
+          <complete-task-botton :target="task"></complete-task-botton>
         </div>
         <div class="tasklist__record-item">
           {{ this.getSenderName(task.sender) }}
         </div>
         <div class="tasklist__record-item">{{ task.description }}</div>
         <div class="tasklist__record-item">
-          <img class="icon" src="@/icons/plus.png" alt="" />
-          <img class="icon" src="@/icons/redirect.png" alt="" />
-          <img class="icon" src="@/icons/edit.png" alt="" />
-          <img
-            @click="deleteTask(task)"
-            class="icon"
-            src="@/icons/trash.png"
-            alt=""
-          />
+          <div>
+            <redirect-task-button :target="task"></redirect-task-button>
+          </div>
+          <div>
+            <edit-task-button :target="task"></edit-task-button>
+          </div>
+          <div>
+            <delete-task-button :target="task"></delete-task-button>
+          </div>
         </div>
       </div>
     </div>
@@ -85,17 +40,24 @@
 
 <script>
 import AddTaskButton from "@/components/AddTaskButton.vue";
+import DeleteTaskButton from "@/components/DeleteTaskButton.vue";
+import CompleteTaskBotton from "@/components/CompleteTaskButton.vue";
+import EditTaskButton from "@/components/EditTaskButton.vue";
+import RedirectTaskButton from "@/components/RedirectTaskButton.vue";
 
 export default {
   name: "TaskList",
 
   components: {
     AddTaskButton,
+    DeleteTaskButton,
+    CompleteTaskBotton,
+    EditTaskButton,
+    RedirectTaskButton,
   },
 
   data() {
     return {
-      isModalOpen: false,
       tasks: [],
     };
   },
@@ -113,23 +75,6 @@ export default {
         let message = `${sender.firstName} ${sender.secondName}`;
         return message;
       }
-    },
-
-    deleteTask(item) {
-      let filteredTasks = this.taskList.filter((task) => task.id !== item.id);
-      localStorage.setItem("taskList", JSON.stringify(filteredTasks));
-      this.$store.commit("updateTaskList");
-    },
-
-    completeTask(item) {
-      let updatedTasks = this.taskList;
-      updatedTasks.forEach((task) => {
-        if (task.id === item.id) {
-          item.isCompleted = !item.isCompleted;
-          localStorage.setItem("taskList", JSON.stringify(updatedTasks));
-          this.$store.commit("updateTaskList");
-        }
-      });
     },
   },
 
@@ -167,7 +112,7 @@ export default {
 
   &__header {
     display: grid;
-    grid-template-columns: 0.2fr 1fr 3fr 1fr;
+    grid-template-columns: 85px 1fr 3fr 130px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -198,7 +143,7 @@ export default {
 
   &__record {
     display: grid;
-    grid-template-columns: 0.2fr 1fr 3fr 1fr;
+    grid-template-columns: 85px 1fr 3fr 130px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -214,6 +159,7 @@ export default {
     text-align: center;
     padding: 5px;
     min-height: 100%;
+    gap: 5px;
 
     &:first-child {
       border-top-left-radius: 20px;
@@ -277,15 +223,23 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
+  width: 25px;
+  height: 25px;
   text-decoration: none;
   cursor: pointer;
 
   &--mini {
-    width: 45px;
-    height: 45px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
   }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 </style>

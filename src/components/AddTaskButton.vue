@@ -1,8 +1,8 @@
 <template>
-  <button @click="openModal" class="button">+</button>
+  <img @click="openModal" src="@/icons/plus.png" class="icon" alt="" />
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <add-task-form @close="closeModal"></add-task-form>
+      <add-task-form @close="closeModal" :target="this.target"></add-task-form>
     </template>
   </modal>
 </template>
@@ -16,6 +16,13 @@ export default {
   components: {
     Modal,
     AddTaskForm,
+  },
+
+  props: {
+    target: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
@@ -33,7 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .button {
   position: relative;
   display: inline-block;
@@ -71,6 +77,24 @@ export default {
   }
 }
 
+.icon {
+  font-size: 34px;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  text-decoration: none;
+  cursor: pointer;
 
-
+  &--mini {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+  }
+}
 </style>

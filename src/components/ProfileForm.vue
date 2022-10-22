@@ -138,6 +138,7 @@ export default {
       phone: "",
       password: "",
       id: "",
+
       invalidEmail: false,
       invalidPassword: false,
       isOpenTaskList: false,

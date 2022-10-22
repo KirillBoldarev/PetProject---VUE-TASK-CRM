@@ -1,7 +1,8 @@
 <template>
-  <section id="addTaskForm" class="container">
-    <h2>Добавить задачу</h2>
+  <section id="RedirectTaskForm" class="container">
+    <h2>Перенаправить задачу</h2>
     <form class="form">
+
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
@@ -12,25 +13,12 @@
       </div>
 
       <div class="form__group">
-        <div class="column">
-          <h3>Описание задачи:</h3>
-          <textarea
-            v-model="description"
-            name="task"
-            id="task"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="form__group">
         <button
-          @click.prevent="this.createTask"
+          @click.prevent="this.updateTaskData"
           class="form__button"
           type="submit"
         >
-          Создать задачу
+          ОК
         </button>
       </div>
     </form>
@@ -38,49 +26,27 @@
 </template>
 
 <script>
+
+
 export default {
-  components: {},
-  name: "AddTaskForm",
+  name: "RedirectTaskForm",
+  components: {
+
+  },
   props: {
     target: {
       type: Object,
       required: true,
     },
   },
+
   data() {
     return {
-      executor: this.target.id,
-      sender: this.$store.state.authentication.authenticatedUser.id,
-      description: "",
+      executor: this.target.executor,
+      id: this.target.id,
     };
   },
-
-  methods: {
-    createTask() {
-      if (!JSON.parse(localStorage.getItem("taskList"))) {
-        localStorage.setItem("taskList", JSON.stringify([this.designedTask]));
-        this.$emit("close");
-      } else {
-        localStorage.setItem(
-          "taskList",
-          JSON.stringify([...this.taskList, this.designedTask])
-        );
-        this.$store.commit("updateTaskList");
-        this.$emit("close");
-      }
-    },
-  },
-
   computed: {
-    designedTask() {
-      return {
-        sender: this.sender,
-        executor: this.executor,
-        description: this.description,
-        id: Math.random().toString(36).substring(2, 7),
-        isCompleted: false,
-      };
-    },
     userList() {
       return JSON.parse(localStorage.getItem("userList"));
     },
@@ -88,23 +54,42 @@ export default {
       return JSON.parse(localStorage.getItem("taskList"));
     },
   },
+  methods: {
+    updateTaskData() {
+      let updatedTaskList = this.taskList;
+      updatedTaskList.forEach((task) => {
+        if (task.id === this.id) {
+          task.executor = this.executor;
+        }
+        localStorage.setItem("taskList", JSON.stringify(updatedTaskList));
+        this.$store.commit("updateTaskList");
+        this.$emit("close");
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  text-align: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 750px;
 }
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 10px;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
 
   &__group {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 15px;
   }
@@ -121,11 +106,38 @@ h2 {
   }
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .column {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.icon {
+  font-size: 34px;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 25px;
+  height: 25px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--mini {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+  }
 }
 </style>

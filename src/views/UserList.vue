@@ -17,10 +17,9 @@
         <div class="userlist__record-item">{{ user.role }}</div>
         <div class="userlist__record-item">{{ user.email }}</div>
         <div class="userlist__record-item">{{ user.phone }}</div>
-        <div class="userlist__record-item">Активные задачи</div>
+        <div class="userlist__record-item">{{ this.getActiveTasks(user) }}</div>
         <div class="userlist__record-item">
-          <img class="icon" src="@/icons/plus.png" alt="" />
-          <img class="icon" src="@/icons/redirect.png" alt="" />
+          <add-task-button :target="user"></add-task-button>
           <img class="icon" src="@/icons/edit.png" alt="" />
           <img
             @click="this.deleteCurrentUser(user)"
@@ -35,7 +34,10 @@
 </template>
 
 <script>
+import Modal from "@/components/Modal.vue";
+import AddTaskButton from "@/components/AddTaskButton.vue";
 export default {
+  components: { Modal, AddTaskButton },
   data() {
     return {
       users: [],
@@ -50,6 +52,10 @@ export default {
     userList() {
       return this.$store.getters.getUserList;
     },
+
+    taskList() {
+      return this.$store.getters.getTaskList;
+    },
   },
 
   methods: {
@@ -57,6 +63,13 @@ export default {
       this.users = this.users.filter((users) => users.id !== user.id);
       localStorage.setItem("userList", JSON.stringify(this.users));
       this.$store.commit("updateUserList");
+    },
+
+    getActiveTasks(user) {
+      let filteredTasks = this.taskList;
+      return filteredTasks.filter(
+        (task) => task.executor === user.id && task.isCompleted === false
+      ).length;
     },
   },
   watch: {
@@ -77,7 +90,7 @@ export default {
 
   &__header {
     display: grid;
-    grid-template-columns: 1fr 0.2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 45px 1fr 1fr 1fr 155px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -108,8 +121,8 @@ export default {
 
   &__record {
     display: grid;
-    grid-template-columns: 1fr 0.2fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 45px 1fr 1fr 1fr 155px;
+    gap: 5px;
     justify-content: center;
     align-items: center;
     height: auto;
@@ -138,8 +151,8 @@ export default {
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   margin: 5px 5px;
 }
