@@ -1,6 +1,7 @@
 <template>
   <header class="header">
     <div class="header__logo"></div>
+    <button @click="testForProps">TEST</button>
     <div class="header__navigation">
       <router-link
         class="header__link"
@@ -21,6 +22,13 @@ import ButtonBox from "@/components/ButtonBox.vue";
 export default {
   components: { Modal, ButtonBox },
   name: "header-layout",
+
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       headerLinks: [
@@ -29,6 +37,12 @@ export default {
         { name: "Список пользователей", url: "/users" },
       ],
     };
+  },
+
+  methods: {
+    testForProps() {
+      console.log(this.taskList);
+    },
   },
 };
 </script>

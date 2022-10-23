@@ -46,6 +46,10 @@ export default {
       type: Object,
       required: true,
     },
+    taskList: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -57,18 +61,11 @@ export default {
 
   methods: {
     createTask() {
-      if (!JSON.parse(localStorage.getItem("taskList"))) {
-        localStorage.setItem("taskList", JSON.stringify([this.designedTask]));
-        this.$emit("close");
-      } else {
-        localStorage.setItem(
-          "taskList",
-          JSON.stringify([...this.taskList, this.designedTask])
-        );
-        this.$store.commit("updateTaskList");
-        this.$emit("close");
-      }
+      this.taskList.push(this.designedTask);
+      /* this.$store.commit("updateTaskList", this.taskList); */
+      this.$emit("close");
     },
+
   },
 
   computed: {
@@ -83,9 +80,6 @@ export default {
     },
     userList() {
       return JSON.parse(localStorage.getItem("userList"));
-    },
-    taskList() {
-      return JSON.parse(localStorage.getItem("taskList"));
     },
   },
 };

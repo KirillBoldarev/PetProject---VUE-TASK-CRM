@@ -2,7 +2,7 @@
   <img @click="openModal" src="@/icons/plus.png" class="icon" alt="" />
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <add-task-form @close="closeModal" :target="this.target"></add-task-form>
+      <add-task-form @close="closeModal" :target="this.target" :taskList="taskList"></add-task-form>
     </template>
   </modal>
 </template>
@@ -21,6 +21,10 @@ export default {
   props: {
     target: {
       type: Object,
+      required: true,
+    },
+    taskList: {
+      type: Array,
       required: true,
     },
   },

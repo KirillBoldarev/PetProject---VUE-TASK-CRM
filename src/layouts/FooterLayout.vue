@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer__top">
-      <h2>FOOTER</h2>
+      <h2>{{ this.$store.state.authentication.taskList }}</h2>
     </div>
     <div class="footer__main">FOOTER MAIN</div>
     <div class="footer__bottom">FOOTER BOTTOM</div>

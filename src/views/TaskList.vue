@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <div class="header">
+      this.taskList:
+      {{ taskList }}
       <h2>Управление личными задачами</h2>
       <add-task-button
+        :taskList="taskList"
         :target="this.$store.state.authentication.authenticatedUser"
       ></add-task-button>
       <label for="">Добавить задачу</label>
@@ -14,7 +17,11 @@
         <div class="tasklist__header-item">Описание задачи</div>
         <div class="tasklist__header-item">Действия</div>
       </div>
-      <div v-for="task in tasks" :key="task.id" class="tasklist__record">
+      <div
+        v-for="task in personalTasks"
+        :key="task.id"
+        class="tasklist__record"
+      >
         <div class="tasklist__record-item">
           <complete-task-botton :target="task"></complete-task-botton>
         </div>
@@ -56,14 +63,21 @@ export default {
     RedirectTaskButton,
   },
 
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      tasks: [],
+      tasks: this.taskList,
     };
   },
 
   created() {
-    this.tasks = this.personalTasks;
+    /* this.tasks = this.personalTasks; */
   },
 
   methods: {
@@ -82,24 +96,25 @@ export default {
     userList() {
       return JSON.parse(localStorage.getItem("userList"));
     },
-    taskList() {
+    /*     taskListData() {
       return this.$store.getters.getTaskList;
-    },
+    }, */
 
     personalTasks() {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.authenticatedUser.id;
-        return this.taskList.filter((task) => task.executor === currentUserId);
+        return this.taskList.filter(
+          (task) => task.executor === this.$store.getters.authenticatedUser.id
+        );
       }
     },
   },
 
   watch: {
-    taskList() {
+    /*     taskList() {
       this.tasks = this.personalTasks;
-    },
+    }, */
   },
 };
 </script>
