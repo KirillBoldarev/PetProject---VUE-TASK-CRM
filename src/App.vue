@@ -18,6 +18,15 @@ export default {
   },
   methods: {},
 
+  computed: {
+    userList() {
+      return JSON.parse(localStorage.getItem("userList"));
+    },
+    taskList() {
+      return JSON.parse(localStorage.getItem("userList"));
+    },
+  },
+
   created() {
     this.$store.commit("updateAuthUser");
     this.$store.commit("updateUserList");
