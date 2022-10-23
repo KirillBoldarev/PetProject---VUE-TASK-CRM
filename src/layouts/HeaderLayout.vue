@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <header class="header">
     <div class="header__logo"></div>
     <div class="header__navigation">
       <router-link
@@ -11,7 +11,7 @@
       >
     </div>
     <button-box></button-box>
-  </div>
+  </header>
 </template>
 
 <script>
