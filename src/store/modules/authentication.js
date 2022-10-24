@@ -23,6 +23,7 @@ export default {
       state.authenticatedUser = {};
       sessionStorage.removeItem("authenticatedUserId");
     },
+
     updateAuthUser(state) {
       let id = sessionStorage.getItem("authenticatedUserId");
       if (id) {
@@ -34,5 +35,6 @@ export default {
       }
     },
   },
+
   actions: {},
 };

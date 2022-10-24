@@ -42,7 +42,7 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.authenticate"
+          @click.prevent="this.authenticateUser"
           class="form__button"
           type="submit"
         >
@@ -58,43 +58,39 @@
 export default {
   components: {},
   name: "LoginForm",
+
+  props: {
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       email: "",
       password: "",
-      foundedUser: {},
       invalidEmail: false,
       invalidPassword: false,
     };
   },
 
   methods: {
-    authenticate() {
-      let find = this.userList.find((user) => user.email === this.email);
-      if (find == undefined) {
+    authenticateUser() {
+      let foundedUser = this.userList.find((user) => user.email === this.email);
+      if (foundedUser == undefined) {
         this.invalidEmail = true;
         return;
       }
-      if (find.password !== this.password) {
+      if (foundedUser.password !== this.password) {
         this.invalidPassword = true;
       } else {
-        this.foundedUser = find;
-        this.$store.commit("authenticateCurrentUser", this.foundedUser);
-        this.$store.commit("updateTaskList");
+        this.$store.commit("authenticateCurrentUser", foundedUser);
         this.$emit("close");
       }
     },
   },
 
-  computed: {
-    userList() {
-      let userList = JSON.parse(localStorage.getItem("userList"));
-      if (userList === null || Array.isArray(userList) === false) {
-        return [];
-      }
-      return userList;
-    },
-  },
+  computed: {},
 };
 </script>
 

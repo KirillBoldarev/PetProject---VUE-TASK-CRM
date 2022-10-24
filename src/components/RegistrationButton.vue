@@ -2,7 +2,10 @@
   <button @click="openModal" class="button">Зарегистрироваться</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <registration-form @close="closeModal"></registration-form>
+      <registration-form
+        @close="closeModal"
+        :userList="userList"
+      ></registration-form>
     </template>
   </modal>
 </template>
@@ -12,6 +15,14 @@ import Modal from "@/components/Modal.vue";
 import RegistrationForm from "@/components/RegistrationForm.vue";
 export default {
   components: { Modal, RegistrationForm },
+
+  props: {
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
+  
   data() {
     return {
       isModalOpen: false,

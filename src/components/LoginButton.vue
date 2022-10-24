@@ -2,7 +2,7 @@
   <button @click="openModal" class="button">Войти в систему</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <login-form @close="closeModal"></login-form>
+      <login-form @close="closeModal" :userList="userList"></login-form>
     </template>
   </modal>
 </template>
@@ -14,6 +14,13 @@ import LoginForm from "@/components/LoginForm.vue";
 export default {
   name: "LoginButton",
   components: { Modal, LoginForm },
+
+  props: {
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       isModalOpen: false,

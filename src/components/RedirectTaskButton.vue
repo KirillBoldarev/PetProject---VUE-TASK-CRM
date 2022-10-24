@@ -6,6 +6,8 @@
       <redirect-task-form
         @close="closeModal"
         :target="this.target"
+        :taskList="taskList"
+        :userList="userList"
       ></redirect-task-form>
     </template>
   </modal>
@@ -23,6 +25,14 @@ export default {
   props: {
     target: {
       type: Object,
+      required: true,
+    },
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
       required: true,
     },
   },

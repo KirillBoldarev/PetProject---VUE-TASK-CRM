@@ -24,10 +24,8 @@ export default {
   methods: {},
 
   computed: {
-    /* userList() {
-      return JSON.parse(localStorage.getItem("userList"));
-    }, */
   },
+  
   created() {
     this.$store.subscribe((mutations, state) => {
       if (mutations.type === "initializeTaskList") {

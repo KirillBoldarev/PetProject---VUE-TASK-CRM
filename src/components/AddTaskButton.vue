@@ -6,6 +6,7 @@
         @close="closeModal"
         :target="this.target"
         :taskList="taskList"
+        :userList="userList"
       ></add-task-form>
     </template>
   </modal>

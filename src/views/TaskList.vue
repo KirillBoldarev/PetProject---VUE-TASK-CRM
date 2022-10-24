@@ -4,6 +4,7 @@
       <h2>Управление личными задачами</h2>
       <add-task-button
         :taskList="taskList"
+        :userList="userList"
         :target="this.$store.state.authentication.authenticatedUser"
       ></add-task-button>
       <label for="">Добавить задачу</label>
@@ -21,7 +22,10 @@
         class="tasklist__record"
       >
         <div class="tasklist__record-item">
-          <complete-task-botton :target="task"></complete-task-botton>
+          <complete-task-button
+            :target="task"
+            :taskList="taskList"
+          ></complete-task-button>
         </div>
         <div class="tasklist__record-item">
           {{ this.getSenderName(task.sender) }}
@@ -29,13 +33,24 @@
         <div class="tasklist__record-item">{{ task.description }}</div>
         <div class="tasklist__record-item">
           <div>
-            <redirect-task-button :target="task"></redirect-task-button>
+            <redirect-task-button
+              :target="task"
+              :userList="userList"
+              :taskList="taskList"
+            ></redirect-task-button>
           </div>
           <div>
-            <edit-task-button :target="task"></edit-task-button>
+            <edit-task-button
+              :target="task"
+              :userList="userList"
+              :taskList="taskList"
+            ></edit-task-button>
           </div>
           <div>
-            <delete-task-button :target="task"></delete-task-button>
+            <delete-task-button
+              :target="task"
+              :taskList="taskList"
+            ></delete-task-button>
           </div>
         </div>
       </div>
@@ -46,7 +61,7 @@
 <script>
 import AddTaskButton from "@/components/AddTaskButton.vue";
 import DeleteTaskButton from "@/components/DeleteTaskButton.vue";
-import CompleteTaskBotton from "@/components/CompleteTaskButton.vue";
+import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
 import EditTaskButton from "@/components/EditTaskButton.vue";
 import RedirectTaskButton from "@/components/RedirectTaskButton.vue";
 
@@ -56,7 +71,7 @@ export default {
   components: {
     AddTaskButton,
     DeleteTaskButton,
-    CompleteTaskBotton,
+    CompleteTaskButton,
     EditTaskButton,
     RedirectTaskButton,
   },
@@ -73,14 +88,10 @@ export default {
   },
 
   data() {
-    return {
-      tasks: this.taskList,
-    };
+    return {};
   },
 
-  created() {
-    /* this.tasks = this.personalTasks; */
-  },
+  created() {},
 
   methods: {
     getSenderName(senderId) {
@@ -95,13 +106,6 @@ export default {
   },
 
   computed: {
-    userList() {
-      return JSON.parse(localStorage.getItem("userList"));
-    },
-    /*     taskListData() {
-      return this.$store.getters.getTaskList;
-    }, */
-
     personalTasks() {
       if (!this.taskList) {
         return [];
@@ -113,11 +117,7 @@ export default {
     },
   },
 
-  watch: {
-    /*     taskList() {
-      this.tasks = this.personalTasks;
-    }, */
-  },
+  watch: {},
 };
 </script>
 

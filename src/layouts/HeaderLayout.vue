@@ -10,7 +10,7 @@
         >{{ link.name }}</router-link
       >
     </div>
-    <button-box></button-box>
+    <button-box :userList="userList" :taskList="taskList"></button-box>
   </header>
 </template>
 
@@ -43,9 +43,7 @@ export default {
   },
 
   methods: {
-    testForProps() {
-      console.log(this.taskList);
-    },
+
   },
 };
 </script>

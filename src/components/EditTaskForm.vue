@@ -33,12 +33,15 @@
       </div>
       <div class="form__group">
         <label class="form__label" for="">Завершение задачи :</label>
-        <complete-task-button :target="this.target"></complete-task-button>
+        <complete-task-button
+          :target="this.target"
+          :taskList="taskList"
+        ></complete-task-button>
       </div>
 
       <div class="form__group">
         <button
-          @click.prevent="this.updateTaskData"
+          @click.prevent="this.updateTask"
           class="form__button"
           type="submit"
         >
@@ -62,6 +65,14 @@ export default {
       type: Object,
       required: true,
     },
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
+    },
   },
 
   data() {
@@ -73,27 +84,18 @@ export default {
       id: this.target.id,
     };
   },
-  computed: {
-    userList() {
-      return JSON.parse(localStorage.getItem("userList"));
-    },
-    taskList() {
-      return JSON.parse(localStorage.getItem("taskList"));
-    },
-  },
+  computed: {},
   methods: {
-    updateTaskData() {
-      let updatedTaskList = this.taskList;
-      updatedTaskList.forEach((task) => {
+    updateTask() {
+      this.taskList.forEach((task) => {
         if (task.id === this.id) {
           task.executor = this.executor;
           task.sender = this.sender;
           task.description = this.description;
         }
-        localStorage.setItem("taskList", JSON.stringify(updatedTaskList));
-        this.$store.commit("updateTaskList");
-        this.$emit("close");
       });
+      this.$store.commit("updateTaskList", this.taskList);
+      this.$emit("close");
     },
   },
 };

@@ -10,7 +10,11 @@
         <div class="userlist__header-item">Активные задачи</div>
         <div class="userlist__header-item">Действия</div>
       </div>
-      <div v-for="user in users" :key="user.id" class="userlist__record">
+      <div
+        v-for="user in this.userList"
+        :key="user.id"
+        class="userlist__record"
+      >
         <div class="userlist__record-item">
           {{ user.firstName }} {{ user.secondName }}
         </div>
@@ -25,12 +29,9 @@
             :target="user"
           ></add-task-button>
           <img class="icon" src="@/icons/edit.png" alt="" />
-          <img
-            @click="this.deleteCurrentUser(user)"
-            class="icon"
-            src="@/icons/trash.png"
-            alt=""
-          />
+          <delete-user-button
+          :target="user"
+          :userList="userList"></delete-user-button>
         </div>
       </div>
     </div>
@@ -40,8 +41,9 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import AddTaskButton from "@/components/AddTaskButton.vue";
+import DeleteUserButton from "@/components/DeleteUserButton.vue";
 export default {
-  components: { Modal, AddTaskButton },
+  components: { Modal, AddTaskButton, DeleteUserButton },
 
   props: {
     taskList: {
@@ -55,32 +57,14 @@ export default {
   },
 
   data() {
-    return {
-      users: [],
-    };
+    return {};
   },
 
-  created() {
-    this.users = JSON.parse(localStorage.getItem("userList"));
-  },
+  created() {},
 
-  computed: {
-    userList() {
-      return this.$store.getters.getUserList;
-    },
-
-    taskList() {
-      return this.$store.getters.getTaskList;
-    },
-  },
+  computed: {},
 
   methods: {
-    deleteCurrentUser(user) {
-      this.users = this.users.filter((users) => users.id !== user.id);
-      localStorage.setItem("userList", JSON.stringify(this.users));
-      this.$store.commit("updateUserList");
-    },
-
     getActiveTasks(user) {
       let filteredTasks = this.taskList;
       return filteredTasks.filter(
@@ -88,11 +72,7 @@ export default {
       ).length;
     },
   },
-  watch: {
-    userList() {
-      this.users = JSON.parse(localStorage.getItem("userList"));
-    },
-  },
+  watch: {},
 };
 </script>
 

@@ -2,11 +2,10 @@
   <section id="RedirectTaskForm" class="container">
     <h2>Перенаправить задачу</h2>
     <form class="form">
-
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
-          <option v-for="user in userList" :key="user.id" :value="user.id">
+          <option v-for="user in this.userList" :key="user.id" :value="user.id">
             {{ user.firstName }} {{ user.secondName }}
           </option>
         </select>
@@ -14,7 +13,7 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.updateTaskData"
+          @click.prevent="this.redirectTask"
           class="form__button"
           type="submit"
         >
@@ -26,16 +25,20 @@
 </template>
 
 <script>
-
-
 export default {
   name: "RedirectTaskForm",
-  components: {
-
-  },
+  components: {},
   props: {
     target: {
       type: Object,
+      required: true,
+    },
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
       required: true,
     },
   },
@@ -46,25 +49,16 @@ export default {
       id: this.target.id,
     };
   },
-  computed: {
-    userList() {
-      return JSON.parse(localStorage.getItem("userList"));
-    },
-    taskList() {
-      return JSON.parse(localStorage.getItem("taskList"));
-    },
-  },
+  computed: {},
   methods: {
-    updateTaskData() {
-      let updatedTaskList = this.taskList;
-      updatedTaskList.forEach((task) => {
+    redirectTask() {
+      this.taskList.forEach((task) => {
         if (task.id === this.id) {
           task.executor = this.executor;
         }
-        localStorage.setItem("taskList", JSON.stringify(updatedTaskList));
-        this.$store.commit("updateTaskList");
-        this.$emit("close");
       });
+      this.$store.commit("updateTaskList", this.taskList);
+      this.$emit("close");
     },
   },
 };

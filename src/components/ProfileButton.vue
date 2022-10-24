@@ -2,7 +2,11 @@
   <button @click="openModal" class="button">Профиль пользователя</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <profile-form @close="closeModal" :importUser="getAuthUser"></profile-form>
+      <profile-form
+        @close="closeModal"
+        :userList="userList"
+        :taskList="taskList"
+      ></profile-form>
     </template>
   </modal>
 </template>
@@ -14,6 +18,18 @@ import ProfileForm from "@/components/ProfileForm.vue";
 export default {
   name: "ProfileButton",
   components: { Modal, ProfileForm },
+
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
+
   data() {
     return {
       isModalOpen: false,
@@ -26,10 +42,7 @@ export default {
     },
   },
   computed: {
-    getAuthUser() {
-      let user = this.$store.getters.authenticatedUser;
-      return user;
-    },
+
   },
 };
 </script>
@@ -73,5 +86,4 @@ export default {
     }
   }
 }
-
 </style>

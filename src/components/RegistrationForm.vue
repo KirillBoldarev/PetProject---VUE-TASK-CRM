@@ -69,25 +69,23 @@ export default {
     };
   },
 
+  props: {
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
+
   methods: {
     registerUser() {
-      let user = this.userData;
-      if (!JSON.parse(localStorage.getItem("userList"))) {
-        localStorage.setItem("userList", JSON.stringify([user]));
-        this.$emit("close");
-      } else {
-        localStorage.setItem(
-          "userList",
-          JSON.stringify([...this.userList, user])
-        );
-        this.$store.commit("updateUserList");
-        this.$emit("close");
-      }
+      this.userList.push(this.createdUser);
+      this.$store.commit("updateUserList", this.userList);
+      this.$emit("close");
     },
   },
 
   computed: {
-    userData() {
+    createdUser() {
       return {
         firstName: this.firstName,
         secondName: this.secondName,
@@ -96,14 +94,6 @@ export default {
         password: this.password,
         id: Math.random().toString(36).substring(2, 7),
       };
-    },
-
-    userList() {
-      let userList = JSON.parse(localStorage.getItem("userList"));
-      if (userList === null || Array.isArray(userList) === false) {
-        return [];
-      }
-      return userList;
     },
   },
 };

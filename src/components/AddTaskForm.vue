@@ -5,7 +5,7 @@
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
-          <option v-for="user in userList" :key="user.id" :value="user.id">
+          <option v-for="user in this.userList" :key="user.id" :value="user.id">
             {{ user.firstName }} {{ user.secondName }}
           </option>
         </select>
@@ -50,6 +50,10 @@ export default {
       type: Array,
       required: true,
     },
+    userList: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -76,9 +80,6 @@ export default {
         id: Math.random().toString(36).substring(2, 7),
         isCompleted: false,
       };
-    },
-    userList() {
-      return JSON.parse(localStorage.getItem("userList"));
     },
   },
 };

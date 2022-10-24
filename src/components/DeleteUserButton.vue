@@ -1,6 +1,6 @@
 <template>
   <img
-    @click="deleteTask(this.target)"
+    @click="deleteUser(this.target)"
     class="icon"
     src="@/icons/trash.png"
     alt=""
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "DeleteTaskButton",
+  name: "DeleteUserButton",
   components: {},
 
   props: {
@@ -17,7 +17,8 @@ export default {
       type: Object,
       required: true,
     },
-    taskList: {
+
+    userList: {
       type: Array,
       required: true,
     },
@@ -28,15 +29,15 @@ export default {
   },
 
   methods: {
-    deleteTask(target) {
+    deleteUser(target) {
       let index;
-      this.taskList.forEach((task, idx) => {
-        if (task.id === target.id) {
+      this.userList.forEach((user, idx) => {
+        if (user.id === target.id) {
           index = idx;
         }
       });
-      this.taskList.splice(index, 1);
-      this.$store.commit("updateTaskList", this.taskList);
+      this.userList.splice(index, 1);
+      this.$store.commit("updateUserList", this.userList);
     },
   },
 

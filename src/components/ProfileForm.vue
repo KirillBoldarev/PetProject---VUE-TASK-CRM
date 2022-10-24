@@ -148,25 +148,30 @@ export default {
   },
 
   props: {
-    importUser: {
-      type: Object,
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
     },
   },
+
   created() {
     this.importUserdata();
   },
   methods: {
     importUserdata() {
-      this.firstName = this.importUser.firstName;
-      this.secondName = this.importUser.secondName;
-      this.email = this.importUser.email;
-      this.phone = this.importUser.phone;
-      this.password = this.importUser.password;
-      this.id = this.importUser.id;
+      this.firstName = this.$store.getters.authenticatedUser.firstName;
+      this.secondName = this.$store.getters.authenticatedUser.secondName;
+      this.email = this.$store.getters.authenticatedUser.email;
+      this.phone = this.$store.getters.authenticatedUser.phone;
+      this.password = this.$store.getters.authenticatedUser.password;
+      this.id = this.$store.getters.authenticatedUser.id;
     },
     updateUserData() {
-      let userList = JSON.parse(localStorage.getItem("userList"));
-      userList.forEach((user) => {
+      this.userList.forEach((user) => {
         if (user.id === this.id) {
           user.firstName = this.firstName;
           user.secondName = this.secondName;
@@ -174,9 +179,9 @@ export default {
           user.phone = this.phone;
           user.password = this.password;
         }
-        localStorage.setItem("userList", JSON.stringify(userList));
-        this.$emit("close");
+        this.$store.commit("updateUserList", this.userList);
         this.$store.commit("updateAuthUser");
+        this.$emit("close");
       });
     },
   },

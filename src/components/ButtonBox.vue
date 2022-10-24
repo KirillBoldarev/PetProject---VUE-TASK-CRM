@@ -6,14 +6,17 @@
           {{ this.greeting }}
         </div>
         <div class="row">
-          <profile-button></profile-button>
+          <profile-button
+            :userList="userList"
+            :taskList="taskList"
+          ></profile-button>
           <logout-button></logout-button>
         </div>
       </div>
     </div>
     <div v-if="this.isAuthenticated === false" class="buttonbox--guest">
-      <registration-button></registration-button>
-      <login-button></login-button>
+      <registration-button :userList="userList"></registration-button>
+      <login-button :userList="userList"></login-button>
     </div>
   </div>
 </template>
@@ -28,10 +31,19 @@ export default {
   components: { RegistrationButton, LoginButton, LogoutButton, ProfileButton },
   name: "ButtonBox",
 
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
+
   data() {
-    return {
-      authenticatedUser: null,
-    };
+    return {};
   },
 
   methods: {},

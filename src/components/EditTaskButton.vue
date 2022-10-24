@@ -6,6 +6,8 @@
       <edit-task-form
         @close="closeModal"
         :target="this.target"
+        :userList="userList"
+        :taskList="taskList"
       ></edit-task-form>
     </template>
   </modal>
@@ -23,6 +25,14 @@ export default {
   props: {
     target: {
       type: Object,
+      required: true,
+    },
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
       required: true,
     },
   },

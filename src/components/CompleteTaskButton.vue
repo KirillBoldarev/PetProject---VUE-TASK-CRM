@@ -25,6 +25,10 @@ export default {
       type: Object,
       required: true,
     },
+    taskList: {
+      type: Array,
+      required: true,
+    },
   },
 
   data() {
@@ -33,21 +37,15 @@ export default {
 
   methods: {
     completeTask(target) {
-      let updatedTasks = this.taskList;
-      updatedTasks.forEach((task) => {
+      this.taskList.forEach((task) => {
         if (task.id === target.id) {
           target.isCompleted = !target.isCompleted;
-          localStorage.setItem("taskList", JSON.stringify(updatedTasks));
-          this.$store.commit("updateTaskList");
+          this.$store.commit("updateTaskList", this.taskList);
         }
       });
     },
   },
 
-  computed: {
-    taskList() {
-      return this.$store.getters.getTaskList;
-    },
-  },
+  computed: {},
 };
 </script>
