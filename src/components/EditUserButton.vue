@@ -1,28 +1,28 @@
 <template>
-  <img @click="openModal" src="@/icons/plus.png" class="icon" alt="" />
+  <img @click="openModal" class="icon" src="@/icons/edit.png" alt="" />
+
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
-      <add-task-form
+      <edit-user-form
         @close="closeModal"
-        :target="this.target"
-        :taskList="taskList"
+        :target="target"
         :userList="userList"
-      ></add-task-form>
+        :taskList="taskList"
+      ></edit-user-form>
     </template>
   </modal>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
-import AddTaskForm from "@/components/AddTaskForm.vue";
+import EditUserForm from '@/components/EditUserForm.vue'
 
 export default {
-  name: "AddTaskButton",
+  name: "EditUserButton",
   components: {
     Modal,
-    AddTaskForm,
+    EditUserForm,
   },
-
   props: {
     target: {
       type: Object,
@@ -49,6 +49,8 @@ export default {
       this.isModalOpen = true;
     },
   },
+
+  computed: {},
 };
 </script>
 
@@ -68,8 +70,8 @@ export default {
   cursor: pointer;
 
   &--mini {
-    width: 45px;
-    height: 45px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
   }
 }

@@ -7,7 +7,6 @@
         :userList="userList"
         :target="this.$store.state.authentication.authenticatedUser"
       ></add-task-button>
-      <label for="">Добавить задачу</label>
     </div>
     <div class="tasklist">
       <div class="tasklist__header">

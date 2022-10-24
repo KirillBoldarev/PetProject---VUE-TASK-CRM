@@ -18,7 +18,11 @@
         <div class="userlist__record-item">
           {{ user.firstName }} {{ user.secondName }}
         </div>
-        <div class="userlist__record-item">{{ user.role }}</div>
+        <div class="userlist__record-item">
+          <img v-if="user.role === 'Неавторизованный пользователь'" class="icon" src="@/icons/unauthorized.png" alt="">
+          <img v-if="user.role === 'Пользователь'" class="icon" src="@/icons/user.png" alt="">
+          <img v-if="user.role === 'Администратор'" class="icon" src="@/icons/admin.png" alt="">
+        </div>
         <div class="userlist__record-item">{{ user.email }}</div>
         <div class="userlist__record-item">{{ user.phone }}</div>
         <div class="userlist__record-item">{{ this.getActiveTasks(user) }}</div>
@@ -28,10 +32,15 @@
             :userList="userList"
             :target="user"
           ></add-task-button>
-          <img class="icon" src="@/icons/edit.png" alt="" />
+          <edit-user-button-vue
+            :taskList="taskList"
+            :userList="userList"
+            :target="user"
+          ></edit-user-button-vue>
           <delete-user-button
-          :target="user"
-          :userList="userList"></delete-user-button>
+            :target="user"
+            :userList="userList"
+          ></delete-user-button>
         </div>
       </div>
     </div>
@@ -42,8 +51,9 @@
 import Modal from "@/components/Modal.vue";
 import AddTaskButton from "@/components/AddTaskButton.vue";
 import DeleteUserButton from "@/components/DeleteUserButton.vue";
+import EditUserButtonVue from "@/components/EditUserButton.vue";
 export default {
-  components: { Modal, AddTaskButton, DeleteUserButton },
+  components: { Modal, AddTaskButton, DeleteUserButton, EditUserButtonVue },
 
   props: {
     taskList: {
@@ -142,20 +152,27 @@ export default {
     &:last-child {
       border-top-right-radius: 25px;
       border-bottom-right-radius: 25px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
   }
 }
 
 .icon {
+  font-size: 34px;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 25px;
   height: 25px;
+  text-decoration: none;
   cursor: pointer;
-  margin: 5px 5px;
-}
-
-h2 {
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
 }
 </style>

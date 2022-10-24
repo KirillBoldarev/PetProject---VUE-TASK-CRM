@@ -93,6 +93,7 @@ export default {
         phone: this.phone,
         password: this.password,
         id: Math.random().toString(36).substring(2, 7),
+        role: "Администратор",
       };
     },
   },
