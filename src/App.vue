@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <header-layout :taskList="taskList"></header-layout>
-    <div>{{ taskList }}</div>
-    <main class="main"><router-view :taskList="taskList"></router-view></main>
-    <footer-layout :taskList="taskList"></footer-layout>
+    <header-layout :taskList="taskList" :userList="userList"></header-layout>
+    <main class="main">
+      <router-view :taskList="taskList" :userList="userList"></router-view>
+    </main>
+    <footer-layout :taskList="taskList" :userList="userList"></footer-layout>
   </div>
 </template>
 
@@ -17,25 +18,28 @@ export default {
   data() {
     return {
       taskList: [],
+      userList: [],
     };
   },
   methods: {},
 
   computed: {
-    userList() {
+    /* userList() {
       return JSON.parse(localStorage.getItem("userList"));
-    },
+    }, */
   },
   created() {
-    this.$store.subscribe((mutations , state) => {
-      if ((mutations.type === 'initializeTaskList'))
-      this.taskList = state.tasks.taskList;
+    this.$store.subscribe((mutations, state) => {
+      if (mutations.type === "initializeTaskList") {
+        this.taskList = state.tasks.taskList;
+      }
+      if ((mutations.type = "initializeUserList")) {
+        this.userList = state.users.userList;
+      }
     });
 
-
-
     this.$store.commit("updateAuthUser");
-    this.$store.commit("updateUserList");
+    this.$store.commit("initializeUserList");
     this.$store.commit("initializeTaskList");
   },
 };

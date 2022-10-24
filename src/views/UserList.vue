@@ -19,7 +19,11 @@
         <div class="userlist__record-item">{{ user.phone }}</div>
         <div class="userlist__record-item">{{ this.getActiveTasks(user) }}</div>
         <div class="userlist__record-item">
-          <add-task-button :target="user"></add-task-button>
+          <add-task-button
+            :taskList="taskList"
+            :userList="userList"
+            :target="user"
+          ></add-task-button>
           <img class="icon" src="@/icons/edit.png" alt="" />
           <img
             @click="this.deleteCurrentUser(user)"
@@ -38,6 +42,18 @@ import Modal from "@/components/Modal.vue";
 import AddTaskButton from "@/components/AddTaskButton.vue";
 export default {
   components: { Modal, AddTaskButton },
+
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
+
   data() {
     return {
       users: [],

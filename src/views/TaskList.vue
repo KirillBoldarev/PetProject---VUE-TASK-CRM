@@ -1,8 +1,6 @@
 <template>
   <div class="container">
     <div class="header">
-      this.taskList:
-      {{ taskList }}
       <h2>Управление личными задачами</h2>
       <add-task-button
         :taskList="taskList"
@@ -65,6 +63,10 @@ export default {
 
   props: {
     taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
       type: Array,
       required: true,
     },

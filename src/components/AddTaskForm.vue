@@ -62,10 +62,9 @@ export default {
   methods: {
     createTask() {
       this.taskList.push(this.designedTask);
-      /* this.$store.commit("updateTaskList", this.taskList); */
+      this.$store.commit("updateTaskList", this.taskList);
       this.$emit("close");
     },
-
   },
 
   computed: {

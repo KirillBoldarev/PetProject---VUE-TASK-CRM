@@ -1,7 +1,6 @@
 <template>
   <header class="header">
     <div class="header__logo"></div>
-    <button @click="testForProps">TEST</button>
     <div class="header__navigation">
       <router-link
         class="header__link"
@@ -25,6 +24,10 @@ export default {
 
   props: {
     taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
       type: Array,
       required: true,
     },
