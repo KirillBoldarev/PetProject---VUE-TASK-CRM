@@ -1,6 +1,9 @@
 <template>
   <div class="buttonbox">
-    <div v-if="this.isAuthenticated === true" class="buttonbox--authenticated">
+    <div
+      v-if="this.$store.getters.checkForAuthenticate === true"
+      class="buttonbox--authenticated"
+    >
       <div class="column">
         <div class="greeting">
           {{ this.greeting }}
@@ -14,21 +17,26 @@
         </div>
       </div>
     </div>
-    <div v-if="this.isAuthenticated === false" class="buttonbox--guest">
-      <registration-button :userList="userList"></registration-button>
-      <login-button :userList="userList"></login-button>
+    <div
+      v-if="this.$store.getters.checkForAuthenticate === false"
+      class="buttonbox--guest"
+    >
+      <authorization-buttons :userList="userList"></authorization-buttons>
     </div>
   </div>
 </template>
 
 <script>
-import RegistrationButton from "@/components/RegistrationButton.vue";
-import LoginButton from "@/components/LoginButton.vue";
 import LogoutButton from "@/components/LogoutButton.vue";
 import ProfileButton from "@/components/ProfileButton.vue";
+import AuthorizationButtons from "./AuthorizationButtons.vue";
 
 export default {
-  components: { RegistrationButton, LoginButton, LogoutButton, ProfileButton },
+  components: {
+    LogoutButton,
+    ProfileButton,
+    AuthorizationButtons,
+  },
   name: "ButtonBox",
 
   props: {
@@ -49,10 +57,6 @@ export default {
   methods: {},
 
   computed: {
-    isAuthenticated() {
-      return this.$store.getters.checkForAuthenticate;
-    },
-
     greeting() {
       let message = `Приветствуем, ${this.$store.getters.authenticatedUser.firstName} ${this.$store.getters.authenticatedUser.secondName}!`;
       return message;

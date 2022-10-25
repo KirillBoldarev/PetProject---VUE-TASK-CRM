@@ -1,5 +1,5 @@
 <template>
-  <section id="loginForm" class="container">
+  <section id="loginForm" class="container-form">
     <h2>Войти в систему!</h2>
     <p>Введите ваши персональные данные:</p>
     <form class="form">
@@ -48,7 +48,9 @@
         >
           Войти в систему
         </button>
-        <a href="#" class="switch">У меня нет аккаунта!</a>
+        <a @click="this.$emit('changeToRegistration')" href="#" class="switch"
+          >У меня нет аккаунта!</a
+        >
       </div>
     </form>
   </section>
@@ -74,6 +76,13 @@ export default {
     };
   },
 
+  created() {
+    document.addEventListener("keypress", this.authenticateUserOnKeypress);
+  },
+  beforeUnmount() {
+    document.removeEventListener("keypress", this.authenticateUserOnKeypress);
+  },
+
   methods: {
     authenticateUser() {
       let foundedUser = this.userList.find((user) => user.email === this.email);
@@ -88,6 +97,12 @@ export default {
         this.$emit("close");
       }
     },
+
+    authenticateUserOnKeypress(event) {
+      if (event.key === "Enter") {
+        this.authenticateUser;
+      }
+    },
   },
 
   computed: {},
@@ -98,9 +113,15 @@ export default {
 h2 {
   text-align: center;
 }
-p {
-  text-align: center;
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
+
 .form {
   display: flex;
   flex-direction: column;

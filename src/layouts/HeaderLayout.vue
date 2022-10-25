@@ -1,7 +1,13 @@
 <template>
   <header class="header">
     <div class="header__logo"></div>
-    <div class="header__navigation">
+    <div
+      v-if="this.$store.getters.checkForAuthenticate === false"
+      class="requirement"
+    >
+      Приветствую! Прошу пройти авторизацию!
+    </div>
+    <div v-else class="header__navigation">
       <router-link
         class="header__link"
         v-for="link in headerLinks"
@@ -42,9 +48,7 @@ export default {
     };
   },
 
-  methods: {
-
-  },
+  methods: {},
 };
 </script>
 

@@ -2,13 +2,13 @@
   <div class="container">
     <h2>Управление пользователями</h2>
     <div class="userlist">
-      <div class="userlist__header">
-        <div class="userlist__header-item">Имя</div>
-        <div class="userlist__header-item">Роль</div>
-        <div class="userlist__header-item">Электронная почта</div>
-        <div class="userlist__header-item">Телефон</div>
-        <div class="userlist__header-item">Активные задачи</div>
-        <div class="userlist__header-item">Действия</div>
+      <div class="userlist__record">
+        <div class="userlist__record-item">Имя</div>
+        <div class="userlist__record-item">Роль</div>
+        <div class="userlist__record-item">Электронная почта</div>
+        <div class="userlist__record-item">Телефон</div>
+        <div class="userlist__record-item">Активные задачи</div>
+        <div class="userlist__record-item">Действия</div>
       </div>
       <div
         v-for="user in this.userList"
@@ -19,13 +19,30 @@
           {{ user.firstName }} {{ user.secondName }}
         </div>
         <div class="userlist__record-item">
-          <img v-if="user.role === 'Неавторизованный пользователь'" class="icon" src="@/icons/unauthorized.png" alt="">
-          <img v-if="user.role === 'Пользователь'" class="icon" src="@/icons/user.png" alt="">
-          <img v-if="user.role === 'Администратор'" class="icon" src="@/icons/admin.png" alt="">
+          <img
+            v-if="user.role === 'Неавторизованный пользователь'"
+            class="icon"
+            src="@/icons/unauthorized.png"
+            alt=""
+          />
+          <img
+            v-if="user.role === 'Пользователь'"
+            class="icon"
+            src="@/icons/user.png"
+            alt=""
+          />
+          <img
+            v-if="user.role === 'Администратор'"
+            class="icon"
+            src="@/icons/admin.png"
+            alt=""
+          />
         </div>
         <div class="userlist__record-item">{{ user.email }}</div>
         <div class="userlist__record-item">{{ user.phone }}</div>
-        <div class="userlist__record-item">{{ this.getActiveTasks(user) }}</div>
+        <div class="userlist__record-item">
+          {{ this.getActiveTasks(user) }}
+        </div>
         <div class="userlist__record-item">
           <add-task-button
             :taskList="taskList"
@@ -93,37 +110,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 30px;
-
-  &__header {
-    display: grid;
-    grid-template-columns: 1fr 45px 1fr 1fr 1fr 155px;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-  }
-
-  &__header-item {
-    border: 1px solid red;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
-    min-height: 100%;
-    gap: 10px;
-
-    &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-    }
-  }
 
   &__record {
     display: grid;

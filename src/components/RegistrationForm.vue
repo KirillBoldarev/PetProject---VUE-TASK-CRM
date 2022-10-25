@@ -1,5 +1,5 @@
 <template>
-  <section id="registrationForm" class="container">
+  <section id="registrationForm" class="container-form">
     <h2>Регистрация пользователя!</h2>
     <p>Введите ваши персональные данные:</p>
     <form class="form">
@@ -51,7 +51,9 @@
         >
           Зарегистрироваться!
         </button>
-        <a href="#" class="switch">У меня уже есть аккаунт!</a>
+        <a @click="this.$emit('changeToLogin')" href="#" class="switch"
+          >У меня уже есть аккаунт!</a
+        >
       </div>
     </form>
   </section>
@@ -75,12 +77,22 @@ export default {
       required: true,
     },
   },
-
+  created() {
+    document.addEventListener("keypress", this.registerUserOnKeypress);
+  },
+  beforeUnmount() {
+    document.removeEventListener("keypress", this.registerUserOnKeypress);
+  },
   methods: {
     registerUser() {
       this.userList.push(this.createdUser);
       this.$store.commit("updateUserList", this.userList);
       this.$emit("close");
+    },
+    registerUserOnKeypress(event) {
+      if (event.key === "Enter") {
+        this.registerUser;
+      }
     },
   },
 
@@ -101,12 +113,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 h2 {
   text-align: center;
 }
-p {
-  text-align: center;
-}
+
 .form {
   display: flex;
   flex-direction: column;

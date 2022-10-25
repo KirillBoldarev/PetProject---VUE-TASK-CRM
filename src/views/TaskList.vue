@@ -9,11 +9,11 @@
       ></add-task-button>
     </div>
     <div class="tasklist">
-      <div class="tasklist__header">
-        <div class="tasklist__header-item">Состояние</div>
-        <div class="tasklist__header-item">Отправитель</div>
-        <div class="tasklist__header-item">Описание задачи</div>
-        <div class="tasklist__header-item">Действия</div>
+      <div class="tasklist__record">
+        <div class="tasklist__record-item">Состояние</div>
+        <div class="tasklist__record-item">Отправитель</div>
+        <div class="tasklist__record-item">Описание задачи</div>
+        <div class="tasklist__record-item">Действия</div>
       </div>
       <div
         v-for="task in personalTasks"
@@ -120,42 +120,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tasklist {
   display: flex;
   flex-direction: column;
   gap: 30px;
-
-  &__header {
-    display: grid;
-    grid-template-columns: 85px 1fr 3fr 130px;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-  }
-
-  &__header-item {
-    border: 1px solid red;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
-    min-height: 100%;
-    gap: 10px;
-
-    &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-    }
-  }
 
   &__record {
     display: grid;
@@ -189,67 +158,6 @@ export default {
   }
 }
 
-.task {
-  display: flex;
-  align-items: center;
-  margin: 10px auto;
-  width: 80%;
-  border-radius: 30px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-  height: auto;
-
-  &__container {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
-    height: auto;
-    align-items: center;
-    gap: 30px;
-  }
-
-  &__data {
-    display: flex;
-    flex-direction: row;
-    flex: 1 0 auto;
-    align-items: center;
-    gap: 30px;
-    text-align: center;
-    max-width: 90%;
-  }
-  & > span {
-    padding-left: 10px;
-  }
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
-}
-
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--mini {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-  }
-}
 
 .header {
   display: flex;

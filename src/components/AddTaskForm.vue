@@ -15,6 +15,7 @@
         <div class="column">
           <h3>Описание задачи:</h3>
           <textarea
+            @keyup.ctrl.enter="this.createTask"
             v-model="description"
             name="task"
             id="task"
@@ -62,7 +63,6 @@ export default {
       description: "",
     };
   },
-
   methods: {
     createTask() {
       this.taskList.push(this.designedTask);

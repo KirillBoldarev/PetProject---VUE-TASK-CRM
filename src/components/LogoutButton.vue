@@ -22,6 +22,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("logoutCurrentUser");
+      this.$router.push("/");
     },
     openModal() {
       this.isModalOpen = true;

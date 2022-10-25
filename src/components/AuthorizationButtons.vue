@@ -1,20 +1,32 @@
 <template>
-  <button @click="openModal" class="button">Зарегистрироваться</button>
-  <modal :isOpen="isModalOpen" @close="isModalOpen = false">
-    <template #ModalSlot="{ closeModal }">
-      <registration-form
-        @close="closeModal"
-        :userList="userList"
-      ></registration-form>
-    </template>
-  </modal>
+  <div class="container">
+    <button @click="this.registraion" class="button">Зарегистрироваться</button>
+    <button @click="this.login" class="button">Войти</button>
+    <modal :isOpen="isModalOpen" @close="isModalOpen = false">
+      <template #ModalSlot="{ closeModal }">
+        <registration-form
+          v-if="this.action === 'registration'"
+          @changeToLogin="this.action = 'login'"
+          @close="closeModal"
+          :userList="userList"
+        ></registration-form>
+        <login-form
+          v-if="this.action === 'login'"
+          @changeToRegistration="this.action = 'registration'"
+          @close="closeModal"
+          :userList="userList"
+        ></login-form>
+      </template>
+    </modal>
+  </div>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
 import RegistrationForm from "@/components/RegistrationForm.vue";
+import LoginForm from "./LoginForm.vue";
 export default {
-  components: { Modal, RegistrationForm },
+  components: { Modal, RegistrationForm, LoginForm },
 
   props: {
     userList: {
@@ -22,14 +34,23 @@ export default {
       required: true,
     },
   },
-  
+
   data() {
     return {
       isModalOpen: false,
+      action: "",
     };
   },
 
   methods: {
+    registraion() {
+      this.isModalOpen = true;
+      this.action = "registration";
+    },
+    login() {
+      this.isModalOpen = true;
+      this.action = "login";
+    },
     openModal() {
       this.isModalOpen = true;
     },
@@ -38,6 +59,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
 @font-face {
   font-family: Cyber;
   src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
