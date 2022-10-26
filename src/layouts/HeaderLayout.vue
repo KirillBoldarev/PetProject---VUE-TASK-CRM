@@ -20,7 +20,8 @@
       <div v-if="this.$store.getters.checkForAuthenticate === true">
         <div class="column">
           <div class="header__greeting">
-             Приветствую , {{ this.$store.getters.authenticatedUser.firstName}} ! 
+            Приветствую ,
+            {{ this.$store.getters.authenticatedUser.firstName }} !
           </div>
           <div class="row">
             <profile-button
@@ -64,7 +65,6 @@ export default {
         { name: "Главная", url: "/" },
         { name: "Управление задачами", url: "/tasks" },
         { name: "Список пользователей", url: "/users" },
-        { name: "Табы", url: "/tabs" },
       ],
     };
   },
