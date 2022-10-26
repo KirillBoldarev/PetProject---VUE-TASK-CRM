@@ -9,9 +9,9 @@
       >{{ tab.label }}</span
     >
   </div>
-  <div class="tab__content">
+<!--   <div class="tab__content">
    <slot></slot>
-  </div>
+  </div> -->
 </template>
 
 <script>

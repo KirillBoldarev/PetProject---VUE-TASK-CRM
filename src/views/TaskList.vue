@@ -1,13 +1,14 @@
 <template>
   <div class="container">
     <div class="header">
-      <h2>Управление задачами</h2>
+      <h2 @click="info">Управление задачами</h2>
       <add-task-button
         :taskList="taskList"
         :userList="userList"
         :target="this.$store.state.authentication.authenticatedUser"
       ></add-task-button>
     </div>
+
     <div class="navigation">
       <tabs
         :tabs="pages"
@@ -15,209 +16,61 @@
         @changeTab="changePage"
       ></tabs>
     </div>
-    <div v-if="this.currentPage === 'personal'">
-      <div class="tasklist">
-        <h3>Полученные задачи</h3>
-        <div class="tasklist__record">
-          <div class="tasklist__record-item">Состояние</div>
-          <div class="tasklist__record-item">Отправитель</div>
-          <div class="tasklist__record-item">Исполнитель</div>
-          <div class="tasklist__record-item">Описание задачи</div>
-          <div class="tasklist__record-item">Действия</div>
-        </div>
-        <div v-for="task in personal" :key="task.id" class="tasklist__record">
-          <div class="tasklist__record-item">
-            <complete-task-button
-              :target="task"
-              :taskList="taskList"
-            ></complete-task-button>
+
+    <div v-for="page in pages" :key="page.name">
+      <template v-if="this.currentPage === page.name">
+        <div class="tasklist">
+          <h3>{{ page.label }}</h3>
+          <div class="tasklist__record">
+            <div class="tasklist__record-item">Состояние</div>
+            <div class="tasklist__record-item">Отправитель</div>
+            <div class="tasklist__record-item">Исполнитель</div>
+            <div class="tasklist__record-item">Описание задачи</div>
+            <div class="tasklist__record-item">Действия</div>
           </div>
-          <div class="tasklist__record-item">
-            {{ this.getSenderName(task.sender) }}
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getExecutorName(task.executor) }}
-          </div>
-          <div class="tasklist__record-item">{{ task.description }}</div>
-          <div class="tasklist__record-item">
-            <div>
-              <redirect-task-button
+          <div
+            v-for="task in page.source"
+            :key="task.id"
+            class="tasklist__record"
+          >
+            <div class="tasklist__record-item">
+              <complete-task-button
                 :target="task"
-                :userList="userList"
                 :taskList="taskList"
-              ></redirect-task-button>
+              ></complete-task-button>
             </div>
-            <div>
-              <edit-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></edit-task-button>
+            <div class="tasklist__record-item">
+              {{ this.getSenderName(task.sender) }}
             </div>
-            <div>
-              <delete-task-button
-                :target="task"
-                :taskList="taskList"
-              ></delete-task-button>
+            <div class="tasklist__record-item">
+              {{ this.getExecutorName(task.executor) }}
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="this.currentPage === 'charged'">
-      <div class="tasklist">
-        <h3>Поручения</h3>
-        <div class="tasklist__record">
-          <div class="tasklist__record-item">Состояние</div>
-          <div class="tasklist__record-item">Отправитель</div>
-          <div class="tasklist__record-item">Исполнитель</div>
-          <div class="tasklist__record-item">Описание задачи</div>
-          <div class="tasklist__record-item">Действия</div>
-        </div>
-        <div v-for="task in charged" :key="task.id" class="tasklist__record">
-          <div class="tasklist__record-item">
-            <complete-task-button
-              :target="task"
-              :taskList="taskList"
-            ></complete-task-button>
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getSenderName(task.sender) }}
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getExecutorName(task.executor) }}
-          </div>
-          <div class="tasklist__record-item">{{ task.description }}</div>
-          <div class="tasklist__record-item">
-            <div>
-              <redirect-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></redirect-task-button>
-            </div>
-            <div>
-              <edit-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></edit-task-button>
-            </div>
-            <div>
-              <delete-task-button
-                :target="task"
-                :taskList="taskList"
-              ></delete-task-button>
+            <div class="tasklist__record-item">{{ task.description }}</div>
+            <div class="tasklist__record-item">
+              <div>
+                <redirect-task-button
+                  :target="task"
+                  :userList="userList"
+                  :taskList="taskList"
+                ></redirect-task-button>
+              </div>
+              <div>
+                <edit-task-button
+                  :target="task"
+                  :userList="userList"
+                  :taskList="taskList"
+                ></edit-task-button>
+              </div>
+              <div>
+                <delete-task-button
+                  :target="task"
+                  :taskList="taskList"
+                ></delete-task-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div v-if="this.currentPage === 'completedPersonal'">
-      <div class="tasklist">
-        <h3>Выполненные задачи</h3>
-        <div class="tasklist__record">
-          <div class="tasklist__record-item">Состояние</div>
-          <div class="tasklist__record-item">Отправитель</div>
-          <div class="tasklist__record-item">Исполнитель</div>
-          <div class="tasklist__record-item">Описание задачи</div>
-          <div class="tasklist__record-item">Действия</div>
-        </div>
-        <div
-          v-for="task in completedPersonal"
-          :key="task.id"
-          class="tasklist__record"
-        >
-          <div class="tasklist__record-item">
-            <complete-task-button
-              :target="task"
-              :taskList="taskList"
-            ></complete-task-button>
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getSenderName(task.sender) }}
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getExecutorName(task.executor) }}
-          </div>
-          <div class="tasklist__record-item">{{ task.description }}</div>
-          <div class="tasklist__record-item">
-            <div>
-              <redirect-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></redirect-task-button>
-            </div>
-            <div>
-              <edit-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></edit-task-button>
-            </div>
-            <div>
-              <delete-task-button
-                :target="task"
-                :taskList="taskList"
-              ></delete-task-button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="this.currentPage === 'completedCharged'">
-      <div class="tasklist">
-        <h3>Исполненные поручения задачи</h3>
-        <div class="tasklist__record">
-          <div class="tasklist__record-item">Состояние</div>
-          <div class="tasklist__record-item">Отправитель</div>
-          <div class="tasklist__record-item">Исполнитель</div>
-          <div class="tasklist__record-item">Описание задачи</div>
-          <div class="tasklist__record-item">Действия</div>
-        </div>
-        <div
-          v-for="task in completedCharged"
-          :key="task.id"
-          class="tasklist__record"
-        >
-          <div class="tasklist__record-item">
-            <complete-task-button
-              :target="task"
-              :taskList="taskList"
-            ></complete-task-button>
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getSenderName(task.sender) }}
-          </div>
-          <div class="tasklist__record-item">
-            {{ this.getExecutorName(task.executor) }}
-          </div>
-          <div class="tasklist__record-item">{{ task.description }}</div>
-          <div class="tasklist__record-item">
-            <div>
-              <redirect-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></redirect-task-button>
-            </div>
-            <div>
-              <edit-task-button
-                :target="task"
-                :userList="userList"
-                :taskList="taskList"
-              ></edit-task-button>
-            </div>
-            <div>
-              <delete-task-button
-                :target="task"
-                :taskList="taskList"
-              ></delete-task-button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -255,12 +108,6 @@ export default {
 
   data() {
     return {
-      pages: [
-        { name: "personal", label: "Полученные задачи" },
-        { name: "charged", label: "Поручения" },
-        { name: "completedPersonal", label: "Выполненные задачи" },
-        { name: "completedCharged", label: "Исполненные поручения" },
-      ],
       currentPage: "personal",
     };
   },
@@ -289,9 +136,32 @@ export default {
     changePage(tabName) {
       this.currentPage = tabName;
     },
+    info() {
+      console.log(this.pages);
+    },
   },
 
   computed: {
+    pages() {
+      return [
+        {
+          name: "personal",
+          label: "Полученные задачи",
+          source: this.personal,
+        },
+        { name: "charged", label: "Поручения", source: this.charged },
+        {
+          name: "completedPersonal",
+          label: "Выполненные задачи",
+          source: this.completedPersonal,
+        },
+        {
+          name: "completedCharged",
+          label: "Исполненные поручения",
+          source: this.completedCharged,
+        },
+      ];
+    },
     personal() {
       if (!this.taskList) {
         return [];
@@ -388,7 +258,7 @@ export default {
   gap: 20px;
 }
 
-.navigation{
+.navigation {
   display: flex;
   flex-direction: row;
   align-items: center;
