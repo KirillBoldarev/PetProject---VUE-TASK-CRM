@@ -16,16 +16,36 @@
         >{{ link.name }}</router-link
       >
     </div>
-    <button-box :userList="userList" :taskList="taskList"></button-box>
+    <div class="header__buttonbox">
+      <div v-if="this.$store.getters.checkForAuthenticate === true">
+        <div class="column">
+          <div class="header__greeting">
+             Приветствую , {{ this.$store.getters.authenticatedUser.firstName}} ! 
+          </div>
+          <div class="row">
+            <profile-button
+              :userList="userList"
+              :taskList="taskList"
+            ></profile-button>
+            <logout-button></logout-button>
+          </div>
+        </div>
+      </div>
+      <div v-if="this.$store.getters.checkForAuthenticate === false">
+        <authorization-buttons :userList="userList"></authorization-buttons>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
-import ButtonBox from "@/components/ButtonBox.vue";
+import LogoutButton from "@/components/LogoutButton.vue";
+import ProfileButton from "@/components/ProfileButton.vue";
+import AuthorizationButtons from "@/components/AuthorizationButtons.vue";
 
 export default {
-  components: { Modal, ButtonBox },
+  components: { Modal, LogoutButton, ProfileButton, AuthorizationButtons },
   name: "header-layout",
 
   props: {
@@ -44,6 +64,7 @@ export default {
         { name: "Главная", url: "/" },
         { name: "Управление задачами", url: "/tasks" },
         { name: "Список пользователей", url: "/users" },
+        { name: "Табы", url: "/tabs" },
       ],
     };
   },
@@ -94,34 +115,25 @@ export default {
       gap: 20px;
     }
   }
-  &__button {
-    position: relative;
-    display: inline-block;
-    font-size: 90%;
+  &__greeting {
+    font-size: 20px;
     font-weight: 700;
-    color: rgb(209, 209, 217);
-    text-decoration: none;
-    text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    padding: 0.5em 1em;
-    outline: none;
-    border-radius: 3px;
-    background: linear-gradient(rgb(110, 112, 120), rgb(81, 81, 86))
-      rgb(110, 112, 120);
-    box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset,
-      0 3px 5px rgba(0, 1, 6, 0.5), 0 0 1px 1px rgba(0, 1, 6, 0.2);
-    transition: 0.2s ease-in-out;
-
-    &:hover:not(:active) {
-      background: linear-gradient(rgb(126, 126, 134), rgb(70, 71, 76))
-        rgb(126, 126, 134);
-    }
-    &:active {
-      top: 1px;
-      background: linear-gradient(rgb(76, 77, 82), rgb(56, 57, 62))
-        rgb(76, 77, 82);
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset,
-        0 2px 3px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.1);
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 </style>

@@ -16,6 +16,11 @@ const routes = [
     name: "User list",
     component: () => import("@/views/UserList.vue"),
   },
+  {
+    path: "/tabs",
+    name: "Tabs",
+    component: () => import("@/views/TabPage.vue"),
+  },
 ];
 
 const router = createRouter({
