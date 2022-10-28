@@ -205,9 +205,6 @@ export default {
   justify-content: center;
   align-items: center;
 
-  &__title {
-  }
-
   &__tooltipBox {
     display: flex;
     flex-direction: row;

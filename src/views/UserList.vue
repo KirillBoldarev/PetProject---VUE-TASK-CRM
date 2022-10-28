@@ -41,7 +41,7 @@
         <div class="userlist__record-item">{{ user.email }}</div>
         <div class="userlist__record-item">{{ user.phone }}</div>
         <div class="userlist__record-item">
-          {{ this.getActiveTasks(user) }}
+          {{ this.getActiveTasksNumber(user) }}
         </div>
         <div class="userlist__record-item">
           <add-task-button
@@ -92,7 +92,7 @@ export default {
   computed: {},
 
   methods: {
-    getActiveTasks(user) {
+    getActiveTasksNumber(user) {
       let filteredTasks = this.taskList;
       return filteredTasks.filter(
         (task) => task.executorId === user.id && task.isCompleted === false

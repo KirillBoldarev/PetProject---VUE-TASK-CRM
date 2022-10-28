@@ -28,7 +28,6 @@ export default {
       this.isModalOpen = true;
     },
   },
-  watch: {},
 };
 </script>
 

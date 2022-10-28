@@ -48,8 +48,6 @@ export default {
       this.isModalOpen = true;
     },
   },
-
-  computed: {},
 };
 </script>
 

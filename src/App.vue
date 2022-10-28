@@ -34,20 +34,15 @@ export default {
         this.userList = state.users.userList;
       }
     });
-
-    this.$store.commit("updateAuthUser");
     this.$store.commit("initializeUserList");
     this.$store.commit("initializeTaskList");
+    this.$store.commit("updateAuthUser");
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .container {
-/*   display: grid;
-  grid-template-rows: 1fr 8fr 1fr; */
-
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -46,7 +46,7 @@
             <div class="tasklist__record-item">Действия</div>
           </div>
           <div
-            v-for="task in this.filterSource(page.source)"
+            v-for="task in this.filterSource(page.dataSource)"
             :key="task.id"
             class="tasklist__record"
           >
@@ -136,22 +136,22 @@ export default {
         {
           name: "personal",
           label: "Полученные задачи",
-          source: this.personal,
+          dataSource: this.personalTasks,
         },
-        { name: "charged", label: "Поручения", source: this.charged },
+        { name: "charged", label: "Поручения", dataSource: this.chargedTasks },
         {
           name: "completedPersonal",
           label: "Выполненные задачи",
-          source: this.completedPersonal,
+          dataSource: this.completedPersonalTasks,
         },
         {
           name: "completedCharged",
           label: "Исполненные поручения",
-          source: this.completedCharged,
+          dataSource: this.completedChargedTasks,
         },
       ];
     },
-    personal() {
+    personalTasks() {
       if (!this.taskList) {
         return [];
       } else {
@@ -162,7 +162,7 @@ export default {
         );
       }
     },
-    charged() {
+    chargedTasks() {
       if (!this.taskList) {
         return [];
       } else {
@@ -173,7 +173,7 @@ export default {
         );
       }
     },
-    completedPersonal() {
+    completedPersonalTasks() {
       if (!this.taskList) {
         return [];
       } else {
@@ -184,7 +184,7 @@ export default {
         );
       }
     },
-    completedCharged() {
+    completedChargedTasks() {
       if (!this.taskList) {
         return [];
       } else {

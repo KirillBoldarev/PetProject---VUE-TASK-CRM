@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     registerUser() {
-      let newUser = this.formingData
+      let newUser = this.formingData;
       this.userList.push(newUser);
       this.$store.commit("updateUserList", this.userList);
       this.$store.commit("authenticateCurrentUser", newUser);

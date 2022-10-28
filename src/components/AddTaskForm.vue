@@ -65,14 +65,14 @@ export default {
   },
   methods: {
     createTask() {
-      this.taskList.push(this.designedTask);
+      this.taskList.push(this.preparedTask);
       this.$store.commit("updateTaskList", this.taskList);
       this.$emit("close");
     },
   },
 
   computed: {
-    designedTask() {
+    preparedTask() {
       return {
         senderId: this.sender.id,
         senderFullName: `${this.sender.firstName} ${this.sender.secondName}`,
