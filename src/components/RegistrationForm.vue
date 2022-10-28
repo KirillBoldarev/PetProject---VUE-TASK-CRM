@@ -85,8 +85,10 @@ export default {
   },
   methods: {
     registerUser() {
-      this.userList.push(this.createdUser);
+      let newUser = this.formingData
+      this.userList.push(newUser);
       this.$store.commit("updateUserList", this.userList);
+      this.$store.commit("authenticateCurrentUser", newUser);
       this.$emit("close");
     },
     registerUserOnKeypress(event) {
@@ -97,7 +99,7 @@ export default {
   },
 
   computed: {
-    createdUser() {
+    formingData() {
       return {
         firstName: this.firstName,
         secondName: this.secondName,
