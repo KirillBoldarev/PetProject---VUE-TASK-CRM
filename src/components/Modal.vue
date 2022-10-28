@@ -8,19 +8,6 @@
           :closeModal="closeModal"
           :confirm="confirm"
         >
-          <button
-            class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            @click="this.closeModal()"
-          >
-            Отмена
-          </button>
-          &nbsp;
-          <button
-            class="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            @click="confirm"
-          >
-            ОК
-          </button>
         </slot>
       </div>
     </div>
@@ -77,10 +64,7 @@ export default {
   border-radius: 10px;
   max-height: 80%;
 }
-.popup h1 {
-  text-align: center;
-  margin: 0;
-}
+
 
 .backdrop {
   position: fixed;
@@ -92,8 +76,4 @@ export default {
   z-index: 100;
 }
 
-.footer {
-  text-align: right;
-  gap: 50px;
-}
 </style>
