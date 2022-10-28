@@ -5,7 +5,7 @@
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
-          <option v-for="user in this.userList" :key="user.id" :value="user.id">
+          <option v-for="user in this.userList" :key="user.id" :value="user">
             {{ user.firstName }} {{ user.secondName }}
           </option>
         </select>
@@ -58,8 +58,8 @@ export default {
   },
   data() {
     return {
-      executor: this.target.id,
-      sender: this.$store.state.authentication.authenticatedUser.id,
+      executor: this.target,
+      sender: this.$store.state.authentication.authenticatedUser,
       description: "",
     };
   },
@@ -74,8 +74,10 @@ export default {
   computed: {
     designedTask() {
       return {
-        sender: this.sender,
-        executor: this.executor,
+        senderId: this.sender.id,
+        senderFullName: `${this.sender.firstName} ${this.sender.secondName}`,
+        executorId: this.executor.id,
+        executorFullName: `${this.executor.firstName} ${this.executor.secondName}`,
         description: this.description,
         id: Math.random().toString(36).substring(2, 7),
         isCompleted: false,

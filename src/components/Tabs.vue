@@ -9,7 +9,7 @@
       >{{ tab.label }}</span
     >
   </div>
-<!--   <div class="tab__content">
+  <!--   <div class="tab__content">
    <slot></slot>
   </div> -->
 </template>
@@ -41,18 +41,16 @@ export default {
   text-decoration: underline;
 }
 
+.tab {
+  &__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+  }
 
-.tab{
-
-   &__navigation{
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 30px;
-   }
-
-   &__navigation-item{
-      padding: 5px;
-   }
+  &__navigation-item {
+    padding: 5px;
+  }
 }
 </style>

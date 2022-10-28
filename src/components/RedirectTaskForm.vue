@@ -45,7 +45,7 @@ export default {
 
   data() {
     return {
-      executor: this.target.executor,
+      executor: this.target.executorId,
       id: this.target.id,
     };
   },
@@ -54,7 +54,12 @@ export default {
     redirectTask() {
       this.taskList.forEach((task) => {
         if (task.id === this.id) {
-          task.executor = this.executor;
+          task.executorId = this.executor;
+          this.userList.forEach((user) => {
+            if (user.id === this.executor) {
+              task.executorFullName = `${user.firstName} ${user.secondName}`;
+            }
+          });
         }
       });
       this.$store.commit("updateTaskList", this.taskList);

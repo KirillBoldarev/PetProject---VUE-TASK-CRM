@@ -57,10 +57,10 @@
               ></complete-task-button>
             </div>
             <div class="tasklist__record-item">
-              {{ this.getSenderName(task.sender) }}
+              {{ task.senderFullName }}
             </div>
             <div class="tasklist__record-item">
-              {{ this.getExecutorName(task.executor) }}
+              {{ task.executorFullName }}
             </div>
             <div class="tasklist__record-item">{{ task.description }}</div>
             <div class="tasklist__record-item">
@@ -157,7 +157,7 @@ export default {
       } else {
         return this.taskList.filter(
           (task) =>
-            task.executor === this.$store.getters.authenticatedUser.id &&
+            task.executorId === this.$store.getters.authenticatedUser.id &&
             task.isCompleted === false
         );
       }
@@ -168,7 +168,7 @@ export default {
       } else {
         return this.taskList.filter(
           (task) =>
-            task.sender === this.$store.getters.authenticatedUser.id &&
+            task.senderId === this.$store.getters.authenticatedUser.id &&
             task.isCompleted === false
         );
       }
@@ -179,7 +179,7 @@ export default {
       } else {
         return this.taskList.filter(
           (task) =>
-            task.executor === this.$store.getters.authenticatedUser.id &&
+            task.executorId === this.$store.getters.authenticatedUser.id &&
             task.isCompleted === true
         );
       }
@@ -190,7 +190,7 @@ export default {
       } else {
         return this.taskList.filter(
           (task) =>
-            task.sender === this.$store.getters.authenticatedUser.id &&
+            task.senderId === this.$store.getters.authenticatedUser.id &&
             task.isCompleted === true
         );
       }
@@ -198,59 +198,23 @@ export default {
   },
 
   SEARCH_PARAMS_LIST: [
-    { name: "sender", label: "Отправитель" },
-    { name: "executor", label: "Исполнитель" },
+    { name: "senderFullName", label: "Отправитель" },
+    { name: "executorFullName", label: "Исполнитель" },
     { name: "description", label: "Описание" },
   ],
 
-  created() {},
-
   methods: {
     filterSource(source) {
-      if (this.searchParams === "sender") {
-        return source.filter((item) =>
-          this.getSenderName(item.sender)
-            .toUpperCase()
-            .includes(this.searchValue.toUpperCase())
-        );
-      }
-      if (this.searchParams === "description") {
-        return source.filter((item) =>
-          item.description
-            .toUpperCase()
-            .includes(this.searchValue.toUpperCase())
-        );
-      }
-      if (this.searchParams === "executor") {
-        return source.filter((item) =>
-          this.getExecutorName(item.executor)
-            .toUpperCase()
-            .includes(this.searchValue.toUpperCase())
-        );
-      }
       if (!this.searchParams) {
         return source;
       }
+      return source.filter((item) =>
+        item[this.searchParams]
+          .toUpperCase()
+          .includes(this.searchValue.toUpperCase())
+      );
     },
 
-    getSenderName(senderId) {
-      let sender = this.userList.find((user) => user.id === senderId);
-      if (!sender) {
-        return "Пользователь был удален";
-      } else {
-        let message = `${sender.firstName} ${sender.secondName}`;
-        return message;
-      }
-    },
-    getExecutorName(executorId) {
-      let executor = this.userList.find((user) => user.id === executorId);
-      if (!executor) {
-        return "Пользователь был удален";
-      } else {
-        let message = `${executor.firstName} ${executor.secondName}`;
-        return message;
-      }
-    },
     changePage(tabName) {
       this.currentPage = tabName;
       this.searchValue = "";
@@ -264,6 +228,12 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  &__title {
+    text-align: center;
+    margin: 10px 0px;
+    padding: 0;
+  }
 
   &__filter {
     display: flex;
@@ -318,9 +288,5 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-h3 {
-  margin: 0;
-  padding: 0;
 }
 </style>

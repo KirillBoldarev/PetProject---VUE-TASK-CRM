@@ -95,7 +95,7 @@ export default {
     getActiveTasks(user) {
       let filteredTasks = this.taskList;
       return filteredTasks.filter(
-        (task) => task.executor === user.id && task.isCompleted === false
+        (task) => task.executorId === user.id && task.isCompleted === false
       ).length;
     },
   },
@@ -104,8 +104,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* .container {
-} */
+
 .userlist {
   display: flex;
   flex-direction: column;

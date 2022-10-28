@@ -77,21 +77,28 @@ export default {
 
   data() {
     return {
-      executor: this.target.executor,
-      sender: this.target.sender,
+      executor: this.target.executorId,
+      sender: this.target.senderId,
       description: this.target.description,
       isCompleted: this.target.isCompleted,
       id: this.target.id,
     };
   },
-  computed: {},
   methods: {
     updateTask() {
       this.taskList.forEach((task) => {
         if (task.id === this.id) {
-          task.executor = this.executor;
-          task.sender = this.sender;
+          task.executorId = this.executor;
+          task.senderId = this.sender;
           task.description = this.description;
+          this.userList.forEach((user) => {
+            if (user.id === this.executor) {
+              task.executorFullName = `${user.firstName} ${user.secondName}`;
+            }
+            if (user.id === this.sender) {
+              task.senderFullName = `${user.firstName} ${user.secondName}`;
+            }
+          });
         }
       });
       this.$store.commit("updateTaskList", this.taskList);
