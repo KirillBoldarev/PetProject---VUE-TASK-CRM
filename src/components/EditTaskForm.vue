@@ -1,7 +1,7 @@
 <template>
   <section id="loginForm" class="container">
     <h2>Редактирование задачи</h2>
-    <form class="form">
+    <form class="form" @submit.prevent="this.updateTask">
       <div class="form__group">
         <label class="form__label" for="email">Выберите отправителя:</label>
         <select v-model="sender" name="sender" id="sender">
@@ -41,7 +41,6 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.updateTask"
           class="form__button"
           type="submit"
         >

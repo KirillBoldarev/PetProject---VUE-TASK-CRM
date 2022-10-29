@@ -2,7 +2,7 @@
   <section id="EditUserForm" class="container">
     <div class="main">
       <h3>Ваши персональные данные:</h3>
-      <form class="form">
+      <form class="form" @submit.prevent="this.updateUser">
         <div class="form__group">
           <label class="form__label" for="email"
             >Выберите роль пользователя:</label
@@ -99,7 +99,6 @@
 
         <div class="form__group">
           <button
-            @click.prevent="this.updateUser"
             class="form__button"
             type="submit"
           >

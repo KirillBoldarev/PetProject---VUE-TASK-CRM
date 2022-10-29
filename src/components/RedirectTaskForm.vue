@@ -1,7 +1,7 @@
 <template>
   <section id="RedirectTaskForm" class="container">
     <h2>Перенаправить задачу</h2>
-    <form class="form">
+    <form class="form" @submit.prevent="this.redirectTask">
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
@@ -13,7 +13,6 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.redirectTask"
           class="form__button"
           type="submit"
         >

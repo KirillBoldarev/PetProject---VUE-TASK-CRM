@@ -1,7 +1,7 @@
 <template>
   <section id="addTaskForm" class="container">
     <h2>Добавить задачу</h2>
-    <form class="form">
+    <form class="form" @submit.prevent="this.createTask">
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
@@ -26,13 +26,7 @@
       </div>
 
       <div class="form__group">
-        <button
-          @click.prevent="this.createTask"
-          class="form__button"
-          type="submit"
-        >
-          Создать задачу
-        </button>
+        <button class="form__button" type="submit">Создать задачу</button>
       </div>
     </form>
   </section>

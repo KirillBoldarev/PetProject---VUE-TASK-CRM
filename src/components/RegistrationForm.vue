@@ -2,7 +2,7 @@
   <section id="registrationForm" class="container-form">
     <h2>Регистрация пользователя!</h2>
     <p>Введите ваши персональные данные:</p>
-    <form class="form">
+    <form class="form" @submit.prevent="this.registerUser()">
       <div class="form__group">
         <label class="form__label" for="firstName">Имя</label>
         <input
@@ -45,7 +45,6 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.registerUser()"
           class="form__button"
           type="submit"
         >
@@ -60,7 +59,14 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
+
   data() {
     return {
       firstName: "",
@@ -70,7 +76,15 @@ export default {
       password: "",
     };
   },
-
+  validations() {
+    return {
+      firstName: { required },
+      secondName: { required },
+      email: { required, email },
+      phone: { required },
+      password: { required },
+    };
+  },
   props: {
     userList: {
       type: Array,
@@ -85,6 +99,8 @@ export default {
   },
   methods: {
     registerUser() {
+      console.log(this.v$);
+      console.log(this.v$.email.required);
       let newUser = this.formingData;
       this.userList.push(newUser);
       this.$store.commit("updateUserList", this.userList);

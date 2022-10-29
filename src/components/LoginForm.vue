@@ -2,7 +2,7 @@
   <section id="loginForm" class="container-form">
     <h2>Войти в систему!</h2>
     <p>Введите ваши персональные данные:</p>
-    <form class="form">
+    <form class="form" @submit.prevent="this.authenticateUser">
       <div class="form__group">
         <label
           v-if="this.invalidEmail === false"
@@ -42,7 +42,6 @@
 
       <div class="form__group">
         <button
-          @click.prevent="this.authenticateUser"
           class="form__button"
           type="submit"
         >

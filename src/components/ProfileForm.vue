@@ -26,7 +26,7 @@
 
     <div class="main">
       <h3>Ваши персональные данные:</h3>
-      <form class="form">
+      <form class="form" @submit.prevent="this.updateUserData">
         <div class="row">
           <div class="form__group">
             <label
@@ -114,7 +114,6 @@
 
         <div class="form__group">
           <button
-            @click.prevent="this.updateUserData"
             class="form__button"
             type="submit"
           >
