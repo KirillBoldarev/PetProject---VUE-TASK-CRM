@@ -62,6 +62,11 @@
             class="invalidData"
             >Email указан в некорректном формате
           </small>
+          <small
+            v-else-if="v$.email.$dirty && !v$.email.uniqueEmail.$invalid"
+            class="invalidData"
+            >Данный Email уже используется
+          </small>
         </div>
       </div>
 
@@ -126,6 +131,10 @@ const isPhone = helpers.regex(
   /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
 );
 
+function uniqueEmail() {
+  return this.userList.some((user) => user.email === this.email);
+}
+
 export default {
   setup() {
     return {
@@ -146,7 +155,7 @@ export default {
     return {
       firstName: { required },
       secondName: { required },
-      email: { required, email },
+      email: { required, email, uniqueEmail },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
     };
