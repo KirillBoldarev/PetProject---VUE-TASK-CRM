@@ -63,7 +63,7 @@
             >Email указан в некорректном формате
           </small>
           <small
-            v-else-if="v$.email.$dirty && !v$.email.uniqueEmail.$invalid"
+            v-else-if="v$.email.$dirty && !v$.email.isUniqueEmail.$invalid"
             class="invalidData"
             >Данный Email уже используется
           </small>
@@ -126,14 +126,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { helpers } from "@vuelidate/validators";
-const isPhone = helpers.regex(
-  /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
-);
-
-function uniqueEmail() {
-  return this.userList.some((user) => user.email === this.email);
-}
+import { isPhone, isUniqueEmail } from "@/js/validation";
 
 export default {
   setup() {
@@ -155,8 +148,12 @@ export default {
     return {
       firstName: { required },
       secondName: { required },
-      email: { required, email, uniqueEmail },
-      phone: { required, isPhone },
+      email: {
+        required,
+        email,
+        isUniqueEmail: isUniqueEmail(this.userList, this.email),
+      },
+      phone: { required, isPhone: isPhone(this.phone) },
       password: { required, minLength: minLength(5) },
     };
   },
