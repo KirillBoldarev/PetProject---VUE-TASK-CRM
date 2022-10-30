@@ -82,7 +82,7 @@
             >Поле обязательно для заполнения
           </small>
           <small
-            v-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+            v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
             class="invalidData"
             >Некорректный формат телефона
           </small>
@@ -153,7 +153,7 @@ export default {
         email,
         isUniqueEmail: isUniqueEmail(this.userList, this.email),
       },
-      phone: { required, isPhone: isPhone(this.phone) },
+      phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
     };
   },
