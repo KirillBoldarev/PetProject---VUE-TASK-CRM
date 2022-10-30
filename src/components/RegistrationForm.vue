@@ -4,52 +4,112 @@
     <p>Введите ваши персональные данные:</p>
     <form class="form" @submit.prevent="this.registerUser()">
       <div class="form__group">
-        <label class="form__label" for="firstName">Имя</label>
-        <input
-          v-model="firstName"
-          class="form__input"
-          type="text"
-          name="firstName"
-        />
+        <div class="row">
+          <label class="form__label" for="firstName">Имя</label>
+          <input
+            v-model="firstName"
+            class="form__input"
+            type="text"
+            name="firstName"
+          />
+        </div>
+        <div class="row">
+          <small
+            v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
+        </div>
       </div>
 
       <div class="form__group">
-        <label class="form__label" for="secondName">Фамилия</label>
-        <input
-          v-model="secondName"
-          class="form__input"
-          type="text"
-          name="secondName"
-        />
+        <div class="row">
+          <label class="form__label" for="secondName">Фамилия</label>
+          <input
+            v-model="secondName"
+            class="form__input"
+            type="text"
+            name="secondName"
+          />
+        </div>
+        <div class="row">
+          <small
+            v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
+        </div>
       </div>
 
       <div class="form__group">
-        <label class="form__label" for="email">Электронная почта</label>
-        <input v-model="email" class="form__input" type="email" name="email" />
+        <div class="row">
+          <label class="form__label" for="email">Электронная почта</label>
+          <input
+            v-model="email"
+            class="form__input"
+            type="email"
+            name="email"
+          />
+        </div>
+        <div class="row">
+          <small
+            v-if="v$.email.$dirty && v$.email.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
+          <small
+            v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+            class="invalidData"
+            >Email указан в некорректном формате
+          </small>
+        </div>
       </div>
 
       <div class="form__group">
-        <label class="form__label" for="phone">Номер телефона</label>
-        <input v-model="phone" class="form__input" type="text" name="phone" />
+        <div class="row">
+          <label class="form__label" for="phone">Номер телефона</label>
+          <input v-model="phone" class="form__input" type="text" name="phone" />
+        </div>
+        <div class="row">
+          <small
+            v-if="v$.phone.$dirty && v$.phone.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
+          <small
+            v-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+            class="invalidData"
+            >Некорректный формат телефона
+          </small>
+        </div>
       </div>
 
       <div class="form__group">
-        <label class="form__label" for="password">Пароль</label>
-        <input
-          v-model="password"
-          class="form__input"
-          type="password"
-          name="password"
-        />
+        <div class="row">
+          <label class="form__label" for="password">Пароль</label>
+          <input
+            v-model="password"
+            class="form__input"
+            type="password"
+            name="password"
+          />
+        </div>
+        <div class="row">
+          <small
+            v-if="v$.password.$dirty && v$.password.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
+          <small
+            v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+            class="invalidData"
+            >Введите не менее {{ v$.password.minLength.$params.min }} символов
+          </small>
+        </div>
       </div>
 
       <div class="form__group">
-        <button
-          class="form__button"
-          type="submit"
-        >
-          Зарегистрироваться!
-        </button>
+        <button class="form__button" type="submit">Зарегистрироваться!</button>
         <a @click="this.$emit('changeToLogin')" href="#" class="switch"
           >У меня уже есть аккаунт!</a
         >
@@ -60,11 +120,17 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
+import { required, email, minLength } from "@vuelidate/validators";
+import { helpers } from "@vuelidate/validators";
+const isPhone = helpers.regex(
+  /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+);
 
 export default {
   setup() {
-    return { v$: useVuelidate() };
+    return {
+      v$: useVuelidate(),
+    };
   },
 
   data() {
@@ -81,8 +147,8 @@ export default {
       firstName: { required },
       secondName: { required },
       email: { required, email },
-      phone: { required },
-      password: { required },
+      phone: { required, isPhone },
+      password: { required, minLength: minLength(5) },
     };
   },
   props: {
@@ -99,14 +165,17 @@ export default {
   },
   methods: {
     registerUser() {
-      console.log(this.v$);
-      console.log(this.v$.email.required);
-      let newUser = this.formingData;
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+      let newUser = this.formData;
       this.userList.push(newUser);
       this.$store.commit("updateUserList", this.userList);
       this.$store.commit("authenticateCurrentUser", newUser);
       this.$emit("close");
     },
+
     registerUserOnKeypress(event) {
       if (event.key === "Enter") {
         this.registerUser;
@@ -115,7 +184,7 @@ export default {
   },
 
   computed: {
-    formingData() {
+    formData() {
       return {
         firstName: this.firstName,
         secondName: this.secondName,
@@ -141,6 +210,10 @@ export default {
 
 h2 {
   text-align: center;
+  margin: 5px;
+}
+p {
+  margin: 0px;
 }
 
 .form {
@@ -150,8 +223,8 @@ h2 {
   padding: 10px;
   &__group {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 15px;
   }
@@ -162,5 +235,21 @@ h2 {
     padding: 15px;
     font-size: 16px;
   }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.invalidData {
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
 }
 </style>
