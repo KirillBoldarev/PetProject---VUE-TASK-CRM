@@ -161,7 +161,7 @@ export default {
       email: {
         required,
         email,
-        isUniqueEmail: isUniqueEmail(this.userList, this.email),
+        isUniqueEmail,
       },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },

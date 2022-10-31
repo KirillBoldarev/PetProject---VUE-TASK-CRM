@@ -19,91 +19,122 @@
         </div>
         <div class="row">
           <div class="form__group">
-            <label
-              v-if="this.invalidEmail === false"
-              class="form__label"
-              for="email"
-              >Имя</label
-            >
+            <label class="form__label" for="email">Имя</label>
             <input
+              @blur="v$.firstName.$touch"
               v-model="firstName"
               class="form__input"
               type="firtstName"
               name="firstName"
             />
+            <div class="row">
+              <small
+                v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+            </div>
           </div>
 
           <div class="form__group">
             <label class="form__label" for="secondName">Фамилия</label>
             <input
+              @blur="v$.secondName.$touch"
               v-model="secondName"
               class="form__input"
               type="text"
               name="secondName"
             />
+            <div class="row">
+              <small
+                v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+            </div>
           </div>
         </div>
 
         <div class="row">
           <div class="form__group">
-            <label
-              v-if="this.invalidEmail === false"
-              class="form__label"
-              for="email"
-              >Электронная почта</label
-            >
-            <label
-              v-if="this.invalidEmail === true"
-              class="form__invalid"
-              for="email"
-              >Введен некорректный формат электронной почты</label
-            >
+            <label class="form__label" for="email">Электронная почта</label>
             <input
+              @blur="v$.email.$touch"
               v-model="email"
               class="form__input"
               type="email"
               name="email"
             />
+            <div class="row">
+              <small
+                v-if="v$.email.$dirty && v$.email.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+                class="invalidData"
+                >Некорректный формат электронной почты
+              </small>
+              <small
+                v-else-if="
+                  v$.email.$dirty && !v$.email.isUniqueTargetEmail.$invalid
+                "
+                class="invalidData"
+                >Данный Email уже используется
+              </small>
+            </div>
           </div>
+
           <div class="form__group">
             <label class="form__label" for="phone">Номер телефона</label>
             <input
+              @blur="v$.phone.$touch"
               v-model="phone"
               class="form__input"
               type="text"
               name="phone"
             />
+            <div class="row">
+              <small
+                v-if="v$.phone.$dirty && v$.phone.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+                class="invalidData"
+                >Некорректный формат телефона
+              </small>
+            </div>
           </div>
         </div>
 
         <div class="form__group">
-          <label
-            v-if="this.invalidPassword === false"
-            class="form__label"
-            for="password"
-            >Пароль</label
-          >
-          <label
-            v-if="this.invalidPassword === true"
-            class="form__invalid"
-            for="password"
-            >Выбран ненадежный пароль!</label
-          >
+          <label class="form__label" for="password">Пароль</label>
           <input
+            @blur="v$.password.$touch"
             v-model="password"
             class="form__input"
             type="password"
             name="password"
           />
+          <div class="row">
+            <small
+              v-if="v$.password.$dirty && v$.password.required.$invalid"
+              class="invalidData"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+              class="invalidData"
+              >Введите не менее {{ v$.password.minLength.$params.min }} символов
+            </small>
+          </div>
         </div>
 
         <div class="form__group">
-          <button
-            class="form__button"
-            type="submit"
-          >
-            Принять
-          </button>
+          <button class="form__button" type="submit">Принять</button>
         </div>
       </form>
     </div>
@@ -111,9 +142,20 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { isPhone, isUniqueTargetEmail } from "@/js/validation";
+
 export default {
   components: {},
   name: "EditUserForm",
+
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
+
   data() {
     return {
       firstName: this.target.firstName,
@@ -123,10 +165,19 @@ export default {
       password: this.target.password,
       id: this.target.id,
       role: this.target.role,
-      invalidEmail: false,
-      invalidPassword: false,
     };
   },
+
+  validations() {
+    return {
+      firstName: { required },
+      secondName: { required },
+      email: { required, email, isUniqueTargetEmail },
+      phone: { required, isPhone },
+      password: { required, minLength: minLength(5) },
+    };
+  },
+
   ROLE: ["Неавторизованный пользователь", "Пользователь", "Администратор"],
 
   props: {
@@ -147,6 +198,10 @@ export default {
   created() {},
   methods: {
     updateUser() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
       this.userList.forEach((user) => {
         if (user.id === this.id) {
           user.firstName = this.firstName;
@@ -157,10 +212,10 @@ export default {
           user.role = this.role;
         }
       });
-      this.$store.commit("updateUserList", this.userList);
       if (this.id === this.$store.getters.authenticatedUser.id) {
         this.$store.commit("updateAuthUser");
       }
+      this.$store.commit("updateUserList", this.userList);
       this.$emit("close");
     },
   },
@@ -174,33 +229,6 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 750px;
-}
-
-.header {
-  display: flex;
-  flex: 0 0 20%;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-
-  &__tooltipBox {
-    display: flex;
-    flex-direction: row;
-    flex: 0 0 auto;
-    gap: 20px;
-  }
-
-  &__tooltipItem {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-  }
 }
 
 .main {
@@ -221,7 +249,7 @@ export default {
 
   &__group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
@@ -242,35 +270,21 @@ export default {
 .row {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  align-items: center;
   justify-content: space-between;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
+.invalidData {
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--mini {
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-  }
+  width: 100%;
 }
 </style>
