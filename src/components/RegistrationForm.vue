@@ -7,6 +7,7 @@
         <div class="row">
           <label class="form__label" for="firstName">Имя</label>
           <input
+            @blur="v$.firstName.$touch"
             v-model="firstName"
             class="form__input"
             type="text"
@@ -26,6 +27,7 @@
         <div class="row">
           <label class="form__label" for="secondName">Фамилия</label>
           <input
+            @blur="v$.secondName.$touch"
             v-model="secondName"
             class="form__input"
             type="text"
@@ -45,6 +47,7 @@
         <div class="row">
           <label class="form__label" for="email">Электронная почта</label>
           <input
+            @blur="v$.email.$touch"
             v-model="email"
             class="form__input"
             type="email"
@@ -60,7 +63,7 @@
           <small
             v-else-if="v$.email.$dirty && v$.email.email.$invalid"
             class="invalidData"
-            >Email указан в некорректном формате
+            >Некорректный формат электронной почты
           </small>
           <small
             v-else-if="v$.email.$dirty && !v$.email.isUniqueEmail.$invalid"
@@ -73,7 +76,13 @@
       <div class="form__group">
         <div class="row">
           <label class="form__label" for="phone">Номер телефона</label>
-          <input v-model="phone" class="form__input" type="text" name="phone" />
+          <input
+            @blur="v$.phone.$touch"
+            v-model="phone"
+            class="form__input"
+            type="text"
+            name="phone"
+          />
         </div>
         <div class="row">
           <small
@@ -93,6 +102,7 @@
         <div class="row">
           <label class="form__label" for="password">Пароль</label>
           <input
+            @blur="v$.password.$touch"
             v-model="password"
             class="form__input"
             type="password"
@@ -257,5 +267,10 @@ p {
   font-size: 14px;
   font-weight: 700;
   text-decoration: underline;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 </style>
