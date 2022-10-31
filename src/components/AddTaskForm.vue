@@ -22,6 +22,11 @@
             cols="30"
             rows="10"
           ></textarea>
+          <small
+            v-if="v$.description.$dirty && v$.description.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
         </div>
       </div>
 
@@ -33,6 +38,9 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
 export default {
   components: {},
   name: "AddTaskForm",
@@ -50,6 +58,11 @@ export default {
       required: true,
     },
   },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   data() {
     return {
       executor: this.target,
@@ -57,8 +70,18 @@ export default {
       description: "",
     };
   },
+
+  validations() {
+    return {
+      description: { required },
+    };
+  },
   methods: {
     createTask() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
       this.taskList.push(this.preparedTask);
       this.$store.commit("updateTaskList", this.taskList);
       this.$emit("close");
@@ -117,5 +140,16 @@ h2 {
   gap: 10px;
   align-items: center;
   justify-content: center;
+}
+.invalidData {
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 </style>

@@ -29,96 +29,124 @@
       <form class="form" @submit.prevent="this.updateUserData">
         <div class="row">
           <div class="form__group">
-            <label
-              v-if="this.invalidEmail === false"
-              class="form__label"
-              for="email"
-              >Имя</label
-            >
+            <label class="form__label" for="firtstName">Имя</label>
             <input
+              @blur="v$.firstName.$touch"
               v-model="firstName"
               class="form__input"
               type="firtstName"
               name="firstName"
               :disabled="editMode === false"
             />
+            <div class="row">
+              <small
+                v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+            </div>
           </div>
 
           <div class="form__group">
             <label class="form__label" for="secondName">Фамилия</label>
             <input
+              @blur="v$.secondName.$touch"
               v-model="secondName"
               class="form__input"
               type="text"
               name="secondName"
               :disabled="editMode === false"
             />
+            <div class="row">
+              <small
+                v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+            </div>
           </div>
         </div>
 
         <div class="row">
           <div class="form__group">
-            <label
-              v-if="this.invalidEmail === false"
-              class="form__label"
-              for="email"
-              >Электронная почта</label
-            >
-            <label
-              v-if="this.invalidEmail === true"
-              class="form__invalid"
-              for="email"
-              >Введена не верная электронная почта!</label
-            >
+            <label class="form__label" for="email">Электронная почта</label>
             <input
+              @blur="v$.email.$touch"
               v-model="email"
               class="form__input"
               type="email"
               name="email"
               :disabled="editMode === false"
             />
+            <div class="row">
+              <small
+                v-if="v$.email.$dirty && v$.email.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+                class="invalidData"
+                >Некорректный формат электронной почты
+              </small>
+              <small
+                v-else-if="v$.email.$dirty && !v$.email.isUniqueEmail.$invalid"
+                class="invalidData"
+                >Данный Email уже используется
+              </small>
+            </div>
           </div>
           <div class="form__group">
             <label class="form__label" for="phone">Номер телефона</label>
             <input
+              @blur="v$.phone.$touch"
               v-model="phone"
               class="form__input"
               type="text"
               name="phone"
               :disabled="editMode === false"
             />
+            <div class="row">
+              <small
+                v-if="v$.phone.$dirty && v$.phone.required.$invalid"
+                class="invalidData"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+                class="invalidData"
+                >Некорректный формат телефона
+              </small>
+            </div>
           </div>
         </div>
 
         <div class="form__group">
-          <label
-            v-if="this.invalidPassword === false"
-            class="form__label"
-            for="password"
-            >Пароль</label
-          >
-          <label
-            v-if="this.invalidPassword === true"
-            class="form__invalid"
-            for="password"
-            >Введен не верный пароль!</label
-          >
+          <label class="form__label" for="password">Пароль</label>
           <input
+            @blur="v$.password.$touch"
             v-model="password"
             class="form__input"
             type="password"
             name="password"
             :disabled="editMode === false"
           />
+          <div class="row">
+            <small
+              v-if="v$.password.$dirty && v$.password.required.$invalid"
+              class="invalidData"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+              class="invalidData"
+              >Введите не менее {{ v$.password.minLength.$params.min }} символов
+            </small>
+          </div>
         </div>
 
         <div class="form__group">
-          <button
-            class="form__button"
-            type="submit"
-          >
-            Принять
-          </button>
+          <button class="form__button" type="submit">Принять</button>
         </div>
       </form>
     </div>
@@ -126,9 +154,20 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { isPhone, isUniqueEmail } from "@/js/validation";
+
 export default {
   components: {},
   name: "ProfileForm",
+
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
+
   data() {
     return {
       firstName: "",
@@ -138,14 +177,25 @@ export default {
       password: "",
       id: "",
 
-      invalidEmail: false,
-      invalidPassword: false,
       isOpenTaskList: false,
       editMode: false,
       taskListMode: false,
     };
   },
 
+  validations() {
+    return {
+      firstName: { required },
+      secondName: { required },
+      email: {
+        required,
+        email,
+        isUniqueEmail: isUniqueEmail(this.userList, this.email),
+      },
+      phone: { required, isPhone },
+      password: { required, minLength: minLength(5) },
+    };
+  },
   props: {
     taskList: {
       type: Array,
@@ -170,6 +220,10 @@ export default {
       this.id = this.$store.getters.authenticatedUser.id;
     },
     updateUserData() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
       this.userList.forEach((user) => {
         if (user.id === this.id) {
           user.firstName = this.firstName;
@@ -242,7 +296,7 @@ export default {
 
   &__group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
@@ -254,18 +308,15 @@ export default {
     padding: 15px;
     font-size: 16px;
   }
-  &__invalid {
-    color: red;
-    text-decoration: underline;
-  }
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .column {
@@ -293,5 +344,16 @@ export default {
     height: 45px;
     cursor: pointer;
   }
+}
+.invalidData {
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 </style>
