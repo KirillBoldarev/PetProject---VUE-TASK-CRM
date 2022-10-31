@@ -23,12 +23,18 @@
         <div class="column">
           <h3>Описание задачи:</h3>
           <textarea
+            @blur="v$.description.$touch"
             v-model="description"
             name="task"
             id="task"
             cols="30"
             rows="10"
           ></textarea>
+          <small
+            v-if="v$.description.$dirty && v$.description.required.$invalid"
+            class="invalidData"
+            >Поле обязательно для заполнения
+          </small>
         </div>
       </div>
       <div class="form__group">
@@ -40,12 +46,7 @@
       </div>
 
       <div class="form__group">
-        <button
-          class="form__button"
-          type="submit"
-        >
-          ОК
-        </button>
+        <button class="form__button" type="submit">ОК</button>
       </div>
     </form>
   </section>
@@ -53,8 +54,16 @@
 
 <script>
 import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
+
   name: "EditTaskForm",
   components: {
     CompleteTaskButton,
@@ -83,8 +92,19 @@ export default {
       id: this.target.id,
     };
   },
+
+  validations() {
+    return {
+      description: { required },
+    };
+  },
+
   methods: {
     updateTask() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
       this.taskList.forEach((task) => {
         if (task.id === this.id) {
           task.executorId = this.executor;
@@ -143,38 +163,21 @@ export default {
   }
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .column {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
+.invalidData {
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--mini {
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-  }
+  width: 100%;
 }
 </style>
