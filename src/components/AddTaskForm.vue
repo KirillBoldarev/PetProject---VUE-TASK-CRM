@@ -15,6 +15,7 @@
         <div class="column">
           <h3>Описание задачи:</h3>
           <textarea
+            @blur="v$.description.$touch"
             @keyup.ctrl.enter="this.createTask"
             v-model="description"
             name="task"
