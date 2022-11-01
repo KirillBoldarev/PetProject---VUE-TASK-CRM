@@ -1,7 +1,7 @@
 <template>
   <section id="loginForm" class="container">
     <h2>Редактирование задачи</h2>
-    <form class="form" @submit.prevent="this.updateTask">
+    <form class="form" @submit.prevent="this.editTask">
       <div class="form__group">
         <label class="form__label" for="email">Выберите отправителя:</label>
         <select v-model="sender" name="sender" id="sender">
@@ -100,28 +100,31 @@ export default {
   },
 
   methods: {
-    updateTask() {
+    editTask() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.taskList.forEach((task) => {
-        if (task.id === this.id) {
-          task.executorId = this.executor;
-          task.senderId = this.sender;
-          task.description = this.description;
-          this.userList.forEach((user) => {
-            if (user.id === this.executor) {
-              task.executorFullName = `${user.firstName} ${user.secondName}`;
-            }
-            if (user.id === this.sender) {
-              task.senderFullName = `${user.firstName} ${user.secondName}`;
-            }
-          });
-        }
-      });
-      this.$store.commit("updateTaskList", this.taskList);
+      this.$store.commit("editTask", this.changedData);
       this.$emit("close");
+    },
+  },
+  computed: {
+    changedData() {
+      return {
+      id: this.target.id,
+      executorId : this.executor,
+      executorFullName : `
+      ${this.userList.find((user) => user.id === this.executor).firstName}
+      ${this.userList.find((user) => user.id === this.executor).secondName}`,
+      senderId : this.sender,
+      senderFullName : `
+      ${this.userList.find((user) => user.id === this.sender).firstName}
+      ${this.userList.find((user) => user.id === this.sender).secondName}`,
+      description : this.description,
+      isCompleted : this.isCompleted,
+      }
+
     },
   },
 };

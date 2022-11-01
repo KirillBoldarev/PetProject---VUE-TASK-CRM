@@ -12,19 +12,19 @@ export default {
     },
   },
   mutations: {
-    authenticateCurrentUser(state, user) {
+    authentication(state, user) {
       state.authenticatedUser = user;
       state.isAuthenticated = true;
       sessionStorage.setItem("authenticatedUserId", state.authenticatedUser.id);
     },
 
-    logoutCurrentUser(state) {
+    logout(state) {
       state.isAuthenticated = false;
       state.authenticatedUser = {};
       sessionStorage.removeItem("authenticatedUserId");
     },
 
-    updateAuthUser(state) {
+    updateAuthenticated(state) {
       let id = sessionStorage.getItem("authenticatedUserId");
       if (id) {
         let userList = JSON.parse(localStorage.getItem("userList"));

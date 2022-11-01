@@ -2,7 +2,7 @@
   <section id="EditUserForm" class="container">
     <div class="main">
       <h3>Ваши персональные данные:</h3>
-      <form class="form" @submit.prevent="this.updateUser">
+      <form class="form" @submit.prevent="this.editUser">
         <div class="form__group">
           <label class="form__label" for="email"
             >Выберите роль пользователя:</label
@@ -197,30 +197,32 @@ export default {
 
   created() {},
   methods: {
-    updateUser() {
+    editUser() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.userList.forEach((user) => {
-        if (user.id === this.id) {
-          user.firstName = this.firstName;
-          user.secondName = this.secondName;
-          user.email = this.email;
-          user.phone = this.phone;
-          user.password = this.password;
-          user.role = this.role;
-        }
-      });
+      this.$store.commit("editUser", this.changedData);
       if (this.id === this.$store.getters.authenticatedUser.id) {
-        this.$store.commit("updateAuthUser");
+        this.$store.commit("updateAuthenticated");
       }
-      this.$store.commit("updateUserList", this.userList);
       this.$emit("close");
     },
   },
 
-  computed: {},
+  computed: {
+    changedData() {
+      return {
+        id: this.id,
+        firstName: this.firstName,
+        secondName: this.secondName,
+        email: this.email,
+        phone: this.phone,
+        password: this.password,
+        role: this.role,
+      };
+    },
+  },
 };
 </script>
 

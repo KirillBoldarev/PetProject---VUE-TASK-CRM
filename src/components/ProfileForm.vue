@@ -26,7 +26,7 @@
 
     <div class="main">
       <h3>Ваши персональные данные:</h3>
-      <form class="form" @submit.prevent="this.updateUserData">
+      <form class="form" @submit.prevent="this.editUser">
         <div class="row">
           <div class="form__group">
             <label class="form__label" for="firtstName">Имя</label>
@@ -91,7 +91,8 @@
               </small>
               <small
                 v-else-if="
-                  v$.email.$dirty && !v$.email.isUniqueAuthenticatedEmail.$invalid
+                  v$.email.$dirty &&
+                  !v$.email.isUniqueAuthenticatedEmail.$invalid
                 "
                 class="invalidData"
                 >Данный Email уже используется
@@ -172,12 +173,12 @@ export default {
 
   data() {
     return {
-      firstName: "",
-      secondName: "",
-      email: "",
-      phone: "",
-      password: "",
-      id: "",
+      firstName: this.$store.getters.authenticatedUser.firstName,
+      secondName: this.$store.getters.authenticatedUser.secondName,
+      email: this.$store.getters.authenticatedUser.email,
+      phone: this.$store.getters.authenticatedUser.phone,
+      password: this.$store.getters.authenticatedUser.password,
+      id: this.$store.getters.authenticatedUser.id,
 
       isOpenTaskList: false,
       editMode: false,
@@ -209,39 +210,32 @@ export default {
     },
   },
 
-  created() {
-    this.importUserdata();
-  },
+  created() {},
   methods: {
-    importUserdata() {
-      this.firstName = this.$store.getters.authenticatedUser.firstName;
-      this.secondName = this.$store.getters.authenticatedUser.secondName;
-      this.email = this.$store.getters.authenticatedUser.email;
-      this.phone = this.$store.getters.authenticatedUser.phone;
-      this.password = this.$store.getters.authenticatedUser.password;
-      this.id = this.$store.getters.authenticatedUser.id;
-    },
-    updateUserData() {
+    editUser() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.userList.forEach((user) => {
-        if (user.id === this.id) {
-          user.firstName = this.firstName;
-          user.secondName = this.secondName;
-          user.email = this.email;
-          user.phone = this.phone;
-          user.password = this.password;
-        }
-        this.$store.commit("updateUserList", this.userList);
-        this.$store.commit("updateAuthUser");
-        this.$emit("close");
-      });
+      this.$store.commit("editUser", this.changedData);
+      this.$store.commit("updateAuthenticated");
+      this.$emit("close");
     },
   },
 
-  computed: {},
+  computed: {
+    changedData() {
+      return {
+        id: this.id,
+        firstName: this.firstName,
+        secondName: this.secondName,
+        email: this.email,
+        phone: this.phone,
+        password: this.password,
+        role: this.role,
+      };
+    },
+  },
 };
 </script>
 

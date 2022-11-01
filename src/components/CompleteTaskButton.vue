@@ -1,14 +1,14 @@
 <template>
   <img
     v-if="target.isCompleted === true"
-    @click="completeTask(this.target)"
+    @click="completeTask"
     class="icon--mini"
     src="@/icons/check.png"
     alt=""
   />
   <img
     v-if="target.isCompleted === false"
-    @click="completeTask(this.target)"
+    @click="completeTask"
     class="icon--mini"
     src="@/icons/notСheck.png"
     alt=""
@@ -25,10 +25,6 @@ export default {
       type: Object,
       required: true,
     },
-    taskList: {
-      type: Array,
-      required: true,
-    },
   },
 
   data() {
@@ -36,13 +32,8 @@ export default {
   },
 
   methods: {
-    completeTask(target) {
-      this.taskList.forEach((task) => {
-        if (task.id === target.id) {
-          target.isCompleted = !target.isCompleted;
-          this.$store.commit("updateTaskList", this.taskList);
-        }
-      });
+    completeTask() {
+      this.$store.commit("completeTask", this.target);
     },
   },
 

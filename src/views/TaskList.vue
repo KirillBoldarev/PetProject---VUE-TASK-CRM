@@ -53,7 +53,6 @@
             <div class="tasklist__record-item">
               <complete-task-button
                 :target="task"
-                :taskList="taskList"
               ></complete-task-button>
             </div>
             <div class="tasklist__record-item">
@@ -65,13 +64,6 @@
             <div class="tasklist__record-item">{{ task.description }}</div>
             <div class="tasklist__record-item">
               <div>
-                <redirect-task-button
-                  :target="task"
-                  :userList="userList"
-                  :taskList="taskList"
-                ></redirect-task-button>
-              </div>
-              <div>
                 <edit-task-button
                   :target="task"
                   :userList="userList"
@@ -81,7 +73,6 @@
               <div>
                 <delete-task-button
                   :target="task"
-                  :taskList="taskList"
                 ></delete-task-button>
               </div>
             </div>
@@ -97,7 +88,6 @@ import AddTaskButton from "@/components/AddTaskButton.vue";
 import DeleteTaskButton from "@/components/DeleteTaskButton.vue";
 import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
 import EditTaskButton from "@/components/EditTaskButton.vue";
-import RedirectTaskButton from "@/components/RedirectTaskButton.vue";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
@@ -108,7 +98,6 @@ export default {
     DeleteTaskButton,
     CompleteTaskButton,
     EditTaskButton,
-    RedirectTaskButton,
     Tabs,
   },
 

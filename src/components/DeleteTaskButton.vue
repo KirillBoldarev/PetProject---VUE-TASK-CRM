@@ -1,6 +1,6 @@
 <template>
   <img
-    @click="deleteTask(this.target)"
+    @click="deleteTask"
     class="icon"
     src="@/icons/trash.png"
     alt=""
@@ -17,10 +17,6 @@ export default {
       type: Object,
       required: true,
     },
-    taskList: {
-      type: Array,
-      required: true,
-    },
   },
 
   data() {
@@ -28,15 +24,8 @@ export default {
   },
 
   methods: {
-    deleteTask(target) {
-      let index;
-      this.taskList.forEach((task, idx) => {
-        if (task.id === target.id) {
-          index = idx;
-        }
-      });
-      this.taskList.splice(index, 1);
-      this.$store.commit("updateTaskList", this.taskList);
+    deleteTask() {
+      this.$store.commit("deleteTask", this.target);
     },
   },
 

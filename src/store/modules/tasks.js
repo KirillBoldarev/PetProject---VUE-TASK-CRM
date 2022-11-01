@@ -9,10 +9,9 @@ export default {
     },
   },
   mutations: {
-    updateTaskList(state, taskList) {
-      localStorage.setItem("taskList", JSON.stringify(taskList));
+/*     updateTaskList(state, taskList) {
       state.taskList = taskList;
-    },
+    }, */
 
     initializeTaskList(state) {
       let taskList = JSON.parse(localStorage.getItem("taskList"));
@@ -23,10 +22,41 @@ export default {
       }
     },
 
-    addTask(state, task) { 
+    addTask(state, task) {
       state.taskList.push(task);
-      localStorage.setItem("taskList", JSON.stringify(taskList));
-    }
+    },
+
+    deleteTask(state, targetedTask) {
+      let index;
+      state.taskList.forEach((task, idx) => {
+        if (task.id === targetedTask.id) {
+          index = idx;
+        }
+      });
+      state.taskList.splice(index, 1);
+    },
+
+    editTask(state, changedData) {
+      state.taskList.forEach((task) => {
+        if (task.id === changedData.id) {
+          task.executorId = changedData.executorId;
+          task.executorFullName = changedData.executorFullName;
+          task.senderId = changedData.senderId;
+          task.senderFullName = changedData.senderFullName;
+          task.description = changedData.description;
+          task.isCompleted = changedData.isCompleted;
+        }
+      });
+    },
+
+    completeTask(state, targetedTask) {
+      state.taskList.forEach((task) => {
+        if (task.id === targetedTask.id) {
+          task.isCompleted = !task.isCompleted;
+        }
+      });
+    },
   },
+
   actions: {},
 };

@@ -56,7 +56,6 @@
           ></edit-user-button-vue>
           <delete-user-button
             :target="user"
-            :userList="userList"
           ></delete-user-button>
         </div>
       </div>

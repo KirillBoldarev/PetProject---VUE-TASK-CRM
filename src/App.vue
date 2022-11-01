@@ -27,16 +27,18 @@ export default {
 
   created() {
     this.$store.subscribe((mutations, state) => {
-      if (mutations.type === "initializeTaskList") {
+      if (mutations.type.includes("Task")) {
+        localStorage.setItem("taskList", JSON.stringify(state.tasks.taskList));
         this.taskList = state.tasks.taskList;
       }
-      if ((mutations.type = "initializeUserList")) {
+      if (mutations.type.includes("User")) {
+        localStorage.setItem("userList", JSON.stringify(state.users.userList));
         this.userList = state.users.userList;
       }
     });
     this.$store.commit("initializeUserList");
     this.$store.commit("initializeTaskList");
-    this.$store.commit("updateAuthUser");
+    this.$store.commit("updateAuthenticated");
   },
 };
 </script>

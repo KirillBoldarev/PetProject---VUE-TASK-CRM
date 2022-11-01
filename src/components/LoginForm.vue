@@ -126,7 +126,7 @@ export default {
           }, 3000);
           return;
         }
-        this.$store.commit("authenticateCurrentUser", foundedUser);
+        this.$store.commit("authentication", foundedUser);
         this.$emit("close");
       }
     },

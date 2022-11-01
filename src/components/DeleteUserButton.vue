@@ -1,6 +1,6 @@
 <template>
   <img
-    @click="deleteUser(this.target)"
+    @click="deleteUser"
     class="icon"
     src="@/icons/trash.png"
     alt=""
@@ -17,11 +17,6 @@ export default {
       type: Object,
       required: true,
     },
-
-    userList: {
-      type: Array,
-      required: true,
-    },
   },
 
   data() {
@@ -29,15 +24,8 @@ export default {
   },
 
   methods: {
-    deleteUser(target) {
-      let index;
-      this.userList.forEach((user, idx) => {
-        if (user.id === target.id) {
-          index = idx;
-        }
-      });
-      this.userList.splice(index, 1);
-      this.$store.commit("updateUserList", this.userList);
+    deleteUser() {
+      this.$store.commit("deleteUser", this.target);
     },
   },
 

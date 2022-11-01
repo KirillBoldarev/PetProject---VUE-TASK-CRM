@@ -21,7 +21,7 @@ export default {
 
   methods: {
     logout() {
-      this.$store.commit("logoutCurrentUser");
+      this.$store.commit("logout");
       this.$router.push("/");
     },
     openModal() {

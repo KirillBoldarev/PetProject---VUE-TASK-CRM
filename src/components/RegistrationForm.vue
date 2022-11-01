@@ -2,7 +2,7 @@
   <section id="registrationForm" class="container-form">
     <h2>Регистрация пользователя!</h2>
     <p>Введите ваши персональные данные:</p>
-    <form class="form" @submit.prevent="this.registerUser()">
+    <form class="form" @submit.prevent="this.registerUser">
       <div class="form__group">
         <div class="row">
           <label class="form__label" for="firstName">Имя</label>
@@ -185,10 +185,8 @@ export default {
         this.v$.$touch();
         return;
       }
-      let newUser = this.formData;
-      this.userList.push(newUser);
-      this.$store.commit("updateUserList", this.userList);
-      this.$store.commit("authenticateCurrentUser", newUser);
+      this.$store.commit("createUser", this.newUser);
+      this.$store.commit("authentication", this.newUser);
       this.$emit("close");
     },
 
@@ -200,7 +198,7 @@ export default {
   },
 
   computed: {
-    formData() {
+    newUser() {
       return {
         firstName: this.firstName,
         secondName: this.secondName,

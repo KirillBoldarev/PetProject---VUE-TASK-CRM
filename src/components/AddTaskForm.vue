@@ -83,8 +83,7 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.taskList.push(this.preparedTask);
-      this.$store.commit("updateTaskList", this.taskList);
+      this.$store.commit("addTask", this.preparedTask);
       this.$emit("close");
     },
   },
