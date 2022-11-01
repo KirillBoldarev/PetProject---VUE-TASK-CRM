@@ -9,10 +9,6 @@ export default {
     },
   },
   mutations: {
-/*     updateUserList(state, userList) {
-      state.userList = userList;
-    }, */
-
     initializeUserList(state) {
       let userList = JSON.parse(localStorage.getItem("userList"));
       if (!userList) {

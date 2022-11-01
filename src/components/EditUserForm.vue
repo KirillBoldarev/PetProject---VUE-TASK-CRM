@@ -76,13 +76,6 @@
                 class="invalidData"
                 >Некорректный формат электронной почты
               </small>
-              <small
-                v-else-if="
-                  v$.email.$dirty && !v$.email.isUniqueTargetEmail.$invalid
-                "
-                class="invalidData"
-                >Данный Email уже используется
-              </small>
             </div>
           </div>
 
@@ -144,7 +137,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { isPhone, isUniqueTargetEmail } from "@/js/validation";
+import { isPhone } from "@/js/validation";
 
 export default {
   components: {},
@@ -172,7 +165,7 @@ export default {
     return {
       firstName: { required },
       secondName: { required },
-      email: { required, email, isUniqueTargetEmail },
+      email: { required, email },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
     };

@@ -112,19 +112,18 @@ export default {
   computed: {
     changedData() {
       return {
-      id: this.target.id,
-      executorId : this.executor,
-      executorFullName : `
+        id: this.target.id,
+        executorId: this.executor,
+        executorFullName: `
       ${this.userList.find((user) => user.id === this.executor).firstName}
       ${this.userList.find((user) => user.id === this.executor).secondName}`,
-      senderId : this.sender,
-      senderFullName : `
+        senderId: this.sender,
+        senderFullName: `
       ${this.userList.find((user) => user.id === this.sender).firstName}
       ${this.userList.find((user) => user.id === this.sender).secondName}`,
-      description : this.description,
-      isCompleted : this.isCompleted,
-      }
-
+        description: this.description,
+        isCompleted: this.isCompleted,
+      };
     },
   },
 };

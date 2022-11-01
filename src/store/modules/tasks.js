@@ -9,10 +9,6 @@ export default {
     },
   },
   mutations: {
-/*     updateTaskList(state, taskList) {
-      state.taskList = taskList;
-    }, */
-
     initializeTaskList(state) {
       let taskList = JSON.parse(localStorage.getItem("taskList"));
       if (!taskList) {

@@ -12,7 +12,7 @@
           />
           <span> Редактировать</span>
         </div>
-        <div class="header__tooltipItem">
+        <!--         <div class="header__tooltipItem">
           <img
             @click="this.taskListMode = !this.taskListMode"
             class="icon"
@@ -20,7 +20,7 @@
             alt=""
           />
           <span> Задачи</span>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -89,14 +89,6 @@
                 class="invalidData"
                 >Некорректный формат электронной почты
               </small>
-              <small
-                v-else-if="
-                  v$.email.$dirty &&
-                  !v$.email.isUniqueAuthenticatedEmail.$invalid
-                "
-                class="invalidData"
-                >Данный Email уже используется
-              </small>
             </div>
           </div>
           <div class="form__group">
@@ -159,7 +151,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { isPhone, isUniqueAuthenticatedEmail } from "@/js/validation";
+import { isPhone } from "@/js/validation";
 
 export default {
   components: {},
@@ -193,7 +185,6 @@ export default {
       email: {
         required,
         email,
-        isUniqueAuthenticatedEmail,
       },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
@@ -313,12 +304,6 @@ export default {
   align-items: center;
   gap: 10px;
   width: 100%;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .icon {
