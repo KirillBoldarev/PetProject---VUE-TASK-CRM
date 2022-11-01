@@ -171,6 +171,7 @@ export default {
       phone: this.$store.getters.authenticatedUser.phone,
       password: this.$store.getters.authenticatedUser.password,
       id: this.$store.getters.authenticatedUser.id,
+      role:this.$store.getters.authenticatedUser.role,
 
       isOpenTaskList: false,
       editMode: false,
