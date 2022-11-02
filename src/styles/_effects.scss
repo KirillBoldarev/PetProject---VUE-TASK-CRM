@@ -10,3 +10,35 @@
     text-shadow: 0 -1px rgba(0, 0, 0, 0.3), 0 0 5px #ffd, 0 0 8px #fff;
   }
 }
+//TRANSITION FADE
+.fade-enter-active {
+  transition: opacity 0.75s;
+}
+.fade-leave-active {
+  transition: opacity 0.75s;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+//TRANSITION BOUNCE
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

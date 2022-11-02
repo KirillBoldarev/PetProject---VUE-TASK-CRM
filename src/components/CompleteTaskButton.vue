@@ -6,6 +6,7 @@
     src="@/icons/check.png"
     alt=""
   />
+
   <img
     v-if="target.isCompleted === false"
     @click="completeTask"

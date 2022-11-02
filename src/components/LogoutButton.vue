@@ -9,7 +9,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import ConfirmForm from "@/components/ConfirmForm.vue";
+import ConfirmForm from "@/components/forms/ConfirmForm.vue";
 export default {
   components: { Modal, ConfirmForm },
 

@@ -15,7 +15,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import EditTaskForm from "@/components/EditTaskForm.vue";
+import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 
 export default {
   components: {

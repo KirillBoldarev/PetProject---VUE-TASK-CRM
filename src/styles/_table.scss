@@ -3,12 +3,13 @@
   padding: 10px 0px;
   flex-direction: column;
   gap: 15px;
-  height: 450px;
+  max-height: 400px;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   &__row {
     display: grid;
-    gap: 10px;
+    gap: 5px;
     justify-content: center;
     align-items: center;
     height: auto;

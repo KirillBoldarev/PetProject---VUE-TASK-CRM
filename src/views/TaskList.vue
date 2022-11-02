@@ -22,8 +22,14 @@
         <h3 class="page__title">{{ page.label }}</h3>
         <div class="page__row filter">
           <label class="filter__label"> Фильтровать по:</label>
-          <select class="filter__select" v-model="searchParams" name="searchParams" id="searchParams">
-            <option class="filter__option"
+          <select
+            class="filter__select"
+            v-model="searchParams"
+            name="searchParams"
+            id="searchParams"
+          >
+            <option
+              class="filter__option"
               v-for="value in this.$options.SEARCH_PARAMS_LIST"
               :key="value"
               :value="value.name"
@@ -42,34 +48,37 @@
             <div class="table__column">Описание задачи</div>
             <div class="table__column">Действия</div>
           </div>
-          <div
-            class="table__row table__row--5"
-            v-for="task in this.filterSource(page.dataSource)"
-            :key="task.id"
-          >
-            <div class="table__column">
-              <complete-task-button :target="task"></complete-task-button>
-            </div>
-            <div class="table__column">
-              {{ task.senderFullName }}
-            </div>
-            <div class="table__column">
-              {{ task.executorFullName }}
-            </div>
-            <div class="table__column">{{ task.description }}</div>
-            <div class="table__column">
-              <div>
-                <edit-task-button
-                  :target="task"
-                  :userList="userList"
-                  :taskList="taskList"
-                ></edit-task-button>
+
+          <TransitionGroup appear name="fade">
+            <div
+              class="table__row table__row--5"
+              v-for="task in this.filterSource(page.dataSource)"
+              :key="task.id"
+            >
+              <div class="table__column">
+                <complete-task-button :target="task"></complete-task-button>
               </div>
-              <div>
-                <delete-task-button :target="task"></delete-task-button>
+              <div class="table__column">
+                {{ task.senderFullName }}
+              </div>
+              <div class="table__column">
+                {{ task.executorFullName }}
+              </div>
+              <div class="table__column">{{ task.description }}</div>
+              <div class="table__column">
+                <div>
+                  <edit-task-button
+                    :target="task"
+                    :userList="userList"
+                    :taskList="taskList"
+                  ></edit-task-button>
+                </div>
+                <div>
+                  <delete-task-button :target="task"></delete-task-button>
+                </div>
               </div>
             </div>
-          </div>
+          </TransitionGroup>
         </div>
       </template>
     </div>
@@ -82,6 +91,7 @@ import DeleteTaskButton from "@/components/DeleteTaskButton.vue";
 import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
 import EditTaskButton from "@/components/EditTaskButton.vue";
 import Tabs from "@/components/Tabs.vue";
+import { Transition, TransitionGroup } from "vue";
 
 export default {
   name: "TaskList",
@@ -92,6 +102,8 @@ export default {
     CompleteTaskButton,
     EditTaskButton,
     Tabs,
+    Transition,
+    TransitionGroup,
   },
 
   props: {

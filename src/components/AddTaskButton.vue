@@ -11,10 +11,9 @@
     </template>
   </modal>
 </template>
-
 <script>
 import Modal from "@/components/Modal.vue";
-import AddTaskForm from "@/components/AddTaskForm.vue";
+import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 
 export default {
   name: "AddTaskButton",

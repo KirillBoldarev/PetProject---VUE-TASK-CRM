@@ -1,15 +1,17 @@
 <template>
   <teleport to="#modal">
-    <div
-      @click="this.closeModal()"
-      v-if="isOpen === true"
-      class="modal__backdrop"
-    >
-      <div @click.stop class="modal__body">
-        <slot name="ModalSlot" :closeModal="closeModal" :confirm="confirm">
-        </slot>
+    <Transition name="bounce">
+      <div
+        @click="this.closeModal()"
+        v-if="isOpen === true"
+        class="modal__backdrop"
+      >
+        <div @click.stop class="modal__body">
+          <slot name="ModalSlot" :closeModal="closeModal" :confirm="confirm">
+          </slot>
+        </div>
       </div>
-    </div>
+    </Transition>
   </teleport>
 </template>
 
@@ -21,20 +23,16 @@ export default {
       required: true,
     },
   },
-
   mounted() {
     document.addEventListener("keydown", this.closeOnKeydown);
   },
-
   beforeUnmount() {
     document.removeEventListener("keydown", this.closeOnKeydown);
   },
-
   emits: {
     ok: null,
     close: null,
   },
-
   methods: {
     closeModal() {
       this.$emit("close");

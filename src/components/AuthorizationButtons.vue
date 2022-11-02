@@ -23,8 +23,8 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import RegistrationForm from "@/components/RegistrationForm.vue";
-import LoginForm from "./LoginForm.vue";
+import RegistrationForm from "@/components/forms/RegistrationForm.vue";
+import LoginForm from "@/components/forms/LoginForm.vue";
 export default {
   components: { Modal, RegistrationForm, LoginForm },
 

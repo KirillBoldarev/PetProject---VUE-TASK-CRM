@@ -15,7 +15,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import EditUserForm from '@/components/EditUserForm.vue'
+import EditUserForm from '@/components/forms/EditUserForm.vue'
 
 export default {
   name: "EditUserButton",

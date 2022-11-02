@@ -12,8 +12,11 @@
         Приветствую ,
         {{ this.$store.getters.authenticatedUser.firstName }} !
       </h2>
-      <div class="header__navigation" 
-      v-if="this.$store.getters.checkForAuthenticate === true">
+
+      <div
+        class="header__navigation"
+        v-if="this.$store.getters.checkForAuthenticate === true"
+      >
         <router-link
           class="header__link"
           v-for="link in headerLinks"
@@ -23,6 +26,7 @@
         >
       </div>
     </div>
+
     <div
       class="header__row"
       v-if="this.$store.getters.checkForAuthenticate === true"
@@ -33,6 +37,7 @@
       ></profile-button>
       <logout-button></logout-button>
     </div>
+
     <div
       class="header__row"
       v-if="this.$store.getters.checkForAuthenticate === false"
@@ -47,9 +52,16 @@ import Modal from "@/components/Modal.vue";
 import LogoutButton from "@/components/LogoutButton.vue";
 import ProfileButton from "@/components/ProfileButton.vue";
 import AuthorizationButtons from "@/components/AuthorizationButtons.vue";
+import { Transition } from "vue";
 
 export default {
-  components: { Modal, LogoutButton, ProfileButton, AuthorizationButtons },
+  components: {
+    Modal,
+    LogoutButton,
+    ProfileButton,
+    AuthorizationButtons,
+    Transition,
+  },
   name: "header-layout",
 
   props: {

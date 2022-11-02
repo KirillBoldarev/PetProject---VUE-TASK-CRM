@@ -15,7 +15,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import ProfileForm from "@/components/ProfileForm.vue";
+import ProfileForm from "@/components/forms/ProfileForm.vue";
 
 export default {
   name: "ProfileButton",
