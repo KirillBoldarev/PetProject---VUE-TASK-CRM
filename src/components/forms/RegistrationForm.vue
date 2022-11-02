@@ -15,11 +15,13 @@
           />
         </div>
         <div class="row">
-          <small
-            v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
+          <transition>
+            <small
+              v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
       </div>
 
@@ -35,11 +37,13 @@
           />
         </div>
         <div class="form__row">
-          <small
-            v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
+          <transition>
+            <small
+              v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
       </div>
 
@@ -54,17 +58,19 @@
             name="email"
           />
         </div>
-        <div class="form__row">
-          <small
-            v-if="v$.email.$dirty && v$.email.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
-          <small
-            v-else-if="v$.email.$dirty && v$.email.email.$invalid"
-            class="form__invalid"
-            >Некорректный формат электронной почты
-          </small>
+        <div class="form__column">
+          <transition-group>
+            <small
+              v-if="v$.email.$dirty && v$.email.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+              class="form__invalid"
+              >Некорректный формат электронной почты
+            </small>
+          </transition-group>
         </div>
       </div>
 
@@ -79,17 +85,19 @@
             name="phone"
           />
         </div>
-        <div class="form__row">
-          <small
-            v-if="v$.phone.$dirty && v$.phone.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
-          <small
-            v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
-            class="form__invalid"
-            >Некорректный формат телефона
-          </small>
+        <div class="form__column">
+          <transition-group>
+            <small
+              v-if="v$.phone.$dirty && v$.phone.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+              class="form__invalid"
+              >Некорректный формат телефона
+            </small>
+          </transition-group>
         </div>
       </div>
 
@@ -104,17 +112,19 @@
             name="password"
           />
         </div>
-        <div class="form__row">
-          <small
-            v-if="v$.password.$dirty && v$.password.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
-          <small
-            v-if="v$.password.$dirty && v$.password.minLength.$invalid"
-            class="form__invalid"
-            >Введите не менее {{ v$.password.minLength.$params.min }} символов
-          </small>
+        <div class="form__column">
+          <transition-group>
+            <small
+              v-if="v$.password.$dirty && v$.password.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+              class="form__invalid"
+              >Введите не менее {{ v$.password.minLength.$params.min }} символов
+            </small>
+          </transition-group>
         </div>
       </div>
 
@@ -206,4 +216,3 @@ export default {
   },
 };
 </script>
-

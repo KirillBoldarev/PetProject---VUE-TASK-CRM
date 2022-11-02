@@ -14,17 +14,19 @@
             name="email"
           />
         </div>
-        <div class="form__row">
-          <small
-            v-if="v$.email.$dirty && v$.email.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
-          <small
-            v-else-if="v$.email.$dirty && v$.email.email.$invalid"
-            class="form__invalid"
-            >Некорректный формат электронной почты
-          </small>
+        <div class="form__column">
+          <transition>
+            <small
+              v-if="v$.email.$dirty && v$.email.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+            <small
+              v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+              class="form__invalid"
+              >Некорректный формат электронной почты
+            </small>
+          </transition>
         </div>
       </div>
 
@@ -40,17 +42,21 @@
           />
         </div>
         <div class="form__row">
-          <small
-            v-if="v$.password.$dirty && v$.password.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
+          <transition>
+            <small
+              v-if="v$.password.$dirty && v$.password.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
       </div>
 
-      <div v-if="this.incorrectData === true" class="form__row form__invalid">
-        Вы ввели не верный логин или пароль!
-      </div>
+      <transition>
+        <div v-if="this.incorrectData === true" class="form__row form__invalid">
+          Вы ввели не верный логин или пароль!
+        </div>
+      </transition>
 
       <div class="form__group">
         <button class="form__button" type="submit">Войти в систему</button>
@@ -64,7 +70,7 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   setup() {

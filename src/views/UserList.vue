@@ -12,53 +12,55 @@
         <div class="table__column">Активные задачи</div>
         <div class="table__column">Действия</div>
       </div>
-      <div
-        v-for="user in this.userList"
-        :key="user.id"
-        class="table__row table__row--6"
-      >
-        <div class="table__column">
-          {{ user.firstName }} {{ user.secondName }}
+      <transition-group name="slide-fade">
+        <div
+          v-for="user in this.userList"
+          :key="user.id"
+          class="table__row table__row--6"
+        >
+          <div class="table__column">
+            {{ user.firstName }} {{ user.secondName }}
+          </div>
+          <div class="table__column">
+            <img
+              v-if="user.role === 'Неавторизованный пользователь'"
+              class="icon"
+              src="@/icons/unauthorized.png"
+              alt=""
+            />
+            <img
+              v-if="user.role === 'Пользователь'"
+              class="icon"
+              src="@/icons/user.png"
+              alt=""
+            />
+            <img
+              v-if="user.role === 'Администратор'"
+              class="icon"
+              src="@/icons/admin.png"
+              alt=""
+            />
+          </div>
+          <div class="table__column">{{ user.email }}</div>
+          <div class="table__column">{{ user.phone }}</div>
+          <div class="table__column">
+            {{ this.getActiveTasksNumber(user) }}
+          </div>
+          <div class="table__column">
+            <add-task-button
+              :taskList="taskList"
+              :userList="userList"
+              :target="user"
+            ></add-task-button>
+            <edit-user-button-vue
+              :taskList="taskList"
+              :userList="userList"
+              :target="user"
+            ></edit-user-button-vue>
+            <delete-user-button :target="user"></delete-user-button>
+          </div>
         </div>
-        <div class="table__column">
-          <img
-            v-if="user.role === 'Неавторизованный пользователь'"
-            class="icon"
-            src="@/icons/unauthorized.png"
-            alt=""
-          />
-          <img
-            v-if="user.role === 'Пользователь'"
-            class="icon"
-            src="@/icons/user.png"
-            alt=""
-          />
-          <img
-            v-if="user.role === 'Администратор'"
-            class="icon"
-            src="@/icons/admin.png"
-            alt=""
-          />
-        </div>
-        <div class="table__column">{{ user.email }}</div>
-        <div class="table__column">{{ user.phone }}</div>
-        <div class="table__column">
-          {{ this.getActiveTasksNumber(user) }}
-        </div>
-        <div class="table__column">
-          <add-task-button
-            :taskList="taskList"
-            :userList="userList"
-            :target="user"
-          ></add-task-button>
-          <edit-user-button-vue
-            :taskList="taskList"
-            :userList="userList"
-            :target="user"
-          ></edit-user-button-vue>
-          <delete-user-button :target="user"></delete-user-button>
-        </div>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>

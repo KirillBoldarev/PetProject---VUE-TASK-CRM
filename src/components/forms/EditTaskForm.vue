@@ -24,7 +24,7 @@
       <div class="form__group">
         <div class="form__column">
           <h2 class="form__title">Описание задачи:</h2>
-          <textarea
+          <textarea class="form__textbox"
             @blur="v$.description.$touch"
             v-model="description"
             name="task"
@@ -32,11 +32,13 @@
             cols="30"
             rows="10"
           ></textarea>
-          <small
-            v-if="v$.description.$dirty && v$.description.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
+          <transition>
+            <small
+              v-if="v$.description.$dirty && v$.description.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
       </div>
       <div class="form__group">

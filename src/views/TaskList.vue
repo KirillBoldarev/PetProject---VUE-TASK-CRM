@@ -49,7 +49,7 @@
             <div class="table__column">Действия</div>
           </div>
 
-          <TransitionGroup appear name="fade">
+          <TransitionGroup name="slide-fade">
             <div
               class="table__row table__row--5"
               v-for="task in this.filterSource(page.dataSource)"
