@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="main main__container">
     <header-layout :taskList="taskList" :userList="userList"></header-layout>
-    <main class="main">
+    <main>
       <router-view :taskList="taskList" :userList="userList"></router-view>
     </main>
     <footer-layout :taskList="taskList" :userList="userList"></footer-layout>
@@ -42,22 +42,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 5px;
-  min-height: 100%;
-  height: 100%;
-  max-height: 100%;
-}
-
-.main {
-  padding: 5px;
-  overflow-y: auto;
-}
-</style>

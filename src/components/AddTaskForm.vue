@@ -1,7 +1,7 @@
 <template>
-  <section id="addTaskForm" class="container">
-    <h2>Добавить задачу</h2>
-    <form class="form" @submit.prevent="this.createTask">
+  <section id="addTaskForm" class="form__container">
+    <h2 class="form__title">Добавить задачу</h2>
+    <form class="form__body" @submit.prevent="this.createTask">
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
@@ -12,7 +12,7 @@
       </div>
 
       <div class="form__group">
-        <div class="column">
+        <div class="form__column">
           <h3>Описание задачи:</h3>
           <textarea
             @blur="v$.description.$touch"
@@ -25,7 +25,7 @@
           ></textarea>
           <small
             v-if="v$.description.$dirty && v$.description.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
         </div>
@@ -103,53 +103,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-h2 {
-  text-align: center;
-}
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-
-  &__group {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-  }
-  &__input {
-    padding: 5px;
-  }
-  &__button {
-    padding: 15px;
-    font-size: 16px;
-  }
-  &__invalid {
-    color: red;
-    text-decoration: underline;
-  }
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-}
-.invalidData {
-  color: red;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: underline;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-</style>

@@ -1,27 +1,29 @@
 <template>
-  <section id="loginForm" class="container">
-    <h2>Редактирование задачи</h2>
-    <form class="form" @submit.prevent="this.editTask">
-      <div class="form__group">
-        <label class="form__label" for="email">Выберите отправителя:</label>
-        <select v-model="sender" name="sender" id="sender">
-          <option v-for="user in userList" :key="user.id" :value="user.id">
-            {{ user.firstName }} {{ user.secondName }}
-          </option>
-        </select>
+  <section id="loginForm" class="form__container">
+    <h3 class="form__title">Редактирование задачи</h3>
+    <form class="form__body" @submit.prevent="this.editTask">
+      <div class="form__row">
+        <div class="form__group">
+          <label class="form__label" for="email">Выберите отправителя:</label>
+          <select v-model="sender" name="sender" id="sender">
+            <option v-for="user in userList" :key="user.id" :value="user.id">
+              {{ user.firstName }} {{ user.secondName }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form__group">
+          <label class="form__label" for="email">Выберите получателя:</label>
+          <select v-model="executor" name="executor" id="executor">
+            <option v-for="user in userList" :key="user.id" :value="user.id">
+              {{ user.firstName }} {{ user.secondName }}
+            </option>
+          </select>
+        </div>
       </div>
-
       <div class="form__group">
-        <label class="form__label" for="email">Выберите получателя:</label>
-        <select v-model="executor" name="executor" id="executor">
-          <option v-for="user in userList" :key="user.id" :value="user.id">
-            {{ user.firstName }} {{ user.secondName }}
-          </option>
-        </select>
-      </div>
-      <div class="form__group">
-        <div class="column">
-          <h3>Описание задачи:</h3>
+        <div class="form__column">
+          <h2 class="form__title">Описание задачи:</h2>
           <textarea
             @blur="v$.description.$touch"
             v-model="description"
@@ -32,7 +34,7 @@
           ></textarea>
           <small
             v-if="v$.description.$dirty && v$.description.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
         </div>
@@ -128,58 +130,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  max-height: 750px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-  max-height: 100%;
-  align-items: center;
-  justify-content: center;
-
-  &__group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-  }
-  &__input {
-    padding: 5px;
-  }
-  &__button {
-    padding: 15px;
-    font-size: 16px;
-  }
-  &__invalid {
-    color: red;
-    text-decoration: underline;
-  }
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.invalidData {
-  color: red;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: underline;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-</style>

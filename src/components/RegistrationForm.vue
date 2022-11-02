@@ -1,10 +1,10 @@
 <template>
-  <section id="registrationForm" class="container-form">
+  <section id="registrationForm" class="form__container">
     <h2>Регистрация пользователя!</h2>
     <p>Введите ваши персональные данные:</p>
-    <form class="form" @submit.prevent="this.registerUser">
+    <form class="form__body" @submit.prevent="this.registerUser">
       <div class="form__group">
-        <div class="row">
+        <div class="form__row">
           <label class="form__label" for="firstName">Имя</label>
           <input
             @blur="v$.firstName.$touch"
@@ -17,14 +17,14 @@
         <div class="row">
           <small
             v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
         </div>
       </div>
 
       <div class="form__group">
-        <div class="row">
+        <div class="form__row">
           <label class="form__label" for="secondName">Фамилия</label>
           <input
             @blur="v$.secondName.$touch"
@@ -34,17 +34,17 @@
             name="secondName"
           />
         </div>
-        <div class="row">
+        <div class="form__row">
           <small
             v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
         </div>
       </div>
 
       <div class="form__group">
-        <div class="row">
+        <div class="form__row">
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
@@ -54,22 +54,22 @@
             name="email"
           />
         </div>
-        <div class="row">
+        <div class="form__row">
           <small
             v-if="v$.email.$dirty && v$.email.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
           <small
             v-else-if="v$.email.$dirty && v$.email.email.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Некорректный формат электронной почты
           </small>
         </div>
       </div>
 
       <div class="form__group">
-        <div class="row">
+        <div class="form__row">
           <label class="form__label" for="phone">Номер телефона</label>
           <input
             @blur="v$.phone.$touch"
@@ -79,22 +79,22 @@
             name="phone"
           />
         </div>
-        <div class="row">
+        <div class="form__row">
           <small
             v-if="v$.phone.$dirty && v$.phone.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
           <small
             v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Некорректный формат телефона
           </small>
         </div>
       </div>
 
       <div class="form__group">
-        <div class="row">
+        <div class="form__row">
           <label class="form__label" for="password">Пароль</label>
           <input
             @blur="v$.password.$touch"
@@ -104,15 +104,15 @@
             name="password"
           />
         </div>
-        <div class="row">
+        <div class="form__row">
           <small
             v-if="v$.password.$dirty && v$.password.required.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Поле обязательно для заполнения
           </small>
           <small
             v-if="v$.password.$dirty && v$.password.minLength.$invalid"
-            class="invalidData"
+            class="form__invalid"
             >Введите не менее {{ v$.password.minLength.$params.min }} символов
           </small>
         </div>
@@ -155,7 +155,7 @@ export default {
       secondName: { required },
       email: {
         required,
-        email
+        email,
       },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
@@ -207,62 +207,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.container-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-h2 {
-  text-align: center;
-  margin: 5px;
-}
-p {
-  margin: 0px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-  &__group {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-  }
-  &__input {
-    padding: 5px;
-  }
-  &__button {
-    padding: 15px;
-    font-size: 16px;
-  }
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.invalidData {
-  color: red;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: underline;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-</style>

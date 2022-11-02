@@ -51,26 +51,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--mini {
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-  }
-}
-</style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <h2 @click="info">Управление задачами</h2>
+  <div class="page">
+    <div class="page__header">
+      <h2 class="page__title">Управление задачами</h2>
       <add-task-button
         :taskList="taskList"
         :userList="userList"
@@ -9,7 +9,7 @@
       ></add-task-button>
     </div>
 
-    <div class="navigation">
+    <div class="page__navigation">
       <tabs
         :tabs="pages"
         :selectedTab="currentPage"
@@ -17,52 +17,47 @@
       ></tabs>
     </div>
 
-    <div v-for="page in pages" :key="page.name">
+    <div class="page__body" v-for="page in pages" :key="page.name">
       <template v-if="this.currentPage === page.name">
-        <div class="tasklist">
-          <h3 class="tasklist__title">{{ page.label }}</h3>
-          <div class="tasklist__filter">
-            <label> Фильтровать по:</label>
-            <select
-              v-model="searchParams"
-              name="searchParams"
-              id="searchParams"
+        <h3 class="page__title">{{ page.label }}</h3>
+        <div class="page__row filter">
+          <label class="filter__label"> Фильтровать по:</label>
+          <select class="filter__select" v-model="searchParams" name="searchParams" id="searchParams">
+            <option class="filter__option"
+              v-for="value in this.$options.SEARCH_PARAMS_LIST"
+              :key="value"
+              :value="value.name"
             >
-              <option
-                v-for="value in this.$options.SEARCH_PARAMS_LIST"
-                :key="value"
-                :value="value.name"
-              >
-                {{ value.label }}
-              </option>
-            </select>
-            <input v-model="this.searchValue" type="text" />
-          </div>
-          <div class="tasklist__record">
-            <div class="tasklist__record-item">Состояние</div>
-            <div class="tasklist__record-item">Отправитель</div>
-            <div class="tasklist__record-item">Исполнитель</div>
-            <div class="tasklist__record-item">Описание задачи</div>
-            <div class="tasklist__record-item">Действия</div>
+              {{ value.label }}
+            </option>
+          </select>
+          <input class="filter__value" v-model="this.searchValue" type="text" />
+        </div>
+
+        <div class="table">
+          <div class="table__row table__row--5">
+            <div class="table__column">Состояние</div>
+            <div class="table__column">Отправитель</div>
+            <div class="table__column">Исполнитель</div>
+            <div class="table__column">Описание задачи</div>
+            <div class="table__column">Действия</div>
           </div>
           <div
+            class="table__row table__row--5"
             v-for="task in this.filterSource(page.dataSource)"
             :key="task.id"
-            class="tasklist__record"
           >
-            <div class="tasklist__record-item">
-              <complete-task-button
-                :target="task"
-              ></complete-task-button>
+            <div class="table__column">
+              <complete-task-button :target="task"></complete-task-button>
             </div>
-            <div class="tasklist__record-item">
+            <div class="table__column">
               {{ task.senderFullName }}
             </div>
-            <div class="tasklist__record-item">
+            <div class="table__column">
               {{ task.executorFullName }}
             </div>
-            <div class="tasklist__record-item">{{ task.description }}</div>
-            <div class="tasklist__record-item">
+            <div class="table__column">{{ task.description }}</div>
+            <div class="table__column">
               <div>
                 <edit-task-button
                   :target="task"
@@ -71,9 +66,7 @@
                 ></edit-task-button>
               </div>
               <div>
-                <delete-task-button
-                  :target="task"
-                ></delete-task-button>
+                <delete-task-button :target="task"></delete-task-button>
               </div>
             </div>
           </div>
@@ -211,71 +204,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.tasklist {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  &__title {
-    text-align: center;
-    margin: 10px 0px;
-    padding: 0;
-  }
-
-  &__filter {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-  }
-
-  &__record {
-    display: grid;
-    grid-template-columns: 85px 1fr 1fr 3fr 130px;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-  }
-
-  &__record-item {
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
-    min-height: 100%;
-    gap: 5px;
-
-    &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 25px;
-      border-bottom-right-radius: 25px;
-    }
-  }
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
-.navigation {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-</style>

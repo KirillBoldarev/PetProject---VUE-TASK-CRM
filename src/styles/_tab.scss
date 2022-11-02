@@ -1,0 +1,17 @@
+.tab {
+  &__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+  }
+
+  &__navigation-item {
+    padding: 5px;
+  }
+
+  &__selected {
+    color: red;
+    text-decoration: underline;
+  }
+}

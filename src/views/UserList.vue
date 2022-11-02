@@ -1,24 +1,26 @@
 <template>
-  <div class="container">
-    <h2>Управление пользователями</h2>
-    <div class="userlist">
-      <div class="userlist__record">
-        <div class="userlist__record-item">Имя</div>
-        <div class="userlist__record-item">Роль</div>
-        <div class="userlist__record-item">Электронная почта</div>
-        <div class="userlist__record-item">Телефон</div>
-        <div class="userlist__record-item">Активные задачи</div>
-        <div class="userlist__record-item">Действия</div>
+  <div class="page">
+    <div class="page__header">
+      <h2 class="page__title">Управление пользователями</h2>
+    </div>
+    <div class="table">
+      <div class="table__row table__row--6">
+        <div class="table__column">Имя</div>
+        <div class="table__column">Роль</div>
+        <div class="table__column">Электронная почта</div>
+        <div class="table__column">Телефон</div>
+        <div class="table__column">Активные задачи</div>
+        <div class="table__column">Действия</div>
       </div>
       <div
         v-for="user in this.userList"
         :key="user.id"
-        class="userlist__record"
+        class="table__row table__row--6"
       >
-        <div class="userlist__record-item">
+        <div class="table__column">
           {{ user.firstName }} {{ user.secondName }}
         </div>
-        <div class="userlist__record-item">
+        <div class="table__column">
           <img
             v-if="user.role === 'Неавторизованный пользователь'"
             class="icon"
@@ -38,12 +40,12 @@
             alt=""
           />
         </div>
-        <div class="userlist__record-item">{{ user.email }}</div>
-        <div class="userlist__record-item">{{ user.phone }}</div>
-        <div class="userlist__record-item">
+        <div class="table__column">{{ user.email }}</div>
+        <div class="table__column">{{ user.phone }}</div>
+        <div class="table__column">
           {{ this.getActiveTasksNumber(user) }}
         </div>
-        <div class="userlist__record-item">
+        <div class="table__column">
           <add-task-button
             :taskList="taskList"
             :userList="userList"
@@ -54,9 +56,7 @@
             :userList="userList"
             :target="user"
           ></edit-user-button-vue>
-          <delete-user-button
-            :target="user"
-          ></delete-user-button>
+          <delete-user-button :target="user"></delete-user-button>
         </div>
       </div>
     </div>
@@ -102,61 +102,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-.userlist {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  &__record {
-    display: grid;
-    grid-template-columns: 1fr 45px 1fr 1fr 1fr 155px;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-  }
-
-  &__record-item {
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
-    min-height: 100%;
-
-    &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 25px;
-      border-bottom-right-radius: 25px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-  }
-}
-
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-}
-</style>

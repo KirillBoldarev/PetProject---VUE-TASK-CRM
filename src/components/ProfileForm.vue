@@ -1,9 +1,9 @@
 <template>
-  <section id="profileForm" class="container">
-    <div class="header">
-      <h2 class="header__title">Профиль пользователя</h2>
-      <div class="header__tooltipBox">
-        <div class="header__tooltipItem">
+  <section id="profileForm" class="form__container">
+    <div class="form__header">
+      <h2 class="form__title">Профиль пользователя</h2>
+      <div class="form__tools">
+        <div class="form__tools-item">
           <img
             @click="this.editMode = !this.editMode"
             class="icon"
@@ -15,7 +15,7 @@
         <!--         <div class="header__tooltipItem">
           <img
             @click="this.taskListMode = !this.taskListMode"
-            class="icon"
+            class="icon""
             src="@/icons/task.png"
             alt=""
           />
@@ -24,10 +24,10 @@
       </div>
     </div>
 
-    <div class="main">
+    <div class="form__main">
       <h3>Ваши персональные данные:</h3>
-      <form class="form" @submit.prevent="this.editUser">
-        <div class="row">
+      <form class="form__body" @submit.prevent="this.editUser">
+        <div class="form__row">
           <div class="form__group">
             <label class="form__label" for="firtstName">Имя</label>
             <input
@@ -38,10 +38,10 @@
               name="firstName"
               :disabled="editMode === false"
             />
-            <div class="row">
+            <div class="form__row">
               <small
                 v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Поле обязательно для заполнения
               </small>
             </div>
@@ -57,17 +57,17 @@
               name="secondName"
               :disabled="editMode === false"
             />
-            <div class="row">
+            <div class="form__row">
               <small
                 v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Поле обязательно для заполнения
               </small>
             </div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="form__row">
           <div class="form__group">
             <label class="form__label" for="email">Электронная почта</label>
             <input
@@ -78,15 +78,15 @@
               name="email"
               :disabled="editMode === false"
             />
-            <div class="row">
+            <div class="form__row">
               <small
                 v-if="v$.email.$dirty && v$.email.required.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Поле обязательно для заполнения
               </small>
               <small
                 v-else-if="v$.email.$dirty && v$.email.email.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Некорректный формат электронной почты
               </small>
             </div>
@@ -101,15 +101,15 @@
               name="phone"
               :disabled="editMode === false"
             />
-            <div class="row">
+            <div class="form__row">
               <small
                 v-if="v$.phone.$dirty && v$.phone.required.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Поле обязательно для заполнения
               </small>
               <small
                 v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
-                class="invalidData"
+                class="form__invalid"
                 >Некорректный формат телефона
               </small>
             </div>
@@ -126,15 +126,15 @@
             name="password"
             :disabled="editMode === false"
           />
-          <div class="row">
+          <div class="form__row">
             <small
               v-if="v$.password.$dirty && v$.password.required.$invalid"
-              class="invalidData"
+              class="form__invalid"
               >Поле обязательно для заполнения
             </small>
             <small
               v-if="v$.password.$dirty && v$.password.minLength.$invalid"
-              class="invalidData"
+              class="form__invalid"
               >Введите не менее {{ v$.password.minLength.$params.min }} символов
             </small>
           </div>
@@ -171,7 +171,7 @@ export default {
       phone: this.$store.getters.authenticatedUser.phone,
       password: this.$store.getters.authenticatedUser.password,
       id: this.$store.getters.authenticatedUser.id,
-      role:this.$store.getters.authenticatedUser.role,
+      role: this.$store.getters.authenticatedUser.role,
 
       isOpenTaskList: false,
       editMode: false,
@@ -230,112 +230,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  max-height: 750px;
-}
-
-.header {
-  display: flex;
-  flex: 0 0 20%;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-
-  &__tooltipBox {
-    display: flex;
-    flex-direction: row;
-    flex: 0 0 auto;
-    gap: 20px;
-  }
-
-  &__tooltipItem {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-  }
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 20%;
-  gap: 20px;
-  overflow-y: scroll;
-  padding: 5px;
-  max-height: 600px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-  max-height: 100%;
-
-  &__group {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-  }
-  &__input {
-    padding: 5px;
-  }
-  &__button {
-    padding: 15px;
-    font-size: 16px;
-  }
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.icon {
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--mini {
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-  }
-}
-.invalidData {
-  color: red;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: underline;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-</style>
