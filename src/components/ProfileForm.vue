@@ -25,7 +25,7 @@
     </div>
 
     <div class="form__main">
-      <h3>Ваши персональные данные:</h3>
+      <h3 class="form__title">Ваши персональные данные:</h3>
       <form class="form__body" @submit.prevent="this.editUser">
         <div class="form__row">
           <div class="form__group">

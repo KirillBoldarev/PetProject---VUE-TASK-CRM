@@ -1,7 +1,7 @@
 <template>
   <section id="registrationForm" class="form__container">
-    <h2>Регистрация пользователя!</h2>
-    <p>Введите ваши персональные данные:</p>
+    <h2 class="form__title">Регистрация пользователя!</h2>
+    <strong> Введите ваши персональные данные :</strong>
     <form class="form__body" @submit.prevent="this.registerUser">
       <div class="form__group">
         <div class="form__row">

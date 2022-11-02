@@ -1,7 +1,7 @@
 <template>
   <section id="loginForm" class="form__container">
     <h2 class="">Войти в систему!</h2>
-    <p>Введите ваши персональные данные:</p>
+    <strong> Введите ваши персональные данные :</strong>
     <form class="form__body" @submit.prevent="this.authenticateUser">
       <div class="form__group">
         <div class="form__row">
