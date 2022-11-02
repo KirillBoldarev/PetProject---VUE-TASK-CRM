@@ -1,8 +1,5 @@
 .main {
   &__container {
-    /*   display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
     display: grid;
     grid-template-rows: 1fr 5fr 1fr;
     max-width: 1400px;
@@ -11,8 +8,10 @@
     gap: 10px;
     overflow: hidden;
   }
-
+  &__header {
+  }
   &__body {
-    overflow-y: auto;
+  }
+  &__footer {
   }
 }

@@ -1,10 +1,18 @@
 <template>
   <div class="main main__container">
-    <header-layout :taskList="taskList" :userList="userList"></header-layout>
+    <header-layout
+      class="main__header"
+      :taskList="taskList"
+      :userList="userList"
+    ></header-layout>
     <main>
-      <router-view :taskList="taskList" :userList="userList"></router-view>
+      <router-view
+        class="main__body"
+        :taskList="taskList"
+        :userList="userList"
+      ></router-view>
     </main>
-    <footer-layout :taskList="taskList" :userList="userList"></footer-layout>
+    <footer-layout class="main__footer"></footer-layout>
   </div>
 </template>
 
