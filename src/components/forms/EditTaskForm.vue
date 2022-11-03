@@ -1,7 +1,12 @@
 <template>
   <section id="loginForm" class="form__container">
     <h3 class="form__title">Редактирование задачи</h3>
-    <form class="form__body" @submit.prevent="this.editTask">
+    <form class="form__body" @submit.prevent="confirmation">
+      <confirm-dialog
+        :isDialogOpen="isDialogOpen"
+        @confirm="this.editTask"
+        @close="isDialogOpen = false"
+      ></confirm-dialog>
       <div class="form__row">
         <div class="form__group">
           <label class="form__label" for="email">Выберите отправителя:</label>
@@ -11,7 +16,7 @@
             </option>
           </select>
         </div>
-  
+
         <div class="form__group">
           <label class="form__label" for="email">Выберите получателя:</label>
           <select v-model="executor" name="executor" id="executor">
@@ -24,7 +29,8 @@
       <div class="form__group">
         <div class="form__column">
           <h2 class="form__title">Описание задачи:</h2>
-          <textarea class="form__textbox"
+          <textarea
+            class="form__textbox"
             @blur="v$.description.$touch"
             v-model="description"
             name="task"
@@ -58,6 +64,7 @@
 
 <script>
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -71,6 +78,7 @@ export default {
   name: "EditTaskForm",
   components: {
     CompleteTaskAction,
+    ConfirmDialog,
   },
   props: {
     target: {
@@ -89,6 +97,7 @@ export default {
 
   data() {
     return {
+      isDialogOpen: false,
       executor: this.target.executorId,
       sender: this.target.senderId,
       description: this.target.description,
@@ -111,6 +120,9 @@ export default {
       }
       this.$store.commit("editTask", this.changedData);
       this.$emit("close");
+    },
+    confirmation() {
+      this.isDialogOpen = true;
     },
   },
   computed: {

@@ -10,7 +10,7 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 export default {
-  name: "DeleteTaskButton",
+  name: "DeleteTaskAction",
   components: { ConfirmDialog },
 
   props: {

@@ -24,9 +24,9 @@ export default {
   },
   data() {
     return {
-      isModalOpen: false,
     };
   },
+
 
   methods: {
     confirm() {

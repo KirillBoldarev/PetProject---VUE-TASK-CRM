@@ -72,7 +72,6 @@
               </div>
               <div class="table__column">{{ task.description }}</div>
               <div class="table__column">
-
                 <button-with-modal-form :image="require('@/icons/edit.png')">
                   <template #formSlot="{ closeModal }">
                     <edit-task-form

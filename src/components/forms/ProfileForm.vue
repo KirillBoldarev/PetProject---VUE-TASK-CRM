@@ -26,7 +26,14 @@
 
     <div class="form__main">
       <h3 class="form__title">Ваши персональные данные:</h3>
-      <form class="form__body" @submit.prevent="this.editUser">
+      <form class="form__body" @submit.prevent="confirmation">
+
+        <confirm-dialog
+          :isDialogOpen="isDialogOpen"
+          @confirm="this.editUser"
+          @close="isDialogOpen = false"
+        ></confirm-dialog>
+
         <div class="form__row">
           <div class="form__group">
             <label class="form__label" for="firtstName">Имя</label>
@@ -144,7 +151,8 @@
               <small
                 v-if="v$.password.$dirty && v$.password.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+                >Введите не менее
+                {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
           </div>
@@ -159,12 +167,13 @@
 </template>
 
 <script>
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
 export default {
-  components: {},
+  components: { ConfirmDialog },
   name: "ProfileForm",
 
   setup() {
@@ -175,6 +184,7 @@ export default {
 
   data() {
     return {
+      isDialogOpen: false,
       firstName: this.$store.getters.authenticatedUser.firstName,
       secondName: this.$store.getters.authenticatedUser.secondName,
       email: this.$store.getters.authenticatedUser.email,
@@ -221,12 +231,11 @@ export default {
       }
       this.$store.commit("editUser", this.changedData);
       this.$store.commit("updateAuthenticated");
-      this.closeModal;
       this.$emit("close");
     },
-    closeModal() { 
-      this.$emit("close");
-    }
+    confirmation() {
+      this.isDialogOpen = true;
+    },
   },
 
   computed: {
