@@ -2,11 +2,15 @@
   <div class="page">
     <div class="page__header">
       <h2 class="page__title">Управление задачами</h2>
-      <add-task-button
+      <add-task-action
         :taskList="taskList"
         :userList="userList"
         :target="this.$store.state.authentication.authenticatedUser"
-      ></add-task-button>
+      ></add-task-action>
+      <my-button label="Регистрация">
+        <template #formSlot><registration-form></registration-form></template>
+      </my-button>
+
     </div>
 
     <div class="page__navigation">
@@ -49,14 +53,14 @@
             <div class="table__column">Действия</div>
           </div>
 
-          <TransitionGroup name="slide-fade">
+          <transition-group name="slide-fade">
             <div
               class="table__row table__row--5"
               v-for="task in this.filterSource(page.dataSource)"
               :key="task.id"
             >
               <div class="table__column">
-                <complete-task-button :target="task"></complete-task-button>
+                <complete-task-action :target="task"></complete-task-action>
               </div>
               <div class="table__column">
                 {{ task.senderFullName }}
@@ -66,19 +70,15 @@
               </div>
               <div class="table__column">{{ task.description }}</div>
               <div class="table__column">
-                <div>
-                  <edit-task-button
-                    :target="task"
-                    :userList="userList"
-                    :taskList="taskList"
-                  ></edit-task-button>
-                </div>
-                <div>
-                  <delete-task-button :target="task"></delete-task-button>
-                </div>
+                <edit-task-action
+                  :target="task"
+                  :userList="userList"
+                  :taskList="taskList"
+                ></edit-task-action>
+                <delete-task-action :target="task"></delete-task-action>
               </div>
             </div>
-          </TransitionGroup>
+          </transition-group>
         </div>
       </template>
     </div>
@@ -86,24 +86,25 @@
 </template>
 
 <script>
-import AddTaskButton from "@/components/AddTaskButton.vue";
-import DeleteTaskButton from "@/components/DeleteTaskButton.vue";
-import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
-import EditTaskButton from "@/components/EditTaskButton.vue";
+import AddTaskAction from "@/components/actions/AddTaskAction.vue";
+import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
+import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
+import EditTaskAction from "@/components/actions/EditTaskAction.vue";
 import Tabs from "@/components/Tabs.vue";
-import { Transition, TransitionGroup } from "vue";
+import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import RegistrationForm from "@/components/forms/RegistrationForm.vue";
 
 export default {
   name: "TaskList",
 
   components: {
-    AddTaskButton,
-    DeleteTaskButton,
-    CompleteTaskButton,
-    EditTaskButton,
+    AddTaskAction,
+    DeleteTaskAction,
+    CompleteTaskAction,
+    EditTaskAction,
     Tabs,
-    Transition,
-    TransitionGroup,
+    ButtonWithModalForm,
+    RegistrationForm,
   },
 
   props: {

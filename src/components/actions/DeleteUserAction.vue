@@ -1,5 +1,5 @@
 <template>
-  <img @click="deleteUser" class="icon" src="@/icons/trash.png" alt="" />
+  <img @click="deleteUser" class="icon" src="@/icons/trash.png" alt=""/>
 </template>
 
 <script>

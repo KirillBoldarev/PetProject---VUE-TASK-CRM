@@ -1,5 +1,5 @@
 <template>
-  <button @click="openModal()" class="button--header">Выйти из системы</button>
+  <button @click="openModal" class="button--header">Выйти из системы</button>
   <modal :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #ModalSlot="{ closeModal }">
       <confirm-form @close="closeModal" @confirm="logout"></confirm-form>

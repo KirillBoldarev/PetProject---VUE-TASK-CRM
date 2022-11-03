@@ -43,10 +43,10 @@
       </div>
       <div class="form__group">
         <label class="form__label" for="">Завершение задачи :</label>
-        <complete-task-button
+        <complete-task-action
           :target="this.target"
           :taskList="taskList"
-        ></complete-task-button>
+        ></complete-task-action>
       </div>
 
       <div class="form__group">
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import CompleteTaskButton from "@/components/CompleteTaskButton.vue";
+import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -70,7 +70,7 @@ export default {
 
   name: "EditTaskForm",
   components: {
-    CompleteTaskButton,
+    CompleteTaskAction,
   },
   props: {
     target: {

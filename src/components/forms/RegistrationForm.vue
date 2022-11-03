@@ -130,9 +130,6 @@
 
       <div class="form__group">
         <button class="form__button" type="submit">Зарегистрироваться!</button>
-        <a @click="this.$emit('changeToLogin')" href="#" class="switch"
-          >У меня уже есть аккаунт!</a
-        >
       </div>
     </form>
   </section>

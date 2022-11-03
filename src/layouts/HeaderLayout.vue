@@ -31,10 +31,17 @@
       class="header__row"
       v-if="this.$store.getters.checkForAuthenticate === true"
     >
-      <profile-button
-        :userList="userList"
-        :taskList="taskList"
-      ></profile-button>
+      <button-with-modal-form label="Профиль пользователя">
+        <template #formSlot="{ closeModal }"
+          ><profile-form
+            @close="closeModal"
+            :userList="userList"
+            :taskList="taskList"
+          >
+          </profile-form
+        ></template>
+      </button-with-modal-form>
+
       <logout-button></logout-button>
     </div>
 
@@ -42,7 +49,18 @@
       class="header__row"
       v-if="this.$store.getters.checkForAuthenticate === false"
     >
-      <authorization-buttons :userList="userList"></authorization-buttons>
+      <button-with-modal-form label="Войти">
+        <template #formSlot="{ closeModal }">
+          <login-form @close="closeModal" :userList="userList"></login-form>
+        </template>
+      </button-with-modal-form>
+
+      <button-with-modal-form label="Зарегистрироваться">
+        <template #formSlot="{ closeModal }">
+          <regisitration-form @close="closeModal" :userList="userList">
+          </regisitration-form>
+        </template>
+      </button-with-modal-form>
     </div>
   </header>
 </template>
@@ -50,17 +68,19 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import LogoutButton from "@/components/LogoutButton.vue";
-import ProfileButton from "@/components/ProfileButton.vue";
-import AuthorizationButtons from "@/components/AuthorizationButtons.vue";
-import { Transition } from "vue";
+import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import ProfileForm from "@/components/forms/ProfileForm.vue";
+import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
+import LoginForm from "@/components/forms/LoginForm.vue";
 
 export default {
   components: {
     Modal,
     LogoutButton,
-    ProfileButton,
-    AuthorizationButtons,
-    Transition,
+    ButtonWithModalForm,
+    ProfileForm,
+    RegisitrationForm,
+    LoginForm,
   },
   name: "header-layout",
 

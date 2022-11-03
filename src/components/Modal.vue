@@ -1,8 +1,8 @@
 <template>
   <teleport to="#modal">
-    <Transition name="bounce">
+    <transition name="bounce">
       <div
-        @click="this.closeModal()"
+        @click="this.closeModal"
         v-if="isOpen === true"
         class="modal__backdrop"
       >
@@ -11,7 +11,7 @@
           </slot>
         </div>
       </div>
-    </Transition>
+    </transition>
   </teleport>
 </template>
 

@@ -221,8 +221,12 @@ export default {
       }
       this.$store.commit("editUser", this.changedData);
       this.$store.commit("updateAuthenticated");
+      this.closeModal;
       this.$emit("close");
     },
+    closeModal() { 
+      this.$emit("close");
+    }
   },
 
   computed: {

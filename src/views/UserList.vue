@@ -47,17 +47,17 @@
             {{ this.getActiveTasksNumber(user) }}
           </div>
           <div class="table__column">
-            <add-task-button
+            <add-task-action
               :taskList="taskList"
               :userList="userList"
               :target="user"
-            ></add-task-button>
-            <edit-user-button-vue
+            ></add-task-action>
+            <edit-user-action
               :taskList="taskList"
               :userList="userList"
               :target="user"
-            ></edit-user-button-vue>
-            <delete-user-button :target="user"></delete-user-button>
+            ></edit-user-action>
+            <delete-user-action :target="user"></delete-user-action>
           </div>
         </div>
       </transition-group>
@@ -67,11 +67,11 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import AddTaskButton from "@/components/AddTaskButton.vue";
-import DeleteUserButton from "@/components/DeleteUserButton.vue";
-import EditUserButtonVue from "@/components/EditUserButton.vue";
+import AddTaskAction from "@/components/actions/AddTaskAction.vue";
+import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
+import EditUserAction from "@/components/actions/EditUserAction.vue";
 export default {
-  components: { Modal, AddTaskButton, DeleteUserButton, EditUserButtonVue },
+  components: { Modal, AddTaskAction, DeleteUserAction, EditUserAction },
 
   props: {
     taskList: {
