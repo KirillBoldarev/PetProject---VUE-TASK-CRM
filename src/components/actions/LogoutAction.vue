@@ -1,8 +1,8 @@
 <template>
-  <img @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
+  <button @click="confirmation" class="button--header">Выйти из системы</button>
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
-    @confirm="deleteUser"
+    @confirm="logout"
     @close="isDialogOpen = false"
   ></confirm-dialog>
 </template>
@@ -10,15 +10,7 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 export default {
-  name: "DeleteUserButton",
   components: { ConfirmDialog },
-
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
-  },
 
   data() {
     return {
@@ -27,14 +19,13 @@ export default {
   },
 
   methods: {
-    deleteUser() {
-      this.$store.commit("deleteUser", this.target);
+    logout() {
+      this.$store.commit("logout");
+      this.$router.push("/");
     },
-    confirmation() { 
+    confirmation() {
       this.isDialogOpen = true;
-    }
+    },
   },
-
-  computed: {},
 };
 </script>

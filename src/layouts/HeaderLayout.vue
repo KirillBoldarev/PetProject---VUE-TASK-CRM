@@ -42,7 +42,7 @@
         ></template>
       </button-with-modal-form>
 
-      <logout-button></logout-button>
+      <logout-action></logout-action>
     </div>
 
     <div
@@ -67,20 +67,22 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import LogoutButton from "@/components/LogoutButton.vue";
+import LogoutAction from "@/components/actions/LogoutAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import ProfileForm from "@/components/forms/ProfileForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
+import ConfirmDialog from "@/components/ConfirmDialog.vue"
 
 export default {
   components: {
     Modal,
-    LogoutButton,
+    LogoutAction,
     ButtonWithModalForm,
     ProfileForm,
     RegisitrationForm,
     LoginForm,
+    ConfirmDialog
   },
   name: "header-layout",
 

@@ -47,16 +47,27 @@
             {{ this.getActiveTasksNumber(user) }}
           </div>
           <div class="table__column">
-            <add-task-action
-              :taskList="taskList"
-              :userList="userList"
-              :target="user"
-            ></add-task-action>
-            <edit-user-action
-              :taskList="taskList"
-              :userList="userList"
-              :target="user"
-            ></edit-user-action>
+            <button-with-modal-form :image="require('@/icons/plus.png')">
+              <template #formSlot="{ closeModal }">
+                <add-task-form
+                  @close="closeModal"
+                  :taskList="taskList"
+                  :userList="userList"
+                  :target="user"
+                ></add-task-form>
+              </template>
+            </button-with-modal-form>
+
+            <button-with-modal-form :image="require('@/icons/edit.png')">
+              <template #formSlot="{ closeModal }">
+                <edit-user-form
+                  @close="closeModal"
+                  :taskList="taskList"
+                  :userList="userList"
+                  :target="user"
+                ></edit-user-form>
+              </template>
+            </button-with-modal-form>
             <delete-user-action :target="user"></delete-user-action>
           </div>
         </div>
@@ -67,11 +78,19 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-import AddTaskAction from "@/components/actions/AddTaskAction.vue";
 import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
-import EditUserAction from "@/components/actions/EditUserAction.vue";
+import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import AddTaskForm from "@/components/forms/AddTaskForm.vue";
+import EditUserForm from "@/components/forms/EditUserForm.vue";
+
 export default {
-  components: { Modal, AddTaskAction, DeleteUserAction, EditUserAction },
+  components: {
+    Modal,
+    DeleteUserAction,
+    ButtonWithModalForm,
+    AddTaskForm,
+    EditUserForm,
+  },
 
   props: {
     taskList: {
@@ -103,4 +122,3 @@ export default {
   watch: {},
 };
 </script>
-
