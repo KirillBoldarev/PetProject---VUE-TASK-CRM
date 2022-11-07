@@ -100,6 +100,8 @@ import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
+import AddTaskForm from "@/components/forms/AddTaskForm.vue";
+import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 
 export default {
   name: "TaskList",

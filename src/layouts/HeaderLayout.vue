@@ -63,17 +63,17 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import ProfileForm from "@/components/forms/ProfileForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
+import ConfirmDialog from "@/components/ConfirmDialog.vue"
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 
 export default {
   components: {
     Modal,
-    LogoutAction,
+    LogoutButton,
     ButtonWithModalForm,
     ProfileForm,
     RegisitrationForm,
     LoginForm,
-    ConfirmDialog,
   },
   name: "header-layout",
 
