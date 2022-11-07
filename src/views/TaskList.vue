@@ -2,15 +2,17 @@
   <div class="page">
     <div class="page__header">
       <h2 class="page__title">Управление задачами</h2>
-      <add-task-action
-        :taskList="taskList"
-        :userList="userList"
-        :target="this.$store.state.authentication.authenticatedUser"
-      ></add-task-action>
-      <my-button label="Регистрация">
-        <template #formSlot><registration-form></registration-form></template>
-      </my-button>
 
+      <button-with-modal-form :image="require('@/icons/plus.png')">
+        <template #formSlot="{ closeModal }">
+          <add-task-form
+            @close="closeModal"
+            :taskList="taskList"
+            :userList="userList"
+            :target="this.$store.state.authentication.authenticatedUser"
+          ></add-task-form>
+        </template>
+      </button-with-modal-form>
     </div>
 
     <div class="page__navigation">
@@ -70,11 +72,17 @@
               </div>
               <div class="table__column">{{ task.description }}</div>
               <div class="table__column">
-                <edit-task-action
-                  :target="task"
-                  :userList="userList"
-                  :taskList="taskList"
-                ></edit-task-action>
+                <button-with-modal-form :image="require('@/icons/edit.png')">
+                  <template #formSlot="{ closeModal }">
+                    <edit-task-form
+                      @close="closeModal"
+                      :taskList="taskList"
+                      :userList="userList"
+                      :target="task"
+                    ></edit-task-form>
+                  </template>
+                </button-with-modal-form>
+
                 <delete-task-action :target="task"></delete-task-action>
               </div>
             </div>
@@ -86,25 +94,25 @@
 </template>
 
 <script>
-import AddTaskAction from "@/components/actions/AddTaskAction.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
-import EditTaskAction from "@/components/actions/EditTaskAction.vue";
 import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import RegistrationForm from "@/components/forms/RegistrationForm.vue";
+import AddTaskForm from "@/components/forms/AddTaskForm.vue";
+import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 
 export default {
   name: "TaskList",
 
   components: {
-    AddTaskAction,
     DeleteTaskAction,
     CompleteTaskAction,
-    EditTaskAction,
     Tabs,
     ButtonWithModalForm,
     RegistrationForm,
+    AddTaskForm,
+    EditTaskForm,
   },
 
   props: {

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { TransitionGroup } from "vue";
 
 export default {
   props: {
@@ -30,6 +29,6 @@ export default {
       this.$emit("changeTab", tabName);
     },
   },
-  components: { TransitionGroup },
+  components: {  },
 };
 </script>

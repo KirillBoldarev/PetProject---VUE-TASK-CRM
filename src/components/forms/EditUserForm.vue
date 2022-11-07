@@ -1,7 +1,14 @@
 <template>
   <section id="EditUserForm" class="form__container">
     <h3 class="form__titile">Ваши персональные данные:</h3>
-    <form class="form__body" @submit.prevent="this.editUser">
+    <form class="form__body" @submit.prevent="confirmation">
+      
+      <confirm-dialog
+        :isDialogOpen="isDialogOpen"
+        @confirm="this.editUser"
+        @close="isDialogOpen = false"
+      ></confirm-dialog>
+
       <div class="form__group">
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
@@ -137,12 +144,13 @@
 </template>
 
 <script>
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
 export default {
-  components: {},
+  components: { ConfirmDialog },
   name: "EditUserForm",
 
   setup() {
@@ -153,6 +161,7 @@ export default {
 
   data() {
     return {
+      isDialogOpen: false,
       firstName: this.target.firstName,
       secondName: this.target.secondName,
       email: this.target.email,
@@ -202,6 +211,9 @@ export default {
         this.$store.commit("updateAuthenticated");
       }
       this.$emit("close");
+    },
+    confirmation() {
+      this.isDialogOpen = true;
     },
   },
 

@@ -1,7 +1,7 @@
 <template>
   <img
     v-if="target.isCompleted === true"
-    @click="completeTask"
+    @click="confirmation"
     class="icon"
     src="@/icons/check.png"
     alt=""
@@ -9,17 +9,24 @@
 
   <img
     v-if="target.isCompleted === false"
-    @click="completeTask"
+    @click="confirmation"
     class="icon"
     src="@/icons/notСheck.png"
     alt=""
   />
+
+  <confirm-dialog
+    :isDialogOpen="isDialogOpen"
+    @confirm="completeTask"
+    @close="isDialogOpen = false"
+  ></confirm-dialog>
 </template>
 
 <script>
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 export default {
   name: "CompleteTaskButton",
-  components: {},
+  components: { ConfirmDialog },
 
   props: {
     target: {
@@ -29,13 +36,18 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      isDialogOpen:false
+    };
   },
 
   methods: {
     completeTask() {
       this.$store.commit("completeTask", this.target);
     },
+    confirmation() { 
+      this.isDialogOpen = true;
+    }
   },
 
   computed: {},

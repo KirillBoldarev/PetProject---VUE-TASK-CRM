@@ -5,6 +5,7 @@
       :taskList="taskList"
       :userList="userList"
     ></header-layout>
+
     <main>
       <router-view
         class="main__body"
@@ -12,6 +13,7 @@
         :userList="userList"
       ></router-view>
     </main>
+
     <footer-layout class="main__footer"></footer-layout>
   </div>
 </template>

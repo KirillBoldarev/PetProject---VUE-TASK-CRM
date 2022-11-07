@@ -1,6 +1,6 @@
 <template>
   <teleport to="#modal">
-    <transition name="bounce">
+    <transition>
       <div
         @click="this.closeModal"
         v-if="isOpen === true"
