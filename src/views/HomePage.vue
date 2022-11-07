@@ -2,28 +2,83 @@
   <div class="page">
     <h2 class="page__title">Приветствую на главной странице!</h2>
     <div class="page__body">
-      <registration-form v-if="!this.$store.getters.checkForAuthenticate"
-      :userList="userList"></registration-form>
+      <registration-form
+        v-if="!this.$store.getters.isAuth"
+        :userList="userList"
+      ></registration-form>
+      <button @click="getApiData">Получить данные</button>
+      <button @click="this.setApiData">Отправить данные</button>
     </div>
   </div>
-
 </template>
 
 <script>
-import RegistrationForm from "@/components/forms/RegistrationForm.vue"
+import RegistrationForm from "@/components/forms/RegistrationForm.vue";
+import axios from "axios";
 export default {
   props: {
     userList: {
       type: Array,
-      required:true,
-    }
+      required: true,
+    },
   },
   components: {
-    RegistrationForm
+    RegistrationForm,
   },
-  date() { 
-    return {}
-  }
-}
+  date() {
+    return {};
+  },
 
+  methods: {
+    /*     getApiData() {
+      let url = "https://jsonplaceholder.typicode.com/users";
+
+      fetch(url)
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.log("ошибка:", error));
+    }, */
+
+    getApiData() {
+      let url = "https://jsonplaceholder.typicode.com/users";
+      /*       let response = await fetch(url);
+      let result = await response.json();
+      console.log(result); */
+
+      axios(url).then((response) => {
+        console.log("Данные получены :", response.data);
+      });
+
+      /*       axios
+        .get(url)
+        .then((response) => console.log(response.data))
+        .catch((error) => console.log(error)); */
+
+      /*       fetch(url)
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.log("ошибка:", error)); */
+    },
+
+    setApiData() {
+      axios
+        .post("https://jsonplaceholder.typicode.com/posts", {
+          text: "Текст моего поста",
+        })
+        .then((response) => {
+          if (response.status > 400) {
+            console.log("Чтото пошло не так");
+          }
+          console.log(response.data);
+        })
+        .catch((error) => console.log(error));
+    },
+  },
+};
 </script>

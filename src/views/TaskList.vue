@@ -98,7 +98,6 @@ import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
-import RegistrationForm from "@/components/forms/RegistrationForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 
@@ -110,7 +109,6 @@ export default {
     CompleteTaskAction,
     Tabs,
     ButtonWithModalForm,
-    RegistrationForm,
     AddTaskForm,
     EditTaskForm,
   },

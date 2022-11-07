@@ -4,7 +4,7 @@ export default {
     isAuthenticated: false,
   },
   getters: {
-    checkForAuthenticate(state) {
+    isAuth(state) {
       return state.isAuthenticated;
     },
     authenticatedUser(state) {

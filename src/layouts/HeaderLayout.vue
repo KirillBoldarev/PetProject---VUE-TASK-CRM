@@ -2,10 +2,7 @@
   <header class="header">
     <div class="header__logo"></div>
     <div class="header__column">
-      <h2
-        class="header__title"
-        v-if="this.$store.getters.checkForAuthenticate === false"
-      >
+      <h2 class="header__title" v-if="this.$store.getters.isAuth === false">
         Приветствую! Прошу пройти авторизацию!
       </h2>
       <h2 v-else class="header__title">
@@ -15,7 +12,7 @@
 
       <div
         class="header__navigation"
-        v-if="this.$store.getters.checkForAuthenticate === true"
+        v-if="this.$store.getters.isAuth === true"
       >
         <router-link
           class="header__link"
@@ -27,10 +24,7 @@
       </div>
     </div>
 
-    <div
-      class="header__row"
-      v-if="this.$store.getters.checkForAuthenticate === true"
-    >
+    <div class="header__row" v-if="this.$store.getters.isAuth === true">
       <button-with-modal-form label="Профиль пользователя">
         <template #formSlot="{ closeModal }"
           ><profile-form
@@ -45,10 +39,7 @@
       <logout-action></logout-action>
     </div>
 
-    <div
-      class="header__row"
-      v-if="this.$store.getters.checkForAuthenticate === false"
-    >
+    <div class="header__row" v-if="this.$store.getters.isAuth === false">
       <button-with-modal-form label="Войти">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>
@@ -72,7 +63,7 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import ProfileForm from "@/components/forms/ProfileForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
-import ConfirmDialog from "@/components/ConfirmDialog.vue"
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 
 export default {
   components: {
@@ -82,7 +73,7 @@ export default {
     ProfileForm,
     RegisitrationForm,
     LoginForm,
-    ConfirmDialog
+    ConfirmDialog,
   },
   name: "header-layout",
 
