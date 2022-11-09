@@ -1,3 +1,4 @@
+@import "_null.scss";
 @import "_modal.scss";
 @import "_footer.scss";
 @import "_modal.scss";
@@ -16,4 +17,7 @@ body {
   padding: 5px;
   min-height: 100%;
   overflow: hidden;
+}
+div:empty {
+  display: none;
 }

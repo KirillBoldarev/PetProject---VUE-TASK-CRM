@@ -2,10 +2,11 @@
   display: flex;
   padding: 10px 0px;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   max-height: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
+  box-sizing: border-box;
 
   &__row {
     display: grid;
@@ -13,6 +14,14 @@
     justify-content: center;
     align-items: center;
     height: auto;
+    box-sizing: border-box;
+
+    /*     &:first-child {
+      position: sticky;
+      top: 0;
+      left: 0;
+      background-color: red;
+    } */
 
     &--5 {
       grid-template-columns: 85px 1fr 1fr 3fr 80px;
@@ -33,9 +42,10 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 5px;
     min-height: 100%;
     gap: 5px;
+    box-sizing: border-box;
+    padding: 5px;
 
     &:first-child {
       border-top-left-radius: 20px;

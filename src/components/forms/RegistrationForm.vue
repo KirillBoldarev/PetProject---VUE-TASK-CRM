@@ -140,6 +140,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
+
 export default {
   setup() {
     return {

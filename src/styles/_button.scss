@@ -20,6 +20,7 @@
       #3caa3c 0 0 0 1px, rgba(0, 0, 0, 0.3) 0 2px 5px;
     -webkit-animation: pulsate 1.2s linear infinite;
     animation: pulsate 1.2s linear infinite;
+    box-sizing: border-box;
 
     &:hover {
       -webkit-animation-play-state: paused;
@@ -56,6 +57,7 @@
       #ff0000 0 0 0 1px, rgba(0, 0, 0, 0.3) 0 2px 5px;
     -webkit-animation: pulsate 1.2s linear infinite;
     animation: pulsate 1.2s linear infinite;
+    box-sizing: border-box;
 
     &:hover {
       -webkit-animation-play-state: paused;

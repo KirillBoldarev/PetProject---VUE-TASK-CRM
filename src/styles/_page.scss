@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  box-sizing: border-box;
 
   &__header {
     display: flex;
@@ -9,12 +10,15 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    box-sizing: border-box;
+    flex: 0 1 10%;
   }
 
   &__title {
     text-align: center;
     margin: 10px 0px;
     padding: 0;
+    box-sizing: border-box;
   }
 
   &__navigation {
@@ -22,12 +26,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    flex: 0 1 10%
   }
 
   &__body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    box-sizing: border-box;
+    flex: 0 1 80%;
   }
 
   &__row {
@@ -36,5 +44,6 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    box-sizing: border-box;
   }
 }
