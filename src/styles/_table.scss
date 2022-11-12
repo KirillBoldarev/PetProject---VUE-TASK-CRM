@@ -1,12 +1,16 @@
 .table {
   display: flex;
-  padding: 10px 0px;
   flex-direction: column;
   gap: 5px;
-  max-height: 400px;
+  flex: 0 0 auto;
   overflow-y: scroll;
   overflow-x: hidden;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
+  box-sizing: content-box;
+  width: 100%;
+  height: auto;
+  max-height: 75%;
+  
 
   &__row {
     display: grid;
@@ -16,18 +20,40 @@
     height: auto;
     box-sizing: border-box;
 
-    /*     &:first-child {
+/*     &:first-child {
       position: sticky;
       top: 0;
       left: 0;
-      background-color: red;
+      background-color: grey;
+      border: 2px solid black;
     } */
 
     &--5 {
-      grid-template-columns: 85px 1fr 1fr 3fr 80px;
+      grid-template-columns:
+        minmax(80px, 80px)
+        minmax(90px, 1fr)
+        minmax(90px, 1fr)
+        minmax(90px, 3fr)
+        minmax(80px, 80px);
+
+      @media (max-width: 800px) {
+        grid-template-columns:
+          minmax(60px, 60px)
+          minmax(80px, 1fr)
+          minmax(80px, 1fr)
+          minmax(90px, 3fr)
+          minmax(70px, 70px);
+      }
     }
+
     &--6 {
-      grid-template-columns: 1fr 45px 1fr 1fr 1fr 155px;
+      grid-template-columns:
+        minmax(90px, 1fr)
+        minmax(45px, 45px)
+        minmax(150px, 1fr)
+        minmax(100px, 1fr)
+        minmax(70px, 1fr)
+        minmax(100px, 1fr);
     }
 
     &:last-child {
@@ -46,6 +72,12 @@
     gap: 5px;
     box-sizing: border-box;
     padding: 5px;
+    word-wrap: break-word;
+
+    @media (max-width: 800px) {
+      font-size: 12px;
+      padding: 3px;
+    }
 
     &:first-child {
       border-top-left-radius: 20px;

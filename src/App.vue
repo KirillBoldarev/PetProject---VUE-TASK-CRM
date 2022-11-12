@@ -1,21 +1,15 @@
 <template>
-  <div class="main main__container">
-    <header-layout
-      class="main__header"
-      :taskList="taskList"
-      :userList="userList"
-    ></header-layout>
+  <header-layout
+    class="main__header"
+    :taskList="taskList"
+    :userList="userList"
+  ></header-layout>
 
-    <main>
-      <router-view
-        class="main__body"
-        :taskList="taskList"
-        :userList="userList"
-      ></router-view>
-    </main>
+  <main class="main__content">
+    <router-view :taskList="taskList" :userList="userList"></router-view>
+  </main>
 
-    <footer-layout class="main__footer"></footer-layout>
-  </div>
+  <footer-layout class="main__footer"></footer-layout>
 </template>
 
 <script>
@@ -29,6 +23,7 @@ export default {
     return {
       taskList: [],
       userList: [],
+      visibleLeft: false,
     };
   },
   methods: {},

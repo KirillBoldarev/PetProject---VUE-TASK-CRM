@@ -3,22 +3,31 @@
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 5px;
 
   &__header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 5px;
     box-sizing: border-box;
     flex: 0 1 10%;
+    width: 100%;
   }
 
   &__title {
     text-align: center;
-    margin: 10px 0px;
     padding: 0;
     box-sizing: border-box;
+    margin: 5px;
+    font-size: 28px;
+    font-weight: 700;
+    width: 100%;
+    height: auto;
   }
 
   &__navigation {
@@ -27,15 +36,18 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    flex: 0 1 10%
+    width: 100%;
+    min-height: 50px;
   }
 
   &__body {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: px;
     box-sizing: border-box;
-    flex: 0 1 80%;
+    max-height: 90%;
+    flex: 0 0 90%;
+    width: 100%;
   }
 
   &__row {
@@ -46,4 +58,10 @@
     gap: 20px;
     box-sizing: border-box;
   }
+
+  &__label{
+
+  }
+
+  
 }

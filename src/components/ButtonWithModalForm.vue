@@ -1,30 +1,28 @@
 <template>
-  <template v-if="this.image" >
-    <img  @click="openModal" :src=this.image class="icon" alt="" />
-        <modal :isOpen="isModalOpen" @close="isModalOpen = false">
-        <template #ModalSlot>
-          <slot name="formSlot" :closeModal="closeModal"></slot>
-        </template>
-      </modal>
-  </template>
-
-
-
-  <button v-else-if="this.label" class="button--header" @click="openModal">
-    {{ label }}
-    <modal :isOpen="isModalOpen" @close="isModalOpen = false">
+  <template v-if="this.image">
+    <img @click="openModal" :src="this.image" class="icon" alt="" />
+    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
         <slot name="formSlot" :closeModal="closeModal"></slot>
       </template>
-    </modal>
+    </modal-window>
+  </template>
+
+  <button v-else-if="this.label" class="button--header" @click="openModal">
+    {{ label }}
+    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
+      <template #ModalSlot>
+        <slot name="formSlot" :closeModal="closeModal"></slot>
+      </template>
+    </modal-window>
   </button>
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import ModalWindow from "@/components/ModalWindow.vue";
 export default {
   name: "ButtonWithModalForm",
-  components: { Modal },
+  components: { ModalWindow },
 
   props: {
     target: {
@@ -41,7 +39,7 @@ export default {
     },
     image: {
       type: String,
-      required:false,
+      required: false,
     },
   },
 

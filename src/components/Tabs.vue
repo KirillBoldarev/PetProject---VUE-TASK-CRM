@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     tabs: {
@@ -29,6 +28,6 @@ export default {
       this.$emit("changeTab", tabName);
     },
   },
-  components: {  },
+  components: {},
 };
 </script>

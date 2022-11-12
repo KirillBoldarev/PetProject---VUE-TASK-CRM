@@ -1,5 +1,5 @@
 <template>
-  <modal :isOpen="isDialogOpen" @close="isDialogOpen = false">
+  <modal-window :isOpen="isDialogOpen" @close="isDialogOpen = false">
     <template #ModalSlot>
       <section id="confirmForm" class="form__container">
         <h2 class="form__title">Вы уверены ?</h2>
@@ -9,13 +9,13 @@
         </div>
       </section>
     </template>
-  </modal>
+  </modal-window>
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import ModalWindow from "@/components/ModalWindow.vue";
 export default {
-  components: { Modal },
+  components: { ModalWindow },
   props: {
     isDialogOpen: {
       type: Boolean,

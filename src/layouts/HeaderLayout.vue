@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
 import LogoutAction from "@/components/actions/LogoutAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import ProfileForm from "@/components/forms/ProfileForm.vue";
@@ -65,7 +64,6 @@ import LoginForm from "@/components/forms/LoginForm.vue";
 
 export default {
   components: {
-    Modal,
     ButtonWithModalForm,
     ProfileForm,
     RegisitrationForm,

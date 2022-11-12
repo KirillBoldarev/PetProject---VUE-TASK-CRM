@@ -1,21 +1,38 @@
 .main {
   &__container {
-    display: grid;
-    grid-template-rows: 1fr 7fr 1fr;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
     max-width: 1400px;
     max-height: 100%;
     margin: 0 auto;
-    gap: 10px;
+    gap: 5px;
     overflow: hidden;
     box-sizing: border-box;
   }
+
   &__header {
+    display: flex;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    max-height: 7.5%;
+    min-height: 70px;
   }
-  &__body {
+  &__content {
+    display: flex;
+    flex: 1 1 auto;
+    max-height: 85%;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
   }
   &__footer {
-    position: sticky;
-    bottom: 0;
-    left: 0;
+    display: flex;
+    flex: 0 0 auto;
+    max-height: 7.5%;
+    box-sizing: border-box;
+    background-color: red;
+    min-height: 70px;
   }
 }

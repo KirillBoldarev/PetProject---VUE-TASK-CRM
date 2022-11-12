@@ -2,40 +2,27 @@
   <div class="page">
     <div class="page__header">
       <h2 class="page__title">Управление задачами</h2>
-
-      <button-with-modal-form :image="require('@/icons/plus.png')">
-        <template #formSlot="{ closeModal }">
-          <add-task-form
-            @close="closeModal"
-            :taskList="taskList"
-            :userList="userList"
-            :target="this.$store.state.authentication.authenticatedUser"
-          ></add-task-form>
-        </template>
-      </button-with-modal-form>
+      <div class="page__navigation">
+        <tabs
+          :tabs="pages"
+          :selectedTab="currentPage"
+          @changeTab="changePage"
+        ></tabs>
+      </div>
     </div>
 
-    <div class="page__navigation">
-      <tabs
-        :tabs="pages"
-        :selectedTab="currentPage"
-        @changeTab="changePage"
-      ></tabs>
-    </div>
-
-    <div class="page__body" v-for="page in pages" :key="page.name">
-      <template v-if="this.currentPage === page.name">
-        <h3 class="page__title">{{ page.label }}</h3>
-        <div class="page__row filter">
-          <label class="filter__label"> Фильтровать по:</label>
+    <template v-for="page in pages" :key="page.name">
+      <div class="page__body" v-if="this.currentPage === page.name">
+        <div class="form">
+          <label class="form__label"> Фильтровать по:</label>
           <select
-            class="filter__select"
+            class="form__select"
             v-model="searchParams"
             name="searchParams"
             id="searchParams"
           >
             <option
-              class="filter__option"
+              class="form__option"
               v-for="value in this.$options.SEARCH_PARAMS_LIST"
               :key="value"
               :value="value.name"
@@ -43,7 +30,19 @@
               {{ value.label }}
             </option>
           </select>
-          <input class="filter__value" v-model="this.searchValue" type="text" />
+          <input class="form__input" v-model="this.searchValue" type="text" />
+
+          <label class="form__label"> Добавить задачу:</label>
+          <button-with-modal-form :image="require('@/icons/plus.png')">
+            <template v-slot:formSlot="{ closeModal }">
+              <add-task-form
+                @close="closeModal"
+                :taskList="taskList"
+                :userList="userList"
+                :target="this.$store.state.authentication.authenticatedUser"
+              ></add-task-form>
+            </template>
+          </button-with-modal-form>
         </div>
 
         <div class="table">
@@ -88,8 +87,8 @@
             </div>
           </transition-group>
         </div>
-      </template>
-    </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -100,6 +99,7 @@ import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
+
 export default {
   name: "TaskList",
 

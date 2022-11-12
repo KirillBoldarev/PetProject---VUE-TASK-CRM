@@ -8,6 +8,7 @@
           <label class="form__label" for="firstName">Имя</label>
           <input
             @blur="v$.firstName.$touch"
+            v-tooltip.right="'Введите имя'"
             v-model="firstName"
             class="form__input"
             type="text"
@@ -30,6 +31,7 @@
           <label class="form__label" for="secondName">Фамилия</label>
           <input
             @blur="v$.secondName.$touch"
+            v-tooltip.right="'Введите фамилию'"
             v-model="secondName"
             class="form__input"
             type="text"
@@ -52,6 +54,7 @@
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
+            v-tooltip.right="'Введите электронную почту'"
             v-model="email"
             class="form__input"
             type="email"
@@ -79,6 +82,7 @@
           <label class="form__label" for="phone">Номер телефона</label>
           <input
             @blur="v$.phone.$touch"
+            v-tooltip.right="'Введите номер мобильного телефона'"
             v-model="phone"
             class="form__input"
             type="text"
@@ -106,6 +110,7 @@
           <label class="form__label" for="password">Пароль</label>
           <input
             @blur="v$.password.$touch"
+            v-tooltip.right="'Введите номер мобильного телефона'"
             v-model="password"
             class="form__input"
             type="password"
@@ -139,7 +144,6 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
-
 
 export default {
   setup() {

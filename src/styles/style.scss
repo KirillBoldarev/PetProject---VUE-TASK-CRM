@@ -10,14 +10,13 @@
 @import "_tab.scss";
 @import "_page.scss";
 @import "_table.scss";
-@import "_filter.scss";
 @import "_main.scss";
+@import "_tooltip.scss";
+
+
 
 body {
   padding: 5px;
   min-height: 100%;
   overflow: hidden;
-}
-div:empty {
-  display: none;
 }

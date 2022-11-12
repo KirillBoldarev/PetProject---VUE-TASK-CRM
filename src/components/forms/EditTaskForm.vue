@@ -1,7 +1,7 @@
 <template>
   <section id="loginForm" class="form__container">
     <h3 class="form__title">Редактирование задачи</h3>
-    <form class="form__body" @submit.prevent="confirmation">
+    <form  class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
         @confirm="this.editTask"
@@ -56,7 +56,7 @@
       </div>
 
       <div class="form__group">
-        <button class="form__button" type="submit">ОК</button>
+        <button  class="form__button" type="submit">ОК</button>
       </div>
     </form>
   </section>
@@ -124,6 +124,7 @@ export default {
     confirmation() {
       this.isDialogOpen = true;
     },
+
   },
   computed: {
     changedData() {
