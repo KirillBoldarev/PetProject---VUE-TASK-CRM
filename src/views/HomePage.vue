@@ -2,19 +2,19 @@
   <div class="page">
     <h2 class="page__title">Приветствую на главной странице!</h2>
     <div class="page__body">
-      <registration-form
-        v-if="!this.$store.getters.isAuth"
-        :userList="userList"
-      ></registration-form>
       <button @click="getApiData">Получить данные</button>
       <button @click="this.setApiData">Отправить данные</button>
+      <button @click="this.getUsers">Вывести массив пользователей</button>
+      <button @click="this.getTasks">Вывести массив тасков</button>
     </div>
   </div>
 </template>
 
 <script>
-import RegistrationForm from "@/components/forms/RegistrationForm.vue";
 import axios from "axios";
+
+import localbase from "@/js/localbase";
+
 export default {
   props: {
     userList: {
@@ -22,9 +22,7 @@ export default {
       required: true,
     },
   },
-  components: {
-    RegistrationForm,
-  },
+  components: {},
   date() {
     return {};
   },
@@ -78,6 +76,23 @@ export default {
           console.log(response.data);
         })
         .catch((error) => console.log(error));
+    },
+
+    getUsers() {
+      localbase
+        .collection("users")
+        .get()
+        .then((users) => {
+          console.log(users);
+        });
+    },
+    getTasks() {
+      localbase
+        .collection("tasks")
+        .get()
+        .then((users) => {
+          console.log(users);
+        });
     },
   },
 };

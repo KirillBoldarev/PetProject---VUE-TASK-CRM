@@ -9,6 +9,9 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+
+import localbase from "@/js/localbase";
+
 export default {
   name: "DeleteUserButton",
   components: { ConfirmDialog },
@@ -29,10 +32,12 @@ export default {
   methods: {
     deleteUser() {
       this.$store.commit("deleteUser", this.target);
+      localbase.collection("users").doc({ id: this.target.id }).delete();
+
     },
-    confirmation() { 
+    confirmation() {
       this.isDialogOpen = true;
-    }
+    },
   },
 
   computed: {},

@@ -15,7 +15,7 @@
         <div class="form__column">
           <h3 class="form__title">Описание задачи:</h3>
           <textarea
-          class="form__textbox"
+            class="form__textbox"
             @blur="v$.description.$touch"
             @keyup.ctrl.enter="this.createTask"
             v-model="description"
@@ -44,6 +44,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import localbase from "@/js/localbase";
 
 export default {
   components: {},
@@ -88,6 +89,8 @@ export default {
       }
       this.$store.commit("addTask", this.preparedTask);
       this.$emit("close");
+
+      localbase.collection("tasks").add(this.preparedTask);
     },
   },
 

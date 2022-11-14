@@ -45,5 +45,6 @@ export default {
     this.$store.commit("initializeTaskList");
     this.$store.commit("updateAuthenticated");
   },
+
 };
 </script>

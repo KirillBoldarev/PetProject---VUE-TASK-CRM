@@ -6,18 +6,15 @@ import store from "./store";
 
 import "./styles/style.scss";
 
+/* import localbase from "./js/localbase.js"; */
+
+/* import  "./js/localbase.js"; */
 
 import PrimeVue from "primevue/config";
 import Tooltip from "primevue/tooltip";
-
-
-
-/* import 'primevue/resources/themes/bootstrap4-dark-purple/theme.css'; */
-
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-
 
 createApp(App)
   .use(store)

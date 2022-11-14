@@ -145,6 +145,8 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
+import localbase from "@/js/localbase";
+
 export default {
   setup() {
     return {
@@ -194,6 +196,8 @@ export default {
       this.$store.commit("createUser", this.newUser);
       this.$store.commit("authentication", this.newUser);
       this.$emit("close");
+
+      localbase.collection("users").add(this.newUser);
     },
 
     registerUserOnKeypress(event) {

@@ -9,6 +9,8 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import localbase from "@/js/localbase";
+
 export default {
   name: "DeleteTaskAction",
   components: { ConfirmDialog },
@@ -28,6 +30,7 @@ export default {
 
   methods: {
     deleteTask() {
+      localbase.collection("tasks").doc({ id: this.target.id }).delete();
       this.$store.commit("deleteTask", this.target);
     },
     confirmation() {
