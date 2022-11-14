@@ -28,17 +28,6 @@ export default {
   },
 
   methods: {
-    /*     getApiData() {
-      let url = "https://jsonplaceholder.typicode.com/users";
-
-      fetch(url)
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((result) => console.log(result))
-        .catch((error) => console.log("ошибка:", error));
-    }, */
 
     getApiData() {
       let url = "https://jsonplaceholder.typicode.com/users";

@@ -167,10 +167,7 @@ export default {
     return {
       firstName: { required },
       secondName: { required },
-      email: {
-        required,
-        email,
-      },
+      email: { required, email },
       phone: { required, isPhone },
       password: { required, minLength: minLength(5) },
     };
@@ -216,7 +213,6 @@ export default {
         phone: this.phone,
         password: this.password,
         id: Math.random().toString(36).substring(2, 7),
-        role: "Администратор",
       };
     },
   },

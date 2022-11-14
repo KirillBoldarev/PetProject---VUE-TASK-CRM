@@ -100,6 +100,8 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 
+import localbase from "@/js/localbase";
+
 export default {
   name: "TaskList",
 
@@ -156,9 +158,19 @@ export default {
         return [];
       } else {
         return this.taskList.filter(
-          (task) =>
-            task.executorId === this.$store.getters.authenticatedUser.id &&
-            task.isCompleted === false
+          (task) => 
+
+
+            task.id ===
+              localbase
+                .collection("task-senders")
+                .doc({ task: this.target.id })
+              .get()
+
+
+
+
+            && task.isCompleted === false
         );
       }
     },

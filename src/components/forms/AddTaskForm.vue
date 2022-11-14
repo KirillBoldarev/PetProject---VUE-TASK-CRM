@@ -1,7 +1,7 @@
 <template>
   <section id="addTaskForm" class="form__container">
     <h2 class="form__title">Добавить задачу</h2>
-    <form class="form__body" @submit.prevent="this.createTask">
+    <form class="form__body" @submit.prevent="this.createHandler">
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select v-model="executor" name="executor" id="executor">
@@ -44,7 +44,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import localbase from "@/js/localbase";
+import { mapMutations } from "vuex";
 
 export default {
   components: {},
@@ -82,25 +82,27 @@ export default {
     };
   },
   methods: {
-    createTask() {
+    ...mapMutations(["createTask", "bindTask"]),
+
+
+    createHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("addTask", this.preparedTask);
+      this.createTask(this.preparedTask);
+      this.bindTask({
+        id: this.preparedTask.id,
+        sender: this.sender.id,
+        executor: this.executor.id,
+      });
       this.$emit("close");
-
-      localbase.collection("tasks").add(this.preparedTask);
     },
   },
 
   computed: {
     preparedTask() {
       return {
-        senderId: this.sender.id,
-        senderFullName: `${this.sender.firstName} ${this.sender.secondName}`,
-        executorId: this.executor.id,
-        executorFullName: `${this.executor.firstName} ${this.executor.secondName}`,
         description: this.description,
         id: Math.random().toString(36).substring(2, 7),
         isCompleted: false,

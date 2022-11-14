@@ -1,3 +1,5 @@
+import localbase from "@/js/localbase";
+
 export default {
   state: {
     taskList: [],
@@ -18,14 +20,36 @@ export default {
       }
     },
 
-    addTask(state, task) {
+    createTask(state, task) {
+      localbase.collection("tasks").add(task);
       state.taskList.push(task);
     },
 
-    deleteTask(state, targetedTask) {
+    bindTask(state, data) {
+      localbase.collection("task-senders").add({
+        task: data.id,
+        sender: data.sender,
+      });
+      localbase.collection("task-executors").add({
+        task: data.id,
+        executor: data.executor,
+      });
+    },
+
+    deleteTask(state, target) {
+      localbase.collection("tasks").doc({ id: target.id }).delete();
+      localbase
+        .collection("task-senders")
+        .doc({ id: target.id })
+        .delete();
+      localbase
+        .collection("task-executors")
+        .doc({ id: target.id })
+        .delete();
+      
       let index;
       state.taskList.forEach((task, idx) => {
-        if (task.id === targetedTask.id) {
+        if (task.id === target.id) {
           index = idx;
         }
       });
@@ -33,14 +57,14 @@ export default {
     },
 
     editTask(state, changedData) {
+      localbase
+        .collection("tasks")
+        .doc({ id: changedData.id })
+        .set(changedData);
+
       state.taskList.forEach((task) => {
         if (task.id === changedData.id) {
-          task.executorId = changedData.executorId;
-          task.executorFullName = changedData.executorFullName;
-          task.senderId = changedData.senderId;
-          task.senderFullName = changedData.senderFullName;
-          task.description = changedData.description;
-          task.isCompleted = changedData.isCompleted;
+          task = changedData;
         }
       });
     },

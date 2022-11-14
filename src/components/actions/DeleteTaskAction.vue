@@ -2,7 +2,7 @@
   <img @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
-    @confirm="deleteTask"
+    @confirm="deleteHandler"
     @close="isDialogOpen = false"
   ></confirm-dialog>
 </template>
@@ -10,6 +10,7 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import localbase from "@/js/localbase";
+import { mapMutations } from "vuex";
 
 export default {
   name: "DeleteTaskAction",
@@ -29,10 +30,12 @@ export default {
   },
 
   methods: {
-    deleteTask() {
-      localbase.collection("tasks").doc({ id: this.target.id }).delete();
-      this.$store.commit("deleteTask", this.target);
+    ...mapMutations(["deleteTask"]),
+
+    deleteHandler() {
+      this.deleteTask(this.target);
     },
+
     confirmation() {
       this.isDialogOpen = true;
     },

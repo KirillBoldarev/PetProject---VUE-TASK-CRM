@@ -24,6 +24,8 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import localbase from "@/js/localbase";
+
 export default {
   name: "CompleteTaskButton",
   components: { ConfirmDialog },
@@ -37,17 +39,20 @@ export default {
 
   data() {
     return {
-      isDialogOpen:false
+      isDialogOpen: false,
     };
   },
 
   methods: {
     completeTask() {
+      localbase.collection("tasks").doc({ id: this.target.id }).update({
+        isCompleted: !this.target.isCompleted,
+      });
       this.$store.commit("completeTask", this.target);
     },
-    confirmation() { 
+    confirmation() {
       this.isDialogOpen = true;
-    }
+    },
   },
 
   computed: {},

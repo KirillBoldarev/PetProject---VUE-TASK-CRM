@@ -1,17 +1,17 @@
 <template>
   <section id="loginForm" class="form__container">
     <h3 class="form__title">Редактирование задачи</h3>
-    <form  class="form__body" @submit.prevent="confirmation">
+    <form class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
-        @confirm="this.editTask"
+        @confirm="this.editHandler"
         @close="isDialogOpen = false"
       ></confirm-dialog>
       <div class="form__row">
         <div class="form__group">
           <label class="form__label" for="email">Выберите отправителя:</label>
           <select v-model="sender" name="sender" id="sender">
-            <option v-for="user in userList" :key="user.id" :value="user.id">
+            <option v-for="user in userList" :key="user.id" :value="user">
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -20,7 +20,7 @@
         <div class="form__group">
           <label class="form__label" for="email">Выберите получателя:</label>
           <select v-model="executor" name="executor" id="executor">
-            <option v-for="user in userList" :key="user.id" :value="user.id">
+            <option v-for="user in userList" :key="user.id" :value="user">
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -56,7 +56,7 @@
       </div>
 
       <div class="form__group">
-        <button  class="form__button" type="submit">ОК</button>
+        <button class="form__button" type="submit">ОК</button>
       </div>
     </form>
   </section>
@@ -67,6 +67,9 @@ import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import { mapMutations } from "vuex";
+
+import localbase from "@/js/localbase";
 
 export default {
   setup() {
@@ -98,8 +101,20 @@ export default {
   data() {
     return {
       isDialogOpen: false,
-      executor: this.target.executorId,
-      sender: this.target.senderId,
+      executor: this.userList.filter((user) => {
+        user.id ===
+          localbase
+            .collection("task-executors")
+            .doc({ task: this.target.id })
+            .get();
+      }),
+      sender: this.userList.filter((user) => {
+        user.id ===
+          localbase
+            .collection("task-senders")
+            .doc({ task: this.target.id })
+            .get();
+      }),
       description: this.target.description,
       isCompleted: this.target.isCompleted,
       id: this.target.id,
@@ -113,31 +128,30 @@ export default {
   },
 
   methods: {
-    editTask() {
+    ...mapMutations(["editTask", "bindTask"]),
+
+    editHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("editTask", this.changedData);
+      this.editTask(this.changedData);
+      this.bindTask({
+        id: this.id,
+        sender: this.sender.id,
+        executor: this.executor.id,
+      });
       this.$emit("close");
     },
+
     confirmation() {
       this.isDialogOpen = true;
     },
-
   },
   computed: {
     changedData() {
       return {
         id: this.target.id,
-        executorId: this.executor,
-        executorFullName: `
-      ${this.userList.find((user) => user.id === this.executor).firstName}
-      ${this.userList.find((user) => user.id === this.executor).secondName}`,
-        senderId: this.sender,
-        senderFullName: `
-      ${this.userList.find((user) => user.id === this.sender).firstName}
-      ${this.userList.find((user) => user.id === this.sender).secondName}`,
         description: this.description,
         isCompleted: this.isCompleted,
       };
