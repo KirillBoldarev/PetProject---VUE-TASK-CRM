@@ -1,7 +1,14 @@
 <template>
   <div class="page">
     <div class="page__header">
-      <h2 class="page__title">Управление задачами</h2>
+      <h2 class="page__title" @click.stop="this.info()">Управление задачами</h2>
+      <div
+        v-for="record in this.$store.state.relations.TASK_SENDERS"
+        :key="record.task"
+      >
+        {{ record.task }}
+      </div>
+      <div>{{ this.personalTasks }}</div>
       <div class="page__navigation">
         <tabs
           :tabs="pages"
@@ -57,7 +64,7 @@
           <transition-group name="slide-fade">
             <div
               class="table__row table__row--5"
-              v-for="task in this.filterSource(page.dataSource)"
+              v-for="task in page.dataSource"
               :key="task.id"
             >
               <div class="table__column">
@@ -153,27 +160,25 @@ export default {
         },
       ];
     },
+
     personalTasks() {
       if (!this.taskList) {
         return [];
       } else {
-        return this.taskList.filter(
-          (task) => 
-
-
-            task.id ===
-              localbase
-                .collection("task-senders")
-                .doc({ task: this.target.id })
-              .get()
-
-
-
-
-            && task.isCompleted === false
+        let currentUserId = this.$store.getters.authenticatedUser.id;
+        let relations = this.$store.getters.TASK_SENDERS.filter(
+          (item) => item.sender === currentUserId
         );
+
+        let finallyFiltered = this.taskList.filter((task) => {
+          return relations.some((record) => {
+            return record.task === task.id;
+          });
+        });
+        return finallyFiltered;
       }
     },
+
     chargedTasks() {
       if (!this.taskList) {
         return [];
@@ -216,7 +221,11 @@ export default {
   ],
 
   methods: {
-    filterSource(source) {
+    info() {
+      console.log(this.personalTasks);
+    },
+    /*     filterSource(source) {
+      console.log(source);
       if (!this.searchParams) {
         return source;
       }
@@ -225,7 +234,7 @@ export default {
           .toUpperCase()
           .includes(this.searchValue.toUpperCase())
       );
-    },
+    }, */
 
     changePage(tabName) {
       this.currentPage = tabName;

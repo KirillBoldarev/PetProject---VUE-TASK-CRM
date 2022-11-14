@@ -44,6 +44,7 @@ export default {
     this.$store.commit("initializeUserList");
     this.$store.commit("initializeTaskList");
     this.$store.commit("updateAuthenticated");
+    this.$store.commit("initialize_TASK_SENDERS");
   },
 
 };

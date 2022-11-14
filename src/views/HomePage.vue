@@ -28,7 +28,6 @@ export default {
   },
 
   methods: {
-
     getApiData() {
       let url = "https://jsonplaceholder.typicode.com/users";
       /*       let response = await fetch(url);
@@ -68,20 +67,21 @@ export default {
     },
 
     getUsers() {
-      localbase
+
+      console.log(localbase
+        .collection("users")
+        .get())
+      /* localbase
         .collection("users")
         .get()
         .then((users) => {
           console.log(users);
-        });
+        }) */;
     },
-    getTasks() {
-      localbase
-        .collection("tasks")
-        .get()
-        .then((users) => {
-          console.log(users);
-        });
+    async getTasks() {
+      let tasks = await localbase.collection("tasks").get();
+      console.log(tasks);
+      return tasks
     },
   },
 };
