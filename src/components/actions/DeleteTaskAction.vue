@@ -9,12 +9,13 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
-import localbase from "@/js/localbase";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { mapMutations } from "vuex";
 
 export default {
   name: "DeleteTaskAction",
   components: { ConfirmDialog },
+  mixins:[confirmationDialogMixin],
 
   props: {
     target: {
@@ -25,7 +26,7 @@ export default {
 
   data() {
     return {
-      isDialogOpen: false,
+
     };
   },
 
@@ -34,10 +35,6 @@ export default {
 
     deleteHandler() {
       this.deleteTask(this.target);
-    },
-
-    confirmation() {
-      this.isDialogOpen = true;
     },
   },
 

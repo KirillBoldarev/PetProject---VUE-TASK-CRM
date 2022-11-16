@@ -1,6 +1,7 @@
 .page {
   display: flex;
   flex-direction: column;
+  flex: 0 1 100%;
   height: 100%;
   box-sizing: border-box;
   align-items: center;
@@ -15,7 +16,7 @@
     justify-content: center;
     gap: 5px;
     box-sizing: border-box;
-    flex: 0 1 10%;
+    flex: 0 0 10%;
     width: 100%;
   }
 
@@ -37,7 +38,6 @@
     justify-content: center;
     box-sizing: border-box;
     width: 100%;
-    min-height: 50px;
   }
 
   &__body {
@@ -58,5 +58,4 @@
     gap: 20px;
     box-sizing: border-box;
   }
-  
 }

@@ -58,7 +58,7 @@
                   ></add-task-form>
                 </template>
               </button-with-modal-form>
-  
+
               <button-with-modal-form :image="require('@/icons/edit.png')">
                 <template #formSlot="{ closeModal }">
                   <edit-user-form
@@ -79,7 +79,6 @@
 </template>
 
 <script>
-
 import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
@@ -87,7 +86,6 @@ import EditUserForm from "@/components/forms/EditUserForm.vue";
 
 export default {
   components: {
-
     DeleteUserAction,
     ButtonWithModalForm,
     AddTaskForm,
@@ -115,12 +113,21 @@ export default {
 
   methods: {
     getActiveTasksNumber(user) {
-      let filteredTasks = this.taskList;
-      return filteredTasks.filter(
-        (task) => task.executorId === user.id && task.isCompleted === false
-      ).length;
+      let personalTasks = this.$store.getters.TASK_EXECUTORS.filter(
+        (record) => record.executor === user.id
+      );
+
+      let filteredTasks = this.taskList.filter((task) =>
+        personalTasks.some((record) => record.task === task.id));
+
+      let completedFilteredTasks = filteredTasks.filter(
+        (task) => task.isCompleted === false
+      );
+
+      return completedFilteredTasks.length;
     },
   },
+
   watch: {},
 };
 </script>

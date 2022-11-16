@@ -1,3 +1,5 @@
+import localbase from "@/js/localbase";
+
 export default {
   state: {
     authenticatedUser: {},
@@ -24,11 +26,11 @@ export default {
       sessionStorage.removeItem("authenticatedUserId");
     },
 
-    updateAuthenticated(state) {
+    updateAuthenticated(state, resultOfAction) {
       let id = sessionStorage.getItem("authenticatedUserId");
       if (id) {
-        let userList = JSON.parse(localStorage.getItem("userList"));
-        if (userList) {
+        let userList = resultOfAction;
+        if (userList.length > 0) {
           state.authenticatedUser = userList.find((user) => user.id === id);
           state.isAuthenticated = true;
         }
@@ -36,5 +38,14 @@ export default {
     },
   },
 
-  actions: {},
+  actions: {
+    updateAuthenticatedAction(context) {
+      localbase
+        .collection("users")
+        .get()
+        .then((result) => {
+          context.commit("updateAuthenticated", result);
+        });
+    },
+  },
 };

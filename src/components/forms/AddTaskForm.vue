@@ -84,7 +84,6 @@ export default {
   methods: {
     ...mapMutations(["createTask", "bindTask"]),
 
-
     createHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();

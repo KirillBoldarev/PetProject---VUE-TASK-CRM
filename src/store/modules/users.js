@@ -1,3 +1,5 @@
+import localbase from "@/js/localbase";
+
 export default {
   state: {
     userList: [],
@@ -9,13 +11,8 @@ export default {
     },
   },
   mutations: {
-    initializeUserList(state) {
-      let userList = JSON.parse(localStorage.getItem("userList"));
-      if (!userList) {
-        state.userList = [];
-      } else {
-        state.userList = userList;
-      }
+    initializeUserList(state, resultFromAction) {
+      state.userList = resultFromAction;
     },
 
     createUser(state, user) {
@@ -45,5 +42,14 @@ export default {
       });
     },
   },
-  actions: {},
+  actions: {
+    initializeUserListAction(context) {
+      localbase
+        .collection("users")
+        .get()
+        .then((result) => {
+          context.commit("initializeUserList", result);
+        });
+    },
+  },
 };

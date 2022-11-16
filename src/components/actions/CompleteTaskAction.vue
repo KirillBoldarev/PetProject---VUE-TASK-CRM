@@ -24,11 +24,12 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
-import localbase from "@/js/localbase";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 
 export default {
   name: "CompleteTaskButton",
   components: { ConfirmDialog },
+  mixins: [confirmationDialogMixin],
 
   props: {
     target: {
@@ -39,20 +40,15 @@ export default {
 
   data() {
     return {
-      isDialogOpen: false,
+
     };
   },
 
   methods: {
     completeTask() {
-      localbase.collection("tasks").doc({ id: this.target.id }).update({
-        isCompleted: !this.target.isCompleted,
-      });
       this.$store.commit("completeTask", this.target);
     },
-    confirmation() {
-      this.isDialogOpen = true;
-    },
+
   },
 
   computed: {},

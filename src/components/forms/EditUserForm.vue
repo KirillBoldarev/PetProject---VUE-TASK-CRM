@@ -2,7 +2,6 @@
   <section id="EditUserForm" class="form__container">
     <h3 class="form__titile">Ваши персональные данные:</h3>
     <form class="form__body" @submit.prevent="confirmation">
-      
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
         @confirm="this.editUser"
@@ -145,12 +144,14 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
 export default {
   components: { ConfirmDialog },
+  mixins: [confirmationDialogMixin],
   name: "EditUserForm",
 
   setup() {
@@ -161,7 +162,6 @@ export default {
 
   data() {
     return {
-      isDialogOpen: false,
       firstName: this.target.firstName,
       secondName: this.target.secondName,
       email: this.target.email,
@@ -211,9 +211,6 @@ export default {
         this.$store.commit("updateAuthenticated");
       }
       this.$emit("close");
-    },
-    confirmation() {
-      this.isDialogOpen = true;
     },
   },
 

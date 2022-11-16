@@ -9,22 +9,19 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 export default {
   components: { ConfirmDialog },
+  mixins: [confirmationDialogMixin],
 
   data() {
-    return {
-      isDialogOpen: false,
-    };
+    return {};
   },
 
   methods: {
     logout() {
       this.$store.commit("logout");
       this.$router.push("/");
-    },
-    confirmation() {
-      this.isDialogOpen = true;
     },
   },
 };

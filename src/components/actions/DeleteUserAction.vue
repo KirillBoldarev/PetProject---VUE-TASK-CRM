@@ -9,12 +9,13 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
-
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import localbase from "@/js/localbase";
 
 export default {
   name: "DeleteUserButton",
   components: { ConfirmDialog },
+  mixins: [confirmationDialogMixin],
 
   props: {
     target: {
@@ -24,19 +25,13 @@ export default {
   },
 
   data() {
-    return {
-      isDialogOpen: false,
-    };
+    return {};
   },
 
   methods: {
     deleteUser() {
       this.$store.commit("deleteUser", this.target);
       localbase.collection("users").doc({ id: this.target.id }).delete();
-
-    },
-    confirmation() {
-      this.isDialogOpen = true;
     },
   },
 

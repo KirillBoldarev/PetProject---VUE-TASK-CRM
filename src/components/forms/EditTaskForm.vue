@@ -35,7 +35,7 @@
             v-model="description"
             name="task"
             id="task"
-            cols="10"
+            cols="25"
             rows="5"
           ></textarea>
           <transition>
@@ -65,11 +65,10 @@
 <script>
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
-
-import localbase from "@/js/localbase";
 
 export default {
   setup() {
@@ -83,6 +82,7 @@ export default {
     CompleteTaskAction,
     ConfirmDialog,
   },
+  mixins: [confirmationDialogMixin],
   props: {
     target: {
       type: Object,
@@ -100,21 +100,21 @@ export default {
 
   data() {
     return {
-      isDialogOpen: false,
-      executor: this.userList.filter((user) => {
-        user.id ===
-          localbase
-            .collection("task-executors")
-            .doc({ task: this.target.id })
-            .get();
-      }),
-      sender: this.userList.filter((user) => {
-        user.id ===
-          localbase
-            .collection("task-senders")
-            .doc({ task: this.target.id })
-            .get();
-      }),
+      executor: this.userList.find(
+        (user) =>
+          user.id ===
+          this.$store.getters.TASK_EXECUTORS.find(
+            (record) => record.task === this.target.id
+          ).executor
+      ),
+      sender: this.userList.find(
+        (user) =>
+          user.id ===
+          this.$store.getters.TASK_SENDERS.find(
+            (record) => record.task === this.target.id
+          ).sender
+      ),
+
       description: this.target.description,
       isCompleted: this.target.isCompleted,
       id: this.target.id,
@@ -128,7 +128,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["editTask", "bindTask"]),
+    ...mapMutations(["editTask", "rebindTask"]),
 
     editHandler() {
       if (this.v$.$invalid) {
@@ -136,7 +136,7 @@ export default {
         return;
       }
       this.editTask(this.changedData);
-      this.bindTask({
+      this.rebindTask({
         id: this.id,
         sender: this.sender.id,
         executor: this.executor.id,
@@ -144,9 +144,6 @@ export default {
       this.$emit("close");
     },
 
-    confirmation() {
-      this.isDialogOpen = true;
-    },
   },
   computed: {
     changedData() {

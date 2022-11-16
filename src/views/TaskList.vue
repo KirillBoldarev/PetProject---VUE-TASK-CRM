@@ -1,14 +1,7 @@
 <template>
   <div class="page">
     <div class="page__header">
-      <h2 class="page__title" @click.stop="this.info()">Управление задачами</h2>
-      <div
-        v-for="record in this.$store.state.relations.TASK_SENDERS"
-        :key="record.task"
-      >
-        {{ record.task }}
-      </div>
-      <div>{{ this.personalTasks }}</div>
+      <h2 class="page__title">Управление задачами</h2>
       <div class="page__navigation">
         <tabs
           :tabs="pages"
@@ -64,17 +57,17 @@
           <transition-group name="slide-fade">
             <div
               class="table__row table__row--5"
-              v-for="task in page.dataSource"
+              v-for="task in this.filterSource(page.dataSource)"
               :key="task.id"
             >
               <div class="table__column">
                 <complete-task-action :target="task"></complete-task-action>
               </div>
               <div class="table__column">
-                {{ task.senderFullName }}
+                {{ this.getFullNameSender(task) }}
               </div>
               <div class="table__column">
-                {{ task.executorFullName }}
+                {{ this.getFullNameExecutor(task) }}
               </div>
               <div class="table__column">{{ task.description }}</div>
               <div class="table__column">
@@ -106,8 +99,6 @@ import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import AddTaskForm from "@/components/forms/AddTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
-
-import localbase from "@/js/localbase";
 
 export default {
   name: "TaskList",
@@ -144,24 +135,18 @@ export default {
       return [
         {
           name: "personal",
-          label: "Полученные задачи",
+          label: "Задачи",
           dataSource: this.personalTasks,
         },
-        { name: "charged", label: "Поручения", dataSource: this.chargedTasks },
         {
-          name: "completedPersonal",
-          label: "Выполненные задачи",
-          dataSource: this.completedPersonalTasks,
-        },
-        {
-          name: "completedCharged",
-          label: "Исполненные поручения",
-          dataSource: this.completedChargedTasks,
+          name: "charged",
+          label: "Поручения",
+          dataSource: this.chargedTasks,
         },
       ];
     },
 
-    personalTasks() {
+    chargedTasks() {
       if (!this.taskList) {
         return [];
       } else {
@@ -170,46 +155,26 @@ export default {
           (item) => item.sender === currentUserId
         );
 
-        let finallyFiltered = this.taskList.filter((task) => {
-          return relations.some((record) => {
-            return record.task === task.id;
-          });
-        });
+        let finallyFiltered = this.taskList.filter((task) =>
+          relations.some((record) => record.task === task.id)
+        );
         return finallyFiltered;
       }
     },
 
-    chargedTasks() {
+    personalTasks() {
       if (!this.taskList) {
         return [];
       } else {
-        return this.taskList.filter(
-          (task) =>
-            task.senderId === this.$store.getters.authenticatedUser.id &&
-            task.isCompleted === false
+        let currentUserId = this.$store.getters.authenticatedUser.id;
+        let relations = this.$store.getters.TASK_EXECUTORS.filter(
+          (item) => item.executor === currentUserId
         );
-      }
-    },
-    completedPersonalTasks() {
-      if (!this.taskList) {
-        return [];
-      } else {
-        return this.taskList.filter(
-          (task) =>
-            task.executorId === this.$store.getters.authenticatedUser.id &&
-            task.isCompleted === true
+
+        let finallyFiltered = this.taskList.filter((task) =>
+          relations.some((record) => record.task === task.id)
         );
-      }
-    },
-    completedChargedTasks() {
-      if (!this.taskList) {
-        return [];
-      } else {
-        return this.taskList.filter(
-          (task) =>
-            task.senderId === this.$store.getters.authenticatedUser.id &&
-            task.isCompleted === true
-        );
+        return finallyFiltered;
       }
     },
   },
@@ -221,11 +186,22 @@ export default {
   ],
 
   methods: {
-    info() {
-      console.log(this.personalTasks);
+    getFullNameSender(task) {
+      let senderId = this.$store.getters.TASK_SENDERS.find(
+        (record) => record.task === task.id
+      ).sender;
+      let sender = this.userList.find((user) => user.id === senderId);
+      return `${sender.firstName} ${sender.secondName}`;
     },
-    /*     filterSource(source) {
-      console.log(source);
+    getFullNameExecutor(task) {
+      let executorId = this.$store.getters.TASK_EXECUTORS.find(
+        (record) => record.task === task.id
+      ).executor;
+      let executor = this.userList.find((user) => user.id === executorId);
+      return `${executor.firstName} ${executor.secondName}`;
+    },
+
+    filterSource(source) {
       if (!this.searchParams) {
         return source;
       }
@@ -234,7 +210,7 @@ export default {
           .toUpperCase()
           .includes(this.searchValue.toUpperCase())
       );
-    }, */
+    },
 
     changePage(tabName) {
       this.currentPage = tabName;

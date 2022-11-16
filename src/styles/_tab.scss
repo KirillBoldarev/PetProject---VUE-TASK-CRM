@@ -16,11 +16,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    box-sizing: border-box;
   }
 
   &__selected {
     border: 2px solid orangered;
     background-color: orangered;
     border-radius: 25px;
+    box-sizing: border-box;
   }
 }

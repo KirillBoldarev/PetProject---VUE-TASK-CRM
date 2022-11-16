@@ -4,7 +4,6 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
@@ -15,10 +14,12 @@
 <script>
 import HeaderLayout from "./layouts/HeaderLayout.vue";
 import FooterLayout from "./layouts/FooterLayout.vue";
+import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
+import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";
 
 export default {
   components: { HeaderLayout, FooterLayout },
-
+  mixins: [usersMutations, tasksMutations],
   data() {
     return {
       taskList: [],
@@ -26,26 +27,20 @@ export default {
       visibleLeft: false,
     };
   },
-  methods: {},
+  methods: {
+  },
 
   computed: {},
 
-  created() {
-    this.$store.subscribe((mutations, state) => {
-      if (mutations.type.includes("Task")) {
-        localStorage.setItem("taskList", JSON.stringify(state.tasks.taskList));
-        this.taskList = state.tasks.taskList;
-      }
-      if (mutations.type.includes("User")) {
-        localStorage.setItem("userList", JSON.stringify(state.users.userList));
-        this.userList = state.users.userList;
-      }
-    });
-    this.$store.commit("initializeUserList");
-    this.$store.commit("initializeTaskList");
-    this.$store.commit("updateAuthenticated");
-    this.$store.commit("initialize_TASK_SENDERS");
-  },
+  mounted() {
+    this.subscribeForMutationsOfUsers();
+    this.subscribeForMutationsOfTasks();
 
+    this.$store.dispatch("initializeTaskListAction");
+    this.$store.dispatch("initializeUserListAction");
+    this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
+    this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
+    this.$store.dispatch("updateAuthenticatedAction");
+  },
 };
 </script>

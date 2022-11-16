@@ -6,6 +6,7 @@ import store from "./store";
 
 import "./styles/style.scss";
 
+
 /* import localbase from "./js/localbase.js"; */
 
 /* import  "./js/localbase.js"; */

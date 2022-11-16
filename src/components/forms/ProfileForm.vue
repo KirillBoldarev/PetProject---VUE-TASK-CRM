@@ -162,12 +162,14 @@
 
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
 export default {
   components: { ConfirmDialog },
+  mixins: [confirmationDialogMixin],
   name: "ProfileForm",
 
   setup() {
@@ -178,7 +180,6 @@ export default {
 
   data() {
     return {
-      isDialogOpen: false,
       firstName: this.$store.getters.authenticatedUser.firstName,
       secondName: this.$store.getters.authenticatedUser.secondName,
       email: this.$store.getters.authenticatedUser.email,
@@ -226,9 +227,6 @@ export default {
       this.$store.commit("editUser", this.changedData);
       this.$store.commit("updateAuthenticated");
       this.$emit("close");
-    },
-    confirmation() {
-      this.isDialogOpen = true;
     },
   },
 
