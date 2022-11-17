@@ -16,28 +16,22 @@ import HeaderLayout from "./layouts/HeaderLayout.vue";
 import FooterLayout from "./layouts/FooterLayout.vue";
 import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";
+import filesMutations from "@/js/mixins/subscribtionsForFilesMutationsMixin";
 
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [usersMutations, tasksMutations],
+  mixins: [usersMutations, tasksMutations, filesMutations],
   data() {
     return {
       taskList: [],
       userList: [],
-      visibleLeft: false,
     };
   },
-  methods: {
-  },
+  methods: {},
 
   computed: {},
 
   mounted() {
-    this.subscribeForMutationsOfUsers();
-    this.subscribeForMutationsOfTasks();
-
-    this.$store.dispatch("initializeTaskListAction");
-    this.$store.dispatch("initializeUserListAction");
     this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
     this.$store.dispatch("updateAuthenticatedAction");

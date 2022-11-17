@@ -47,6 +47,12 @@
           </transition>
         </div>
       </div>
+      <div class="form__grou">
+        <label class="form__label" for="">Связанные файлы</label>
+        <div v-for="file in bindedFiles" :key="file.id">{{ file.name }}</div>
+      </div>
+      <upload-file-form :target="target"></upload-file-form>
+
       <div class="form__group">
         <label class="form__label" for="">Завершение задачи :</label>
         <complete-task-action
@@ -70,6 +76,8 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
 
+import UploadFileForm from "./UploadFileForm.vue";
+
 export default {
   setup() {
     return {
@@ -81,6 +89,7 @@ export default {
   components: {
     CompleteTaskAction,
     ConfirmDialog,
+    UploadFileForm,
   },
   mixins: [confirmationDialogMixin],
   props: {
@@ -124,6 +133,7 @@ export default {
   validations() {
     return {
       description: { required },
+      fileList: [],
     };
   },
 
@@ -143,7 +153,6 @@ export default {
       });
       this.$emit("close");
     },
-
   },
   computed: {
     changedData() {
@@ -152,6 +161,11 @@ export default {
         description: this.description,
         isCompleted: this.isCompleted,
       };
+    },
+    bindedFiles() {
+      return this.$store.getters.getFileList.filter(
+        (file) => file.owner === this.target.id
+      );
     },
   },
 };

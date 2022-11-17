@@ -1,10 +1,14 @@
 import localbase from "@/js/localbase";
 
-
 export default {
-  methods: {
-    subscribeForMutationsOfTasks() {
-      this.$store.subscribe((mutation, state) => {
+  data() {
+    return {
+      subscribtionsForTasksMutations: null,
+    };
+  },
+  mounted() {
+    this.subscribtionsForTasksMutations = this.$store.subscribe(
+      (mutation, state) => {
         //Initialize
         if (mutation.type === "initializeTaskList") {
           this.taskList = this.$store.getters.getTaskList;
@@ -72,7 +76,12 @@ export default {
               executor: mutation.payload.executor,
             });
         }
-      });
-    },
+      }
+    );
+    this.$store.dispatch("initializeTaskListAction");
+  },
+
+  beforeUnmounted() {
+    this.subscribtionsForTasksMutations = null;
   },
 };

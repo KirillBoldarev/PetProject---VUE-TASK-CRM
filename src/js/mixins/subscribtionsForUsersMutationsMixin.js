@@ -1,9 +1,14 @@
 import localbase from "@/js/localbase";
 
 export default {
-  methods: {
-    subscribeForMutationsOfUsers() {
-      this.$store.subscribe((mutation, state) => {
+  data() {
+    return {
+      subscribtionsForUsersMutations: null,
+    };
+  },
+  mounted() {
+    this.subscribtionsForUsersMutations = this.$store.subscribe(
+      (mutation, state) => {
         //Initialize
         if (mutation.type === "initializeUserList") {
           this.userList = this.$store.getters.getUserList;
@@ -26,7 +31,11 @@ export default {
             .doc({ id: mutation.payload.id })
             .set(mutation.payload);
         }
-      });
-    },
+      }
+    );
+        this.$store.dispatch("initializeUserListAction");
+  },
+  beforeUnmounted() {
+    this.subscribtionsForUsersMutations = null;
   },
 };

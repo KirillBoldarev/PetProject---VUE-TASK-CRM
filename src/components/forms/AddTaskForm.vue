@@ -103,7 +103,7 @@ export default {
     preparedTask() {
       return {
         description: this.description,
-        id: Math.random().toString(36).substring(2, 7),
+        id: Math.random().toString(36).substring(2, 9),
         isCompleted: false,
       };
     },
