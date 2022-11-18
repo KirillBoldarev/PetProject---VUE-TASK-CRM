@@ -49,7 +49,8 @@ export default {
         .get()
         .then((result) => {
           context.commit("initializeUserList", result);
-        });
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

@@ -15,29 +15,36 @@ export default {
         }
         //Create
         if (mutation.type === "createTask") {
-          localbase.collection("tasks").add(mutation.payload);
+          localbase
+            .collection("tasks")
+            .add(mutation.payload)
+            .catch((error) => console.log(error));
         }
         //Delete
         if (mutation.type === "deleteTask") {
           localbase
             .collection("tasks")
             .doc({ id: mutation.payload.id })
-            .delete();
+            .delete()
+            .catch((error) => console.log(error));
           localbase
             .collection("task-senders")
             .doc({ task: mutation.payload.id })
-            .delete();
+            .delete()
+            .catch((error) => console.log(error));
           localbase
             .collection("task-executors")
             .doc({ task: mutation.payload.id })
-            .delete();
+            .delete()
+            .catch((error) => console.log(error));
         }
         //Edit
         if (mutation.type === "editTask") {
           localbase
             .collection("tasks")
             .doc({ id: mutation.payload.id })
-            .set(mutation.payload);
+            .set(mutation.payload)
+            .catch((error) => console.log(error));
         }
         //Complete
         if (mutation.type === "completeTask") {
@@ -46,18 +53,25 @@ export default {
             .doc({ id: mutation.payload.id })
             .update({
               isCompleted: mutation.payload.isCompleted,
-            });
+            })
+            .catch((error) => console.log(error));
         }
         //Bind
         if (mutation.type === "bindTask") {
-          localbase.collection("task-senders").add({
-            task: mutation.payload.id,
-            sender: mutation.payload.sender,
-          });
-          localbase.collection("task-executors").add({
-            task: mutation.payload.id,
-            executor: mutation.payload.executor,
-          });
+          localbase
+            .collection("task-senders")
+            .add({
+              task: mutation.payload.id,
+              sender: mutation.payload.sender,
+            })
+            .catch((error) => console.log(error));
+          localbase
+            .collection("task-executors")
+            .add({
+              task: mutation.payload.id,
+              executor: mutation.payload.executor,
+            })
+            .catch((error) => console.log(error));
         }
         //Rebind
         if (mutation.type === "rebindTask") {
@@ -67,14 +81,16 @@ export default {
             .update({
               task: mutation.payload.id,
               sender: mutation.payload.sender,
-            });
+            })
+            .catch((error) => console.log(error));
           localbase
             .collection("task-executors")
             .doc({ task: mutation.payload.id })
             .update({
               task: mutation.payload.id,
               executor: mutation.payload.executor,
-            });
+            })
+            .catch((error) => console.log(error));
         }
       }
     );

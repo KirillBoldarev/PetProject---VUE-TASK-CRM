@@ -20,7 +20,7 @@ import filesMutations from "@/js/mixins/subscribtionsForFilesMutationsMixin";
 
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [usersMutations, tasksMutations, filesMutations],
+  mixins: [usersMutations, tasksMutations , filesMutations],
   data() {
     return {
       taskList: [],

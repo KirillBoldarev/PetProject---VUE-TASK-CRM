@@ -19,7 +19,8 @@ export default {
           localbase
             .collection("files")
             .doc({ id: mutation.payload.id })
-            .delete();
+            .delete()
+            .catch((error) => console.log(error));
         }
       }
     );

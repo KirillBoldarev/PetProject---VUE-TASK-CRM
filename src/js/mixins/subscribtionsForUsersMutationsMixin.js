@@ -15,21 +15,26 @@ export default {
         }
         //Create
         if (mutation.type === "createUser") {
-          localbase.collection("users").add(mutation.payload);
+          localbase
+            .collection("users")
+            .add(mutation.payload)
+            .catch((error) => console.log(error));
         }
         //Delete
         if (mutation.type === "deleteUser") {
           localbase
             .collection("users")
             .doc({ id: mutation.payload.id })
-            .delete();
+            .delete()
+            .catch((error) => console.log(error));
         }
         //Edit
         if (mutation.type === "editUser") {
           localbase
             .collection("users")
             .doc({ id: mutation.payload.id })
-            .set(mutation.payload);
+            .set(mutation.payload)
+            .catch((error) => console.log(error));
         }
       }
     );

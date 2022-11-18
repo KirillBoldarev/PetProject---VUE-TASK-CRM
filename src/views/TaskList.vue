@@ -14,22 +14,7 @@
     <template v-for="page in pages" :key="page.name">
       <div class="page__body" v-if="this.currentPage === page.name">
         <div class="form">
-          <label class="form__label"> Фильтровать по:</label>
-          <select
-            class="form__select"
-            v-model="searchParams"
-            name="searchParams"
-            id="searchParams"
-          >
-            <option
-              class="form__option"
-              v-for="value in this.$options.SEARCH_PARAMS_LIST"
-              :key="value"
-              :value="value.name"
-            >
-              {{ value.label }}
-            </option>
-          </select>
+          <label class="form__label"> Поиск:</label>
           <input class="form__input" v-model="this.searchValue" type="text" />
 
           <label class="form__label"> Добавить задачу:</label>
@@ -127,7 +112,6 @@ export default {
     return {
       currentPage: "personal",
       searchValue: "",
-      searchParams: "description",
     };
   },
   computed: {
@@ -179,12 +163,6 @@ export default {
     },
   },
 
-  SEARCH_PARAMS_LIST: [
-    { name: "senderFullName", label: "Отправитель" },
-    { name: "executorFullName", label: "Исполнитель" },
-    { name: "description", label: "Описание" },
-  ],
-
   methods: {
     getFullNameSender(task) {
       let senderId = this.$store.getters.TASK_SENDERS.find(
@@ -202,13 +180,11 @@ export default {
     },
 
     filterSource(source) {
-      if (!this.searchParams) {
+      if (!this.searchValue) {
         return source;
       }
       return source.filter((item) =>
-        item[this.searchParams]
-          .toUpperCase()
-          .includes(this.searchValue.toUpperCase())
+        item.description.toUpperCase().includes(this.searchValue.toUpperCase())
       );
     },
 

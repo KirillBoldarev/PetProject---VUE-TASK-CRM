@@ -53,8 +53,9 @@ export default {
         .collection("tasks")
         .get()
         .then((result) => {
-          context.commit("initializeTaskList" , result);
-        });
+          context.commit("initializeTaskList", result);
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

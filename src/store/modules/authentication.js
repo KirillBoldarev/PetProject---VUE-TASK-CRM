@@ -45,7 +45,8 @@ export default {
         .get()
         .then((result) => {
           context.commit("updateAuthenticated", result);
-        });
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

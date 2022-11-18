@@ -149,7 +149,6 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
-
 export default {
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
@@ -209,7 +208,7 @@ export default {
       }
       this.$store.commit("editUser", this.changedData);
       if (this.id === this.$store.getters.authenticatedUser.id) {
-        this.$store.commit("updateAuthenticated");
+        this.$store.dispatch("updateAuthenticatedAction");
       }
       this.$emit("close");
     },

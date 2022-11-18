@@ -6,11 +6,6 @@ import store from "./store";
 
 import "./styles/style.scss";
 
-
-/* import localbase from "./js/localbase.js"; */
-
-/* import  "./js/localbase.js"; */
-
 import PrimeVue from "primevue/config";
 import Tooltip from "primevue/tooltip";
 import "primevue/resources/themes/saga-blue/theme.css";
@@ -23,3 +18,5 @@ createApp(App)
   .use(PrimeVue)
   .directive("tooltip", Tooltip)
   .mount("#app");
+
+

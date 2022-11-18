@@ -1,6 +1,6 @@
 <template>
   <div class="form__group">
-    <label @click.stop="info" for="">Загрузите файл</label>
+    <label @click="info" for="">Загрузите файл</label>
     <div class="form__row">
       <input
         class="form__input"
@@ -11,7 +11,7 @@
       />
       <button @click.prevent.stop="uploadFile">Загрузить файлы</button>
     </div>
-    <div v-for="file in files" :key="file">{{ file.name }}</div>
+    <div v-for="file in files" :key="file">{{ file }}</div>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     info() {
-      console.log("файлЛист в сторе", this.$store.getters.getFileList);
+      console.log(this.$store.getters.getFileList);
     },
     previewFile(event) {
       console.log("Евент Таргет Файлз", event.target.files);
@@ -49,6 +49,7 @@ export default {
       });
     },
   },
+
   computed: {},
 
   mounted() {},
