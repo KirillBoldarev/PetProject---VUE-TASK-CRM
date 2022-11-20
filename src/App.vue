@@ -16,11 +16,11 @@ import HeaderLayout from "./layouts/HeaderLayout.vue";
 import FooterLayout from "./layouts/FooterLayout.vue";
 import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";
-import filesMutations from "@/js/mixins/subscribtionsForFilesMutationsMixin";
+
 
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [usersMutations, tasksMutations , filesMutations],
+  mixins: [usersMutations, tasksMutations ],
   data() {
     return {
       taskList: [],

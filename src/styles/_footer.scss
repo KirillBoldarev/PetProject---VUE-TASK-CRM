@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   background-color: red;
-  border: 2px solid black;
+
   box-sizing: border-box;
   bottom: 0;
   left: 0;
@@ -12,18 +12,19 @@
   justify-content: center;
   text-align: center;
   gap: 10px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
 
   &__top {
     display: flex;
     flex-direction: row;
     width: 100%;
-    background-color: red;
+
     align-items: center;
     justify-content: center;
     text-align: center;
   }
   &__main {
-    background-color: red;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -32,7 +33,6 @@
     text-align: center;
   }
   &__bottom {
-    background-color: red;
     display: flex;
     flex-direction: row;
     width: 100%;

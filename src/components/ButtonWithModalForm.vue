@@ -8,7 +8,7 @@
     </modal-window>
   </template>
 
-  <button v-else-if="this.label" class="button--header" @click="openModal">
+  <button v-else-if="this.label" class="button--basic" @click="openModal">
     {{ label }}
     <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>

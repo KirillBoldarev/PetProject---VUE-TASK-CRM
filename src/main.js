@@ -12,11 +12,15 @@ import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import Localbase from "localbase";
+
+let localbase = new Localbase("localbase");
+localbase.config.debug = false;
+
 createApp(App)
   .use(store)
   .use(router)
   .use(PrimeVue)
+  .use(localbase)
   .directive("tooltip", Tooltip)
   .mount("#app");
-
-

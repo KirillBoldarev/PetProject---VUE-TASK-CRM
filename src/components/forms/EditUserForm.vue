@@ -12,8 +12,8 @@
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
         >
-        <select v-model="role" name="role" id="role">
-          <option v-for="role in this.$options.ROLE" :key="role" :value="role">
+        <select class="form__select" v-model="role" name="role" id="role">
+          <option class="form__option" v-for="role in this.$options.ROLE" :key="role" :value="role">
             {{ role }}
           </option>
         </select>

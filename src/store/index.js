@@ -3,7 +3,7 @@ import authentication from "./modules/authentication";
 import users from "./modules/users";
 import tasks from "./modules/tasks";
 import relations from "./modules/relations";
-import files from "./modules/files";
+
 
 export default createStore({
   modules: {
@@ -11,6 +11,6 @@ export default createStore({
     users,
     tasks,
     relations,
-    files,
+
   },
 });

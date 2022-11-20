@@ -4,8 +4,18 @@
     <form class="form__body" @submit.prevent="this.createHandler">
       <div class="form__group">
         <label class="form__label" for="email">Выберите получателя:</label>
-        <select v-model="executor" name="executor" id="executor">
-          <option v-for="user in this.userList" :key="user.id" :value="user">
+        <select
+          class="form__select"
+          v-model="executor"
+          name="executor"
+          id="executor"
+        >
+          <option
+            class="form__option"
+            v-for="user in this.userList"
+            :key="user.id"
+            :value="user"
+          >
             {{ user.firstName }} {{ user.secondName }}
           </option>
         </select>

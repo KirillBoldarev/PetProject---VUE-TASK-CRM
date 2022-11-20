@@ -2,25 +2,13 @@
   <section id="profileForm" class="form__container">
     <div class="form__header">
       <h2 class="form__title">Профиль пользователя</h2>
-      <div class="form__row">
-        <img
-          @click="this.editMode = !this.editMode"
-          v-tooltip.bottom="'Нажмите для редактирования'"
-          class="icon"
-          src="@/icons/edit.png"
-          alt=""
-        />
-
-        <!--         <div class="header__tooltipItem">
-          <img
-            @click="this.taskListMode = !this.taskListMode"
-            class="icon""
-            src="@/icons/task.png"
-            alt=""
-          />
-          <span> Задачи</span>
-        </div> -->
-      </div>
+      <img
+        @click="this.editMode = !this.editMode"
+        v-tooltip.bottom="'Нажмите для редактирования'"
+        class="icon"
+        src="@/icons/edit.png"
+        alt=""
+      />
     </div>
 
     <form class="form__body" @submit.prevent="confirmation">

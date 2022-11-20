@@ -19,8 +19,8 @@
 
         <div class="form__group">
           <label class="form__label" for="email">Выберите получателя:</label>
-          <select v-model="executor" name="executor" id="executor">
-            <option v-for="user in userList" :key="user.id" :value="user">
+          <select class="form__select" v-model="executor" name="executor" id="executor">
+            <option class="form__option" v-for="user in userList" :key="user.id" :value="user">
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -47,11 +47,6 @@
           </transition>
         </div>
       </div>
-      <div class="form__grou">
-        <label class="form__label" for="">Связанные файлы</label>
-        <div v-for="file in bindedFiles" :key="file.id">{{ file.name }}</div>
-      </div>
-      <upload-file-form :target="target"></upload-file-form>
 
       <div class="form__group">
         <label class="form__label" for="">Завершение задачи :</label>
@@ -62,7 +57,7 @@
       </div>
 
       <div class="form__group">
-        <button class="form__button" type="submit">ОК</button>
+        <button class="form--button" type="submit">ОК</button>
       </div>
     </form>
   </section>
@@ -76,10 +71,6 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
 
-import UploadFileForm from "./UploadFileForm.vue";
-
-
-
 export default {
   setup() {
     return {
@@ -91,7 +82,6 @@ export default {
   components: {
     CompleteTaskAction,
     ConfirmDialog,
-    UploadFileForm,
   },
   mixins: [confirmationDialogMixin],
   props: {
@@ -135,7 +125,6 @@ export default {
   validations() {
     return {
       description: { required },
-      fileList: [],
     };
   },
 
@@ -163,11 +152,6 @@ export default {
         description: this.description,
         isCompleted: this.isCompleted,
       };
-    },
-    bindedFiles() {
-      return this.$store.getters.getFileList.filter(
-        (file) => file.owner === this.target.id
-      );
     },
   },
 };
