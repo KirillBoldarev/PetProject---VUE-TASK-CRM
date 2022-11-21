@@ -1,9 +1,7 @@
 <template>
   <div class="page">
-    <div class="page__header">
-      <h2 class="page__title">Управление пользователями</h2>
-    </div>
     <div class="page__body">
+      <h2 class="page__title">Управление пользователями</h2>
       <div class="table">
         <div class="table__row table__row--6">
           <div class="table__column">Имя</div>
@@ -118,7 +116,8 @@ export default {
       );
 
       let filteredTasks = this.taskList.filter((task) =>
-        personalTasks.some((record) => record.task === task.id));
+        personalTasks.some((record) => record.task === task.id)
+      );
 
       let completedFilteredTasks = filteredTasks.filter(
         (task) => task.isCompleted === false

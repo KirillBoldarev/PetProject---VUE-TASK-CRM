@@ -108,8 +108,5 @@ export default {
       return require(`../icons/` + item);
     },
   },
-
-
-
 };
 </script>
