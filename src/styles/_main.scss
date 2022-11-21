@@ -24,7 +24,8 @@
     box-sizing: border-box;
     flex: 0 0 80%;
     max-height: 100%;
-    overflow-y: auto;
+ /*    overflow-y: auto; */
+    display: flex;
   }
   &__footer {
     box-sizing: border-box;
