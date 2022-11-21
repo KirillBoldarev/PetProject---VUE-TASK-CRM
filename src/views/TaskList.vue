@@ -2,17 +2,12 @@
   <div class="page">
     <div class="page__header">
       <h2 class="page__title">Управление задачами</h2>
-      <div class="page__navigation">
+      <div class="page__toolbar">
         <tabs
           :tabs="pages"
           :selectedTab="currentPage"
           @changeTab="changePage"
         ></tabs>
-      </div>
-    </div>
-
-    <template v-for="page in pages" :key="page.name">
-      <div class="page__body" v-if="this.currentPage === page.name">
         <div class="form">
           <label class="form__label"> Поиск:</label>
           <input class="form__input" v-model="this.searchValue" type="text" />
@@ -29,7 +24,11 @@
             </template>
           </button-with-modal-form>
         </div>
+      </div>
+    </div>
 
+    <template v-for="page in pages" :key="page.name">
+      <div class="page__body" v-if="this.currentPage === page.name">
         <div class="table">
           <div class="table__row table__row--5">
             <div class="table__column">Состояние</div>

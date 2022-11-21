@@ -1,7 +1,9 @@
 .main {
   &__container {
-    display: grid;
-    grid-template-rows: minmax(auto, auto) minmax(auto, 8fr) minmax(auto, auto);
+    /*     display: grid;
+    grid-template-rows: minmax(auto, 1fr) minmax(auto, 8fr) minmax(auto, 1fr); */
+    display: flex;
+    flex-direction: column;
     height: 100%;
     min-height: 100%;
     max-width: 1400px;
@@ -14,21 +16,19 @@
 
   &__header {
     box-sizing: border-box;
-    max-height: 7.5%;
     min-height: 70px;
+    flex: 0 0 10%;
   }
-  &__navigation{
-    
-  }
+
   &__content {
-    max-height: 85%;
     box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 80%;
+    max-height: 100%;
+    overflow-y: auto;
   }
   &__footer {
-    max-height: 7.5%;
     box-sizing: border-box;
     min-height: 70px;
+    flex: 0 0 10%;
   }
 }

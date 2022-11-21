@@ -5,7 +5,6 @@
     :userList="userList"
   ></header-layout>
 
-
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>

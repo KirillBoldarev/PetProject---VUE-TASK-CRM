@@ -19,7 +19,10 @@
           v-for="link in headerLinks"
           :key="link.name"
           :to="link.url"
-          >{{ link.name }}</router-link
+        >
+          <img class="icon" :src="getImgUrl(link.icon)" />{{
+            link.name
+          }}</router-link
         >
       </div>
     </div>
@@ -68,7 +71,7 @@ export default {
     ProfileForm,
     RegisitrationForm,
     LoginForm,
-    LogoutAction
+    LogoutAction,
   },
   name: "header-layout",
 
@@ -85,13 +88,28 @@ export default {
   data() {
     return {
       headerLinks: [
-        { name: "Главная", url: "/" },
-        { name: "Управление задачами", url: "/tasks" },
-        { name: "Список пользователей", url: "/users" },
+        { name: "Главная", url: "/", icon: "home.png" },
+        {
+          name: "Управление задачами",
+          url: "/tasks",
+          icon: "task.png",
+        },
+        {
+          name: "Список пользователей",
+          url: "/users",
+          icon: "user.png",
+        },
       ],
     };
   },
 
-  methods: {},
+  methods: {
+    getImgUrl(item) {
+      return require(`../icons/` + item);
+    },
+  },
+
+
+
 };
 </script>
