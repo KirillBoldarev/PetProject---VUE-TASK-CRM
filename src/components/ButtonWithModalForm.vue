@@ -8,7 +8,7 @@
     </modal-window>
   </template>
 
-  <button v-else-if="this.label" class="button--basic" @click="openModal">
+  <button v-else-if="this.label" class="button" @click="openModal">
     {{ label }}
     <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
@@ -25,10 +25,6 @@ export default {
   components: { ModalWindow },
 
   props: {
-    target: {
-      type: Object,
-      required: true,
-    },
     icon: {
       type: String,
       required: false,

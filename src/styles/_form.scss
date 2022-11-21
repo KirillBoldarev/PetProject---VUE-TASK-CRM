@@ -101,52 +101,6 @@
     box-sizing: border-box;
   }
 
-  &__button {
-    min-width: 50px;
-    font-size: 12px;
-    font-weight: 900;
-    color: black;
-    padding: 5px;
-    display: inline-block;
-    float: right;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background: rgb(138, 233, 255);
-    background: radial-gradient(
-      circle,
-      rgba(138, 233, 255, 1) 4%,
-      rgba(0, 94, 217, 1) 78%,
-      rgba(0, 66, 213, 1) 92%
-    );
-    -webkit-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
-    -moz-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
-    box-shadow: 0 3px rgba(58, 87, 175, 0.75);
-    transition: all 0.1s linear 0s;
-    top: 0px;
-    position: relative;
-
-    &:hover {
-      top: 3px;
-      background-color: #2e458b;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-
-    @media (max-width: 960px) {
-      padding: 5px;
-      font-size: 10px;
-    }
-    @media (max-width: 580px) {
-      padding: 3px;
-      font-size: 6px;
-    }
-  }
-
   &__invalid {
     color: red;
     font-size: 14px;

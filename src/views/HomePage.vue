@@ -6,7 +6,7 @@
         Для начала работы системы , прошу пройти &nbsp;
         <button-with-modal-form label="регистрацию">
           <template #formSlot="{ closeModal }">
-            <regisitration-form @close="closeModal"> </regisitration-form>
+            <regisitration-form @close="closeModal" :userList="userList"> </regisitration-form>
           </template>
         </button-with-modal-form>
 &nbsp; или же  &nbsp;

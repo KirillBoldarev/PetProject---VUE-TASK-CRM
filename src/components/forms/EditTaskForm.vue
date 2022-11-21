@@ -57,7 +57,7 @@
       </div>
 
       <div class="form__group">
-        <button class="form__button" type="submit">ОК</button>
+        <button class="button" type="submit">ОК</button>
       </div>
     </form>
   </section>

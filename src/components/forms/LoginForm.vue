@@ -59,7 +59,7 @@
       </transition>
 
       <div class="form__group">
-        <button class="form__button" type="submit">Войти в систему</button>
+        <button class="button" type="submit">Войти в систему</button>
       </div>
     </form>
   </section>
