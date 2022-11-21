@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="header__row" v-if="this.$store.getters.isAuth === true">
+    <div class="header__buttons" v-if="this.$store.getters.isAuth === true">
       <button-with-modal-form label="Профиль пользователя">
         <template #formSlot="{ closeModal }"
           ><profile-form
@@ -38,7 +38,7 @@
       <logout-action></logout-action>
     </div>
 
-    <div class="header__row" v-if="this.$store.getters.isAuth === false">
+    <div class="header__buttons" v-if="this.$store.getters.isAuth === false">
       <button-with-modal-form label="Войти">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>

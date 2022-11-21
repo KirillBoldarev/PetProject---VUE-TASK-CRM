@@ -10,8 +10,8 @@
       <div class="form__row">
         <div class="form__group">
           <label class="form__label" for="email">Выберите отправителя:</label>
-          <select v-model="sender" name="sender" id="sender">
-            <option v-for="user in userList" :key="user.id" :value="user">
+          <select class="form__select" v-model="sender" name="sender" id="sender">
+            <option class="form__option" v-for="user in userList" :key="user.id" :value="user">
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="form__group">
-        <button class="form--button" type="submit">ОК</button>
+        <button class="form__button" type="submit">ОК</button>
       </div>
     </form>
   </section>

@@ -10,7 +10,10 @@
   width: 100%;
   height: auto;
   max-height: 75%;
-  
+
+  @media (max-width: 960px) {
+    gap: 3px;
+  }
 
   &__row {
     display: grid;
@@ -19,14 +22,6 @@
     align-items: center;
     height: auto;
     box-sizing: border-box;
-
-/*     &:first-child {
-      position: sticky;
-      top: 0;
-      left: 0;
-      background-color: grey;
-      border: 2px solid black;
-    } */
 
     &--5 {
       grid-template-columns:
@@ -43,6 +38,7 @@
           minmax(80px, 1fr)
           minmax(90px, 3fr)
           minmax(70px, 70px);
+          gap: 3px;
       }
     }
 
@@ -77,6 +73,7 @@
     @media (max-width: 800px) {
       font-size: 12px;
       padding: 3px;
+      gap: 3px;
     }
 
     &:first-child {

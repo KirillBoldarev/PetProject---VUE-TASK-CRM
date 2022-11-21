@@ -4,6 +4,8 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
+
+
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
@@ -14,13 +16,13 @@
 <script>
 import HeaderLayout from "./layouts/HeaderLayout.vue";
 import FooterLayout from "./layouts/FooterLayout.vue";
+
 import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";
 
-
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [usersMutations, tasksMutations ],
+  mixins: [usersMutations, tasksMutations],
   data() {
     return {
       taskList: [],

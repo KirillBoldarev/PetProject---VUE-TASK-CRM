@@ -32,6 +32,13 @@
     box-sizing: border-box;
     font-size: 18px;
     font-weight: 700;
+
+    @media (max-width: 960px) {
+      font-size: 14px;
+    }
+    @media (max-width: 580px) {
+      font-size: 12px;
+    }
   }
 
   &__tool {
@@ -95,21 +102,26 @@
   }
 
   &__button {
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-    padding: 6px 25px 0px 20px;
-    margin: 10px 8px 20px 0px;
+    min-width: 50px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    padding: 5px;
     display: inline-block;
     float: right;
     text-decoration: none;
     width: auto;
     height: auto;
-    padding: 10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background-color: #3a57af;
+    background: rgb(138, 233, 255);
+    background: radial-gradient(
+      circle,
+      rgba(138, 233, 255, 1) 4%,
+      rgba(0, 94, 217, 1) 78%,
+      rgba(0, 66, 213, 1) 92%
+    );
     -webkit-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
     -moz-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
     box-shadow: 0 3px rgba(58, 87, 175, 0.75);
@@ -123,6 +135,15 @@
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
       box-shadow: none;
+    }
+
+    @media (max-width: 960px) {
+      padding: 5px;
+      font-size: 10px;
+    }
+    @media (max-width: 580px) {
+      padding: 3px;
+      font-size: 6px;
     }
   }
 
