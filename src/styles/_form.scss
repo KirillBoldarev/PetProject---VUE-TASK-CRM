@@ -64,42 +64,16 @@
     padding: 10px;
     box-sizing: border-box;
   }
-
-  &__group {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    box-sizing: border-box;
-  }
-
   &__select {
     padding: 5px;
   }
   &__option {
   }
 
-  &__row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  &__column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-sizing: border-box;
-  }
   &__input {
     padding: 5px;
     box-sizing: border-box;
-    width: 200px;
+    width: 250px;
 
     @media (max-width: 500px) {
       width: 125px;

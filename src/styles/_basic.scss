@@ -1,0 +1,35 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.space-between {
+  justify-content: space-between;
+  align-items: center;
+}
+.space-around {
+  justify-content: space-around;
+  align-items: center;
+}
+.flex-end {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* .w-auto {
+  width: auto !important;
+} */

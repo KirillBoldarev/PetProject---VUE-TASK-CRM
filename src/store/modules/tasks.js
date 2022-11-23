@@ -4,16 +4,39 @@ import localbase from "@/js/localbase";
 export default {
   state: {
     taskList: [],
+    inspectedTask: {},
   },
 
   getters: {
     getTaskList(state) {
       return state.taskList;
     },
+    getInspectedTask(state) {
+      return state.inspectedTask;
+    },
   },
   mutations: {
     initializeTaskList(state, resultFromAction) {
       state.taskList = resultFromAction;
+    },
+
+    inspectTask(state, task) {
+      state.inspectedTask = task;
+      sessionStorage.setItem("inspectedTask", JSON.stringify(task));
+    },
+
+    clearInspectedTask(state) {
+      state.inspectedTask = null;
+      sessionStorage.removeItem("inspectedTask");
+    },
+    
+    updateInspectedTask(state, resultOfAction) {
+      let inspected = JSON.parse(sessionStorage.getItem("inspectedTask"));
+      if (inspected) {
+        state.inspectedTask = resultOfAction.find(
+          (task) => task.id === inspected.id
+        );
+      }
     },
 
     createTask(state, task) {
@@ -46,12 +69,12 @@ export default {
         if (task.id === targetedTask.id) {
           if (task.isCompleted === true) {
             task.isCompleted = !targetedTask.isCompleted;
-            delete task.dateOfComplete;
+            delete task.dateOfCompletion;
             return;
           }
           if (task.isCompleted === false) {
             task.isCompleted = !targetedTask.isCompleted;
-            task.dateOfComplete = filterDate(new Date(), "datetime");
+            task.dateOfCompletion = filterDate(new Date(), "datetime");
             return;
           }
         }
@@ -66,6 +89,7 @@ export default {
         .get()
         .then((result) => {
           context.commit("initializeTaskList", result);
+          context.commit("updateInspectedTask", result);
         })
         .catch((error) => console.log(error));
     },

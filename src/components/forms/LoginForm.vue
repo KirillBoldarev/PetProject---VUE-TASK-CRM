@@ -3,8 +3,8 @@
     <h2 class="">Войти в систему!</h2>
     <strong> Введите ваши персональные данные :</strong>
     <form class="form__body" @submit.prevent="this.authenticateUser">
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
@@ -30,8 +30,8 @@
         </div>
       </div>
 
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="password">Пароль</label>
           <input
             @blur="v$.password.$touch"
@@ -41,7 +41,7 @@
             name="password"
           />
         </div>
-        <div class="form__row">
+        <div class="flex-row center">
           <transition>
             <small
               v-if="v$.password.$dirty && v$.password.required.$invalid"
@@ -53,12 +53,15 @@
       </div>
 
       <transition>
-        <div v-if="this.incorrectData === true" class="form__row form__invalid">
+        <div
+          v-if="this.incorrectData === true"
+          class="flex-row center form__invalid"
+        >
           Вы ввели не верный логин или пароль!
         </div>
       </transition>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">Войти в систему</button>
       </div>
     </form>

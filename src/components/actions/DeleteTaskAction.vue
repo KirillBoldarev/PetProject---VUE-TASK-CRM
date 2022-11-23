@@ -1,5 +1,7 @@
 <template>
-  <img @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
+  <img 
+  v-tooltip.bottom="'Удалить'"
+  @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
     @confirm="deleteHandler"
@@ -15,7 +17,7 @@ import { mapMutations } from "vuex";
 export default {
   name: "DeleteTaskAction",
   components: { ConfirmDialog },
-  mixins:[confirmationDialogMixin],
+  mixins: [confirmationDialogMixin],
 
   props: {
     target: {
@@ -25,15 +27,19 @@ export default {
   },
 
   data() {
-    return {
-
-    };
+    return {};
   },
 
   methods: {
-    ...mapMutations(["deleteTask"]),
+    ...mapMutations(["deleteTask", "clearInspectedTask"]),
 
     deleteHandler() {
+      if (this.target.id === this.$store.getters.getInspectedTask.id) {
+        this.$router.push("/tasks");
+        this.clearInspectedTask();
+        this.deleteTask(this.target);
+        return;
+      }
       this.deleteTask(this.target);
     },
   },

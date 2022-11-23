@@ -1,15 +1,14 @@
 <template>
   <section id="loginForm" class="form__container">
     <h3 class="form__title">Редактирование задачи</h3>
-    <strong>Дата создания: {{ target.dateOfCreation }}</strong>
     <form class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
         @confirm="this.editHandler"
         @close="isDialogOpen = false"
       ></confirm-dialog>
-      <div class="form__row">
-        <div class="form__group">
+      <div class="flex-row center">
+        <div class="flex-column center">
           <label class="form__label" for="email">Выберите отправителя:</label>
           <select
             class="form__select"
@@ -28,7 +27,7 @@
           </select>
         </div>
 
-        <div class="form__group">
+        <div class="flex-column center">
           <label class="form__label" for="email">Выберите получателя:</label>
           <select
             class="form__select"
@@ -47,8 +46,8 @@
           </select>
         </div>
       </div>
-      <div class="form__group">
-        <div class="form__column">
+      <div class="flex-column center">
+        <div class="flex-column center">
           <h2 class="form__title">Заголовок задачи:</h2>
           <input
             class="form__input"
@@ -67,8 +66,8 @@
           </transition>
         </div>
       </div>
-      <div class="form__group">
-        <div class="form__column">
+      <div class="flex-column center">
+        <div class="flex-column center">
           <h2 class="form__title">Описание задачи:</h2>
           <textarea
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
@@ -89,7 +88,7 @@
           </transition>
         </div>
       </div>
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">ОК</button>
       </div>
     </form>
@@ -153,7 +152,7 @@ export default {
       id: this.target.id,
       commits: this.target.commits,
       dateOfCreation: this.target.dateOfCreation,
-      dateOfComplete: this.target.dateOfComplete,
+      dateOfCompletion: this.target.dateOfCompletion,
     };
   },
 
@@ -190,7 +189,7 @@ export default {
         title: this.title,
         commits: this.commits,
         dateOfCreation: this.dateOfCreation,
-        dateOfComplete: this.dateOfComplete,
+        dateOfCompletion: this.dateOfCompletion,
       };
     },
   },

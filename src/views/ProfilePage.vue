@@ -2,16 +2,16 @@
   <div class="page">
     <div class="page__body">
       <h2 class="page__title">Профиль пользователя</h2>
-      <div class="page__row">
+      <div class="flex-row center">
         <img
-          @click="this.editMode = !this.editMode"
+          @click="this.editUserMode = !this.editUserMode"
           v-tooltip.bottom="'Нажмите для редактирования'"
           class="icon"
           src="@/icons/edit.png"
           alt=""
         />
       </div>
-      <div class="page__row">
+      <div class="flex-row center">
         <form class="form__body" @submit.prevent="confirmation">
           <confirm-dialog
             :isDialogOpen="isDialogOpen"
@@ -19,8 +19,8 @@
             @close="isDialogOpen = false"
           ></confirm-dialog>
 
-          <div class="form__row">
-            <div class="form__group">
+          <div class="flex-row center">
+            <div class="flex-column center">
               <label class="form__label" for="firtstName">Имя</label>
               <input
                 @blur="v$.firstName.$touch"
@@ -28,9 +28,9 @@
                 class="form__input"
                 type="firtstName"
                 name="firstName"
-                :disabled="editMode === false"
+                :disabled="editUserMode === false"
               />
-              <div class="form__row">
+              <div class="flex-row center">
                 <transition>
                   <small
                     v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
@@ -41,7 +41,7 @@
               </div>
             </div>
 
-            <div class="form__group">
+            <div class="flex-column center">
               <label class="form__label" for="secondName">Фамилия</label>
               <input
                 @blur="v$.secondName.$touch"
@@ -49,9 +49,9 @@
                 class="form__input"
                 type="text"
                 name="secondName"
-                :disabled="editMode === false"
+                :disabled="editUserMode === false"
               />
-              <div class="form__row">
+              <div class="flex-row center">
                 <transition>
                   <small
                     v-if="
@@ -65,8 +65,8 @@
             </div>
           </div>
 
-          <div class="form__row">
-            <div class="form__group">
+          <div class="flex-row center">
+            <div class="flex-column center">
               <label class="form__label" for="email">Электронная почта</label>
               <input
                 @blur="v$.email.$touch"
@@ -74,7 +74,7 @@
                 class="form__input"
                 type="email"
                 name="email"
-                :disabled="editMode === false"
+                :disabled="editUserMode === false"
               />
               <div class="form__column">
                 <transition-group>
@@ -91,7 +91,7 @@
                 </transition-group>
               </div>
             </div>
-            <div class="form__group">
+            <div class="flex-column center">
               <label class="form__label" for="phone">Номер телефона</label>
               <input
                 @blur="v$.phone.$touch"
@@ -99,7 +99,7 @@
                 class="form__input"
                 type="text"
                 name="phone"
-                :disabled="editMode === false"
+                :disabled="editUserMode === false"
               />
               <div class="form__column">
                 <transition-group>
@@ -118,7 +118,7 @@
             </div>
           </div>
 
-          <div class="form__group">
+          <div class="flex-column center">
             <label class="form__label" for="password">Пароль</label>
             <input
               @blur="v$.password.$touch"
@@ -126,7 +126,7 @@
               class="form__input"
               type="password"
               name="password"
-              :disabled="editMode === false"
+              :disabled="editUserMode === false"
             />
             <div class="form__column">
               <transition-group>
@@ -145,7 +145,7 @@
             </div>
           </div>
 
-          <div class="form__group">
+          <div class="flex-column center">
             <button class="button" type="submit">Принять</button>
           </div>
         </form>
@@ -178,7 +178,7 @@ export default {
       id: this.$store.getters.authenticatedUser.id,
       role: this.$store.getters.authenticatedUser.role,
 
-      editMode: false,
+      editUserMode: false,
     };
   },
 

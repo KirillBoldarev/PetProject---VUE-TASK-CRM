@@ -3,8 +3,8 @@
     <h2 class="form__title">Регистрация пользователя!</h2>
     <strong> Введите ваши персональные данные :</strong>
     <form class="form__body" @submit.prevent="this.registerUser">
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="firstName">Имя</label>
           <input
             @blur="v$.firstName.$touch"
@@ -26,8 +26,8 @@
         </div>
       </div>
 
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="secondName">Фамилия</label>
           <input
             @blur="v$.secondName.$touch"
@@ -38,7 +38,7 @@
             name="secondName"
           />
         </div>
-        <div class="form__row">
+        <div class="flex-row center">
           <transition>
             <small
               v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
@@ -49,8 +49,8 @@
         </div>
       </div>
 
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
@@ -77,8 +77,8 @@
         </div>
       </div>
 
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="phone">Номер телефона</label>
           <input
             @blur="v$.phone.$touch"
@@ -105,8 +105,8 @@
         </div>
       </div>
 
-      <div class="form__group">
-        <div class="form__row">
+      <div class="flex-column center">
+        <div class="flex-row center">
           <label class="form__label" for="password">Пароль</label>
           <input
             @blur="v$.password.$touch"
@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">Зарегистрироваться!</button>
       </div>
     </form>

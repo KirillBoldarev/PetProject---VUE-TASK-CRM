@@ -20,18 +20,14 @@
 
 <script>
 import ModalWindow from "@/components/ModalWindow.vue";
+
 export default {
   name: "ButtonWithModalForm",
   components: { ModalWindow },
-
   props: {
-    icon: {
-      type: String,
-      required: false,
-    },
     label: {
       type: String,
-      required: true,
+      required: false,
     },
     image: {
       type: String,

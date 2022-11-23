@@ -1,8 +1,11 @@
 <template>
-  <section id="addTaskForm" class="form__container">
+  <section
+    id="addTaskForm"
+    class="form__container"
+  >
     <h2 class="form__title">Добавить задачу</h2>
     <form class="form__body" @submit.prevent="this.createHandler">
-      <div class="form__group">
+      <div class="flex-column center">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select
           class="form__select"
@@ -21,8 +24,8 @@
         </select>
       </div>
 
-      <div class="form__group">
-        <div class="form__column">
+      <div class="flex-column center">
+        <div class="flex-column center">
           <label class="form__label" for="title">Заголовок:</label>
           <input
             v-tooltip.right="'Опишите суть задачи'"
@@ -40,7 +43,7 @@
             </small>
           </transition>
         </div>
-        <div class="form__column">
+        <div class="flex-column center">
           <label class="form__label">Описание задачи:</label>
           <textarea
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
@@ -63,7 +66,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">Создать задачу</button>
       </div>
     </form>

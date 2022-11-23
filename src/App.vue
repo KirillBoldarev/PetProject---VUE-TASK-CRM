@@ -4,9 +4,13 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-
+  <p>{{ this.inspectedTask }}</p>
   <main class="main__content">
-    <router-view :taskList="taskList" :userList="userList"></router-view>
+    <router-view
+      :taskList="taskList"
+      :userList="userList"
+      :inspectedTask="inspectedTask"
+    ></router-view>
   </main>
 
   <footer-layout
@@ -30,6 +34,7 @@ export default {
     return {
       taskList: [],
       userList: [],
+      inspectedTask: {},
     };
   },
   methods: {},

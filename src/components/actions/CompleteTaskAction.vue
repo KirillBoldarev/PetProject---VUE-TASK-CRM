@@ -2,6 +2,7 @@
   <img
     v-if="target.isCompleted === true"
     @click="confirmation"
+    v-tooltip.bottom="'Отменить выполнение'"
     class="icon"
     src="@/icons/check.png"
     alt=""
@@ -10,6 +11,7 @@
   <img
     v-if="target.isCompleted === false"
     @click="confirmation"
+    v-tooltip.bottom="'Выполнить задачу'"
     class="icon"
     src="@/icons/notСheck.png"
     alt=""

@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__logo"></div>
-    <div class="header__column">
+    <div class="flex-column center">
       <strong class="header__title" v-if="this.$store.getters.isAuth === false">
         Приветствую! Прошу пройти авторизацию!
       </strong>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="header__buttons" v-if="this.$store.getters.isAuth === true">
+    <div class="flex-row flex-end" v-if="this.$store.getters.isAuth === true">
       <button class="button" @click="this.$router.push('/profile')">
         Личный кабинет
       </button>
@@ -44,7 +44,7 @@
       <logout-action></logout-action>
     </div>
 
-    <div class="header__buttons" v-if="this.$store.getters.isAuth === false">
+    <div class="flex-row flex-end" v-if="this.$store.getters.isAuth === false">
       <button-with-modal-form label="Войти">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>

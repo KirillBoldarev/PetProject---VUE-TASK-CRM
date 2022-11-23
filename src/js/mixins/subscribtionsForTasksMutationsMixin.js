@@ -14,6 +14,18 @@ export default {
         if (mutation.type === "initializeTaskList") {
           this.taskList = this.$store.getters.getTaskList;
         }
+        //Inspect
+        if (mutation.type === "inspectTask") {
+          this.inspectedTask = mutation.payload;
+        }
+        //ClearInspectedTask
+        if (mutation.type === "clearInspectedTask") {
+          this.inspectedTask = null;
+        }
+        //UpdateInspectedTask
+        if (mutation.type === "updateInspectedTask") {
+          this.inspectedTask = this.$store.getters.getInspectedTask;
+        }
         //Create
         if (mutation.type === "createTask") {
           localbase
@@ -52,7 +64,7 @@ export default {
           let target = this.taskList.find(
             (task) => task.id === mutation.payload.id
           );
-          console.log(target)
+          console.log(target);
           localbase
             .collection("tasks")
             .doc({ id: target.id })

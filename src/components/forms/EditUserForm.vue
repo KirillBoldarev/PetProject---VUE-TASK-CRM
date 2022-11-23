@@ -8,18 +8,23 @@
         @close="isDialogOpen = false"
       ></confirm-dialog>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
         >
         <select class="form__select" v-model="role" name="role" id="role">
-          <option class="form__option" v-for="role in this.$options.ROLE" :key="role" :value="role">
+          <option
+            class="form__option"
+            v-for="role in this.$options.ROLE"
+            :key="role"
+            :value="role"
+          >
             {{ role }}
           </option>
         </select>
       </div>
-      <div class="form__row">
-        <div class="form__group">
+      <div class="flex-row center">
+        <div class="flex-column center">
           <label class="form__label" for="email">Имя</label>
           <input
             @blur="v$.firstName.$touch"
@@ -28,7 +33,7 @@
             type="firtstName"
             name="firstName"
           />
-          <div class="form__row">
+          <div class="flex-row center">
             <small
               v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
               class="form__invalid"
@@ -37,7 +42,7 @@
           </div>
         </div>
 
-        <div class="form__group">
+        <div class="flex-column center">
           <label class="form__label" for="secondName">Фамилия</label>
           <input
             @blur="v$.secondName.$touch"
@@ -46,7 +51,7 @@
             type="text"
             name="secondName"
           />
-          <div class="form__row">
+          <div class="flex-row center">
             <transition>
               <small
                 v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
@@ -58,8 +63,8 @@
         </div>
       </div>
 
-      <div class="form__row">
-        <div class="form__group">
+      <div class="flex-row center">
+        <div class="flex-column center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
@@ -84,7 +89,7 @@
           </div>
         </div>
 
-        <div class="form__group">
+        <div class="flex-column center">
           <label class="form__label" for="phone">Номер телефона</label>
           <input
             @blur="v$.phone.$touch"
@@ -110,7 +115,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <label class="form__label" for="password">Пароль</label>
         <input
           @blur="v$.password.$touch"
@@ -135,7 +140,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">Принять</button>
       </div>
     </form>

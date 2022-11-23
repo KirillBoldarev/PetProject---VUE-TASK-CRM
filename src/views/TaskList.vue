@@ -3,7 +3,7 @@
     <template v-for="page in pages" :key="page.name">
       <div class="page__body" v-if="this.currentPage === page.name">
         <h2 class="page__title">Управление задачами</h2>
-        <div class="page__column">
+        <div class="flex-column center">
           <tabs
             :tabs="pages"
             :selectedTab="currentPage"
@@ -20,7 +20,9 @@
             <label class="form__label"> Поиск:</label>
             <input class="form__input" v-model="this.searchValue" type="text" />
             <label class="form__label"> Добавить задачу:</label>
-            <button-with-modal-form :image="require('@/icons/plus.png')">
+            <button-with-modal-form
+              :image="require('@/icons/plus.png')"
+            >
               <template v-slot:formSlot="{ closeModal }">
                 <add-task-form
                   @close="closeModal"
@@ -56,7 +58,11 @@
               <div class="table__column">
                 {{ this.getFullNameExecutor(task) }}
               </div>
-              <div class="table__column">
+              <div
+                class="table__column"
+                style="cursor: pointer"
+                @dblclick="this.inspectTask(task)"
+              >
                 {{ task.title }}
               </div>
               <div class="table__column">
@@ -176,6 +182,10 @@ export default {
   },
 
   methods: {
+    inspectTask(task) {
+      this.$store.commit("inspectTask", task);
+      this.$router.push("/task");
+    },
     getSender(task) {
       let senderId = this.$store.getters.TASK_SENDERS.find(
         (record) => record.task === task.id

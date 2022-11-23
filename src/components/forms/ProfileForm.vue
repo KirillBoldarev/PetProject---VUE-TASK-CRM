@@ -18,8 +18,8 @@
         @close="isDialogOpen = false"
       ></confirm-dialog>
 
-      <div class="form__row">
-        <div class="form__group">
+      <div class="flex-row center">
+        <div class="flex-column center">
           <label class="form__label" for="firtstName">Имя</label>
           <input
             @blur="v$.firstName.$touch"
@@ -29,7 +29,7 @@
             name="firstName"
             :disabled="editMode === false"
           />
-          <div class="form__row">
+          <div class="flex-row center">
             <transition>
               <small
                 v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div class="form__group">
+        <div class="flex-column center">
           <label class="form__label" for="secondName">Фамилия</label>
           <input
             @blur="v$.secondName.$touch"
@@ -50,7 +50,7 @@
             name="secondName"
             :disabled="editMode === false"
           />
-          <div class="form__row">
+          <div class="flex-row center">
             <transition>
               <small
                 v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
@@ -62,8 +62,8 @@
         </div>
       </div>
 
-      <div class="form__row">
-        <div class="form__group">
+      <div class="flex-row center">
+        <div class="flex-column center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
             @blur="v$.email.$touch"
@@ -88,7 +88,7 @@
             </transition-group>
           </div>
         </div>
-        <div class="form__group">
+        <div class="flex-column center">
           <label class="form__label" for="phone">Номер телефона</label>
           <input
             @blur="v$.phone.$touch"
@@ -115,7 +115,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <label class="form__label" for="password">Пароль</label>
         <input
           @blur="v$.password.$touch"
@@ -141,7 +141,7 @@
         </div>
       </div>
 
-      <div class="form__group">
+      <div class="flex-column center">
         <button class="button" type="submit">Принять</button>
       </div>
     </form>
