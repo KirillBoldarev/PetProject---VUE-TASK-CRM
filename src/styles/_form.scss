@@ -41,6 +41,10 @@
     }
   }
 
+  &__label {
+    text-align: center;
+  }
+
   &__tool {
     display: flex;
     flex-direction: column;
@@ -95,6 +99,12 @@
   &__input {
     padding: 5px;
     box-sizing: border-box;
+    width: 200px;
+
+    @media (max-width: 500px) {
+      width: 125px;
+    }
+
   }
   &__textbox {
     padding: 15px;

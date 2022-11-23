@@ -2,13 +2,13 @@
   <header class="header">
     <div class="header__logo"></div>
     <div class="header__column">
-      <h2 class="header__title" v-if="this.$store.getters.isAuth === false">
+      <strong class="header__title" v-if="this.$store.getters.isAuth === false">
         Приветствую! Прошу пройти авторизацию!
-      </h2>
-      <h2 v-else class="header__title">
+      </strong>
+      <strong v-else class="header__title">
         Приветствую ,
         {{ this.$store.getters.authenticatedUser.firstName }} !
-      </h2>
+      </strong>
 
       <div
         class="header__navigation"
@@ -20,7 +20,7 @@
           :key="link.name"
           :to="link.url"
         >
-          <img class="icon" :src="getImgUrl(link.icon)" />{{
+          <img class="icon--mini" :src="getImgUrl(link.icon)" />{{
             link.name
           }}</router-link
         >
@@ -28,7 +28,10 @@
     </div>
 
     <div class="header__buttons" v-if="this.$store.getters.isAuth === true">
-      <button-with-modal-form label="Профиль пользователя">
+      <button class="button" @click="this.$router.push('/profile')">
+        Личный кабинет
+      </button>
+      <!-- <button-with-modal-form label="Профиль пользователя">
         <template #formSlot="{ closeModal }"
           ><profile-form
             @close="closeModal"
@@ -37,7 +40,7 @@
           >
           </profile-form
         ></template>
-      </button-with-modal-form>
+      </button-with-modal-form> -->
       <logout-action></logout-action>
     </div>
 

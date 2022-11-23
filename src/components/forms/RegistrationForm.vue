@@ -145,8 +145,6 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
-
-
 export default {
   setup() {
     return {
@@ -210,8 +208,18 @@ export default {
         email: this.email,
         phone: this.phone,
         password: this.password,
-        id: Math.random().toString(36).substring(2, 9),
+        id: this.userId,
+        role: this.userRole,
       };
+    },
+    userRole() {
+      if (this.$store.getters.getUserList.length === 0) {
+        return "Администратор";
+      }
+      return "Неавторизованный пользователь";
+    },
+    userId() {
+      return Math.random().toString(36).substring(2, 9);
     },
   },
 };

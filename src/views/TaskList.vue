@@ -3,16 +3,22 @@
     <template v-for="page in pages" :key="page.name">
       <div class="page__body" v-if="this.currentPage === page.name">
         <h2 class="page__title">Управление задачами</h2>
-        <div class="page__toolbar">
+        <div class="page__column">
           <tabs
             :tabs="pages"
             :selectedTab="currentPage"
             @changeTab="changePage"
           ></tabs>
           <div class="form">
+            <label class="form__label"> Отображать завершенные:</label>
+            <input
+              v-model="completed"
+              type="checkbox"
+              name="completedTask"
+              id="completedCheckbox"
+            />
             <label class="form__label"> Поиск:</label>
             <input class="form__input" v-model="this.searchValue" type="text" />
-
             <label class="form__label"> Добавить задачу:</label>
             <button-with-modal-form :image="require('@/icons/plus.png')">
               <template v-slot:formSlot="{ closeModal }">
@@ -50,9 +56,18 @@
               <div class="table__column">
                 {{ this.getFullNameExecutor(task) }}
               </div>
-              <div class="table__column">{{ task.description }}</div>
               <div class="table__column">
-                <button-with-modal-form :image="require('@/icons/edit.png')">
+                {{ task.title }}
+              </div>
+              <div class="table__column">
+                <button-with-modal-form
+                  v-if="
+                    task.isCompleted === false &&
+                    this.getSender(task).id ===
+                      this.$store.getters.authenticatedUser.id
+                  "
+                  :image="require('@/icons/edit.png')"
+                >
                   <template #formSlot="{ closeModal }">
                     <edit-task-form
                       @close="closeModal"
@@ -70,7 +85,6 @@
         </div>
       </div>
     </template>
-    
   </div>
 </template>
 
@@ -109,6 +123,7 @@ export default {
     return {
       currentPage: "personal",
       searchValue: "",
+      completed: true,
     };
   },
   computed: {
@@ -116,12 +131,12 @@ export default {
       return [
         {
           name: "personal",
-          label: "Задачи",
+          label: "Полученные задачи",
           dataSource: this.personalTasks,
         },
         {
           name: "charged",
-          label: "Поручения",
+          label: "Отправленные поручения",
           dataSource: this.chargedTasks,
         },
       ];
@@ -161,6 +176,13 @@ export default {
   },
 
   methods: {
+    getSender(task) {
+      let senderId = this.$store.getters.TASK_SENDERS.find(
+        (record) => record.task === task.id
+      ).sender;
+      let sender = this.userList.find((user) => user.id === senderId);
+      return sender;
+    },
     getFullNameSender(task) {
       let senderId = this.$store.getters.TASK_SENDERS.find(
         (record) => record.task === task.id
@@ -176,13 +198,26 @@ export default {
       return `${executor.firstName} ${executor.secondName}`;
     },
 
+    //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
     filterSource(source) {
-      if (!this.searchValue) {
+      if (!this.searchValue && this.completed === true) {
         return source;
       }
-      return source.filter((item) =>
-        item.description.toUpperCase().includes(this.searchValue.toUpperCase())
-      );
+      if (!this.searchValue && this.completed === false) {
+        return source.filter((item) => item.isCompleted === this.completed);
+      }
+      if (this.searchValue && this.completed === true) {
+        return source.filter((item) =>
+          item.title.toUpperCase().includes(this.searchValue.toUpperCase())
+        );
+      }
+      if (this.searchValue && this.completed === false) {
+        return source.filter(
+          (item) =>
+            item.title.toUpperCase().includes(this.searchValue.toUpperCase()) &&
+            item.isCompleted === this.completed
+        );
+      }
     },
 
     changePage(tabName) {

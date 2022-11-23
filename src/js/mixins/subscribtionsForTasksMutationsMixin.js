@@ -1,4 +1,5 @@
 import localbase from "@/js/localbase";
+import { toRaw } from "vue"; //функция извлекающая объект из прокси
 
 export default {
   data() {
@@ -48,14 +49,17 @@ export default {
         }
         //Complete
         if (mutation.type === "completeTask") {
+          let target = this.taskList.find(
+            (task) => task.id === mutation.payload.id
+          );
+          console.log(target)
           localbase
             .collection("tasks")
-            .doc({ id: mutation.payload.id })
-            .update({
-              isCompleted: mutation.payload.isCompleted,
-            })
+            .doc({ id: target.id })
+            .set(toRaw(target))
             .catch((error) => console.log(error));
         }
+
         //Bind
         if (mutation.type === "bindTask") {
           localbase

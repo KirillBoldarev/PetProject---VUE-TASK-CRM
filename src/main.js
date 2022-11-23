@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import filterDate from "./js/filterDate";
 
 import "./styles/style.scss";
 
@@ -22,5 +23,6 @@ createApp(App)
   .use(router)
   .use(PrimeVue)
   .use(localbase)
+  .use("filterDate", filterDate)
   .directive("tooltip", Tooltip)
   .mount("#app");

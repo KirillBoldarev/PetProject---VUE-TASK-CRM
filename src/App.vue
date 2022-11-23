@@ -9,7 +9,11 @@
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
 
-  <footer-layout class="main__footer"></footer-layout>
+  <footer-layout
+    :taskList="taskList"
+    :userList="userList"
+    class="main__footer"
+  ></footer-layout>
 </template>
 
 <script>

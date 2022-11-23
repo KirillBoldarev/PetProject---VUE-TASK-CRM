@@ -1,3 +1,4 @@
+import filterDate from "@/js/filterDate";
 import localbase from "@/js/localbase";
 
 export default {
@@ -32,6 +33,8 @@ export default {
     editTask(state, changedData) {
       state.taskList.forEach((task) => {
         if (task.id === changedData.id) {
+          task.title = changedData.title;
+          task.commits = changedData.commits;
           task.description = changedData.description;
           task.isCompleted = changedData.isCompleted;
         }
@@ -41,7 +44,16 @@ export default {
     completeTask(state, targetedTask) {
       state.taskList.forEach((task) => {
         if (task.id === targetedTask.id) {
-          task.isCompleted = !targetedTask.isCompleted;
+          if (task.isCompleted === true) {
+            task.isCompleted = !targetedTask.isCompleted;
+            delete task.dateOfComplete;
+            return;
+          }
+          if (task.isCompleted === false) {
+            task.isCompleted = !targetedTask.isCompleted;
+            task.dateOfComplete = filterDate(new Date(), "datetime");
+            return;
+          }
         }
       });
     },

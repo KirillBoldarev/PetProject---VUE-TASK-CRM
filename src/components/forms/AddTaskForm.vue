@@ -23,8 +23,27 @@
 
       <div class="form__group">
         <div class="form__column">
-          <h3 class="form__title">Описание задачи:</h3>
+          <label class="form__label" for="title">Заголовок:</label>
+          <input
+            v-tooltip.right="'Опишите суть задачи'"
+            @blur="v$.title.$touch"
+            v-model="title"
+            class="form__input"
+            type="text"
+            name="title"
+          />
+          <transition>
+            <small
+              v-if="v$.title.$dirty && v$.title.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
+        </div>
+        <div class="form__column">
+          <label class="form__label">Описание задачи:</label>
           <textarea
+            v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
             @blur="v$.description.$touch"
             @keyup.ctrl.enter="this.createTask"
@@ -55,6 +74,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
+import filterDate from "@/js/filterDate";
 
 export default {
   components: {},
@@ -82,6 +102,7 @@ export default {
     return {
       executor: this.target,
       sender: this.$store.state.authentication.authenticatedUser,
+      title: "",
       description: "",
     };
   },
@@ -89,6 +110,7 @@ export default {
   validations() {
     return {
       description: { required },
+      title: { required },
     };
   },
   methods: {
@@ -113,9 +135,18 @@ export default {
     preparedTask() {
       return {
         description: this.description,
-        id: Math.random().toString(36).substring(2, 9),
+        title: this.title,
+        id: this.taskId,
         isCompleted: false,
+        dateOfCreation: this.dateOfCreation,
       };
+    },
+    taskId() {
+      return Math.random().toString(36).substring(2, 9);
+    },
+    dateOfCreation() {
+      let now = new Date();
+      return filterDate(now, "datetime");
     },
   },
 };

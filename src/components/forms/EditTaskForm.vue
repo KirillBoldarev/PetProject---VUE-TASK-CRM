@@ -1,6 +1,7 @@
 <template>
   <section id="loginForm" class="form__container">
     <h3 class="form__title">Редактирование задачи</h3>
+    <strong>Дата создания: {{ target.dateOfCreation }}</strong>
     <form class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
@@ -10,8 +11,18 @@
       <div class="form__row">
         <div class="form__group">
           <label class="form__label" for="email">Выберите отправителя:</label>
-          <select class="form__select" v-model="sender" name="sender" id="sender">
-            <option class="form__option" v-for="user in userList" :key="user.id" :value="user">
+          <select
+            class="form__select"
+            v-model="sender"
+            name="sender"
+            id="sender"
+          >
+            <option
+              class="form__option"
+              v-for="user in userList"
+              :key="user.id"
+              :value="user"
+            >
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -19,8 +30,18 @@
 
         <div class="form__group">
           <label class="form__label" for="email">Выберите получателя:</label>
-          <select class="form__select" v-model="executor" name="executor" id="executor">
-            <option class="form__option" v-for="user in userList" :key="user.id" :value="user">
+          <select
+            class="form__select"
+            v-model="executor"
+            name="executor"
+            id="executor"
+          >
+            <option
+              class="form__option"
+              v-for="user in userList"
+              :key="user.id"
+              :value="user"
+            >
               {{ user.firstName }} {{ user.secondName }}
             </option>
           </select>
@@ -28,8 +49,29 @@
       </div>
       <div class="form__group">
         <div class="form__column">
+          <h2 class="form__title">Заголовок задачи:</h2>
+          <input
+            class="form__input"
+            @blur="v$.title.$touch"
+            v-model="title"
+            v-tooltip.right="'Опишите суть задачи'"
+            name="title"
+            type="text"
+          />
+          <transition>
+            <small
+              v-if="v$.title.$dirty && v$.title.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
+        </div>
+      </div>
+      <div class="form__group">
+        <div class="form__column">
           <h2 class="form__title">Описание задачи:</h2>
           <textarea
+            v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
             @blur="v$.description.$touch"
             v-model="description"
@@ -47,15 +89,6 @@
           </transition>
         </div>
       </div>
-
-      <div class="form__group">
-        <label class="form__label" for="">Завершение задачи :</label>
-        <complete-task-action
-          :target="this.target"
-          :taskList="taskList"
-        ></complete-task-action>
-      </div>
-
       <div class="form__group">
         <button class="button" type="submit">ОК</button>
       </div>
@@ -64,7 +97,6 @@
 </template>
 
 <script>
-import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
@@ -80,7 +112,6 @@ export default {
 
   name: "EditTaskForm",
   components: {
-    CompleteTaskAction,
     ConfirmDialog,
   },
   mixins: [confirmationDialogMixin],
@@ -117,14 +148,19 @@ export default {
       ),
 
       description: this.target.description,
+      title: this.target.title,
       isCompleted: this.target.isCompleted,
       id: this.target.id,
+      commits: this.target.commits,
+      dateOfCreation: this.target.dateOfCreation,
+      dateOfComplete: this.target.dateOfComplete,
     };
   },
 
   validations() {
     return {
       description: { required },
+      title: { required },
     };
   },
 
@@ -151,6 +187,10 @@ export default {
         id: this.target.id,
         description: this.description,
         isCompleted: this.isCompleted,
+        title: this.title,
+        commits: this.commits,
+        dateOfCreation: this.dateOfCreation,
+        dateOfComplete: this.dateOfComplete,
       };
     },
   },
