@@ -112,8 +112,6 @@ export default {
         }
       }
     );
-    this.$store.dispatch("initializeTaskListAction");
-    this.$store.dispatch("updateInspectedTaskAction");
   },
 
   beforeUnmounted() {

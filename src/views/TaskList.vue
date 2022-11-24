@@ -38,8 +38,12 @@
         <div class="table">
           <div class="table__row table__row--5">
             <div class="table__column">Состояние</div>
-            <div class="table__column">Отправитель</div>
-            <div class="table__column">Исполнитель</div>
+            <div v-if="currentPage === 'personal'" class="table__column">
+              Отправитель
+            </div>
+            <div v-if="currentPage === 'charged'" class="table__column">
+              Исполнитель
+            </div>
             <div class="table__column">Описание задачи</div>
             <div class="table__column">Действия</div>
           </div>
@@ -53,7 +57,7 @@
               <div class="table__column">
                 <complete-task-action :target="task"></complete-task-action>
               </div>
-              <div class="table__column">
+              <div v-if="currentPage === 'personal'" class="table__column">
                 <span
                   v-if="
                     this.getSender(task).firstName &&
@@ -65,7 +69,7 @@
                 <span v-else>{{ this.getSender(task).login }}</span>
               </div>
 
-              <div class="table__column">
+              <div v-if="currentPage === 'charged'" class="table__column">
                 <span
                   v-if="
                     this.getExecutor(task).firstName &&

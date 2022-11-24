@@ -14,14 +14,6 @@ export default {
     },
   },
   mutations: {
-    initialize_TASK_SENDERS(state, resultOfAction) {
-      state.TASK_SENDERS = resultOfAction;
-    },
-
-    initialize_TASK_EXECUTORS(state, resultOfAction) {
-      state.TASK_EXECUTORS = resultOfAction;
-    },
-
     bindTask(state, data) {
       state.TASK_SENDERS.push({
         task: data.id,
@@ -45,6 +37,14 @@ export default {
           record.executor = data.executor;
         }
       });
+    },
+
+    initialize_TASK_SENDERS(state, resultOfAction) {
+      state.TASK_SENDERS = resultOfAction;
+    },
+
+    initialize_TASK_EXECUTORS(state, resultOfAction) {
+      state.TASK_EXECUTORS = resultOfAction;
     },
   },
   actions: {

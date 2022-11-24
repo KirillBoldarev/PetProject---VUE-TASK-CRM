@@ -24,11 +24,16 @@
     justify-content: center;
     cursor: pointer;
     box-sizing: border-box;
+    max-width: 125px;
 
-    @media (max-width: 500px) {
+    @media (max-width: 960px) {
+      padding: 12px;
+      max-width: 100px;
+    }
+    @media (max-width: 580px) {
       padding: 10px;
       font-size: 10px;
-
+      max-width: 75px;
     }
   }
 

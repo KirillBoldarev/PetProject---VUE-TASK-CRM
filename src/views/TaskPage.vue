@@ -22,17 +22,23 @@
       <h2 class="page__title">Задача:{{ this.inspectedTask.title }}</h2>
       <div class="flex-row center">
         <strong
-          >Отправитель: {{ this.getSender.firstName }}
-          {{ this.getSender.secondName }}</strong
+          >Отправитель:
+          <span v-if="this.getSender.firstName && this.getSender.secondName"
+            >{{ this.getSender.firstName }}
+            {{ this.getSender.secondName }}</span
+          ><span v-else> {{ this.getSender.login }}</span></strong
         >
         <strong
-          >Исполнитель: {{ this.getExecutor.firstName }}
-          {{ this.getExecutor.secondName }}</strong
+          >Исполнитель:
+          <span v-if="this.getExecutor.firstName && this.getExecutor.secondName"
+            >{{ this.getExecutor.firstName }}
+            {{ this.getExecutor.secondName }}</span
+          ><span v-else> {{ this.getExecutor.login }}</span></strong
         >
       </div>
       <div class="flex-row center">
         <strong>Дата создания: {{ inspectedTask.dateOfCreation }}</strong>
-        <strong v-if="isCompleted"
+        <strong v-if="this.inspectedTask.isCompleted"
           >Дата завершения: {{ this.inspectedTask.dateOfCompletion }}</strong
         >
       </div>
@@ -84,6 +90,9 @@ export default {
   methods: {},
   computed: {
     getSender() {
+      console.log(this.userList);
+      console.log(this.$store.getters.TASK_SENDERS);
+      console.log(this.inspectedTask);
       return this.userList.find(
         (user) =>
           user.id ===
@@ -92,6 +101,7 @@ export default {
           ).sender
       );
     },
+
     getExecutor() {
       return this.userList.find(
         (user) =>

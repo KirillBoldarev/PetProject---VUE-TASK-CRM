@@ -48,8 +48,6 @@ export default {
         }
       }
     );
-    this.$store.dispatch("initializeUserListAction");
-    this.$store.dispatch("updateAuthenticatedAction");
   },
   beforeUnmounted() {
     this.subscribtionsForUsersMutations = null;

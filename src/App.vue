@@ -41,10 +41,17 @@ export default {
 
   computed: {},
 
-  mounted() {
+  beforeCreate() {
+    this.$store.dispatch("initializeUserListAction");
+    this.$store.dispatch("updateAuthenticatedAction");
+    this.$store.dispatch("initializeTaskListAction");
+    this.$store.dispatch("updateInspectedTaskAction");
     this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
-    
+
+
+    /* this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
+    this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION"); */
 
     // fetch("http://admin-tasks.local/api/users/11", {
     //   method: "put",

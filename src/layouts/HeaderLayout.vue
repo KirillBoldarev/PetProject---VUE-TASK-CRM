@@ -26,9 +26,10 @@
           :key="link.name"
           :to="link.url"
         >
-          <img class="icon--mini" :src="getImgUrl(link.icon)" />{{
-            link.name
-          }}</router-link
+          <img 
+          v-tooltip.bottom="link.name"
+          class="icon--mini" :src="getImgUrl(link.icon)"/>
+          <span>{{link.name}}</span></router-link
         >
       </div>
     </div>

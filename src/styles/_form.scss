@@ -43,6 +43,14 @@
 
   &__label {
     text-align: center;
+    font-size: 14px;
+    
+    @media (max-width: 960px) {
+      font-size: 12px;
+    }
+    @media (max-width: 580px) {
+      font-size: 10px;
+    }
   }
 
   &__tool {
@@ -78,7 +86,6 @@
     @media (max-width: 500px) {
       width: 125px;
     }
-
   }
   &__textbox {
     padding: 15px;
