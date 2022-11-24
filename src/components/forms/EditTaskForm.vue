@@ -9,7 +9,7 @@
       ></confirm-dialog>
       <div class="flex-row center">
         <div class="flex-column center">
-          <label class="form__label" for="email">Выберите отправителя:</label>
+          <label class="form__label" for="email">Отправитель:</label>
           <select
             class="form__select"
             v-model="sender"
@@ -22,13 +22,16 @@
               :key="user.id"
               :value="user"
             >
-              {{ user.firstName }} {{ user.secondName }}
+              <span v-if="user.firstName && user.secondName"
+                >{{ user.firstName }} {{ user.secondName }}</span
+              >
+              <span v-else>{{ user.login }}</span>
             </option>
           </select>
         </div>
 
         <div class="flex-column center">
-          <label class="form__label" for="email">Выберите получателя:</label>
+          <label class="form__label" for="email">Исполнитель:</label>
           <select
             class="form__select"
             v-model="executor"
@@ -41,7 +44,10 @@
               :key="user.id"
               :value="user"
             >
-              {{ user.firstName }} {{ user.secondName }}
+              <span v-if="user.firstName && user.secondName"
+                >{{ user.firstName }} {{ user.secondName }}</span
+              >
+              <span v-else>{{ user.login }}</span>
             </option>
           </select>
         </div>
@@ -177,6 +183,7 @@ export default {
         sender: this.sender.id,
         executor: this.executor.id,
       });
+      this.$emit("edited");
       this.$emit("close");
     },
   },

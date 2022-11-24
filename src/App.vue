@@ -4,6 +4,7 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
+
   <main class="main__content">
     <router-view
       :taskList="taskList"
@@ -43,7 +44,7 @@ export default {
   mounted() {
     this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
-    this.$store.dispatch("updateAuthenticatedAction");
+    
 
     // fetch("http://admin-tasks.local/api/users/11", {
     //   method: "put",
@@ -62,8 +63,8 @@ export default {
     // }).then((response) => {
     //   console.log(response);
     // });
-    
-/*     fetch("http://admin-tasks.local/api/users/11", {
+
+    /*     fetch("http://admin-tasks.local/api/users/11", {
       method: "delete",
       headers: {
         Accept: "application/json",

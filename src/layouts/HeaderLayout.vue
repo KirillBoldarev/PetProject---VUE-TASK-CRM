@@ -5,9 +5,15 @@
       <strong class="header__title" v-if="this.$store.getters.isAuth === false">
         Приветствую! Прошу пройти авторизацию!
       </strong>
-      <strong v-else class="header__title">
-        Приветствую ,
-        {{ this.$store.getters.authenticatedUser.firstName }} !
+      <strong v-if="this.$store.getters.isAuth === true" class="header__title">
+        Приветствую , 	&nbsp;
+        <span v-if="this.$store.getters.getAuth.firstName">{{
+          this.$store.getters.getAuth.firstName
+        }}</span
+        ><span v-if="!this.$store.getters.getAuth.firstName">{{
+          this.$store.getters.getAuth.login
+        }}</span>
+        !
       </strong>
 
       <div

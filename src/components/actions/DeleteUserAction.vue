@@ -1,5 +1,7 @@
 <template>
-  <img @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
+  <img 
+  v-tooltip.bottom="'Удалить пользователя'"
+  @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
     @confirm="deleteUser"

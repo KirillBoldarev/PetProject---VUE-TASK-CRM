@@ -29,7 +29,7 @@ export default {
       state.inspectedTask = null;
       sessionStorage.removeItem("inspectedTask");
     },
-    
+
     updateInspectedTask(state, resultOfAction) {
       let inspected = JSON.parse(sessionStorage.getItem("inspectedTask"));
       if (inspected) {
@@ -89,6 +89,14 @@ export default {
         .get()
         .then((result) => {
           context.commit("initializeTaskList", result);
+        })
+        .catch((error) => console.log(error));
+    },
+    updateInspectedTaskAction(context) {
+      localbase
+        .collection("tasks")
+        .get()
+        .then((result) => {
           context.commit("updateInspectedTask", result);
         })
         .catch((error) => console.log(error));

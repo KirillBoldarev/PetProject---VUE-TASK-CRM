@@ -1,6 +1,12 @@
 <template>
   <section id="EditUserForm" class="form__container">
-    <h3 class="form__titile">Ваши персональные данные:</h3>
+    <h3 class="form__titile">
+      Персональные данные пользователя:
+      <strong v-if="!target.firstName">{{ target.login }}</strong>
+      <strong v-if="target.firstName"
+        >{{ target.firstName }} {{ target.secondName }}</strong
+      >
+    </h3>
     <form class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
@@ -8,7 +14,10 @@
         @close="isDialogOpen = false"
       ></confirm-dialog>
 
-      <div class="flex-column center">
+      <div
+        v-if="this.$store.getters.getAuth.role === 'Администратор'"
+        class="flex-column center"
+      >
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
         >
@@ -23,6 +32,25 @@
           </option>
         </select>
       </div>
+
+      <div class="flex-column center">
+        <label class="form__label" for="login">Логин</label>
+        <input
+          @blur="v$.login.$touch"
+          v-model="login"
+          class="form__input"
+          type="text"
+          name="login"
+        />
+        <div class="flex-row center">
+          <small
+            v-if="v$.login.$dirty && v$.login.required.$invalid"
+            class="form__invalid"
+            >Поле обязательно для заполнения
+          </small>
+        </div>
+      </div>
+
       <div class="flex-row center">
         <div class="flex-column center">
           <label class="form__label" for="email">Имя</label>
@@ -33,13 +61,6 @@
             type="firtstName"
             name="firstName"
           />
-          <div class="flex-row center">
-            <small
-              v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-          </div>
         </div>
 
         <div class="flex-column center">
@@ -51,15 +72,6 @@
             type="text"
             name="secondName"
           />
-          <div class="flex-row center">
-            <transition>
-              <small
-                v-if="v$.secondName.$dirty && v$.secondName.required.$invalid"
-                class="form__invalid"
-                >Поле обязательно для заполнения
-              </small>
-            </transition>
-          </div>
         </div>
       </div>
 
@@ -74,18 +86,13 @@
             name="email"
           />
           <div class="form__column">
-            <transition-group>
+            <transition>
               <small
-                v-if="v$.email.$dirty && v$.email.required.$invalid"
-                class="form__invalid"
-                >Поле обязательно для заполнения
-              </small>
-              <small
-                v-else-if="v$.email.$dirty && v$.email.email.$invalid"
+                v-if="v$.email.$dirty && v$.email.email.$invalid"
                 class="form__invalid"
                 >Некорректный формат электронной почты
               </small>
-            </transition-group>
+            </transition>
           </div>
         </div>
 
@@ -99,18 +106,13 @@
             name="phone"
           />
           <div class="form__column">
-            <transition-group>
+            <transition>
               <small
-                v-if="v$.phone.$dirty && v$.phone.required.$invalid"
-                class="form__invalid"
-                >Поле обязательно для заполнения
-              </small>
-              <small
-                v-else-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
+                v-if="v$.phone.$dirty && v$.phone.isPhone.$invalid"
                 class="form__invalid"
                 >Некорректный формат телефона
               </small>
-            </transition-group>
+            </transition>
           </div>
         </div>
       </div>
@@ -167,6 +169,7 @@ export default {
 
   data() {
     return {
+      login: this.target.login,
       firstName: this.target.firstName,
       secondName: this.target.secondName,
       email: this.target.email,
@@ -179,10 +182,11 @@ export default {
 
   validations() {
     return {
-      firstName: { required },
-      secondName: { required },
-      email: { required, email },
-      phone: { required, isPhone },
+      login: { required, minLength: minLength(5) },
+      firstName: {},
+      secondName: {},
+      email: { email },
+      phone: { isPhone },
       password: { required, minLength: minLength(5) },
     };
   },
@@ -212,9 +216,7 @@ export default {
         return;
       }
       this.$store.commit("editUser", this.changedData);
-      if (this.id === this.$store.getters.authenticatedUser.id) {
-        this.$store.dispatch("updateAuthenticatedAction");
-      }
+      this.$emit("edited");
       this.$emit("close");
     },
   },
@@ -222,6 +224,7 @@ export default {
   computed: {
     changedData() {
       return {
+        login: this.login,
         id: this.id,
         firstName: this.firstName,
         secondName: this.secondName,

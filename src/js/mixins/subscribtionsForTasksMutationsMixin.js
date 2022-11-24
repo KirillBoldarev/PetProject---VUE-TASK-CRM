@@ -57,6 +57,9 @@ export default {
             .collection("tasks")
             .doc({ id: mutation.payload.id })
             .set(mutation.payload)
+            .then((response) => {
+              this.$store.dispatch("updateInspectedTaskAction");
+            })
             .catch((error) => console.log(error));
         }
         //Complete
@@ -64,7 +67,6 @@ export default {
           let target = this.taskList.find(
             (task) => task.id === mutation.payload.id
           );
-          console.log(target);
           localbase
             .collection("tasks")
             .doc({ id: target.id })
@@ -111,6 +113,7 @@ export default {
       }
     );
     this.$store.dispatch("initializeTaskListAction");
+    this.$store.dispatch("updateInspectedTaskAction");
   },
 
   beforeUnmounted() {

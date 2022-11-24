@@ -168,13 +168,13 @@ export default {
 
   data() {
     return {
-      firstName: this.$store.getters.authenticatedUser.firstName,
-      secondName: this.$store.getters.authenticatedUser.secondName,
-      email: this.$store.getters.authenticatedUser.email,
-      phone: this.$store.getters.authenticatedUser.phone,
-      password: this.$store.getters.authenticatedUser.password,
-      id: this.$store.getters.authenticatedUser.id,
-      role: this.$store.getters.authenticatedUser.role,
+      firstName: this.$store.getters.getAuth.firstName,
+      secondName: this.$store.getters.getAuth.secondName,
+      email: this.$store.getters.getAuth.email,
+      phone: this.$store.getters.getAuth.phone,
+      password: this.$store.getters.getAuth.password,
+      id: this.$store.getters.getAuth.id,
+      role: this.$store.getters.getAuth.role,
 
       isOpenTaskList: false,
       editMode: false,

@@ -21,6 +21,7 @@
             <input class="form__input" v-model="this.searchValue" type="text" />
             <label class="form__label"> Добавить задачу:</label>
             <button-with-modal-form
+              :tooltip="'Добавить задачу'"
               :image="require('@/icons/plus.png')"
             >
               <template v-slot:formSlot="{ closeModal }">
@@ -28,7 +29,7 @@
                   @close="closeModal"
                   :taskList="taskList"
                   :userList="userList"
-                  :target="this.$store.state.authentication.authenticatedUser"
+                  :target="this.$store.state.authentication.getAuth"
                 ></add-task-form>
               </template>
             </button-with-modal-form>
@@ -53,10 +54,27 @@
                 <complete-task-action :target="task"></complete-task-action>
               </div>
               <div class="table__column">
-                {{ this.getFullNameSender(task) }}
+                <span
+                  v-if="
+                    this.getSender(task).firstName &&
+                    this.getSender(task).secondName
+                  "
+                  >{{ this.getSender(task).firstName }}
+                  {{ this.getSender(task).secondName }}</span
+                >
+                <span v-else>{{ this.getSender(task).login }}</span>
               </div>
+
               <div class="table__column">
-                {{ this.getFullNameExecutor(task) }}
+                <span
+                  v-if="
+                    this.getExecutor(task).firstName &&
+                    this.getExecutor(task).secondName
+                  "
+                  >{{ this.getExecutor(task).firstName }}
+                  {{ this.getExecutor(task).secondName }}</span
+                >
+                <span v-else>{{ this.getExecutor(task).login }}</span>
               </div>
               <div
                 class="table__column"
@@ -69,10 +87,10 @@
                 <button-with-modal-form
                   v-if="
                     task.isCompleted === false &&
-                    this.getSender(task).id ===
-                      this.$store.getters.authenticatedUser.id
+                    this.getSender(task).id === this.$store.getters.getAuth.id
                   "
                   :image="require('@/icons/edit.png')"
+                  :tooltip="'Редактировать'"
                 >
                   <template #formSlot="{ closeModal }">
                     <edit-task-form
@@ -152,7 +170,7 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.authenticatedUser.id;
+        let currentUserId = this.$store.getters.getAuth.id;
         let relations = this.$store.getters.TASK_SENDERS.filter(
           (item) => item.sender === currentUserId
         );
@@ -168,7 +186,7 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.authenticatedUser.id;
+        let currentUserId = this.$store.getters.getAuth.id;
         let relations = this.$store.getters.TASK_EXECUTORS.filter(
           (item) => item.executor === currentUserId
         );
@@ -193,19 +211,13 @@ export default {
       let sender = this.userList.find((user) => user.id === senderId);
       return sender;
     },
-    getFullNameSender(task) {
-      let senderId = this.$store.getters.TASK_SENDERS.find(
-        (record) => record.task === task.id
-      ).sender;
-      let sender = this.userList.find((user) => user.id === senderId);
-      return `${sender.firstName} ${sender.secondName}`;
-    },
-    getFullNameExecutor(task) {
+
+    getExecutor(task) {
       let executorId = this.$store.getters.TASK_EXECUTORS.find(
         (record) => record.task === task.id
       ).executor;
       let executor = this.userList.find((user) => user.id === executorId);
-      return `${executor.firstName} ${executor.secondName}`;
+      return executor;
     },
 
     //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!

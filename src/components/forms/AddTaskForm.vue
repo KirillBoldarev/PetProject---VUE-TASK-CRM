@@ -1,8 +1,5 @@
 <template>
-  <section
-    id="addTaskForm"
-    class="form__container"
-  >
+  <section id="addTaskForm" class="form__container">
     <h2 class="form__title">Добавить задачу</h2>
     <form class="form__body" @submit.prevent="this.createHandler">
       <div class="flex-column center">
@@ -19,7 +16,8 @@
             :key="user.id"
             :value="user"
           >
-            {{ user.firstName }} {{ user.secondName }}
+            <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
+            <span v-else>{{user.login}}</span>
           </option>
         </select>
       </div>
@@ -104,7 +102,7 @@ export default {
   data() {
     return {
       executor: this.target,
-      sender: this.$store.state.authentication.authenticatedUser,
+      sender: this.$store.getters.getAuth,
       title: "",
       description: "",
     };

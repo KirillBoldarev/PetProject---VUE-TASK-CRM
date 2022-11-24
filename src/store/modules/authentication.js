@@ -2,37 +2,40 @@ import localbase from "@/js/localbase";
 
 export default {
   state: {
-    authenticatedUser: {},
+    authenticated: {},
     isAuthenticated: false,
   },
   getters: {
     isAuth(state) {
       return state.isAuthenticated;
     },
-    authenticatedUser(state) {
-      return state.authenticatedUser;
+    getAuth(state) {
+      return state.authenticated;
     },
   },
   mutations: {
     authentication(state, user) {
-      state.authenticatedUser = user;
+      state.authenticated = user;
       state.isAuthenticated = true;
-      sessionStorage.setItem("authenticatedUserId", state.authenticatedUser.id);
+      sessionStorage.setItem("getAuthId", state.authenticated.id);
     },
 
     logout(state) {
       state.isAuthenticated = false;
-      state.authenticatedUser = {};
-      sessionStorage.removeItem("authenticatedUserId");
+      state.authenticated = {};
+      sessionStorage.removeItem("getAuthId");
     },
 
     updateAuthenticated(state, resultOfAction) {
-      let id = sessionStorage.getItem("authenticatedUserId");
+      let id = sessionStorage.getItem("getAuthId");
       if (id) {
-        let userList = resultOfAction;
-        if (userList.length > 0) {
-          state.authenticatedUser = userList.find((user) => user.id === id);
+        if (Array.isArray(resultOfAction)) {
+          state.authenticated = resultOfAction.find((user) => user.id === id);
           state.isAuthenticated = true;
+        }
+        if (!Array.isArray(resultOfAction)) {
+          state.isAuthenticated = true;
+          state.authenticated = resultOfAction;
         }
       }
     },

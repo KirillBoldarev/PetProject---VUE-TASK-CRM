@@ -1,7 +1,18 @@
 <template>
   <div class="page">
     <div class="page__body">
-      <h2 class="page__title">Профиль пользователя</h2>
+      <h2 class="page__title">
+        Профиль пользователя : {{ this.$store.getters.getAuth.login }}
+        <span
+          v-if="
+            this.$store.getters.getAuth.firstName &&
+            this.$store.getters.getAuth.secondName
+          "
+        >
+          - {{ this.$store.getters.getAuth.firstName }}
+          {{ this.$store.getters.getAuth.secondName }}</span
+        >
+      </h2>
       <div class="flex-row center">
         <img
           @click="this.editUserMode = !this.editUserMode"
@@ -11,7 +22,15 @@
           alt=""
         />
       </div>
-      <div class="flex-row center">
+
+      <edit-user-form
+        v-if="editUserMode"
+        @edited="this.editUserMode = !this.editUserMode"
+        :target="this.$store.getters.getAuth"
+        :userList="userList"
+        :taskList="taskList"
+      ></edit-user-form>
+      <!-- <div class="flex-row center">
         <form class="form__body" @submit.prevent="confirmation">
           <confirm-dialog
             :isDialogOpen="isDialogOpen"
@@ -149,7 +168,7 @@
             <button class="button" type="submit">Принять</button>
           </div>
         </form>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -157,6 +176,7 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
+import EditUserForm from "@/components/forms/EditUserForm.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
@@ -170,13 +190,14 @@ export default {
 
   data() {
     return {
-      firstName: this.$store.getters.authenticatedUser.firstName,
-      secondName: this.$store.getters.authenticatedUser.secondName,
-      email: this.$store.getters.authenticatedUser.email,
-      phone: this.$store.getters.authenticatedUser.phone,
-      password: this.$store.getters.authenticatedUser.password,
-      id: this.$store.getters.authenticatedUser.id,
-      role: this.$store.getters.authenticatedUser.role,
+      login: this.$store.getters.getAuth.login,
+      firstName: this.$store.getters.getAuth.firstName,
+      secondName: this.$store.getters.getAuth.secondName,
+      email: this.$store.getters.getAuth.email,
+      phone: this.$store.getters.getAuth.phone,
+      password: this.$store.getters.getAuth.password,
+      id: this.$store.getters.getAuth.id,
+      role: this.$store.getters.getAuth.role,
 
       editUserMode: false,
     };
@@ -184,6 +205,7 @@ export default {
 
   components: {
     ConfirmDialog,
+    EditUserForm,
   },
 
   mixins: [confirmationDialogMixin],

@@ -1,6 +1,12 @@
 <template>
   <template v-if="this.image">
-    <img @click="openModal" :src="this.image" class="icon" alt="" />
+    <img
+      v-tooltip.bottom="tooltip"
+      @click="openModal"
+      :src="this.image"
+      class="icon"
+      alt=""
+    />
     <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
         <slot name="formSlot" :closeModal="closeModal"></slot>
@@ -8,7 +14,12 @@
     </modal-window>
   </template>
 
-  <button v-else-if="this.label" class="button" @click="openModal">
+  <button
+    v-tooltip.bottom="tooltip"
+    v-else-if="this.label"
+    class="button"
+    @click="openModal"
+  >
     {{ label }}
     <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
@@ -30,6 +41,10 @@ export default {
       required: false,
     },
     image: {
+      type: String,
+      required: false,
+    },
+    tooltip: {
       type: String,
       required: false,
     },

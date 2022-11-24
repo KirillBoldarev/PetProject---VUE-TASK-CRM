@@ -34,11 +34,22 @@ export default {
             .collection("users")
             .doc({ id: mutation.payload.id })
             .set(mutation.payload)
+            .then((result) => {
+              this.userList.forEach((user) => {
+                if (user.id === mutation.payload.id) {
+                  user = mutation.payload;
+                }
+              });
+              if (mutation.payload.id === this.$store.getters.getAuth.id) {
+                this.$store.commit("updateAuthenticated", mutation.payload);
+              }
+            })
             .catch((error) => console.log(error));
         }
       }
     );
-        this.$store.dispatch("initializeUserListAction");
+    this.$store.dispatch("initializeUserListAction");
+    this.$store.dispatch("updateAuthenticatedAction");
   },
   beforeUnmounted() {
     this.subscribtionsForUsersMutations = null;

@@ -4,34 +4,29 @@
     <strong> Введите ваши персональные данные :</strong>
     <form class="form__body" @submit.prevent="this.authenticateUser">
       <div class="flex-column center">
-        <div class="flex-row center">
-          <label class="form__label" for="email">Электронная почта</label>
+        <div class="flex-row space-between">
+          <label class="form__label" for="login">Логин</label>
           <input
-            @blur="v$.email.$touch"
-            v-model="email"
+            @blur="v$.login.$touch"
+            v-model="login"
             class="form__input"
-            type="email"
-            name="email"
+            type="text"
+            name="login"
           />
         </div>
         <div class="form__column">
           <transition>
             <small
-              v-if="v$.email.$dirty && v$.email.required.$invalid"
+              v-if="v$.login.$dirty && v$.login.required.$invalid"
               class="form__invalid"
               >Поле обязательно для заполнения
-            </small>
-            <small
-              v-else-if="v$.email.$dirty && v$.email.email.$invalid"
-              class="form__invalid"
-              >Некорректный формат электронной почты
             </small>
           </transition>
         </div>
       </div>
 
       <div class="flex-column center">
-        <div class="flex-row center">
+        <div class="flex-row space-between">
           <label class="form__label" for="password">Пароль</label>
           <input
             @blur="v$.password.$touch"
@@ -70,7 +65,7 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -90,14 +85,14 @@ export default {
   },
   data() {
     return {
-      email: "",
+      login: "",
       password: "",
       incorrectData: false,
     };
   },
   validations() {
     return {
-      email: { required, email },
+      login: { required },
       password: { required },
     };
   },
@@ -116,7 +111,7 @@ export default {
         return;
       } else {
         let foundedUser = this.userList.find(
-          (user) => user.email === this.email
+          (user) => user.login === this.login
         );
         if (foundedUser == undefined) {
           this.incorrectData = true;

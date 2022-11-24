@@ -17,8 +17,11 @@
             :key="user.id"
             class="table__row table__row--6"
           >
-            <div class="table__column">
+            <div v-if="user.firstName" class="table__column">
               {{ user.firstName }} {{ user.secondName }}
+            </div>
+            <div v-if="!user.firstName" class="table__column">
+              {{ user.login }}
             </div>
             <div class="table__column">
               <img
@@ -46,7 +49,10 @@
               {{ this.getActiveTasksNumber(user) }}
             </div>
             <div class="table__column">
-              <button-with-modal-form :image="require('@/icons/plus.png')">
+              <button-with-modal-form
+                :tooltip="'Назначить задачу'"
+                :image="require('@/icons/plus.png')"
+              >
                 <template #formSlot="{ closeModal }">
                   <add-task-form
                     @close="closeModal"
@@ -57,7 +63,11 @@
                 </template>
               </button-with-modal-form>
 
-              <button-with-modal-form :image="require('@/icons/edit.png')">
+              <button-with-modal-form
+                :tooltip="'Редактировать'"
+                v-if="this.$store.getters.getAuth.role === 'Администратор'"
+                :image="require('@/icons/edit.png')"
+              >
                 <template #formSlot="{ closeModal }">
                   <edit-user-form
                     @close="closeModal"
@@ -67,7 +77,10 @@
                   ></edit-user-form>
                 </template>
               </button-with-modal-form>
-              <delete-user-action :target="user"></delete-user-action>
+              <delete-user-action
+                v-if="this.$store.getters.getAuth.role === 'Администратор'"
+                :target="user"
+              ></delete-user-action>
             </div>
           </div>
         </transition-group>

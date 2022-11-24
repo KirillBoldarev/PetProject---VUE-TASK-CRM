@@ -32,6 +32,7 @@ export default {
     editUser(state, changedData) {
       state.userList.forEach((user) => {
         if (user.id === changedData.id) {
+          user.login = changedData.login;
           user.firstName = changedData.firstName;
           user.secondName = changedData.secondName;
           user.email = changedData.email;

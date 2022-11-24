@@ -5,8 +5,7 @@
       <strong
         v-if="
           this.$store.getters.isAuth === true &&
-          this.$store.getters.authenticatedUser.role ===
-            'Неавторизованный пользователь'
+          this.$store.getters.getAuth.role === 'Неавторизованный пользователь'
         "
         class="header__title"
       >
