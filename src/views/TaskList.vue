@@ -61,7 +61,7 @@
               <div
                 class="table__column"
                 style="cursor: pointer"
-                @dblclick="this.inspectTask(task)"
+                @click="this.inspectTask(task)"
               >
                 {{ task.title }}
               </div>

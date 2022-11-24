@@ -1,10 +1,8 @@
 <template>
   <div class="page" v-if="inspectedTask">
     <div class="page__body">
-      <div class="flex-row center">
-        <complete-task-action
-          :target="inspectedTask"
-        ></complete-task-action>
+      <div class="flex-row center w-auto">
+        <complete-task-action :target="inspectedTask"></complete-task-action>
         <img
           @click="this.editTaskMode = !this.editTaskMode"
           v-tooltip.bottom="'Редактировать'"
@@ -13,9 +11,26 @@
           alt=""
         />
         <delete-task-action :target="inspectedTask"></delete-task-action>
+        <img
+          @click="this.$router.push('/tasks')"
+          v-tooltip.bottom="'Назад'"
+          class="icon"
+          src="@/icons/back.png"
+          alt=""
+        />
       </div>
       <h2 class="page__title">Задача:{{ title }}</h2>
-      <div class="flex-column center">
+
+      <div class="flex-row center">
+        <strong
+          >Отправитель: {{ sender.firstName }} {{ sender.secondName }}</strong
+        >
+        <strong
+          >Исполнитель: {{ executor.firstName }}
+          {{ executor.secondName }}</strong
+        >
+      </div>
+      <div class="flex-row center">
         <strong>Дата создания: {{ dateOfCreation }}</strong>
         <strong v-if="isCompleted"
           >Дата завершения: {{ this.inspectedTask.dateOfCompletion }}</strong
@@ -27,6 +42,19 @@
         :userList="userList"
         :target="inspectedTask"
       ></edit-task-form>
+      <div class="flex-column center">
+        <h2 class="form__title">Описание задачи:</h2>
+        <textarea
+          class="form__textbox"
+          @blur="v$.description.$touch"
+          v-model="description"
+          name="task"
+          id="task"
+          cols="45"
+          rows="5"
+          disabled
+        ></textarea>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +70,20 @@ export default {
     CompleteTaskAction,
     DeleteTaskAction,
   },
-
+  props: {
+    taskList: {
+      type: Array,
+      required: true,
+    },
+    userList: {
+      type: Array,
+      required: true,
+    },
+    inspectedTask: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
       executor: this.userList.find(
@@ -70,29 +111,6 @@ export default {
       editTaskMode: false,
     };
   },
-
-  validatios() {
-    return {
-      description: { required },
-      title: { required },
-    };
-  },
-  mounted() {},
-
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-    inspectedTask: {
-      type: Object,
-      required: false,
-    },
-  },
-  watch: {},
+  methods: {},
 };
 </script>

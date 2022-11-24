@@ -4,7 +4,6 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-  <p>{{ this.inspectedTask }}</p>
   <main class="main__content">
     <router-view
       :taskList="taskList"
@@ -45,6 +44,40 @@ export default {
     this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
     this.$store.dispatch("updateAuthenticatedAction");
+
+    // fetch("http://admin-tasks.local/api/users/11", {
+    //   method: "put",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+
+    //   //make sure to serialize your JSON body
+    //   body: JSON.stringify({
+    //     firstName: "ololo",
+    //     secondName: "rtololol",
+    //     email: "welrhw@glswkngs.rtu",
+    //     phone: 12312312,
+    //   }),
+    // }).then((response) => {
+    //   console.log(response);
+    // });
+    
+/*     fetch("http://admin-tasks.local/api/users/11", {
+      method: "delete",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: "ololo",
+        secondName: "rtololol",
+        email: "welrhw@glswkngs.rtu",
+        phone: 12312312,
+      }),
+    }).then((response) => {
+      console.log(response);
+    }); */
   },
 };
 </script>
