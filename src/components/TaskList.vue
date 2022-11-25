@@ -1,10 +1,10 @@
 <template>
-  <template v-for="page in pages" :key="page.name">
+  <template v-for="page in permittedPages" :key="page.name">
     <div class="flex-column center" v-if="this.currentPage === page.name">
       <h2 class="page__title">Управление задачами</h2>
       <div class="flex-column center">
         <tabs
-          :tabs="pages"
+          :tabs="permittedPages"
           :selectedTab="currentPage"
           @changeTab="changePage"
         ></tabs>
@@ -35,12 +35,12 @@
         </div>
       </div>
       <div class="table">
-        <div class="table__row table__row--5">
+        <div class="table__row" :class="getGrid">
           <div class="table__column">Состояние</div>
-          <div v-if="currentPage === 'personal'" class="table__column">
+          <div v-if="currentPage !== 'charged'" class="table__column">
             Отправитель
           </div>
-          <div v-if="currentPage === 'charged'" class="table__column">
+          <div v-if="currentPage !== 'personal'" class="table__column">
             Исполнитель
           </div>
           <div class="table__column">Описание задачи</div>
@@ -49,14 +49,15 @@
 
         <transition-group name="slide-fade">
           <div
-            class="table__row table__row--5"
+            class="table__row"
+            :class="getGrid"
             v-for="task in this.filterSource(page.dataSource)"
             :key="task.id"
           >
             <div class="table__column">
               <complete-task-action :target="task"></complete-task-action>
             </div>
-            <div v-if="currentPage === 'personal'" class="table__column">
+            <div v-if="currentPage !== 'charged'" class="table__column">
               <span
                 v-if="
                   this.getSender(task).firstName &&
@@ -68,7 +69,7 @@
               <span v-else>{{ this.getSender(task).login }}</span>
             </div>
 
-            <div v-if="currentPage === 'charged'" class="table__column">
+            <div v-if="currentPage !== 'personal'" class="table__column">
               <span
                 v-if="
                   this.getExecutor(task).firstName &&
@@ -144,7 +145,6 @@ export default {
       required: true,
     },
   },
-
   data() {
     return {
       currentPage: "personal",
@@ -153,6 +153,24 @@ export default {
     };
   },
   computed: {
+    permittedPages() {
+      if (this.$store.getters.getAuth.role === "Администратор") {
+        return this.pages;
+      } else {
+        return this.pages.filter((page) => page.name !== "all");
+      }
+    },
+    getGrid() {
+      if (this.currentPage === "personal") {
+        return "table__row--4";
+      }
+      if (this.currentPage === "charged") {
+        return "table__row--4";
+      }
+      if (this.currentPage === "all") {
+        return "table__row--5";
+      }
+    },
     pages() {
       return [
         {
