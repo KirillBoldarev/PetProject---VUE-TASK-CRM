@@ -21,7 +21,7 @@
     height: auto;
     box-sizing: border-box;
 
-    &--5 {
+    &--4 {
       grid-template-columns:
         minmax(80px, 80px)
         minmax(90px, 1fr)
@@ -31,6 +31,25 @@
       @media (max-width: 800px) {
         grid-template-columns:
           minmax(60px, 60px)
+          minmax(80px, 1fr)
+          minmax(90px, 3fr)
+          minmax(70px, 70px);
+        gap: 3px;
+      }
+    }
+
+    &--5 {
+      grid-template-columns:
+        minmax(80px, 80px)
+        minmax(90px, 1fr)
+        minmax(90px, 1fr)
+        minmax(90px, 3fr)
+        minmax(80px, 80px);
+
+      @media (max-width: 800px) {
+        grid-template-columns:
+          minmax(60px, 60px)
+          minmax(80px, 1fr)
           minmax(80px, 1fr)
           minmax(90px, 3fr)
           minmax(70px, 70px);
