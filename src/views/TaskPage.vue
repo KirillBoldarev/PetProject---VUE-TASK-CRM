@@ -1,6 +1,6 @@
 <template>
   <div class="page" v-if="inspectedTask">
-    <div class="page__body">
+    <div class="page__body" >
       <div class="flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <img
@@ -23,17 +23,16 @@
       <div class="flex-row center">
         <strong
           >Отправитель:
-          <span v-if="this.getSender.firstName && this.getSender.secondName"
-            >{{ this.getSender.firstName }}
-            {{ this.getSender.secondName }}</span
-          ><span v-else> {{ this.getSender.login }}</span></strong
+          <span v-if="this.sender.firstName && this.sender.secondName"
+            >{{ this.sender.firstName }} {{ this.sender.secondName }}</span
+          ><span v-else> {{ this.sender.login }}</span></strong
         >
         <strong
           >Исполнитель:
-          <span v-if="this.getExecutor.firstName && this.getExecutor.secondName"
-            >{{ this.getExecutor.firstName }}
-            {{ this.getExecutor.secondName }}</span
-          ><span v-else> {{ this.getExecutor.login }}</span></strong
+          <span v-if="this.executor.firstName && this.executor.secondName"
+            >{{ this.executor.firstName }}
+            {{ this.executor.secondName }}</span
+          ><span v-else> {{ this.executor.login }}</span></strong
         >
       </div>
       <div class="flex-row center">
@@ -79,27 +78,59 @@ export default {
     },
     inspectedTask: {
       type: Object,
-      required: false,
+      required: true,
     },
   },
   data() {
     return {
-      editTaskMode: false,
-    };
-  },
-  methods: {},
-  computed: {
-    getSender() {
-      console.log(this.userList);
-      console.log(this.$store.getters.TASK_SENDERS);
-      console.log(this.inspectedTask);
-      return this.userList.find(
+      sender: this.userList.find(
         (user) =>
           user.id ===
           this.$store.getters.TASK_SENDERS.find(
             (record) => record.task === this.inspectedTask.id
           ).sender
-      );
+      ),
+      executor: this.userList.find(
+        (user) =>
+          user.id ===
+          this.$store.getters.TASK_EXECUTORS.find(
+            (record) => record.task === this.inspectedTask.id
+          ).executor
+      ),
+      editTaskMode: false,
+    };
+  },
+/*   beforeCreate() {
+    console.log("this userList", this.userList);
+    console.log("this.TASK_SENDERS", this.$store.getters.TASK_SENDERS);
+    console.log("this.inspectedTask", this.inspectedTask);
+  }, */
+  methods: {},
+  /*   computed: {
+    getSender() {
+      if (
+        !this.userList.length > 0 ||
+        !this.$store.getters.TASK_SENDERS.length > 0 ||
+        !this.inspectedTask.id
+      ) {
+        setTimeout(() => {
+          return this.userList.find(
+            (user) =>
+              user.id ===
+              this.$store.getters.TASK_SENDERS.find(
+                (record) => record.task === this.inspectedTask.id
+              ).sender
+          );
+        }, 1000);
+      } else {
+        return this.userList.find(
+          (user) =>
+            user.id ===
+            this.$store.getters.TASK_SENDERS.find(
+              (record) => record.task === this.inspectedTask.id
+            ).sender
+        );
+      }
     },
 
     getExecutor() {
@@ -111,6 +142,6 @@ export default {
           ).executor
       );
     },
-  },
+  }, */
 };
 </script>

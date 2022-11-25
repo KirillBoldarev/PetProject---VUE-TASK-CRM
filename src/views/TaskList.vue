@@ -159,12 +159,12 @@ export default {
       return [
         {
           name: "personal",
-          label: "Полученные задачи",
+          label: "Полученные",
           dataSource: this.personalTasks,
         },
         {
           name: "charged",
-          label: "Отправленные поручения",
+          label: "Отправленные",
           dataSource: this.chargedTasks,
         },
       ];

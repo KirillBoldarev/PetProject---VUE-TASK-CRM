@@ -4,7 +4,10 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-
+  <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
+  <!--   <div>userList{{ userList }}</div>
+  <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
+  <div>task_executors{{ this.$store.getters.TASK_EXECUTORS }}</div> -->
   <main class="main__content">
     <router-view
       :taskList="taskList"
@@ -41,14 +44,14 @@ export default {
 
   computed: {},
 
-  beforeCreate() {
+  mounted() {
     this.$store.dispatch("initializeUserListAction");
-    this.$store.dispatch("updateAuthenticatedAction");
     this.$store.dispatch("initializeTaskListAction");
-    this.$store.dispatch("updateInspectedTaskAction");
     this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
-
+    this.$store.dispatch("updateAuthenticatedAction");
+    /*    this.$store.dispatch("initializeInspectedTaskAction"); */
+    this.$store.commit("initializeInspectedTask");
 
     /* this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION"); */

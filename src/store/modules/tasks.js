@@ -4,39 +4,16 @@ import localbase from "@/js/localbase";
 export default {
   state: {
     taskList: [],
-    inspectedTask: {},
   },
 
   getters: {
     getTaskList(state) {
       return state.taskList;
     },
-    getInspectedTask(state) {
-      return state.inspectedTask;
-    },
   },
   mutations: {
     initializeTaskList(state, resultFromAction) {
       state.taskList = resultFromAction;
-    },
-
-    inspectTask(state, task) {
-      state.inspectedTask = task;
-      sessionStorage.setItem("inspectedTask", JSON.stringify(task));
-    },
-
-    clearInspectedTask(state) {
-      state.inspectedTask = null;
-      sessionStorage.removeItem("inspectedTask");
-    },
-
-    updateInspectedTask(state, resultOfAction) {
-      let inspected = JSON.parse(sessionStorage.getItem("inspectedTask"));
-      if (inspected) {
-        state.inspectedTask = resultOfAction.find(
-          (task) => task.id === inspected.id
-        );
-      }
     },
 
     createTask(state, task) {
@@ -89,15 +66,6 @@ export default {
         .get()
         .then((result) => {
           context.commit("initializeTaskList", result);
-        })
-        .catch((error) => console.log(error));
-    },
-    updateInspectedTaskAction(context) {
-      localbase
-        .collection("tasks")
-        .get()
-        .then((result) => {
-          context.commit("updateInspectedTask", result);
         })
         .catch((error) => console.log(error));
     },

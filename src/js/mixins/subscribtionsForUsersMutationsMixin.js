@@ -6,7 +6,7 @@ export default {
       subscribtionsForUsersMutations: null,
     };
   },
-  mounted() {
+  beforeMount() {
     this.subscribtionsForUsersMutations = this.$store.subscribe(
       (mutation, state) => {
         //Initialize

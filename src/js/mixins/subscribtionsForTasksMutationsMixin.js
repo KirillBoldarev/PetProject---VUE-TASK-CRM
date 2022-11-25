@@ -7,7 +7,7 @@ export default {
       subscribtionsForTasksMutations: null,
     };
   },
-  mounted() {
+  beforeMount() {
     this.subscribtionsForTasksMutations = this.$store.subscribe(
       (mutation, state) => {
         //Initialize
@@ -21,6 +21,10 @@ export default {
         //ClearInspectedTask
         if (mutation.type === "clearInspectedTask") {
           this.inspectedTask = null;
+        }
+        //initializeInspectedTask
+        if (mutation.type === "initializeInspectedTask") {
+          this.inspectedTask = this.$store.getters.getInspectedTask;
         }
         //UpdateInspectedTask
         if (mutation.type === "updateInspectedTask") {
@@ -58,7 +62,9 @@ export default {
             .doc({ id: mutation.payload.id })
             .set(mutation.payload)
             .then((response) => {
-              this.$store.dispatch("updateInspectedTaskAction");
+              if (mutation.payload.id === this.$store.getters.getInspectedTask.id) {
+                this.$store.commit("updateInspectedTask", mutation.payload);
+              }
             })
             .catch((error) => console.log(error));
         }
