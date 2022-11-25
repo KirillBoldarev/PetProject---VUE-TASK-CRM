@@ -4,8 +4,10 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
+
+  <!--   <div>{{authenticated}}</div> -->
   <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
-<!--   <div> зис таск лист{{this.taskList}}</div>
+  <!--   <div> зис таск лист{{this.taskList}}</div>
   <div> СТОР таск лист {{this.$store.getters.getTaskList}}</div> -->
   <!--   <div>userList{{ userList }}</div>
   <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
@@ -15,6 +17,7 @@
       :taskList="taskList"
       :userList="userList"
       :inspectedTask="inspectedTask"
+      :authenticated="authenticated"
     ></router-view>
   </main>
 
@@ -40,6 +43,7 @@ export default {
       taskList: [],
       userList: [],
       inspectedTask: {},
+      authenticated: {},
     };
   },
   methods: {},
@@ -53,7 +57,6 @@ export default {
     this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
     this.$store.dispatch("updateAuthenticatedAction");
     this.$store.commit("initializeInspectedTask");
-
 
     // fetch("http://admin-tasks.local/api/users/11", {
     //   method: "put",

@@ -2,9 +2,9 @@
   <div class="page">
     <div class="page__body">
       <h2 class="page__title">
-        Профиль пользователя : {{ login }}
-        <span v-if="firstName && secondName">
-          - {{ firstName }} {{ secondName }}</span
+        Профиль пользователя : {{ authenticated.login }}
+        <span v-if="authenticated.firstName && authenticated.secondName">
+          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span
         >
       </h2>
       <div class="flex-row center">
@@ -49,7 +49,6 @@ import TaskList from "@/components/TaskList.vue";
 export default {
   data() {
     return {
-      ...this.$store.getters.getAuth, //Get all keys from authUser object in store
       editUserMode: false,
       showTaskMode: false,
     };
@@ -71,6 +70,10 @@ export default {
     userList: {
       type: Array,
       required: true,
+    },
+    authenticated: {
+      type: Object,
+      required: false,
     },
   },
 

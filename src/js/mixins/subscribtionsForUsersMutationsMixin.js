@@ -13,6 +13,15 @@ export default {
         if (mutation.type === "initializeUserList") {
           this.userList = this.$store.getters.getUserList;
         }
+
+        //Authentication
+        if (
+          mutation.type === "authentication" ||
+          "updateAuthenticated " ||
+          "logout"
+        ) {
+          this.authenticated = this.$store.getters.getAuth;
+        }
         //Create
         if (mutation.type === "createUser") {
           localbase

@@ -165,6 +165,11 @@ export default {
           label: "Отправленные",
           dataSource: this.chargedTasks,
         },
+        {
+          name: "all",
+          label: "Все задачи",
+          dataSource: this.taskList,
+        },
       ];
     },
 

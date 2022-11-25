@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/tasks",
     name: "Task management",
-    component: () => import("@/views/TaskList.vue"),
+    component: () => import("@/views/TaskListPage.vue"),
   },
   {
     path: "/users",

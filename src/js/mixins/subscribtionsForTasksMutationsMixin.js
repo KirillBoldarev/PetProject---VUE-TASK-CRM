@@ -16,7 +16,7 @@ export default {
         }
         //Inspect
         if (mutation.type === "inspectTask") {
-          this.inspectedTask = mutation.payload;
+          this.inspectedTask = this.$store.getters.getInspectedTask;
         }
         //ClearInspectedTask
         if (mutation.type === "clearInspectedTask") {
