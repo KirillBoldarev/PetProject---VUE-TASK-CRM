@@ -169,14 +169,8 @@ export default {
 
   data() {
     return {
-      login: this.target.login,
-      firstName: this.target.firstName,
-      secondName: this.target.secondName,
-      email: this.target.email,
-      phone: this.target.phone,
-      password: this.target.password,
-      id: this.target.id,
-      role: this.target.role,
+      //Get all keys from target(user) object
+      ...this.target,
     };
   },
 

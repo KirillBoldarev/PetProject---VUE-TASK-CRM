@@ -30,16 +30,8 @@ export default {
     },
 
     editUser(state, changedData) {
-      state.userList.forEach((user) => {
-        if (user.id === changedData.id) {
-          user.login = changedData.login;
-          user.firstName = changedData.firstName;
-          user.secondName = changedData.secondName;
-          user.email = changedData.email;
-          user.phone = changedData.phone;
-          user.password = changedData.password;
-          user.role = changedData.role;
-        }
+      state.userList = state.userList.map((user) => {
+        return user.id === changedData.id ? changedData : user;
       });
     },
   },

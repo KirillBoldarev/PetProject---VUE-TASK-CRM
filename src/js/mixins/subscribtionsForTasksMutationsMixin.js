@@ -55,19 +55,27 @@ export default {
             .delete()
             .catch((error) => console.log(error));
         }
+
         //Edit
         if (mutation.type === "editTask") {
+          this.taskList = this.taskList.map((task) => {
+            return task.id === mutation.payload.id ? mutation.payload : task;
+          });
+
           localbase
             .collection("tasks")
             .doc({ id: mutation.payload.id })
             .set(mutation.payload)
             .then((response) => {
-              if (mutation.payload.id === this.$store.getters.getInspectedTask.id) {
+              if (
+                mutation.payload.id === this.$store.getters.getInspectedTask.id
+              ) {
                 this.$store.commit("updateInspectedTask", mutation.payload);
               }
             })
             .catch((error) => console.log(error));
         }
+
         //Complete
         if (mutation.type === "completeTask") {
           let target = this.taskList.find(

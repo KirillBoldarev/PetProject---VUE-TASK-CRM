@@ -35,10 +35,10 @@ export default {
             .doc({ id: mutation.payload.id })
             .set(mutation.payload)
             .then((result) => {
-              this.userList.forEach((user) => {
-                if (user.id === mutation.payload.id) {
-                  user = mutation.payload;
-                }
+              this.userList = this.userList.map((user) => {
+                return user.id === mutation.payload.id
+                  ? mutation.payload
+                  : user;
               });
               if (mutation.payload.id === this.$store.getters.getAuth.id) {
                 this.$store.commit("updateAuthenticated", mutation.payload);

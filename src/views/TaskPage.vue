@@ -100,48 +100,8 @@ export default {
       editTaskMode: false,
     };
   },
-/*   beforeCreate() {
-    console.log("this userList", this.userList);
-    console.log("this.TASK_SENDERS", this.$store.getters.TASK_SENDERS);
-    console.log("this.inspectedTask", this.inspectedTask);
-  }, */
-  methods: {},
-  /*   computed: {
-    getSender() {
-      if (
-        !this.userList.length > 0 ||
-        !this.$store.getters.TASK_SENDERS.length > 0 ||
-        !this.inspectedTask.id
-      ) {
-        setTimeout(() => {
-          return this.userList.find(
-            (user) =>
-              user.id ===
-              this.$store.getters.TASK_SENDERS.find(
-                (record) => record.task === this.inspectedTask.id
-              ).sender
-          );
-        }, 1000);
-      } else {
-        return this.userList.find(
-          (user) =>
-            user.id ===
-            this.$store.getters.TASK_SENDERS.find(
-              (record) => record.task === this.inspectedTask.id
-            ).sender
-        );
-      }
-    },
 
-    getExecutor() {
-      return this.userList.find(
-        (user) =>
-          user.id ===
-          this.$store.getters.TASK_EXECUTORS.find(
-            (record) => record.task === this.inspectedTask.id
-          ).executor
-      );
-    },
-  }, */
+  methods: {},
+
 };
 </script>

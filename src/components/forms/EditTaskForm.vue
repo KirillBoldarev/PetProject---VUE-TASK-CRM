@@ -151,14 +151,8 @@ export default {
             (record) => record.task === this.target.id
           ).sender
       ),
-
-      description: this.target.description,
-      title: this.target.title,
-      isCompleted: this.target.isCompleted,
-      id: this.target.id,
-      commits: this.target.commits,
-      dateOfCreation: this.target.dateOfCreation,
-      dateOfCompletion: this.target.dateOfCompletion,
+      //Get all keys from object target = task
+      ...this.target,
     };
   },
 
@@ -190,7 +184,8 @@ export default {
   computed: {
     changedData() {
       return {
-        id: this.target.id,
+        //all keys from target object
+        id: this.id,
         description: this.description,
         isCompleted: this.isCompleted,
         title: this.title,

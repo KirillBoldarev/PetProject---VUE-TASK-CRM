@@ -38,16 +38,6 @@
       <button class="button" @click="this.$router.push('/profile')">
         Личный кабинет
       </button>
-      <!-- <button-with-modal-form label="Профиль пользователя">
-        <template #formSlot="{ closeModal }"
-          ><profile-form
-            @close="closeModal"
-            :userList="userList"
-            :taskList="taskList"
-          >
-          </profile-form
-        ></template>
-      </button-with-modal-form> -->
       <logout-action></logout-action>
     </div>
 
@@ -71,14 +61,12 @@
 <script>
 import LogoutAction from "@/components/actions/LogoutAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
-import ProfileForm from "@/components/forms/ProfileForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 
 export default {
   components: {
     ButtonWithModalForm,
-    ProfileForm,
     RegisitrationForm,
     LoginForm,
     LogoutAction,

@@ -31,13 +31,8 @@ export default {
     },
 
     editTask(state, changedData) {
-      state.taskList.forEach((task) => {
-        if (task.id === changedData.id) {
-          task.title = changedData.title;
-          task.commits = changedData.commits;
-          task.description = changedData.description;
-          task.isCompleted = changedData.isCompleted;
-        }
+      state.taskList = state.taskList.map((task) => {
+        return task.id === changedData.id ? changedData : task;
       });
     },
 
