@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import HeaderLayout from "./layouts/HeaderLayout.vue";
-import FooterLayout from "./layouts/FooterLayout.vue";
+import HeaderLayout from "./components/layouts/HeaderLayout.vue";
+import FooterLayout from "./components/layouts/FooterLayout.vue";
 
 import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";

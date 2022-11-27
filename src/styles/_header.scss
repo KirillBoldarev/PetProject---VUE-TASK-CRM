@@ -1,6 +1,13 @@
 .header {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
+ */
+display: grid;
+grid-template-columns: 
+minmax(auto , 1fr)
+minmax(auto , 6fr)
+minmax(auto , 1fr)
+;
   justify-content: space-between;
   padding: 10px 20px;
   background-color: rgb(175, 165, 165);
@@ -73,6 +80,9 @@
     }
     @media (max-width: 580px) {
       font-size: 10px;
+    }
+    @media (max-width: 450px) {
+      font-size: 0px;
     }
   }
 }

@@ -34,14 +34,14 @@
       </div>
     </div>
 
-    <div class="flex-row flex-end" v-if="this.$store.getters.isAuth === true">
+    <div class="flex-column center" v-if="this.$store.getters.isAuth === true">
       <button class="button" @click="this.$router.push('/profile')">
         Личный кабинет
       </button>
       <logout-action></logout-action>
     </div>
 
-    <div class="flex-row flex-end" v-if="this.$store.getters.isAuth === false">
+    <div class="flex-column center" v-if="this.$store.getters.isAuth === false">
       <button-with-modal-form label="Войти">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>
@@ -103,7 +103,7 @@ export default {
 
   methods: {
     getImgUrl(item) {
-      return require(`../icons/` + item);
+      return require(`@/icons/` + item);
     },
   },
 };
