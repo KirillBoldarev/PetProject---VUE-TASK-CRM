@@ -2,7 +2,7 @@
   <button @click="confirmation" class="button">Выйти из системы</button>
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
-    @confirm="logout"
+    @confirm="logoutHandler"
     @close="isDialogOpen = false"
   ></confirm-dialog>
 </template>
@@ -19,8 +19,8 @@ export default {
   },
 
   methods: {
-    logout() {
-      this.$store.commit("logout");
+    logoutHandler() {
+      this.$store.commit("LOGOUT");
       this.$router.push("/");
     },
   },

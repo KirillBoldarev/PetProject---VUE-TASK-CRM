@@ -54,18 +54,18 @@
                 :image="require('@/icons/plus.png')"
               >
                 <template #formSlot="{ closeModal }">
-                  <add-task-form
+                  <create-task-form
                     @close="closeModal"
                     :taskList="taskList"
                     :userList="userList"
                     :target="user"
-                  ></add-task-form>
+                  ></create-task-form>
                 </template>
               </button-with-modal-form>
 
               <button-with-modal-form
                 :tooltip="'Редактировать'"
-                v-if="this.$store.getters.getAuth.role === 'Администратор'"
+                v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
                 :image="require('@/icons/edit.png')"
               >
                 <template #formSlot="{ closeModal }">
@@ -78,7 +78,7 @@
                 </template>
               </button-with-modal-form>
               <delete-user-action
-                v-if="this.$store.getters.getAuth.role === 'Администратор'"
+                v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
                 :target="user"
               ></delete-user-action>
             </div>
@@ -92,14 +92,14 @@
 <script>
 import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
-import AddTaskForm from "@/components/forms/AddTaskForm.vue";
+import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 
 export default {
   components: {
     DeleteUserAction,
     ButtonWithModalForm,
-    AddTaskForm,
+    CreateTaskForm,
     EditUserForm,
   },
 
@@ -124,7 +124,7 @@ export default {
 
   methods: {
     getActiveTasksNumber(user) {
-      let personalTasks = this.$store.getters.TASK_EXECUTORS.filter(
+      let personalTasks = this.$store.getters.TASK_RELATIONS.filter(
         (record) => record.executor === user.id
       );
 

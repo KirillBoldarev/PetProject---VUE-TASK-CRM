@@ -2,7 +2,7 @@
   <section id="loginForm" class="form__container">
     <h2 class="">Войти в систему!</h2>
     <strong> Введите ваши персональные данные :</strong>
-    <form class="form__body" @submit.prevent="this.authenticateUser">
+    <form class="form__body" @submit.prevent="this.authenticateUserHandler">
       <div class="flex-column center">
         <div class="flex-row space-between">
           <label class="form__label" for="login">Логин</label>
@@ -105,7 +105,7 @@ export default {
   },
 
   methods: {
-    authenticateUser() {
+    authenticateUserHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
@@ -127,14 +127,14 @@ export default {
           }, 3000);
           return;
         }
-        this.$store.commit("authentication", foundedUser);
+        this.$store.commit("AUTHENTICATION", foundedUser);
         this.$emit("close");
       }
     },
 
     authenticateUserOnKeypress(event) {
       if (event.key === "Enter") {
-        this.authenticateUser;
+        this.authenticateUserHandler;
       }
     },
   },

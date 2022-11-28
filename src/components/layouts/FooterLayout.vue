@@ -4,8 +4,8 @@
     <div class="footer__main">
       <strong
         v-if="
-          this.$store.getters.isAuth === true &&
-          this.$store.getters.getAuth.role === 'Неавторизованный пользователь'
+          this.$store.getters.IS_AUTH === true &&
+          this.$store.getters.GET_AUTH.role === 'Неавторизованный пользователь'
         "
         class="header__title"
       >

@@ -27,7 +27,7 @@
       <edit-user-form
         v-if="editUserMode"
         @edited="this.editUserMode = !this.editUserMode"
-        :target="this.$store.getters.getAuth"
+        :target="this.$store.getters.GET_AUTH"
         :userList="userList"
         :taskList="taskList"
       ></edit-user-form>
@@ -78,7 +78,7 @@ export default {
   },
 
   beforeCreate() {
-    if (this.$store.getters.isAuth === false) {
+    if (this.$store.getters.IS_AUTH === false) {
       this.$router.push("/");
     }
   },

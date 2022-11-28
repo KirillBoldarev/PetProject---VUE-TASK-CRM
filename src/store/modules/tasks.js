@@ -3,41 +3,41 @@ import localbase from "@/js/localbase";
 
 export default {
   state: {
-    taskList: [],
+    TASK_LIST: [],
   },
 
   getters: {
-    getTaskList(state) {
-      return state.taskList;
+    GET_TASK_LIST(state) {
+      return state.TASK_LIST;
     },
   },
   mutations: {
-    initializeTaskList(state, resultFromAction) {
-      state.taskList = resultFromAction;
+    INITIALIZE_TASK_LIST(state, resultFromAction) {
+      state.TASK_LIST = resultFromAction;
     },
 
-    createTask(state, task) {
-      state.taskList.push(task);
+    CREATE_TASK(state, task) {
+      state.TASK_LIST.push(task);
     },
 
-    deleteTask(state, target) {
+    DELETE_TASK(state, target) {
       let index;
-      state.taskList.forEach((task, idx) => {
+      state.TASK_LIST.forEach((task, idx) => {
         if (task.id === target.id) {
           index = idx;
         }
       });
-      state.taskList.splice(index, 1);
+      state.TASK_LIST.splice(index, 1);
     },
 
-    editTask(state, changedData) {
-      state.taskList = state.taskList.map((task) => {
+    EDIT_TASK(state, changedData) {
+      state.TASK_LIST = state.TASK_LIST.map((task) => {
         return task.id === changedData.id ? changedData : task;
       });
     },
 
-    completeTask(state, targetedTask) {
-      state.taskList.forEach((task) => {
+    COMPLETE_TASK(state, targetedTask) {
+      state.TASK_LIST.forEach((task) => {
         if (task.id === targetedTask.id) {
           if (task.isCompleted === true) {
             task.isCompleted = !targetedTask.isCompleted;
@@ -55,12 +55,12 @@ export default {
   },
 
   actions: {
-    initializeTaskListAction(context) {
+    INITIALIZE_TASK_LIST_ACTION(context) {
       localbase
         .collection("tasks")
         .get()
         .then((result) => {
-          context.commit("initializeTaskList", result);
+          context.commit("INITIALIZE_TASK_LIST", result);
         })
         .catch((error) => console.log(error));
     },

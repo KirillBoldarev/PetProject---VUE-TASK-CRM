@@ -8,7 +8,7 @@
   <!--   <div>{{authenticated}}</div> -->
   <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
   <!--   <div> зис таск лист{{this.taskList}}</div>
-  <div> СТОР таск лист {{this.$store.getters.getTaskList}}</div> -->
+  <div> СТОР таск лист {{this.$store.getters.GET_TASK_LIST}}</div> -->
   <!--   <div>userList{{ userList }}</div>
   <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
   <div>task_executors{{ this.$store.getters.TASK_EXECUTORS }}</div> -->
@@ -31,13 +31,17 @@
 <script>
 import HeaderLayout from "./components/layouts/HeaderLayout.vue";
 import FooterLayout from "./components/layouts/FooterLayout.vue";
-
-import usersMutations from "./js/mixins/subscribtionsForUsersMutationsMixin";
-import tasksMutations from "./js/mixins/subscribtionsForTasksMutationsMixin";
+import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUsersMutationsMixin";
+import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
+import subscribtionsForCommentsMutationMixin from "./js/mixins/subscribtionsForCommentsMutationMixin";
 
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [usersMutations, tasksMutations],
+  mixins: [
+    subscribtionsForUsersMutationsMixin,
+    subscribtionsForTasksMutationsMixin,
+    subscribtionsForCommentsMutationMixin,
+  ],
   data() {
     return {
       taskList: [],
@@ -51,12 +55,11 @@ export default {
   computed: {},
 
   mounted() {
-    this.$store.dispatch("initializeUserListAction");
-    this.$store.dispatch("initializeTaskListAction");
-    this.$store.dispatch("initialize_TASK_SENDERS_ACTION");
-    this.$store.dispatch("initialize_TASK_EXECUTORS_ACTION");
-    this.$store.dispatch("updateAuthenticatedAction");
-    this.$store.commit("initializeInspectedTask");
+    this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
+    this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
+    this.$store.dispatch("INITIALIZE_TASK_RELATIONS_ACTION");
+    this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
+    this.$store.commit("INITIALIZE_INSPECTED_TASK");
 
     // fetch("http://admin-tasks.local/api/users/11", {
     //   method: "put",

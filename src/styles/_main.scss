@@ -10,18 +10,16 @@
     max-height: 100%;
     margin: 0 auto;
     overflow: hidden;
-    box-sizing: border-box;
+
     background-color: rgb(233, 233, 233);
   }
 
   &__header {
-    box-sizing: border-box;
     height: auto;
     flex: 0 0 10%;
   }
 
   &__content {
-    box-sizing: border-box;
     flex: 0 0 80%;
     max-height: 100%;
     overflow-y: auto;
@@ -29,7 +27,6 @@
     padding: 5px;
   }
   &__footer {
-    box-sizing: border-box;
     min-height: 70px;
     flex: 0 0 10%;
     position: sticky;

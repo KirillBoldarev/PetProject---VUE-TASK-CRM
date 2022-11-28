@@ -2,46 +2,46 @@ import localbase from "@/js/localbase";
 
 export default {
   state: {
-    userList: [],
+    USER_LIST: [],
   },
 
   getters: {
-    getUserList(state) {
-      return state.userList;
+    GET_USER_LIST(state) {
+      return state.USER_LIST;
     },
   },
   mutations: {
-    initializeUserList(state, resultFromAction) {
-      state.userList = resultFromAction;
+    INITIALIZE_USER_LIST(state, resultFromAction) {
+      state.USER_LIST = resultFromAction;
     },
 
-    createUser(state, user) {
-      state.userList.push(user);
+    CREATE_USER(state, user) {
+      state.USER_LIST.push(user);
     },
 
-    deleteUser(state, targetedUser) {
+    DELETE_USER(state, targetedUser) {
       let index;
-      state.userList.forEach((user, idx) => {
+      state.USER_LIST.forEach((user, idx) => {
         if (user.id === targetedUser.id) {
           index = idx;
         }
       });
-      state.userList.splice(index, 1);
+      state.USER_LIST.splice(index, 1);
     },
 
-    editUser(state, changedData) {
-      state.userList = state.userList.map((user) => {
+    EDIT_USER(state, changedData) {
+      state.USER_LIST = state.USER_LIST.map((user) => {
         return user.id === changedData.id ? changedData : user;
       });
     },
   },
   actions: {
-    initializeUserListAction(context) {
+    INITIALIZE_USER_LIST_ACTION(context) {
       localbase
         .collection("users")
         .get()
         .then((result) => {
-          context.commit("initializeUserList", result);
+          context.commit("INITIALIZE_USER_LIST", result);
         })
         .catch((error) => console.log(error));
     },

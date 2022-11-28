@@ -2,23 +2,26 @@
   <header class="header">
     <div class="header__logo"></div>
     <div class="flex-column center">
-      <strong class="header__title" v-if="this.$store.getters.isAuth === false">
+      <strong
+        class="header__title"
+        v-if="this.$store.getters.IS_AUTH === false"
+      >
         Приветствую! Прошу пройти авторизацию!
       </strong>
-      <strong v-if="this.$store.getters.isAuth === true" class="header__title">
-        Приветствую , 	&nbsp;
-        <span v-if="this.$store.getters.getAuth.firstName">{{
-          this.$store.getters.getAuth.firstName
+      <strong v-if="this.$store.getters.IS_AUTH === true" class="header__title">
+        Приветствую , &nbsp;
+        <span v-if="this.$store.getters.GET_AUTH.firstName">{{
+          this.$store.getters.GET_AUTH.firstName
         }}</span
-        ><span v-if="!this.$store.getters.getAuth.firstName">{{
-          this.$store.getters.getAuth.login
+        ><span v-if="!this.$store.getters.GET_AUTH.firstName">{{
+          this.$store.getters.GET_AUTH.login
         }}</span>
         !
       </strong>
 
       <div
         class="header__navigation"
-        v-if="this.$store.getters.isAuth === true"
+        v-if="this.$store.getters.IS_AUTH === true"
       >
         <router-link
           class="header__link"
@@ -26,22 +29,27 @@
           :key="link.name"
           :to="link.url"
         >
-          <img 
-          v-tooltip.bottom="link.name"
-          class="icon--mini" :src="getImgUrl(link.icon)"/>
-          <span>{{link.name}}</span></router-link
+          <img
+            v-tooltip.bottom="link.name"
+            class="icon--mini"
+            :src="getImgUrl(link.icon)"
+          />
+          <span>{{ link.name }}</span></router-link
         >
       </div>
     </div>
 
-    <div class="flex-column center" v-if="this.$store.getters.isAuth === true">
+    <div class="flex-column center" v-if="this.$store.getters.IS_AUTH === true">
       <button class="button" @click="this.$router.push('/profile')">
         Личный кабинет
       </button>
       <logout-action></logout-action>
     </div>
 
-    <div class="flex-column center" v-if="this.$store.getters.isAuth === false">
+    <div
+      class="flex-column center"
+      v-if="this.$store.getters.IS_AUTH === false"
+    >
       <button-with-modal-form label="Войти">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>

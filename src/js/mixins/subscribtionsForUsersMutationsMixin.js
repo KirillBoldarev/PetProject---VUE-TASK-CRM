@@ -10,27 +10,27 @@ export default {
     this.subscribtionsForUsersMutations = this.$store.subscribe(
       (mutation, state) => {
         //Initialize
-        if (mutation.type === "initializeUserList") {
-          this.userList = this.$store.getters.getUserList;
+        if (mutation.type === "INITIALIZE_USER_LIST") {
+          this.userList = this.$store.getters.GET_USER_LIST;
         }
 
-        //Authentication
+        //AUTHENTICATION
         if (
-          mutation.type === "authentication" ||
-          "updateAuthenticated " ||
-          "logout"
+          mutation.type === "AUTHENTICATION" ||
+          "UPDATE_AUTHENTICATED " ||
+          "LOGOUT"
         ) {
-          this.authenticated = this.$store.getters.getAuth;
+          this.authenticated = this.$store.getters.GET_AUTH;
         }
         //Create
-        if (mutation.type === "createUser") {
+        if (mutation.type === "CREATE_USER") {
           localbase
             .collection("users")
             .add(mutation.payload)
             .catch((error) => console.log(error));
         }
         //Delete
-        if (mutation.type === "deleteUser") {
+        if (mutation.type === "DELETE_USER") {
           localbase
             .collection("users")
             .doc({ id: mutation.payload.id })
@@ -38,7 +38,7 @@ export default {
             .catch((error) => console.log(error));
         }
         //Edit
-        if (mutation.type === "editUser") {
+        if (mutation.type === "EDIT_USER") {
           localbase
             .collection("users")
             .doc({ id: mutation.payload.id })
@@ -49,8 +49,8 @@ export default {
                   ? mutation.payload
                   : user;
               });
-              if (mutation.payload.id === this.$store.getters.getAuth.id) {
-                this.$store.commit("updateAuthenticated", mutation.payload);
+              if (mutation.payload.id === this.$store.getters.GET_AUTH.id) {
+                this.$store.commit("UPDATE_AUTHENTICATED", mutation.payload);
               }
             })
             .catch((error) => console.log(error));

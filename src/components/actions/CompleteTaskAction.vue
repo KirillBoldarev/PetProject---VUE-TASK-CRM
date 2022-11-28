@@ -48,7 +48,7 @@ export default {
 
   methods: {
     completeTask() {
-      this.$store.commit("completeTask", this.target);
+      this.$store.commit("COMPLETE_TASK", this.target);
     },
 
   },

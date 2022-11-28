@@ -15,7 +15,7 @@
       ></confirm-dialog>
 
       <div
-        v-if="this.$store.getters.getAuth.role === 'Администратор'"
+        v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
         class="flex-column center"
       >
         <label class="form__label" for="email"
@@ -209,7 +209,7 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("editUser", this.changedData);
+      this.$store.commit("EDIT_USER", this.changedData);
       this.$emit("edited");
       this.$emit("close");
     },

@@ -26,23 +26,23 @@
         minmax(80px, 80px)
         minmax(90px, 1fr)
         minmax(90px, 3fr)
-        minmax(80px, 80px);
+        minmax(80px, 100px);
 
       @media (max-width: 800px) {
         grid-template-columns:
           minmax(60px, 60px)
           minmax(80px, 1fr)
           minmax(90px, 3fr)
-          minmax(70px, 70px);
+          minmax(80px, 100px);
         gap: 3px;
       }
       @media (max-width: 600px) {
         grid-template-columns:
-          minmax(50px, 60px)
+          minmax(50px, 50px)
           minmax(70px, 1fr)
           minmax(80px, 3fr)
-          minmax(60px, 70px);
-        gap: 3px;
+          minmax(60px, 100px);
+        gap: 2px;
       }
     }
 
@@ -52,7 +52,7 @@
         minmax(90px, 1fr)
         minmax(90px, 1fr)
         minmax(90px, 3fr)
-        minmax(80px, 80px);
+        minmax(80px, 100px);
 
       @media (max-width: 800px) {
         grid-template-columns:
@@ -60,23 +60,23 @@
           minmax(80px, 1fr)
           minmax(80px, 1fr)
           minmax(90px, 3fr)
-          minmax(70px, 70px);
+          minmax(80px, 100px);
         gap: 3px;
       }
       @media (max-width: 600px) {
         grid-template-columns:
-          minmax(50px, 60px)
+          minmax(50px, 50px)
           minmax(60px, 1fr)
           minmax(60px, 1fr)
           minmax(80px, 3fr)
-          minmax(60px, 70px);
+          minmax(70px, 100px);
         gap: 2px;
       }
     }
 
     &--6 {
       grid-template-columns:
-        minmax(90px, 1fr)
+        minmax(80px, 1fr)
         minmax(45px, 45px)
         minmax(150px, 1fr)
         minmax(100px, 1fr)

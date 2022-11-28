@@ -11,53 +11,48 @@ export default {
     this.subscribtionsForTasksMutations = this.$store.subscribe(
       (mutation, state) => {
         //Initialize
-        if (mutation.type === "initializeTaskList") {
-          this.taskList = this.$store.getters.getTaskList;
+        if (mutation.type === "INITIALIZE_TASK_LIST") {
+          this.taskList = this.$store.getters.GET_TASK_LIST;
         }
         //Inspect
-        if (mutation.type === "inspectTask") {
-          this.inspectedTask = this.$store.getters.getInspectedTask;
+        if (mutation.type === "INSPECT_TASK") {
+          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
         }
-        //ClearInspectedTask
-        if (mutation.type === "clearInspectedTask") {
+        //CLEAR_INSPECTED_TASK
+        if (mutation.type === "CLEAR_INSPECTED_TASK") {
           this.inspectedTask = null;
         }
-        //initializeInspectedTask
-        if (mutation.type === "initializeInspectedTask") {
-          this.inspectedTask = this.$store.getters.getInspectedTask;
+        //INITIALIZE_INSPECTED_TASK
+        if (mutation.type === "INITIALIZE_INSPECTED_TASK") {
+          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
         }
-        //UpdateInspectedTask
-        if (mutation.type === "updateInspectedTask") {
-          this.inspectedTask = this.$store.getters.getInspectedTask;
+        //UPDATE_INSPECTED_TASK
+        if (mutation.type === "UPDATE_INSPECTED_TASK") {
+          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
         }
         //Create
-        if (mutation.type === "createTask") {
+        if (mutation.type === "CREATE_TASK") {
           localbase
             .collection("tasks")
             .add(mutation.payload)
             .catch((error) => console.log(error));
         }
         //Delete
-        if (mutation.type === "deleteTask") {
+        if (mutation.type === "DELETE_TASK") {
           localbase
             .collection("tasks")
             .doc({ id: mutation.payload.id })
             .delete()
             .catch((error) => console.log(error));
           localbase
-            .collection("task-senders")
-            .doc({ task: mutation.payload.id })
-            .delete()
-            .catch((error) => console.log(error));
-          localbase
-            .collection("task-executors")
+            .collection("task-relations")
             .doc({ task: mutation.payload.id })
             .delete()
             .catch((error) => console.log(error));
         }
 
         //Edit
-        if (mutation.type === "editTask") {
+        if (mutation.type === "EDIT_TASK") {
           this.taskList = this.taskList.map((task) => {
             return task.id === mutation.payload.id ? mutation.payload : task;
           });
@@ -68,16 +63,17 @@ export default {
             .set(mutation.payload)
             .then((response) => {
               if (
-                mutation.payload.id === this.$store.getters.getInspectedTask.id
+                mutation.payload.id ===
+                this.$store.getters.GET_INSPECTED_TASK.id
               ) {
-                this.$store.commit("updateInspectedTask", mutation.payload);
+                this.$store.commit("UPDATE_INSPECTED_TASK", mutation.payload);
               }
             })
             .catch((error) => console.log(error));
         }
 
         //Complete
-        if (mutation.type === "completeTask") {
+        if (mutation.type === "COMPLETE_TASK") {
           let target = this.taskList.find(
             (task) => task.id === mutation.payload.id
           );
@@ -89,37 +85,24 @@ export default {
         }
 
         //Bind
-        if (mutation.type === "bindTask") {
+        if (mutation.type === "BIND_TASK") {
           localbase
-            .collection("task-senders")
+            .collection("task-relations")
             .add({
               task: mutation.payload.id,
               sender: mutation.payload.sender,
-            })
-            .catch((error) => console.log(error));
-          localbase
-            .collection("task-executors")
-            .add({
-              task: mutation.payload.id,
               executor: mutation.payload.executor,
             })
             .catch((error) => console.log(error));
         }
         //Rebind
-        if (mutation.type === "rebindTask") {
+        if (mutation.type === "REBIND_TASK") {
           localbase
-            .collection("task-senders")
+            .collection("task-relations")
             .doc({ task: mutation.payload.id })
             .update({
               task: mutation.payload.id,
               sender: mutation.payload.sender,
-            })
-            .catch((error) => console.log(error));
-          localbase
-            .collection("task-executors")
-            .doc({ task: mutation.payload.id })
-            .update({
-              task: mutation.payload.id,
               executor: mutation.payload.executor,
             })
             .catch((error) => console.log(error));

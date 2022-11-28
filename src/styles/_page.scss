@@ -38,6 +38,10 @@
     max-height: 100%;
   }
 
+  &__toolbar {
+    padding: 5px;
+  }
+
   &__text {
     display: flex;
     flex-direction: row;

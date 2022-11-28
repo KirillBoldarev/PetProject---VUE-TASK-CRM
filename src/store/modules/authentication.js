@@ -2,52 +2,52 @@ import localbase from "@/js/localbase";
 
 export default {
   state: {
-    authenticated: {},
-    isAuthenticated: false,
+    AUTHENTICATED: {},
+    IS_AUTHENTICATED: false,
   },
   getters: {
-    isAuth(state) {
-      return state.isAuthenticated;
+    IS_AUTH(state) {
+      return state.IS_AUTHENTICATED;
     },
-    getAuth(state) {
-      return state.authenticated;
+    GET_AUTH(state) {
+      return state.AUTHENTICATED;
     },
   },
   mutations: {
-    authentication(state, user) {
-      state.authenticated = user;
-      state.isAuthenticated = true;
-      sessionStorage.setItem("getAuthId", state.authenticated.id);
+    AUTHENTICATION(state, user) {
+      state.AUTHENTICATED = user;
+      state.IS_AUTHENTICATED = true;
+      sessionStorage.setItem("authID", state.AUTHENTICATED.id);
     },
 
-    logout(state) {
-      state.isAuthenticated = false;
-      state.authenticated = {};
-      sessionStorage.removeItem("getAuthId");
+    LOGOUT(state) {
+      state.IS_AUTHENTICATED = false;
+      state.AUTHENTICATED = {};
+      sessionStorage.removeItem("authID");
     },
 
-    updateAuthenticated(state, resultOfAction) {
-      let id = sessionStorage.getItem("getAuthId");
+    UPDATE_AUTHENTICATED(state, resultOfAction) {
+      let id = sessionStorage.getItem("authID");
       if (id) {
         if (Array.isArray(resultOfAction)) {
-          state.authenticated = resultOfAction.find((user) => user.id === id);
-          state.isAuthenticated = true;
+          state.AUTHENTICATED = resultOfAction.find((user) => user.id === id);
+          state.IS_AUTHENTICATED = true;
         }
         if (!Array.isArray(resultOfAction)) {
-          state.isAuthenticated = true;
-          state.authenticated = resultOfAction;
+          state.IS_AUTHENTICATED = true;
+          state.AUTHENTICATED = resultOfAction;
         }
       }
     },
   },
 
   actions: {
-    updateAuthenticatedAction(context) {
+    UPDATE_AUTHENTICATED_ACTION(context) {
       localbase
         .collection("users")
         .get()
         .then((result) => {
-          context.commit("updateAuthenticated", result);
+          context.commit("UPDATE_AUTHENTICATED", result);
         })
         .catch((error) => console.log(error));
     },

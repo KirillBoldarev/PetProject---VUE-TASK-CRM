@@ -1,32 +1,31 @@
-
 export default {
   state: {
-    inspectedTask: {},
+    INSPECTED_TASK: {},
   },
   getters: {
-    getInspectedTask(state) {
-      return state.inspectedTask;
+    GET_INSPECTED_TASK(state) {
+      return state.INSPECTED_TASK;
     },
   },
   mutations: {
-    inspectTask(state, task) {
-      state.inspectedTask = task;
+    INSPECT_TASK(state, task) {
+      state.INSPECTED_TASK = task;
       sessionStorage.setItem("inspectedTask", JSON.stringify(task));
     },
 
-    clearInspectedTask(state) {
-      state.inspectedTask = null;
+    CLEAR_INSPECTED_TASK(state) {
+      state.INSPECTED_TASK = null;
       sessionStorage.removeItem("inspectedTask");
     },
-    initializeInspectedTask(state) {
+    INITIALIZE_INSPECTED_TASK(state) {
       let inspected = JSON.parse(sessionStorage.getItem("inspectedTask"));
       if (inspected) {
-        state.inspectedTask = inspected;
+        state.INSPECTED_TASK = inspected;
       }
-     },
-     updateInspectedTask(state, task) { 
-        sessionStorage.setItem("inspectedTask", JSON.stringify(task));
-        state.inspectedTask = task;
-     }
+    },
+    UPDATE_INSPECTED_TASK(state, task) {
+      sessionStorage.setItem("inspectedTask", JSON.stringify(task));
+      state.INSPECTED_TASK = task;
+    },
   },
 };

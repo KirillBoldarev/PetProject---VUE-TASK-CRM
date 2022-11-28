@@ -32,7 +32,7 @@ export default {
 
   methods: {
     deleteUser() {
-      this.$store.commit("deleteUser", this.target);
+      this.$store.commit("DELETE_USER", this.target);
       localbase.collection("users").doc({ id: this.target.id }).delete();
     },
   },

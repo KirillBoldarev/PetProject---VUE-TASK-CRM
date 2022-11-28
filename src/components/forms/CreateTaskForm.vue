@@ -1,7 +1,7 @@
 <template>
   <section id="addTaskForm" class="form__container">
     <h2 class="form__title">Добавить задачу</h2>
-    <form class="form__body" @submit.prevent="this.createHandler">
+    <form class="form__body" @submit.prevent="this.createTaskHandler">
       <div class="flex-column center">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select
@@ -16,8 +16,10 @@
             :key="user.id"
             :value="user"
           >
-            <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
-            <span v-else>{{user.login}}</span>
+            <span v-if="user.firstName && user.secondName"
+              >{{ user.firstName }} {{ user.secondName }}</span
+            >
+            <span v-else>{{ user.login }}</span>
           </option>
         </select>
       </div>
@@ -102,7 +104,7 @@ export default {
   data() {
     return {
       executor: this.target,
-      sender: this.$store.getters.getAuth,
+      sender: this.$store.getters.GET_AUTH,
       title: "",
       description: "",
     };
@@ -115,15 +117,15 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["createTask", "bindTask"]),
+    ...mapMutations(["CREATE_TASK", "BIND_TASK"]),
 
-    createHandler() {
+    createTaskHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.createTask(this.preparedTask);
-      this.bindTask({
+      this.CREATE_TASK(this.newTask);
+      this.BIND_TASK({
         id: this.preparedTask.id,
         sender: this.sender.id,
         executor: this.executor.id,
@@ -133,7 +135,7 @@ export default {
   },
 
   computed: {
-    preparedTask() {
+    newTask() {
       return {
         description: this.description,
         title: this.title,

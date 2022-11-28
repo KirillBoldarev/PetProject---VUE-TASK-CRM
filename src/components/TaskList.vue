@@ -24,12 +24,12 @@
             :image="require('@/icons/plus.png')"
           >
             <template v-slot:formSlot="{ closeModal }">
-              <add-task-form
+              <create-task-form
                 @close="closeModal"
                 :taskList="taskList"
                 :userList="userList"
-                :target="this.$store.state.authentication.getAuth"
-              ></add-task-form>
+                :target="this.$store.getters.GET_AUTH"
+              ></create-task-form>
             </template>
           </button-with-modal-form>
         </div>
@@ -89,9 +89,21 @@
             </div>
             <div class="table__column">
               <button-with-modal-form
+                :image="require('@/icons/comment.png')"
+                :tooltip="'Комментировать'"
+              >
+                <template #formSlot="{ closeModal }">
+                  <create-comment-form
+                    @close="closeModal"
+                    :target="task"
+                  ></create-comment-form>
+                </template>
+              </button-with-modal-form>
+
+              <button-with-modal-form
                 v-if="
                   task.isCompleted === false &&
-                  this.getSender(task).id === this.$store.getters.getAuth.id
+                  this.getSender(task).id === this.$store.getters.GET_AUTH.id
                 "
                 :image="require('@/icons/edit.png')"
                 :tooltip="'Редактировать'"
@@ -120,18 +132,20 @@ import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
-import AddTaskForm from "@/components/forms/AddTaskForm.vue";
+import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
+import CreateCommentForm from "./forms/CreateCommentForm.vue";
 
 export default {
   name: "TaskList",
 
   components: {
+    CreateCommentForm,
     DeleteTaskAction,
     CompleteTaskAction,
     Tabs,
     ButtonWithModalForm,
-    AddTaskForm,
+    CreateTaskForm,
     EditTaskForm,
   },
 
@@ -154,7 +168,7 @@ export default {
   },
   computed: {
     permittedPages() {
-      if (this.$store.getters.getAuth.role === "Администратор") {
+      if (this.$store.getters.GET_AUTH.role === "Администратор") {
         return this.pages;
       } else {
         return this.pages.filter((page) => page.name !== "all");
@@ -195,8 +209,8 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.getAuth.id;
-        let relations = this.$store.getters.TASK_SENDERS.filter(
+        let currentUserId = this.$store.getters.GET_AUTH.id;
+        let relations = this.$store.getters.TASK_RELATIONS.filter(
           (item) => item.sender === currentUserId
         );
 
@@ -211,8 +225,8 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.getAuth.id;
-        let relations = this.$store.getters.TASK_EXECUTORS.filter(
+        let currentUserId = this.$store.getters.GET_AUTH.id;
+        let relations = this.$store.getters.TASK_RELATIONS.filter(
           (item) => item.executor === currentUserId
         );
 
@@ -226,11 +240,11 @@ export default {
 
   methods: {
     inspectTask(task) {
-      this.$store.commit("inspectTask", task);
+      this.$store.commit("INSPECT_TASK", task);
       this.$router.push("/task");
     },
     getSender(task) {
-      let senderId = this.$store.getters.TASK_SENDERS.find(
+      let senderId = this.$store.getters.TASK_RELATIONS.find(
         (record) => record.task === task.id
       ).sender;
       let sender = this.userList.find((user) => user.id === senderId);
@@ -238,7 +252,7 @@ export default {
     },
 
     getExecutor(task) {
-      let executorId = this.$store.getters.TASK_EXECUTORS.find(
+      let executorId = this.$store.getters.TASK_RELATIONS.find(
         (record) => record.task === task.id
       ).executor;
       let executor = this.userList.find((user) => user.id === executorId);

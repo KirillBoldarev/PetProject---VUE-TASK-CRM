@@ -1,8 +1,20 @@
 <template>
   <div class="page" v-if="inspectedTask">
-    <div class="page__body" >
-      <div class="flex-row center w-auto">
+    <div class="page__body">
+      <div>{{ this.$store.getters.GET_COMMENTS }}</div>
+      <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
+        <button-with-modal-form
+          :image="require('@/icons/comment.png')"
+          :tooltip="'Комментировать'"
+        >
+          <template #formSlot="{ closeModal }">
+            <create-comment-form
+              @close="closeModal"
+              :target="inspectedTask"
+            ></create-comment-form>
+          </template>
+        </button-with-modal-form>
         <img
           @click="this.editTaskMode = !this.editTaskMode"
           v-tooltip.bottom="'Редактировать'"
@@ -30,8 +42,7 @@
         <strong
           >Исполнитель:
           <span v-if="this.executor.firstName && this.executor.secondName"
-            >{{ this.executor.firstName }}
-            {{ this.executor.secondName }}</span
+            >{{ this.executor.firstName }} {{ this.executor.secondName }}</span
           ><span v-else> {{ this.executor.login }}</span></strong
         >
       </div>
@@ -60,12 +71,16 @@
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
+import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
+import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 
 export default {
   components: {
     EditTaskForm,
     CompleteTaskAction,
     DeleteTaskAction,
+    CreateCommentForm,
+    ButtonWithModalForm,
   },
   props: {
     taskList: {
@@ -86,22 +101,23 @@ export default {
       sender: this.userList.find(
         (user) =>
           user.id ===
-          this.$store.getters.TASK_SENDERS.find(
+          this.$store.getters.TASK_RELATIONS.find(
             (record) => record.task === this.inspectedTask.id
           ).sender
       ),
       executor: this.userList.find(
         (user) =>
           user.id ===
-          this.$store.getters.TASK_EXECUTORS.find(
+          this.$store.getters.TASK_RELATIONS.find(
             (record) => record.task === this.inspectedTask.id
           ).executor
       ),
       editTaskMode: false,
     };
   },
-
+  beforeCreate() {
+    this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
+  },
   methods: {},
-
 };
 </script>

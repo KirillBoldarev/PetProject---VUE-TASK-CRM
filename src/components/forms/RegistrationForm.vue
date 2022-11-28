@@ -2,7 +2,7 @@
   <section id="registrationForm" class="form__container">
     <h2 class="form__title">Регистрация пользователя!</h2>
     <strong> Придумайте логин и пароль :</strong>
-    <form class="form__body" @submit.prevent="this.registerUser">
+    <form class="form__body" @submit.prevent="this.registrateUserHandler">
       <div class="flex-column center">
         <div class="flex-row space-between">
           <label class="form__label" for="login">Логин</label>
@@ -96,25 +96,25 @@ export default {
     },
   },
   created() {
-    document.addEventListener("keypress", this.registerUserOnKeypress);
+    document.addEventListener("keypress", this.registrateUserOnKeypress);
   },
   beforeUnmount() {
-    document.removeEventListener("keypress", this.registerUserOnKeypress);
+    document.removeEventListener("keypress", this.registrateUserOnKeypress);
   },
   methods: {
-    registerUser() {
+    registrateUserHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("createUser", this.newUser);
-      this.$store.commit("authentication", this.newUser);
+      this.$store.commit("CREATE_USER", this.newUser);
+      this.$store.commit("AUTHENTICATION", this.newUser);
       this.$emit("close");
     },
 
-    registerUserOnKeypress(event) {
+    registrateUserOnKeypress(event) {
       if (event.key === "Enter") {
-        this.registerUser;
+        this.registrateUserHandler;
       }
     },
   },
@@ -129,7 +129,7 @@ export default {
       };
     },
     userRole() {
-      if (this.$store.getters.getUserList.length === 0) {
+      if (this.$store.getters.GET_USER_LIST.length === 0) {
         return "Администратор";
       }
       return "Неавторизованный пользователь";

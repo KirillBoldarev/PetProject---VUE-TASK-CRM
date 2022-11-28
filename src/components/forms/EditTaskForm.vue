@@ -140,14 +140,14 @@ export default {
       executor: this.userList.find(
         (user) =>
           user.id ===
-          this.$store.getters.TASK_EXECUTORS.find(
+          this.$store.getters.TASK_RELATIONS.find(
             (record) => record.task === this.target.id
           ).executor
       ),
       sender: this.userList.find(
         (user) =>
           user.id ===
-          this.$store.getters.TASK_SENDERS.find(
+          this.$store.getters.TASK_RELATIONS.find(
             (record) => record.task === this.target.id
           ).sender
       ),
@@ -164,15 +164,15 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["editTask", "rebindTask"]),
+    ...mapMutations(["EDIT_TASK", "REBIND_TASK"]),
 
     editHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.editTask(this.changedData);
-      this.rebindTask({
+      this.EDIT_TASK(this.changedData);
+      this.REBIND_TASK({
         id: this.id,
         sender: this.sender.id,
         executor: this.executor.id,

@@ -1,7 +1,11 @@
 <template>
-  <img 
-  v-tooltip.bottom="'Удалить'"
-  @click="confirmation" class="icon" src="@/icons/trash.png" alt="" />
+  <img
+    v-tooltip.bottom="'Удалить'"
+    @click="confirmation"
+    class="icon"
+    src="@/icons/trash.png"
+    alt=""
+  />
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
     @confirm="deleteHandler"
@@ -31,16 +35,16 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["deleteTask", "clearInspectedTask"]),
+    ...mapMutations(["DELETE_TASK", "CLEAR_INSPECTED_TASK"]),
 
     deleteHandler() {
-      if (this.target.id === this.$store.getters.getInspectedTask.id) {
+      if (this.target.id === this.$store.getters.GET_INSPECTED_TASK.id) {
         this.$router.push("/tasks");
-        this.clearInspectedTask();
-        this.deleteTask(this.target);
+        this.CLEAR_INSPECTED_TASK();
+        this.DELETE_TASK(this.target);
         return;
       }
-      this.deleteTask(this.target);
+      this.DELETE_TASK(this.target);
     },
   },
 
