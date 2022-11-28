@@ -29,6 +29,9 @@ export default {
     INITIALIZE_COMMENTS(state, resultOfAction) {
       state.COMMENTS = resultOfAction;
     },
+    CLEAR_COMMENTS(state) {
+      state.COMMENTS = [];
+    },
   },
   actions: {
     INITIALIZE_COMMENTS_ACTION(context, taskId) {

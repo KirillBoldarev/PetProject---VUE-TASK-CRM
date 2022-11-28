@@ -1,7 +1,13 @@
 <template>
-  <div class="page" v-if="inspectedTask">
+  <div
+    class="page"
+    v-if="
+      inspectedTask &&
+      this.userList.length > 0 &&
+      this.$store.getters.TASK_RELATIONS.length > 0
+    "
+  >
     <div class="page__body">
-      <div>{{ this.$store.getters.GET_COMMENTS }}</div>
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
@@ -63,6 +69,15 @@
         <h3 class="page__title">Описание задачи:</h3>
         <div class="page__text">{{ inspectedTask.description }}</div>
       </div>
+
+      <transition-group name="slide-fade">
+        <div
+          v-for="comment in this.$store.getters.GET_COMMENTS"
+          :key="comment.id"
+        >
+          <comment :target="comment"></comment>
+        </div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -73,6 +88,7 @@ import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import Comment from "@/components/Comment.vue";
 
 export default {
   components: {
@@ -81,6 +97,7 @@ export default {
     DeleteTaskAction,
     CreateCommentForm,
     ButtonWithModalForm,
+    Comment,
   },
   props: {
     taskList: {
@@ -115,9 +132,33 @@ export default {
       editTaskMode: false,
     };
   },
+
+  methods: {},
+  computed: {
+    /* sender() {
+      let senderId = this.$store.getters.TASK_RELATIONS.find(
+        (record) => record.task === this.inspectedTask.id
+      ).sender;
+
+      return this.userList.find((user) => user.id === senderId);
+    },
+
+    executor() {
+      let executorId = this.$store.getters.TASK_RELATIONS.find(
+        (record) => record.task === this.inspectedTask.id
+      ).executor;
+
+      this.userList.find((user) => user.id === executorId);
+    }, */
+  },
   beforeCreate() {
     this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
+    /*     console.log("task_relations", this.$store.getters.TASK_RELATIONS);
+    console.log("this.inspectedTask", this.inspectedTask);
+    console.log("this.userList.", this.userList); */
   },
-  methods: {},
+  unmounted() {
+    this.$store.commit("CLEAR_COMMENTS");
+  },
 };
 </script>

@@ -83,7 +83,7 @@ export default {
         id: this.commentId,
         dateOfCreation: this.dateOfCreation,
         task: this.task,
-        sender: this.sender.id,
+        author: this.sender.id,
         text: this.text,
       };
     },

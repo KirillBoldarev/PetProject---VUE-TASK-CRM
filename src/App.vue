@@ -12,6 +12,7 @@
   <!--   <div>userList{{ userList }}</div>
   <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
   <div>task_executors{{ this.$store.getters.TASK_EXECUTORS }}</div> -->
+  <!-- <div>{{ this.$store.getters.GET_COMMENTS }}</div> -->
   <main class="main__content">
     <router-view
       :taskList="taskList"
