@@ -20,7 +20,7 @@
               class="form__option"
               v-for="user in userList"
               :key="user.id"
-              :value="user"
+              :value="user.id"
             >
               <span v-if="user.firstName && user.secondName"
                 >{{ user.firstName }} {{ user.secondName }}</span
@@ -42,7 +42,7 @@
               class="form__option"
               v-for="user in userList"
               :key="user.id"
-              :value="user"
+              :value="user.id"
             >
               <span v-if="user.firstName && user.secondName"
                 >{{ user.firstName }} {{ user.secondName }}</span
@@ -137,21 +137,6 @@ export default {
 
   data() {
     return {
-      executor: this.userList.find(
-        (user) =>
-          user.id ===
-          this.$store.getters.TASK_RELATIONS.find(
-            (record) => record.task === this.target.id
-          ).executor
-      ),
-      sender: this.userList.find(
-        (user) =>
-          user.id ===
-          this.$store.getters.TASK_RELATIONS.find(
-            (record) => record.task === this.target.id
-          ).sender
-      ),
-      //Get all keys from object target = task
       ...this.target,
     };
   },
@@ -164,7 +149,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["EDIT_TASK", "REBIND_TASK"]),
+    ...mapMutations(["EDIT_TASK"]),
 
     editHandler() {
       if (this.v$.$invalid) {
@@ -172,11 +157,6 @@ export default {
         return;
       }
       this.EDIT_TASK(this.changedData);
-      this.REBIND_TASK({
-        id: this.id,
-        sender: this.sender.id,
-        executor: this.executor.id,
-      });
       this.$emit("edited");
       this.$emit("close");
     },
@@ -186,10 +166,12 @@ export default {
       return {
         //all keys from target object
         id: this.id,
-        description: this.description,
-        isCompleted: this.isCompleted,
         title: this.title,
-        commits: this.commits,
+        description: this.description,
+        sender: this.sender,
+        executor: this.executor,
+        isCompleted: this.isCompleted,
+        comments: this.comments,
         dateOfCreation: this.dateOfCreation,
         dateOfCompletion: this.dateOfCompletion,
       };

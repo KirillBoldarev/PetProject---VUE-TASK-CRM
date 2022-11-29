@@ -6,13 +6,14 @@
   ></header-layout>
 
   <!--   <div>{{authenticated}}</div> -->
-  <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
+  <div>inspectedTask{{ inspectedTask }}</div>
+
   <!--   <div> зис таск лист{{this.taskList}}</div>
   <div> СТОР таск лист {{this.$store.getters.GET_TASK_LIST}}</div> -->
   <!--   <div>userList{{ userList }}</div>
   <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
   <div>task_executors{{ this.$store.getters.TASK_EXECUTORS }}</div> -->
-  <!-- <div>{{ this.$store.getters.GET_COMMENTS }}</div> -->
+  <div>КОММЕНТЫ {{ this.$store.getters.GET_COMMENTS }}</div>
   <main class="main__content">
     <router-view
       :taskList="taskList"
@@ -58,7 +59,6 @@ export default {
   mounted() {
     this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
     this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-    this.$store.dispatch("INITIALIZE_TASK_RELATIONS_ACTION");
     this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
     this.$store.commit("INITIALIZE_INSPECTED_TASK");
 

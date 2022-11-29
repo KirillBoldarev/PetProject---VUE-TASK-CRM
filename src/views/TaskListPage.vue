@@ -1,10 +1,19 @@
 <template>
-  <task-list :userList="userList" :taskList="taskList"></task-list>
+  <router-view
+    :taskList="taskList"
+    :userList="userList"
+    :inspectedTask="this.$store.getters.GET_INSPECTED_TASK"
+  >
+  </router-view>
+  <task-list
+    v-if="this.$route.name === 'TaskList'"
+    :userList="userList"
+    :taskList="taskList"
+  ></task-list>
 </template>
 
 <script>
 import TaskList from "@/components/TaskList.vue";
-
 
 export default {
   name: "TaskListPage",
@@ -23,10 +32,7 @@ export default {
   },
 
   data() {
-    return {
-      
-    };
+    return {};
   },
-
 };
 </script>

@@ -1,12 +1,5 @@
 <template>
-  <div
-    class="page"
-    v-if="
-      inspectedTask &&
-      this.userList.length > 0 &&
-      this.$store.getters.TASK_RELATIONS.length > 0
-    "
-  >
+  <div class="page" v-if="inspectedTask && this.userList.length > 0">
     <div class="page__body">
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
@@ -30,7 +23,7 @@
         />
         <delete-task-action :target="inspectedTask"></delete-task-action>
         <img
-          @click="this.$router.push('/tasks')"
+          @click="lastPath"
           v-tooltip.bottom="'Назад'"
           class="icon"
           src="@/icons/back.png"
@@ -116,46 +109,37 @@ export default {
   data() {
     return {
       sender: this.userList.find(
-        (user) =>
-          user.id ===
-          this.$store.getters.TASK_RELATIONS.find(
-            (record) => record.task === this.inspectedTask.id
-          ).sender
+        (user) => user.id === this.inspectedTask.sender
       ),
       executor: this.userList.find(
-        (user) =>
-          user.id ===
-          this.$store.getters.TASK_RELATIONS.find(
-            (record) => record.task === this.inspectedTask.id
-          ).executor
+        (user) => user.id === this.inspectedTask.executor
       ),
       editTaskMode: false,
     };
   },
 
-  methods: {},
-  computed: {
-    /* sender() {
-      let senderId = this.$store.getters.TASK_RELATIONS.find(
-        (record) => record.task === this.inspectedTask.id
-      ).sender;
-
-      return this.userList.find((user) => user.id === senderId);
+  methods: {
+    lastPath() {
+      let lastPathRoute = this.$router.options.history.state.back;
+      return this.$router.push(lastPathRoute);
     },
-
-    executor() {
-      let executorId = this.$store.getters.TASK_RELATIONS.find(
-        (record) => record.task === this.inspectedTask.id
-      ).executor;
-
-      this.userList.find((user) => user.id === executorId);
-    }, */
   },
+  computed: {},
+  /*   watch: {
+    $route(to, from) {
+      let id = this.$route.params.id;
+      let changedTask = this.taskList.find((task) => task.id === id);
+      if (changedTask) {
+        this.$store.commit("INSPECT_TASK", changedTask);
+      } else {
+        this.$router.push("/");
+      }
+    },
+  }, */
   beforeCreate() {
-    this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
-    /*     console.log("task_relations", this.$store.getters.TASK_RELATIONS);
-    console.log("this.inspectedTask", this.inspectedTask);
-    console.log("this.userList.", this.userList); */
+    if (this.$store.getters.GET_COMMENTS.length < 1) {
+      this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
+    }
   },
   unmounted() {
     this.$store.commit("CLEAR_COMMENTS");

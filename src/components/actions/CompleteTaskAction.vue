@@ -41,16 +41,16 @@ export default {
   },
 
   data() {
-    return {
-
-    };
+    return {};
   },
 
   methods: {
     completeTask() {
       this.$store.commit("COMPLETE_TASK", this.target);
+      if (this.target.id === this.$store.getters.GET_INSPECTED_TASK.id) {
+        this.$store.commit('UPDATE_INSPECTED_TASK', this.target);
+      }
     },
-
   },
 
   computed: {},

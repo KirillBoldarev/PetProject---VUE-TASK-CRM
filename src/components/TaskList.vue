@@ -1,6 +1,7 @@
 <template>
   <template v-for="page in permittedPages" :key="page.name">
     <div class="flex-column center" v-if="this.currentPage === page.name">
+      <div @click="info">RELATIONS {{ this.relations }}</div>
       <h2 class="page__title">Управление задачами</h2>
       <div class="flex-column center">
         <tabs
@@ -80,12 +81,12 @@
               >
               <span v-else>{{ this.getExecutor(task).login }}</span>
             </div>
-            <div
-              class="table__column"
-              style="cursor: pointer"
-              @click="this.inspectTask(task)"
-            >
-              {{ task.title }}
+            <div class="table__column">
+              <router-link
+                @click="this.inspectTask(task)"
+                :to="{ name: 'InspectedTask', params: { id: task.id } }"
+                >{{ task.title }}</router-link
+              >
             </div>
             <div class="table__column">
               <button-with-modal-form
@@ -210,14 +211,7 @@ export default {
         return [];
       } else {
         let currentUserId = this.$store.getters.GET_AUTH.id;
-        let relations = this.$store.getters.TASK_RELATIONS.filter(
-          (item) => item.sender === currentUserId
-        );
-
-        let finallyFiltered = this.taskList.filter((task) =>
-          relations.some((record) => record.task === task.id)
-        );
-        return finallyFiltered;
+        return this.taskList.filter((task) => task.sender === currentUserId);
       }
     },
 
@@ -226,37 +220,24 @@ export default {
         return [];
       } else {
         let currentUserId = this.$store.getters.GET_AUTH.id;
-        let relations = this.$store.getters.TASK_RELATIONS.filter(
-          (item) => item.executor === currentUserId
-        );
-
-        let finallyFiltered = this.taskList.filter((task) =>
-          relations.some((record) => record.task === task.id)
-        );
-        return finallyFiltered;
+        return this.taskList.filter(task => task.executor === currentUserId)
       }
     },
   },
 
   methods: {
+    info() {
+    },
+
     inspectTask(task) {
       this.$store.commit("INSPECT_TASK", task);
-      this.$router.push("/task");
     },
     getSender(task) {
-      let senderId = this.$store.getters.TASK_RELATIONS.find(
-        (record) => record.task === task.id
-      ).sender;
-      let sender = this.userList.find((user) => user.id === senderId);
-      return sender;
+      return this.userList.find((user) => user.id === task.sender);
     },
 
     getExecutor(task) {
-      let executorId = this.$store.getters.TASK_RELATIONS.find(
-        (record) => record.task === task.id
-      ).executor;
-      let executor = this.userList.find((user) => user.id === executorId);
-      return executor;
+      return this.userList.find(user => user.id === task.executor);
     },
 
     //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
@@ -285,6 +266,9 @@ export default {
       this.currentPage = tabName;
       this.searchValue = "";
     },
+  },
+
+  beforeCreate() {
   },
 };
 </script>

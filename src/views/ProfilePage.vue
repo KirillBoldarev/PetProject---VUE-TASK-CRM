@@ -17,7 +17,7 @@
         />
         <img
           @click="this.showTaskMode = !this.showTaskMode"
-          v-tooltip.bottom="'Показать задачи'"
+          v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/icons/task.png"
           alt=""
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       editUserMode: false,
-      showTaskMode: false,
+      showTaskMode: true,
     };
   },
 

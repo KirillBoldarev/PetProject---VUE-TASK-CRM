@@ -124,19 +124,7 @@ export default {
 
   methods: {
     getActiveTasksNumber(user) {
-      let personalTasks = this.$store.getters.TASK_RELATIONS.filter(
-        (record) => record.executor === user.id
-      );
-
-      let filteredTasks = this.taskList.filter((task) =>
-        personalTasks.some((record) => record.task === task.id)
-      );
-
-      let completedFilteredTasks = filteredTasks.filter(
-        (task) => task.isCompleted === false
-      );
-
-      return completedFilteredTasks.length;
+      return this.taskList.filter(task => task.executor === user.id).length
     },
   },
 

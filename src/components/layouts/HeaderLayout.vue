@@ -1,6 +1,8 @@
 <template>
   <header class="header">
-    <div class="header__logo"></div>
+    <div class="header__logo">
+      <button @click="info">Консоль!</button>
+    </div>
     <div class="flex-column center">
       <strong
         class="header__title"
@@ -113,6 +115,9 @@ export default {
     getImgUrl(item) {
       return require(`@/icons/` + item);
     },
+    info() { 
+      console.log('РОУТЕР', this.$route)
+    }
   },
 };
 </script>

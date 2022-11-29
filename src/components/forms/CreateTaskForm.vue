@@ -125,11 +125,6 @@ export default {
         return;
       }
       this.CREATE_TASK(this.newTask);
-      this.BIND_TASK({
-        id: this.preparedTask.id,
-        sender: this.sender.id,
-        executor: this.executor.id,
-      });
       this.$emit("close");
     },
   },
@@ -137,9 +132,11 @@ export default {
   computed: {
     newTask() {
       return {
-        description: this.description,
-        title: this.title,
         id: this.taskId,
+        title: this.title,
+        description: this.description,
+        sender: this.sender.id,
+        executor: this.executor.id,
         isCompleted: false,
         dateOfCreation: this.dateOfCreation,
       };

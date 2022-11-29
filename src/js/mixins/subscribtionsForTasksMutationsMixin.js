@@ -44,11 +44,6 @@ export default {
             .doc({ id: mutation.payload.id })
             .delete()
             .catch((error) => console.log(error));
-          localbase
-            .collection("task-relations")
-            .doc({ task: mutation.payload.id })
-            .delete()
-            .catch((error) => console.log(error));
         }
 
         //Edit
@@ -81,29 +76,13 @@ export default {
             .collection("tasks")
             .doc({ id: target.id })
             .set(toRaw(target))
-            .catch((error) => console.log(error));
-        }
-
-        //Bind
-        if (mutation.type === "BIND_TASK") {
-          localbase
-            .collection("task-relations")
-            .add({
-              task: mutation.payload.id,
-              sender: mutation.payload.sender,
-              executor: mutation.payload.executor,
-            })
-            .catch((error) => console.log(error));
-        }
-        //Rebind
-        if (mutation.type === "REBIND_TASK") {
-          localbase
-            .collection("task-relations")
-            .doc({ task: mutation.payload.id })
-            .update({
-              task: mutation.payload.id,
-              sender: mutation.payload.sender,
-              executor: mutation.payload.executor,
+            .then((response) => {
+              if (
+                mutation.payload.id ===
+                this.$store.getters.GET_INSPECTED_TASK.id
+              ) {
+                this.$store.commit("UPDATE_INSPECTED_TASK", mutation.payload);
+              }
             })
             .catch((error) => console.log(error));
         }
