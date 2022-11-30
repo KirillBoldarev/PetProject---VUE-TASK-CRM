@@ -5,7 +5,7 @@
       :key="tab.name"
       class="tab__navigation-item"
       :class="{ tab__selected: tab.name === selectedTab }"
-      @click="this.changeTab(tab.name)"
+      @click="changeTab(tab.name)"
       >{{ tab.label }}</span
     >
   </div>

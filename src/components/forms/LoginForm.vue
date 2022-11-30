@@ -2,7 +2,7 @@
   <section id="loginForm" class="form__container">
     <h2 class="">Войти в систему!</h2>
     <strong> Введите ваши персональные данные :</strong>
-    <form class="form__body" @submit.prevent="this.authenticateUserHandler">
+    <form class="form__body" @submit.prevent="authenticateUserHandler">
       <div class="flex-column center">
         <div class="flex-row space-between">
           <label class="form__label" for="login">Логин</label>
@@ -49,7 +49,7 @@
 
       <transition>
         <div
-          v-if="this.incorrectData === true"
+          v-if="incorrectData === true"
           class="flex-row center form__invalid"
         >
           Вы ввели не верный логин или пароль!

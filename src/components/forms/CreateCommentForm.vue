@@ -2,15 +2,15 @@
   <section id="addTaskForm" class="form__container">
     <h2 class="form__title">
       Добавить комментарий к задаче <br />
-      "{{ this.target.title }}"
+      "{{ target.title }}"
     </h2>
-    <form class="form__body" @submit.prevent="this.createCommentHandler">
+    <form class="form__body" @submit.prevent="createCommentHandler">
       <div class="flex-column center">
         <div class="flex-column center">
           <textarea
             class="form__textbox"
             @blur="v$.text.$touch"
-            @keyup.ctrl.enter="this.createCommentHandler"
+            @keyup.ctrl.enter="createCommentHandler"
             v-model="text"
             name="comment"
             id="task"

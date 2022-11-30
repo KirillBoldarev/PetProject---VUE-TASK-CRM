@@ -4,7 +4,7 @@
     <form class="form__body" @submit.prevent="confirmation">
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
-        @confirm="this.editHandler"
+        @confirm="editHandler"
         @close="isDialogOpen = false"
       ></confirm-dialog>
       <div class="flex-row center">

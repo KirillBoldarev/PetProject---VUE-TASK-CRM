@@ -2,7 +2,7 @@
   <teleport to="#modal">
     <transition>
       <div
-        @click="this.closeModal"
+        @click="closeModal"
         v-if="isOpen === true"
         class="modal__backdrop"
       >

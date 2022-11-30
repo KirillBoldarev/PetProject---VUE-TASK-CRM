@@ -69,7 +69,7 @@
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
-import TaskList from "@/components/TaskList.vue";
+
 
 export default {
   name: "HomePage",

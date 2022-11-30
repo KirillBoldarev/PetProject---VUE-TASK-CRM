@@ -3,11 +3,15 @@
     <div class="comment__top">
       <div class="comment__title">
         <strong
-          >{{ target.dateOfCreation }} от {{ this.author.firstName }}
-          {{ this.author.secondName }}</strong
-        >
+          >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
+        </strong>
       </div>
-      <img @click="deleteComment" class="icon" src="@/icons/remove.png" alt="" />
+      <img
+        @click="deleteComment"
+        class="icon"
+        src="@/icons/remove.png"
+        alt=""
+      />
     </div>
     <div class="comment__body">{{ target.text }}</div>
   </div>
@@ -20,21 +24,30 @@ export default {
       type: Object,
       required: false,
     },
+    userList: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {};
   },
   computed: {
-    author() {
-      return this.$store.getters.GET_USER_LIST.find(
-        (user) => user.id === this.target.author
-      );
+  },
+  methods: {
+    deleteComment() {
+      this.$store.commit("DELETE_COMMENT", this.target);
     },
-   },
-   methods: {
-      deleteComment() { 
-         this.$store.commit('DELETE_COMMENT' , this.target)
-      },
-   },
+    getPerson(role) {
+      let person = this.userList.find((user) => user.id === role);
+      if (!person) {
+        return "Пользователь удален";
+      }
+      if (!person.firstName || !person.secondName) {
+        return `${person.login}`;
+      }
+      return `${person.firstName} ${person.secondName}`;
+    },
+  },
 };
 </script>

@@ -9,14 +9,14 @@
       </h2>
       <div class="flex-row center">
         <img
-          @click="this.editUserMode = !this.editUserMode"
+          @click="editUserMode = !editUserMode"
           v-tooltip.bottom="'Редактировать профиль'"
           class="icon"
           src="@/icons/edit.png"
           alt=""
         />
         <img
-          @click="this.showTaskMode = !this.showTaskMode"
+          @click="showTaskMode = !showTaskMode"
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/icons/task.png"
@@ -26,7 +26,7 @@
 
       <edit-user-form
         v-if="editUserMode"
-        @edited="this.editUserMode = !this.editUserMode"
+        @edited="editUserMode = !editUserMode"
         :target="this.$store.getters.GET_AUTH"
         :userList="userList"
         :taskList="taskList"
@@ -44,7 +44,7 @@
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
-import TaskList from "@/components/TaskList.vue";
+import TaskList from "@/components/tables/TaskList.vue";
 
 export default {
   data() {

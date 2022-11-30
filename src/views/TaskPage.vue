@@ -1,10 +1,8 @@
 <template>
-  <div class="page" v-if="this.inspectedTask && this.userList.length > 0">
+  <div class="page" v-if="inspectedTask && userList.length > 0">
     <div class="page__body">
       <div class="page__toolbar flex-row center w-auto">
-        <complete-task-action
-          :target="this.inspectedTask"
-        ></complete-task-action>
+        <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
           :image="require('@/icons/comment.png')"
           :tooltip="'Комментировать'"
@@ -17,13 +15,13 @@
           </template>
         </button-with-modal-form>
         <img
-          @click="this.editTaskMode = !this.editTaskMode"
+          @click="editTaskMode = !editTaskMode"
           v-tooltip.bottom="'Редактировать'"
           class="icon"
           src="@/icons/edit.png"
           alt=""
         />
-        <delete-task-action :target="this.inspectedTask"></delete-task-action>
+        <delete-task-action :target="inspectedTask"></delete-task-action>
         <img
           @click="lastPath"
           v-tooltip.bottom="'Назад'"
@@ -32,36 +30,32 @@
           alt=""
         />
       </div>
-      <h2 class="page__title">Задача:{{ this.inspectedTask.title }}</h2>
+      <h2 class="page__title">Задача:{{ inspectedTask.title }}</h2>
       <div class="flex-row center">
         <strong
           >Отправитель:
-          <span v-if="this.sender.firstName && this.sender.secondName"
-            >{{ this.sender.firstName }} {{ this.sender.secondName }}</span
-          ><span v-else> {{ this.sender.login }}</span></strong
-        >
+          <span>{{ getPerson(inspectedTask.sender) }}</span>
+        </strong>
         <strong
           >Исполнитель:
-          <span v-if="this.executor.firstName && this.executor.secondName"
-            >{{ this.executor.firstName }} {{ this.executor.secondName }}</span
-          ><span v-else> {{ this.executor.login }}</span></strong
-        >
+          <span>{{ getPerson(inspectedTask.executor) }}</span>
+        </strong>
       </div>
       <div class="flex-row center">
-        <strong>Дата создания: {{ this.filteredDateOfCreation }}</strong>
-        <strong v-if="this.inspectedTask.isCompleted"
-          >Дата завершения: {{ this.filteredDateOfCompletion }}</strong
+        <strong>Дата создания: {{ filteredDateOfCreation }}</strong>
+        <strong v-if="inspectedTask.isCompleted"
+          >Дата завершения: {{ filteredDateOfCompletion }}</strong
         >
-        <strong v-if="this.inspectedTask.isCompleted"
-          >Затраченное время: {{ this.spendedTime }}</strong
+        <strong v-if="inspectedTask.isCompleted"
+          >Затраченное время: {{ spendedTime }}</strong
         >
       </div>
       <edit-task-form
-        @edited="this.editTaskMode = !this.editTaskMode"
-        v-if="this.editTaskMode"
+        @edited="editTaskMode = !editTaskMode"
+        v-if="editTaskMode"
         :taskList="taskList"
         :userList="userList"
-        :target="this.inspectedTask"
+        :target="inspectedTask"
       ></edit-task-form>
       <div v-if="!editTaskMode" class="flex-column center">
         <h3 class="page__title">Описание задачи:</h3>
@@ -73,7 +67,7 @@
           v-for="comment in this.$store.getters.GET_COMMENTS"
           :key="comment.id"
         >
-          <comment :target="comment"></comment>
+          <comment :target="comment" :userList="userList"></comment>
         </div>
       </transition-group>
     </div>
@@ -123,6 +117,17 @@ export default {
       let lastPathRoute = this.$router.options.history.state.back;
       return this.$router.push(lastPathRoute);
     },
+
+    getPerson(role) {
+      let person = this.userList.find((user) => user.id === role);
+      if (!person) {
+        return "Пользователь удален";
+      }
+      if (!person.firstName || !person.secondName) {
+        return `${person.login}`;
+      }
+      return `${person.firstName} ${person.secondName}`;
+    },
   },
   computed: {
     filteredDateOfCreation() {
@@ -139,28 +144,7 @@ export default {
         3 * 60 * 60 * 1000;
       return filterDate(spendedTime, "time");
     },
-    sender() {
-      return this.userList.find(
-        (user) => user.id === this.inspectedTask.sender
-      );
-    },
-    executor() {
-      return this.userList.find(
-        (user) => user.id === this.inspectedTask.executor
-      );
-    },
   },
-  /*   watch: {
-    $route(to, from) {
-      let id = this.$route.params.id;
-      let changedTask = this.taskList.find((task) => task.id === id);
-      if (changedTask) {
-        this.$store.commit("INSPECT_TASK", changedTask);
-      } else {
-        this.$router.push("/");
-      }
-    },
-  }, */
   beforeCreate() {
     if (this.$store.getters.GET_COMMENTS.length < 1) {
       this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);

@@ -1,7 +1,7 @@
 <template>
   <section id="addTaskForm" class="form__container">
     <h2 class="form__title">Добавить задачу</h2>
-    <form class="form__body" @submit.prevent="this.createTaskHandler">
+    <form class="form__body" @submit.prevent="createTaskHandler">
       <div class="flex-column center">
         <label class="form__label" for="email">Выберите получателя:</label>
         <select
@@ -12,7 +12,7 @@
         >
           <option
             class="form__option"
-            v-for="user in this.userList"
+            v-for="user in userList"
             :key="user.id"
             :value="user"
           >
@@ -49,7 +49,7 @@
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
             @blur="v$.description.$touch"
-            @keyup.ctrl.enter="this.createTask"
+            @keyup.ctrl.enter="createTaskHandler"
             v-model="description"
             name="task"
             id="task"

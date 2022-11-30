@@ -1,6 +1,6 @@
 <template>
   <template v-for="page in permittedPages" :key="page.name">
-    <div class="flex-column center" v-if="this.currentPage === page.name">
+    <div class="flex-column center" v-if="currentPage === page.name">
       <h2 class="page__title">Управление задачами</h2>
       <div class="flex-column center">
         <tabs
@@ -11,13 +11,13 @@
         <div class="form">
           <label class="form__label"> Отображать завершенные:</label>
           <input
-            v-model="completed"
+            v-model="includeCompletedTask"
             type="checkbox"
             name="completedTask"
             id="completedCheckbox"
           />
           <label class="form__label"> Поиск:</label>
-          <input class="form__input" v-model="this.searchValue" type="text" />
+          <input class="form__input" v-model="searchValue" type="text" />
           <label class="form__label"> Добавить задачу:</label>
           <button-with-modal-form
             :tooltip="'Добавить задачу'"
@@ -51,75 +51,16 @@
           <div
             class="table__row"
             :class="getGrid"
-            v-for="task in this.filterSource(page.dataSource)"
+            v-for="task in filterSource(page.dataSource)"
             :key="task.id"
           >
-            <div class="table__column">
-              <complete-task-action :target="task"></complete-task-action>
-            </div>
-            <div v-if="currentPage !== 'charged'" class="table__column">
-              <span
-                v-if="
-                  this.getSender(task).firstName &&
-                  this.getSender(task).secondName
-                "
-                >{{ this.getSender(task).firstName }}
-                {{ this.getSender(task).secondName }}</span
-              >
-              <span v-else>{{ this.getSender(task).login }}</span>
-            </div>
+          <task-list-line
+          :taskList="taskList"
+          :userList="userList"
+          :task="task"
+          :currentPage="currentPage"
+          ></task-list-line>
 
-            <div v-if="currentPage !== 'personal'" class="table__column">
-              <span
-                v-if="
-                  this.getExecutor(task).firstName &&
-                  this.getExecutor(task).secondName
-                "
-                >{{ this.getExecutor(task).firstName }}
-                {{ this.getExecutor(task).secondName }}</span
-              >
-              <span v-else>{{ this.getExecutor(task).login }}</span>
-            </div>
-            <div class="table__column">
-              <router-link
-                @click="this.inspectTask(task)"
-                :to="{ name: 'InspectedTask', params: { id: task.id } }"
-                >{{ task.title }}</router-link
-              >
-            </div>
-            <div class="table__column">
-              <button-with-modal-form
-                :image="require('@/icons/comment.png')"
-                :tooltip="'Комментировать'"
-              >
-                <template #formSlot="{ closeModal }">
-                  <create-comment-form
-                    @close="closeModal"
-                    :target="task"
-                  ></create-comment-form>
-                </template>
-              </button-with-modal-form>
-
-              <button-with-modal-form
-                v-if="
-                  task.isCompleted === false &&
-                  this.getSender(task).id === this.$store.getters.GET_AUTH.id
-                "
-                :image="require('@/icons/edit.png')"
-                :tooltip="'Редактировать'"
-              >
-                <template #formSlot="{ closeModal }">
-                  <edit-task-form
-                    @close="closeModal"
-                    :taskList="taskList"
-                    :userList="userList"
-                    :target="task"
-                  ></edit-task-form>
-                </template>
-              </button-with-modal-form>
-
-              <delete-task-action :target="task"></delete-task-action>
-            </div>
           </div>
         </transition-group>
       </div>
@@ -128,25 +69,21 @@
 </template>
 
 <script>
-import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
-import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
-import EditTaskForm from "@/components/forms/EditTaskForm.vue";
-import CreateCommentForm from "./forms/CreateCommentForm.vue";
+import TaskListLine from "@/components/tables/TaskListLine.vue";
+
+
 
 export default {
   name: "TaskList",
 
   components: {
-    CreateCommentForm,
-    DeleteTaskAction,
-    CompleteTaskAction,
     Tabs,
     ButtonWithModalForm,
     CreateTaskForm,
-    EditTaskForm,
+    TaskListLine,
   },
 
   props: {
@@ -163,7 +100,7 @@ export default {
     return {
       currentPage: "personal",
       searchValue: "",
-      completed: true,
+      includeCompletedTask: true,
     };
   },
   computed: {
@@ -226,36 +163,24 @@ export default {
 
   methods: {
     info() {},
-
-    inspectTask(task) {
-      this.$store.commit("INSPECT_TASK", task);
-    },
-    getSender(task) {
-      return this.userList.find((user) => user.id === task.sender);
-    },
-
-    getExecutor(task) {
-      return this.userList.find((user) => user.id === task.executor);
-    },
-
     //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
     filterSource(source) {
-      if (!this.searchValue && this.completed === true) {
+      if (!this.searchValue && this.includeCompletedTask === true) {
         return source;
       }
-      if (!this.searchValue && this.completed === false) {
-        return source.filter((item) => item.isCompleted === this.completed);
+      if (!this.searchValue && this.includeCompletedTask === false) {
+        return source.filter((item) => item.isCompleted === false);
       }
-      if (this.searchValue && this.completed === true) {
+      if (this.searchValue && this.includeCompletedTask === true) {
         return source.filter((item) =>
           item.title.toUpperCase().includes(this.searchValue.toUpperCase())
         );
       }
-      if (this.searchValue && this.completed === false) {
+      if (this.searchValue && this.includeCompletedTask === false) {
         return source.filter(
           (item) =>
             item.title.toUpperCase().includes(this.searchValue.toUpperCase()) &&
-            item.isCompleted === this.completed
+            item.isCompleted === false
         );
       }
     },
