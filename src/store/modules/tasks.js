@@ -46,7 +46,8 @@ export default {
           }
           if (task.isCompleted === false) {
             task.isCompleted = !targetedTask.isCompleted;
-            task.dateOfCompletion = filterDate(new Date(), "datetime");
+            /* task.dateOfCompletion = filterDate(new Date(), "datetime"); */
+            task.dateOfCompletion = new Date();
             return;
           }
         }

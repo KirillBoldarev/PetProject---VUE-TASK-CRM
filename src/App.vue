@@ -6,14 +6,14 @@
   ></header-layout>
 
   <!--   <div>{{authenticated}}</div> -->
-  <div>inspectedTask{{ inspectedTask }}</div>
+  <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
 
   <!--   <div> зис таск лист{{this.taskList}}</div>
   <div> СТОР таск лист {{this.$store.getters.GET_TASK_LIST}}</div> -->
   <!--   <div>userList{{ userList }}</div>
   <div>task_senders{{ this.$store.getters.TASK_SENDERS }}</div>
   <div>task_executors{{ this.$store.getters.TASK_EXECUTORS }}</div> -->
-  <div>КОММЕНТЫ {{ this.$store.getters.GET_COMMENTS }}</div>
+  <!-- <div>КОММЕНТЫ {{ this.$store.getters.GET_COMMENTS }}</div> -->
   <main class="main__content">
     <router-view
       :taskList="taskList"

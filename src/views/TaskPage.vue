@@ -1,8 +1,10 @@
 <template>
-  <div class="page" v-if="inspectedTask && this.userList.length > 0">
+  <div class="page" v-if="this.inspectedTask && this.userList.length > 0">
     <div class="page__body">
       <div class="page__toolbar flex-row center w-auto">
-        <complete-task-action :target="inspectedTask"></complete-task-action>
+        <complete-task-action
+          :target="this.inspectedTask"
+        ></complete-task-action>
         <button-with-modal-form
           :image="require('@/icons/comment.png')"
           :tooltip="'Комментировать'"
@@ -21,7 +23,7 @@
           src="@/icons/edit.png"
           alt=""
         />
-        <delete-task-action :target="inspectedTask"></delete-task-action>
+        <delete-task-action :target="this.inspectedTask"></delete-task-action>
         <img
           @click="lastPath"
           v-tooltip.bottom="'Назад'"
@@ -46,9 +48,12 @@
         >
       </div>
       <div class="flex-row center">
-        <strong>Дата создания: {{ inspectedTask.dateOfCreation }}</strong>
+        <strong>Дата создания: {{ this.inspectedTask.dateOfCreation }}</strong>
         <strong v-if="this.inspectedTask.isCompleted"
           >Дата завершения: {{ this.inspectedTask.dateOfCompletion }}</strong
+        >
+        <strong v-if="this.inspectedTask.isCompleted"
+          >Затраченное время: {{ this.spendedTime }}</strong
         >
       </div>
       <edit-task-form
@@ -56,7 +61,7 @@
         v-if="this.editTaskMode"
         :taskList="taskList"
         :userList="userList"
-        :target="inspectedTask"
+        :target="this.inspectedTask"
       ></edit-task-form>
       <div v-if="!editTaskMode" class="flex-column center">
         <h3 class="page__title">Описание задачи:</h3>
@@ -108,12 +113,6 @@ export default {
   },
   data() {
     return {
-      sender: this.userList.find(
-        (user) => user.id === this.inspectedTask.sender
-      ),
-      executor: this.userList.find(
-        (user) => user.id === this.inspectedTask.executor
-      ),
       editTaskMode: false,
     };
   },
@@ -124,7 +123,22 @@ export default {
       return this.$router.push(lastPathRoute);
     },
   },
-  computed: {},
+  computed: {
+    spendedTime() {
+      let spendedTime = this.dateOfCompletion - this.dateOfCreation
+    return  spendedTime
+    },
+    sender() {
+      return this.userList.find(
+        (user) => user.id === this.inspectedTask.sender
+      );
+    },
+    executor() {
+      return this.userList.find(
+        (user) => user.id === this.inspectedTask.executor
+      );
+    },
+  },
   /*   watch: {
     $route(to, from) {
       let id = this.$route.params.id;

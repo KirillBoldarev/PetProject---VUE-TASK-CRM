@@ -1,7 +1,6 @@
 <template>
   <template v-for="page in permittedPages" :key="page.name">
     <div class="flex-column center" v-if="this.currentPage === page.name">
-      <div @click="info">RELATIONS {{ this.relations }}</div>
       <h2 class="page__title">Управление задачами</h2>
       <div class="flex-column center">
         <tabs
@@ -220,14 +219,13 @@ export default {
         return [];
       } else {
         let currentUserId = this.$store.getters.GET_AUTH.id;
-        return this.taskList.filter(task => task.executor === currentUserId)
+        return this.taskList.filter((task) => task.executor === currentUserId);
       }
     },
   },
 
   methods: {
-    info() {
-    },
+    info() {},
 
     inspectTask(task) {
       this.$store.commit("INSPECT_TASK", task);
@@ -237,7 +235,7 @@ export default {
     },
 
     getExecutor(task) {
-      return this.userList.find(user => user.id === task.executor);
+      return this.userList.find((user) => user.id === task.executor);
     },
 
     //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
@@ -268,7 +266,6 @@ export default {
     },
   },
 
-  beforeCreate() {
-  },
+  beforeCreate() {},
 };
 </script>

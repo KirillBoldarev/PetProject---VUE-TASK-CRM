@@ -138,7 +138,8 @@ export default {
         sender: this.sender.id,
         executor: this.executor.id,
         isCompleted: false,
-        dateOfCreation: this.dateOfCreation,
+        /* dateOfCreation: this.dateOfCreation, */
+        dateOfCreation: new Date(),
       };
     },
     taskId() {
