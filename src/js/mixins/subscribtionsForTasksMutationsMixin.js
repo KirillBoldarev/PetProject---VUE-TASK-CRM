@@ -81,7 +81,12 @@ export default {
                 mutation.payload.id ===
                 this.$store.getters.GET_INSPECTED_TASK.id
               ) {
-                this.$store.commit("UPDATE_INSPECTED_TASK", mutation.payload);
+                this.$store.commit(
+                  "UPDATE_INSPECTED_TASK",
+                  this.$store.getters.GET_TASK_LIST.find(
+                    (task) => task.id === mutation.payload.id
+                  )
+                );
               }
             })
             .catch((error) => console.log(error));

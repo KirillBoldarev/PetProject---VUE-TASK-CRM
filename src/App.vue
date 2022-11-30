@@ -6,7 +6,7 @@
   ></header-layout>
 
   <!--   <div>{{authenticated}}</div> -->
-  <!-- <div>inspectedTask{{ inspectedTask }}</div> -->
+<!--   <div>inspectedTask{{ inspectedTask }}</div> -->
 
   <!--   <div> зис таск лист{{this.taskList}}</div>
   <div> СТОР таск лист {{this.$store.getters.GET_TASK_LIST}}</div> -->
@@ -60,7 +60,7 @@ export default {
     this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
     this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
     this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
-    this.$store.commit("INITIALIZE_INSPECTED_TASK");
+    this.$store.dispatch("INITIALIZE_INSPECTED_TASK_ACTION");
 
     // fetch("http://admin-tasks.local/api/users/11", {
     //   method: "put",

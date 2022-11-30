@@ -1,3 +1,5 @@
+import localbase from "@/js/localbase";
+
 export default {
   state: {
     INSPECTED_TASK: {},
@@ -10,22 +12,35 @@ export default {
   mutations: {
     INSPECT_TASK(state, task) {
       state.INSPECTED_TASK = task;
-      sessionStorage.setItem("inspectedTask", JSON.stringify(task));
+      sessionStorage.setItem("inspectedTaskID", task.id);
     },
 
     CLEAR_INSPECTED_TASK(state) {
       state.INSPECTED_TASK = null;
-      sessionStorage.removeItem("inspectedTask");
+      sessionStorage.removeItem("inspectedTaskID");
     },
-    INITIALIZE_INSPECTED_TASK(state) {
-      let inspected = JSON.parse(sessionStorage.getItem("inspectedTask"));
+    INITIALIZE_INSPECTED_TASK(state, resultFromAction) {
+      let inspected = sessionStorage.getItem("inspectedTaskID");
       if (inspected) {
-        state.INSPECTED_TASK = inspected;
+        state.INSPECTED_TASK = resultFromAction.find(
+          (task) => task.id === inspected
+        );
       }
     },
     UPDATE_INSPECTED_TASK(state, task) {
-      sessionStorage.setItem("inspectedTask", JSON.stringify(task));
+      sessionStorage.setItem("inspectedTaskID", task.id);
       state.INSPECTED_TASK = task;
+    },
+  },
+  actions: {
+    INITIALIZE_INSPECTED_TASK_ACTION(context) {
+      localbase
+        .collection("tasks")
+        .get()
+        .then((result) => {
+          context.commit("INITIALIZE_INSPECTED_TASK", result);
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

@@ -28,8 +28,8 @@ const routes = [
         beforeEnter: (to, from) => {
           store.dispatch("INITIALIZE_USER_LIST_ACTION");
           store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-          store.commit("INITIALIZE_INSPECTED_TASK");
-          /*           if (store.getters.GET_USER_LIST.length < 1) {
+          /* store.commit("INITIALIZE_INSPECTED_TASK");
+                    if (store.getters.GET_USER_LIST.length < 1) {
             return { path: "/tasks" };
           } */
         },
@@ -53,7 +53,6 @@ const routes = [
     beforeEnter: (to, from) => {
       store.dispatch("INITIALIZE_USER_LIST_ACTION");
       store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-      store.commit("INITIALIZE_INSPECTED_TASK");
       if (store.getters.GET_USER_LIST.length < 1) {
         return { path: "/tasks" };
       }

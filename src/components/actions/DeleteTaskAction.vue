@@ -38,7 +38,7 @@ export default {
     ...mapMutations(["DELETE_TASK", "CLEAR_INSPECTED_TASK"]),
 
     deleteHandler() {
-      if (this.target.id === this.$store.getters.GET_INSPECTED_TASK.id) {
+      if (this.$store.getters.GET_INSPECTED_TASK && this.target.id === this.$store.getters.GET_INSPECTED_TASK.id) {
         this.$router.push("/tasks");
         this.CLEAR_INSPECTED_TASK();
         this.DELETE_TASK(this.target);

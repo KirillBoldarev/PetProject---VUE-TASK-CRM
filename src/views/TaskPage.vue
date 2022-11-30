@@ -48,9 +48,9 @@
         >
       </div>
       <div class="flex-row center">
-        <strong>Дата создания: {{ this.inspectedTask.dateOfCreation }}</strong>
+        <strong>Дата создания: {{ this.filteredDateOfCreation }}</strong>
         <strong v-if="this.inspectedTask.isCompleted"
-          >Дата завершения: {{ this.inspectedTask.dateOfCompletion }}</strong
+          >Дата завершения: {{ this.filteredDateOfCompletion }}</strong
         >
         <strong v-if="this.inspectedTask.isCompleted"
           >Затраченное время: {{ this.spendedTime }}</strong
@@ -87,6 +87,7 @@ import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import Comment from "@/components/Comment.vue";
+import filterDate from "@/js/filterDate";
 
 export default {
   components: {
@@ -124,9 +125,19 @@ export default {
     },
   },
   computed: {
+    filteredDateOfCreation() {
+      return filterDate(this.inspectedTask.dateOfCreation, "datetime");
+    },
+    filteredDateOfCompletion() {
+      return filterDate(this.inspectedTask.dateOfCompletion, "datetime");
+    },
     spendedTime() {
-      let spendedTime = this.dateOfCompletion - this.dateOfCreation
-    return  spendedTime
+      //из разницы вычитаем часовой пояс - костыль библиотеки
+      let spendedTime =
+        this.inspectedTask.dateOfCompletion -
+        this.inspectedTask.dateOfCreation -
+        3 * 60 * 60 * 1000;
+      return filterDate(spendedTime, "time");
     },
     sender() {
       return this.userList.find(
