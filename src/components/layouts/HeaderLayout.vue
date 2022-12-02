@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <button @click="info">Консоль!</button>
+      <img  class="header__logo--icon" src="@/icons/modalBackground.png" alt="">
     </div>
     <div class="flex-column center">
       <strong
@@ -11,10 +11,10 @@
         Приветствую! Прошу пройти авторизацию!
       </strong>
       <strong v-if="this.$store.getters.IS_AUTH === true" class="header__title">
-        Приветствую , &nbsp;
-        <span v-if="this.$store.getters.GET_AUTH.firstName">{{
+        Приветствую,  &nbsp;  
+        <strong v-if="this.$store.getters.GET_AUTH.firstName">{{
           this.$store.getters.GET_AUTH.firstName
-        }}</span
+        }}</strong
         ><span v-if="!this.$store.getters.GET_AUTH.firstName">{{
           this.$store.getters.GET_AUTH.login
         }}</span>
@@ -115,9 +115,6 @@ export default {
     getImgUrl(item) {
       return require(`@/icons/` + item);
     },
-    info() { 
-      console.log('РОУТЕР', this.$route)
-    }
   },
 };
 </script>

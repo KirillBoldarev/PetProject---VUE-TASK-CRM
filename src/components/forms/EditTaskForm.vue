@@ -1,7 +1,7 @@
 <template>
   <section id="loginForm" class="form__container">
-    <h3 class="form__title">Редактирование задачи</h3>
     <form class="form__body" @submit.prevent="confirmation">
+      <h2 class="form__title">Редактирование задачи</h2>
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
         @confirm="editHandler"
@@ -55,8 +55,6 @@
         </div>
       </fieldset>
 
-
-
       <fieldset class="flex-column center form__block">
         <legend class="form__title">Описание</legend>
         <div class="flex-column center">
@@ -89,8 +87,8 @@
               v-model="description"
               name="task"
               id="task"
-              cols="25"
-              rows="5"
+              cols="30"
+              rows="10"
             ></textarea>
             <transition>
               <small

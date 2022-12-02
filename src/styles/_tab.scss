@@ -1,3 +1,4 @@
+@import "_var.scss";
 .tab {
   &__navigation {
     display: flex;
@@ -7,9 +8,8 @@
     box-sizing: border-box;
     width: auto;
     height: 100%;
-    border: 2px solid white;
     border-radius: 20px;
-
+    color: $primary-dark;
     @media (max-width: 500px) {
       gap: 15px;
     }
@@ -25,6 +25,7 @@
     cursor: pointer;
     box-sizing: border-box;
     max-width: 125px;
+    color: $primary-dark;
 
     @media (max-width: 960px) {
       padding: 12px;
@@ -38,13 +39,8 @@
   }
 
   &__selected {
-    background: rgb(138, 233, 255);
-    background: radial-gradient(
-      circle,
-      rgba(138, 233, 255, 1) 4%,
-      rgba(0, 94, 217, 1) 78%,
-      rgba(0, 66, 213, 1) 92%
-    );
+    color: $secondary-light;
+    background-color: $primary-dark;
 
     border-radius: 20px;
     box-sizing: border-box;

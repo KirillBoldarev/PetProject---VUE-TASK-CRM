@@ -8,7 +8,6 @@
           <div class="table__column">Роль</div>
           <div class="table__column">Электронная почта</div>
           <div class="table__column">Телефон</div>
-          <div class="table__column">Активные задачи</div>
           <div class="table__column">Действия</div>
         </div>
         <transition-group name="slide-fade">
@@ -45,9 +44,7 @@
             </div>
             <div class="table__column">{{ user.email }}</div>
             <div class="table__column">{{ user.phone }}</div>
-            <div class="table__column">
-              {{ this.getActiveTasksNumber(user) }}
-            </div>
+
             <div class="table__column">
               <button-with-modal-form
                 :tooltip="'Назначить задачу'"
@@ -123,9 +120,6 @@ export default {
   computed: {},
 
   methods: {
-    getActiveTasksNumber(user) {
-      return this.taskList.filter(task => task.executor === user.id).length
-    },
   },
 
   watch: {},

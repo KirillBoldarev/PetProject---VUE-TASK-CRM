@@ -1,7 +1,8 @@
 <template>
   <section id="addTaskForm" class="form__container">
-    <h2 class="form__title">Добавить задачу</h2>
+    
     <form class="form__body" @submit.prevent="createTaskHandler">
+      <h2 class="form__title">Добавить задачу</h2>
       <fieldset class="flex-row center form__block">
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>

@@ -1,68 +1,70 @@
 <template>
   <template v-for="page in permittedPages" :key="page.name">
-    <div class="flex-column center" v-if="currentPage === page.name">
-      <h2 class="page__title">Управление задачами</h2>
-      <div class="flex-column center">
-        <tabs
-          :tabs="permittedPages"
-          :selectedTab="currentPage"
-          @changeTab="changePage"
-        ></tabs>
-        <div class="form">
-          <label class="form__label"> Отображать завершенные:</label>
-          <input
-            v-model="includeCompletedTask"
-            type="checkbox"
-            name="completedTask"
-            id="completedCheckbox"
-          />
-          <label class="form__label"> Поиск:</label>
-          <input class="form__input" v-model="searchValue" type="text" />
-          <label class="form__label"> Добавить задачу:</label>
-          <button-with-modal-form
-            :tooltip="'Добавить задачу'"
-            :image="require('@/icons/plus.png')"
-          >
-            <template v-slot:formSlot="{ closeModal }">
-              <create-task-form
-                @close="closeModal"
-                :taskList="taskList"
-                :userList="userList"
-                :target="this.$store.getters.GET_AUTH"
-              ></create-task-form>
-            </template>
-          </button-with-modal-form>
+    <div class="page" v-if="currentPage === page.name">
+      <div class="page__body">
+        <h2 class="page__title">Управление задачами</h2>
+        <div class="flex-column center">
+          <tabs
+            :tabs="permittedPages"
+            :selectedTab="currentPage"
+            @changeTab="changePage"
+          ></tabs>
+          <div class="form">
+            <label class="form__label"> Отображать завершенные:</label>
+            <input
+              v-model="includeCompletedTask"
+              type="checkbox"
+              name="completedTask"
+              id="completedCheckbox"
+            />
+            <label class="form__label"> Поиск:</label>
+            <input class="form__input" v-model="searchValue" type="text" />
+            <label class="form__label"> Добавить задачу:</label>
+            <button-with-modal-form
+              :tooltip="'Добавить задачу'"
+              :image="require('@/icons/plus.png')"
+            >
+              <template v-slot:formSlot="{ closeModal }">
+                <create-task-form
+                  @close="closeModal"
+                  :taskList="taskList"
+                  :userList="userList"
+                  :target="this.$store.getters.GET_AUTH"
+                ></create-task-form>
+              </template>
+            </button-with-modal-form>
+          </div>
         </div>
-      </div>
-      <div class="table">
-        <div class="table__row" :class="getGrid">
-          <div class="table__column">Состояние</div>
-          <div v-if="currentPage !== 'charged'" class="table__column">
-            Отправитель
+        <div class="table">
+          <div class="table__row" :class="getGrid">
+            <div class="table__column">Состояние</div>
+            <div v-if="currentPage !== 'charged'" class="table__column">
+              Отправитель
+            </div>
+            <div v-if="currentPage !== 'personal'" class="table__column">
+              Исполнитель
+            </div>
+            <div class="table__column">Описание задачи</div>
+            <div class="table__column">Действия</div>
           </div>
-          <div v-if="currentPage !== 'personal'" class="table__column">
-            Исполнитель
-          </div>
-          <div class="table__column">Описание задачи</div>
-          <div class="table__column">Действия</div>
+  
+          <transition-group name="slide-fade">
+            <div
+              class="table__row"
+              :class="getGrid"
+              v-for="task in filterSource(page.dataSource)"
+              :key="task.id"
+            >
+            <task-list-line
+            :taskList="taskList"
+            :userList="userList"
+            :task="task"
+            :currentPage="currentPage"
+            ></task-list-line>
+  
+            </div>
+          </transition-group>
         </div>
-
-        <transition-group name="slide-fade">
-          <div
-            class="table__row"
-            :class="getGrid"
-            v-for="task in filterSource(page.dataSource)"
-            :key="task.id"
-          >
-          <task-list-line
-          :taskList="taskList"
-          :userList="userList"
-          :task="task"
-          :currentPage="currentPage"
-          ></task-list-line>
-
-          </div>
-        </transition-group>
       </div>
     </div>
   </template>

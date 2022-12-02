@@ -1,3 +1,4 @@
+@import '_var.scss';
 .main {
   &__container {
     /*     display: grid;
@@ -10,13 +11,14 @@
     max-height: 100%;
     margin: 0 auto;
     overflow: hidden;
-
-    background-color: rgb(233, 233, 233);
+    background-color: $primary-dark;
+    /*     background-color: rgb(233, 233, 233); */
   }
 
   &__header {
     height: auto;
     flex: 0 0 10%;
+    background-color: $primary-dark;
   }
 
   &__content {
@@ -24,13 +26,15 @@
     max-height: 100%;
     overflow-y: auto;
     display: flex;
+    background-color: $primary-dark;
+    border-radius: 40px 40px 40px 40px;
     padding: 5px;
   }
   &__footer {
-    min-height: 70px;
-    flex: 0 0 10%;
-    position: sticky;
+    height: auto;
+    /*     position: sticky;
     bottom: 0;
-    left: 0;
+    left: 0; */
+    background-color: $primary-dark;
   }
 }

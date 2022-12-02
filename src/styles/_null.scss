@@ -42,6 +42,14 @@ body {
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   overflow: hidden;
+  
+  //Скрытие скроллбара
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  }
 }
 
 input,
@@ -79,5 +87,3 @@ ul li {
 img {
   vertical-align: top;
 }
-
-

@@ -1,10 +1,10 @@
 <template>
   <section id="addTaskForm" class="form__container">
-    <h2 class="form__title">
-      Добавить комментарий к задаче <br />
-      "{{ target.title }}"
-    </h2>
     <form class="form__body" @submit.prevent="createCommentHandler">
+      <h2 class="form__title">
+        Добавить комментарий к задаче <br />
+        "{{ target.title }}"
+      </h2>
       <div class="flex-column center">
         <div class="flex-column center">
           <textarea

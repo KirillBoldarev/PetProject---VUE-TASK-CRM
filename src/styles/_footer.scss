@@ -3,16 +3,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: red;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 10px;
-
+  gap: 5px;
   position: sticky;
   bottom: 0;
   left: 0;
+  height: auto;
 
   &__top {
     display: flex;

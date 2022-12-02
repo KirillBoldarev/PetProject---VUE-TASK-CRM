@@ -1,13 +1,15 @@
 <template>
   <teleport to="#modal">
     <transition>
-      <div
-        @click="closeModal"
-        v-if="isOpen === true"
-        class="modal__backdrop"
-      >
+      <div @click="closeModal" v-if="isOpen === true" class="modal__backdrop">
         <div @click.stop class="modal__body">
-          <slot name="ModalSlot" :closeModal="closeModal" :confirm="confirm">
+          <div class="flex-row center"><div class="modal__image"></div></div>
+          <slot
+            class="modal__slot"
+            name="ModalSlot"
+            :closeModal="closeModal"
+            :confirm="confirm"
+          >
           </slot>
         </div>
       </div>

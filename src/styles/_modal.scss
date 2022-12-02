@@ -1,17 +1,55 @@
+@import '_var.scss';
 .modal {
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
   &__body {
-    top: 100px;
-    padding: 20px;
+    top: 25px;
     left: 50%;
     transform: translateX(-50%);
     position: fixed;
     z-index: 101;
     background-color: white;
-    border-radius: 10px;
     box-sizing: border-box;
+    background: $primary-dark;
     
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+    /* margin-bottom: 30px; */
 
+
+    //Скрытие скроллбара
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      width: 0px;
+      display: none;
+    }
   }
+
+  &__image {
+    justify-content: center;
+    background-image: url("../icons/modalBackground.png");
+    background-size: no-repeat;
+    background-position: top;
+    background-size: cover;
+    height: 150px;
+    width: 100%;
+    max-width: 150px;
+  }
+
+  &__slot {
+    background: #ffecaa;
+    border-radius: 40px 40px 30px 30px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
   &__backdrop {
     position: fixed;
     top: 0;
