@@ -5,6 +5,7 @@
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
           :image="require('@/icons/comment.png')"
+          :iconClass="'icon'"
           :tooltip="'Комментировать'"
         >
           <template #formSlot="{ closeModal }">
@@ -21,7 +22,8 @@
           src="@/icons/edit.png"
           alt=""
         />
-        <delete-task-action :target="inspectedTask"></delete-task-action>
+        <delete-task-action :target="inspectedTask"
+        :iconClass="'icon'"></delete-task-action>
         <img
           @click="lastPath"
           v-tooltip.bottom="'Назад'"

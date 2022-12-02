@@ -26,6 +26,15 @@
     box-sizing: border-box;
     max-width: 125px;
     color: $primary-dark;
+    position: relative;
+
+    border: 1px solid $primary-dark;
+    -webkit-box-shadow: 5px 5px 0px 0.1px rgba(239, 88, 88, 1);
+    -moz-box-shadow: 5px 5px 0px 0.1px rgba(239, 88, 88, 1);
+    box-shadow: 5px 5px 0px 0.1px rgba(239, 88, 88, 1);
+    top: 0px;
+    right: 0px;
+    transition: all 0.2s linear 0s;
 
     @media (max-width: 960px) {
       padding: 12px;
@@ -39,10 +48,17 @@
   }
 
   &__selected {
-    color: $secondary-light;
-    background-color: $primary-dark;
-
-    border-radius: 20px;
+    top: 5px;
+    left: 5px;
+    transition: all 0.2s linear 0s;
+    transition: 0.3s;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-weight: 700;
+    color: $primary-dark;
+    background-color: $primary-light;
     box-sizing: border-box;
+    border: 1px solid $primary-dark;
   }
 }

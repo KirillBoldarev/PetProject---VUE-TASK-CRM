@@ -49,6 +49,7 @@
               <button-with-modal-form
                 :tooltip="'Назначить задачу'"
                 :image="require('@/icons/plus.png')"
+                :iconClass="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">
                   <create-task-form
@@ -64,6 +65,7 @@
                 :tooltip="'Редактировать'"
                 v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
                 :image="require('@/icons/edit.png')"
+                :icon-class="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">
                   <edit-user-form
@@ -77,6 +79,7 @@
               <delete-user-action
                 v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
                 :target="user"
+                :iconClass="'icon--mini'"
               ></delete-user-action>
             </div>
           </div>

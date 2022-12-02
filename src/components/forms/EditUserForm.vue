@@ -1,13 +1,13 @@
 <template>
   <section id="EditUserForm" class="form__container">
-    <h3 class="form__titile">
-      Данные пользователя:
-      <strong v-if="!target.firstName">{{ target.login }}</strong>
-      <strong v-if="target.firstName"
-        >{{ target.firstName }} {{ target.secondName }}</strong
-      >
-    </h3>
     <form class="form__body" @submit.prevent="confirmation">
+      <h2 class="form__title">
+        Данные пользователя:
+        <strong v-if="!target.firstName">{{ target.login }}</strong>
+        <strong v-if="target.firstName"
+          >{{ target.firstName }} {{ target.secondName }}</strong
+        >
+      </h2>
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
         @confirm="this.editUser"
@@ -52,8 +52,7 @@
             </small>
           </div>
         </div>
-  
-  
+
         <div class="flex-column center">
           <label class="form__label" for="password">Пароль</label>
           <input
@@ -73,7 +72,8 @@
               <small
                 v-if="v$.password.$dirty && v$.password.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+                >Введите не менее
+                {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
           </div>
@@ -147,8 +147,6 @@
           </div>
         </div>
       </fieldset>
-
-      
 
       <div class="flex-column center">
         <button class="button" type="submit">Принять</button>

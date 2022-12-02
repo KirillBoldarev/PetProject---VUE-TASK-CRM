@@ -21,6 +21,7 @@
     <button-with-modal-form
       :image="require('@/icons/comment.png')"
       :tooltip="'Комментировать'"
+      :iconClass="'icon--mini'"
     >
       <template #formSlot="{ closeModal }">
         <create-comment-form
@@ -37,6 +38,7 @@
           this.$store.getters.GET_AUTH.role === 'Администратор')
       "
       :image="require('@/icons/edit.png')"
+      :iconClass="'icon--mini'"
       :tooltip="'Редактировать'"
     >
       <template #formSlot="{ closeModal }">
@@ -49,7 +51,10 @@
       </template>
     </button-with-modal-form>
 
-    <delete-task-action :target="task"></delete-task-action>
+    <delete-task-action
+      :target="task"
+      :iconClass="'icon--mini'"
+    ></delete-task-action>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <img
     v-tooltip.bottom="'Удалить'"
     @click="confirmation"
-    class="icon"
+    :class=iconClass
     src="@/icons/trash.png"
     alt=""
   />
@@ -28,6 +28,10 @@ export default {
       type: Object,
       required: true,
     },
+    iconClass: {
+      type: String,
+      required: false,
+    },
   },
 
   data() {
@@ -38,7 +42,10 @@ export default {
     ...mapMutations(["DELETE_TASK", "CLEAR_INSPECTED_TASK"]),
 
     deleteHandler() {
-      if (this.$store.getters.GET_INSPECTED_TASK && this.target.id === this.$store.getters.GET_INSPECTED_TASK.id) {
+      if (
+        this.$store.getters.GET_INSPECTED_TASK &&
+        this.target.id === this.$store.getters.GET_INSPECTED_TASK.id
+      ) {
         this.$router.push("/tasks");
         this.CLEAR_INSPECTED_TASK();
         this.DELETE_TASK(this.target);

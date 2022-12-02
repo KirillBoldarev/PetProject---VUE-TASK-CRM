@@ -57,7 +57,7 @@
             name="task"
             id="task"
             cols="30"
-            rows="10"
+            rows="7"
           ></textarea>
           <transition>
             <small

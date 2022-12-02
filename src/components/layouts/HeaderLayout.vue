@@ -33,7 +33,7 @@
         >
           <img
             v-tooltip.bottom="link.name"
-            class="icon--mini"
+            class="icon"
             :src="getImgUrl(link.icon)"
           />
           <span>{{ link.name }}</span></router-link

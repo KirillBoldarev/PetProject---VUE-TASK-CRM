@@ -7,16 +7,16 @@
           - {{ authenticated.firstName }} {{ authenticated.secondName }}</span
         >
       </h2>
-      <div class="flex-row center">
+      <div class="page__toolbar flex-row center">
         <img
-          @click="editUserMode = !editUserMode"
+          @click=switchEditUserMode
           v-tooltip.bottom="'Редактировать профиль'"
           class="icon"
           src="@/icons/edit.png"
           alt=""
         />
         <img
-          @click="showTaskMode = !showTaskMode"
+          @click=switchShowTaskMode
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/icons/task.png"
@@ -26,7 +26,7 @@
 
       <edit-user-form
         v-if="editUserMode"
-        @edited="editUserMode = !editUserMode"
+        @edited="(editUserMode = false)"
         :target="this.$store.getters.GET_AUTH"
         :userList="userList"
         :taskList="taskList"
@@ -51,7 +51,7 @@ export default {
     return {
       editUserMode: false,
       showTaskMode: true,
-      authenticated:{},
+      authenticated: this.$store.getters.GET_AUTH,
     };
   },
 
@@ -78,10 +78,18 @@ export default {
     if (this.$store.getters.IS_AUTH === false) {
       this.$router.push("/");
     }
-    this.authenticated = this.$store.getters.GET_AUTH;
   },
 
-  methods: {},
+  methods: {
+    switchEditUserMode() {
+      this.editUserMode = !this.editUserMode;
+      this.showTaskMode = false;
+    },
+    switchShowTaskMode() {
+      this.showTaskMode = !this.showTaskMode;
+      this.editUserMode = false;
+    },
+  },
 
   computed: {},
 };

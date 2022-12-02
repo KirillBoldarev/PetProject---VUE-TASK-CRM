@@ -10,29 +10,42 @@
             @changeTab="changePage"
           ></tabs>
           <div class="form">
-            <label class="form__label"> Отображать завершенные:</label>
-            <input
-              v-model="includeCompletedTask"
-              type="checkbox"
-              name="completedTask"
-              id="completedCheckbox"
-            />
-            <label class="form__label"> Поиск:</label>
-            <input class="form__input" v-model="searchValue" type="text" />
-            <label class="form__label"> Добавить задачу:</label>
-            <button-with-modal-form
-              :tooltip="'Добавить задачу'"
-              :image="require('@/icons/plus.png')"
-            >
-              <template v-slot:formSlot="{ closeModal }">
-                <create-task-form
-                  @close="closeModal"
-                  :taskList="taskList"
-                  :userList="userList"
-                  :target="this.$store.getters.GET_AUTH"
-                ></create-task-form>
-              </template>
-            </button-with-modal-form>
+            <div class="form__toolbar">
+              <div class="flex-row center">
+                <label class="form__label"> Отображать завершенные:</label>
+                <img v-if="includeCompletedTask"
+                  @click="includeCompletedTask = false"
+                  class="icon"
+                  src="@/icons/check.png"
+                />
+                <img v-if="!includeCompletedTask"
+                  @click="includeCompletedTask = true"
+                  class="icon"
+                  src="@/icons/notСheck.png"
+                />
+              </div>
+              <div class="flex-row center">
+                <label class="form__label"> Поиск:</label>
+                <input class="form__input" v-model="searchValue" type="text" />
+              </div>
+              <div class="flex-row center">
+                <label class="form__label"> Добавить задачу:</label>
+                <button-with-modal-form
+                  :tooltip="'Добавить задачу'"
+                  :image="require('@/icons/plus.png')"
+                  :iconClass="'icon'"
+                >
+                  <template v-slot:formSlot="{ closeModal }">
+                    <create-task-form
+                      @close="closeModal"
+                      :taskList="taskList"
+                      :userList="userList"
+                      :target="this.$store.getters.GET_AUTH"
+                    ></create-task-form>
+                  </template>
+                </button-with-modal-form>
+              </div>
+            </div>
           </div>
         </div>
         <div class="table">
@@ -47,7 +60,7 @@
             <div class="table__column">Описание задачи</div>
             <div class="table__column">Действия</div>
           </div>
-  
+
           <transition-group name="slide-fade">
             <div
               class="table__row"
@@ -55,13 +68,12 @@
               v-for="task in filterSource(page.dataSource)"
               :key="task.id"
             >
-            <task-list-line
-            :taskList="taskList"
-            :userList="userList"
-            :task="task"
-            :currentPage="currentPage"
-            ></task-list-line>
-  
+              <task-list-line
+                :taskList="taskList"
+                :userList="userList"
+                :task="task"
+                :currentPage="currentPage"
+              ></task-list-line>
             </div>
           </transition-group>
         </div>
@@ -75,8 +87,6 @@ import Tabs from "@/components/Tabs.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import TaskListLine from "@/components/tables/TaskListLine.vue";
-
-
 
 export default {
   name: "TaskList",

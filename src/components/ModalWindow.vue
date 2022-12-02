@@ -3,7 +3,13 @@
     <transition>
       <div @click="closeModal" v-if="isOpen === true" class="modal__backdrop">
         <div @click.stop class="modal__body">
-          <div class="flex-row center"><div class="modal__image"></div></div>
+          <div></div>
+          <div class="flex-row center">
+            <div class="modal__image"></div>
+            <div class="modal__close">
+              <img @click="closeModal" class="icon" src="@/icons/remove.png" alt="" />
+            </div>
+          </div>
           <slot
             class="modal__slot"
             name="ModalSlot"

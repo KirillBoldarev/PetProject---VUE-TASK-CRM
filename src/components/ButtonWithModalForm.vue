@@ -4,7 +4,7 @@
       v-tooltip.bottom="tooltip"
       @click="openModal"
       :src="this.image"
-      class="icon"
+      :class=iconClass
       alt=""
     />
     <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
@@ -41,6 +41,10 @@ export default {
       required: false,
     },
     image: {
+      type: String,
+      required: false,
+    },
+    iconClass: {
       type: String,
       required: false,
     },
