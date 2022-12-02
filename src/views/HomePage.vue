@@ -73,7 +73,7 @@ import LoginForm from "@/components/forms/LoginForm.vue";
 
 export default {
   name: "HomePage",
-  components: { ButtonWithModalForm, RegisitrationForm, LoginForm, TaskList },
+  components: { ButtonWithModalForm, RegisitrationForm, LoginForm },
   props: {
     userList: {
       type: Array,

@@ -2,7 +2,8 @@
   <section id="addTaskForm" class="form__container">
     <h2 class="form__title">Добавить задачу</h2>
     <form class="form__body" @submit.prevent="createTaskHandler">
-      <div class="flex-column center">
+      <fieldset class="flex-row center form__block">
+        <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
         <select
           class="form__select"
@@ -22,9 +23,10 @@
             <span v-else>{{ user.login }}</span>
           </option>
         </select>
-      </div>
+      </fieldset>
 
-      <div class="flex-column center">
+      <fieldset class="flex-column center form__block">
+        <legend class="form__title">Описание</legend>
         <div class="flex-column center">
           <label class="form__label" for="title">Заголовок:</label>
           <input
@@ -44,7 +46,7 @@
           </transition>
         </div>
         <div class="flex-column center">
-          <label class="form__label">Описание задачи:</label>
+          <label class="form__label">Подробности:</label>
           <textarea
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
@@ -64,7 +66,7 @@
             </small>
           </transition>
         </div>
-      </div>
+      </fieldset>
 
       <div class="flex-column center">
         <button class="button" type="submit">Создать задачу</button>

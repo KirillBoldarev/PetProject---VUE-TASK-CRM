@@ -80,7 +80,7 @@ import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
-import Comment from "@/components/Comment.vue";
+import Comment from "@/components/tables/CommentLine.vue";
 import filterDate from "@/js/filterDate";
 
 export default {

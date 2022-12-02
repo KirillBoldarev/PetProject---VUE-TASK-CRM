@@ -39,7 +39,7 @@ const routes = [
   {
     path: "/users",
     name: "UserList",
-    component: () => import("@/views/UserList.vue"),
+    component: () => import("@/views/UserListPage.vue"),
   },
   {
     path: "/profile",

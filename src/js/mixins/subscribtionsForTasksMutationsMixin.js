@@ -14,22 +14,6 @@ export default {
         if (mutation.type === "INITIALIZE_TASK_LIST") {
           this.taskList = this.$store.getters.GET_TASK_LIST;
         }
-        //Inspect
-        if (mutation.type === "INSPECT_TASK") {
-          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
-        }
-        //CLEAR_INSPECTED_TASK
-        if (mutation.type === "CLEAR_INSPECTED_TASK") {
-          this.inspectedTask = null;
-        }
-        //INITIALIZE_INSPECTED_TASK
-        if (mutation.type === "INITIALIZE_INSPECTED_TASK") {
-          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
-        }
-        //UPDATE_INSPECTED_TASK
-        if (mutation.type === "UPDATE_INSPECTED_TASK") {
-          this.inspectedTask = this.$store.getters.GET_INSPECTED_TASK;
-        }
         //Create
         if (mutation.type === "CREATE_TASK") {
           localbase

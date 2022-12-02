@@ -1,20 +1,21 @@
 <template>
   <section id="loginForm" class="form__container">
     <h2 class="">Войти в систему!</h2>
-    <strong> Введите ваши персональные данные :</strong>
+
     <form class="form__body" @submit.prevent="authenticateUserHandler">
-      <div class="flex-column center">
-        <div class="flex-row space-between">
-          <label class="form__label" for="login">Логин</label>
-          <input
-            @blur="v$.login.$touch"
-            v-model="login"
-            class="form__input"
-            type="text"
-            name="login"
-          />
-        </div>
-        <div class="form__column">
+      <fieldset class="flex-column center form__block">
+        <legend class="form__title">Введите ваши персональные данные</legend>
+        <div class="flex-column center">
+          <div class="flex-row space-between">
+            <label class="form__label" for="login">Логин</label>
+            <input
+              @blur="v$.login.$touch"
+              v-model="login"
+              class="form__input"
+              type="text"
+              name="login"
+            />
+          </div>
           <transition>
             <small
               v-if="v$.login.$dirty && v$.login.required.$invalid"
@@ -23,37 +24,37 @@
             </small>
           </transition>
         </div>
-      </div>
 
-      <div class="flex-column center">
-        <div class="flex-row space-between">
-          <label class="form__label" for="password">Пароль</label>
-          <input
-            @blur="v$.password.$touch"
-            v-model="password"
-            class="form__input"
-            type="password"
-            name="password"
-          />
+        <div class="flex-column center">
+          <div class="flex-row space-between">
+            <label class="form__label" for="password">Пароль</label>
+            <input
+              @blur="v$.password.$touch"
+              v-model="password"
+              class="form__input"
+              type="password"
+              name="password"
+            />
+          </div>
+          <div class="flex-row center">
+            <transition>
+              <small
+                v-if="v$.password.$dirty && v$.password.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+            </transition>
+          </div>
         </div>
-        <div class="flex-row center">
-          <transition>
-            <small
-              v-if="v$.password.$dirty && v$.password.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-          </transition>
-        </div>
-      </div>
+      </fieldset>
 
       <transition>
-        <div
+        <strong
           v-if="incorrectData === true"
           class="flex-row center form__invalid"
         >
           Вы ввели не верный логин или пароль!
-        </div>
+        </strong>
       </transition>
 
       <div class="flex-column center">

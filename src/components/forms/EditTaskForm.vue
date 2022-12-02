@@ -7,7 +7,9 @@
         @confirm="editHandler"
         @close="isDialogOpen = false"
       ></confirm-dialog>
-      <div class="flex-row center">
+
+      <fieldset class="flex-row center form__block">
+        <legend class="form__title">Адресаты</legend>
         <div class="flex-column center">
           <label class="form__label" for="email">Отправитель:</label>
           <select
@@ -51,49 +53,56 @@
             </option>
           </select>
         </div>
-      </div>
-      <div class="flex-column center">
+      </fieldset>
+
+
+
+      <fieldset class="flex-column center form__block">
+        <legend class="form__title">Описание</legend>
         <div class="flex-column center">
-          <h2 class="form__title">Заголовок задачи:</h2>
-          <input
-            class="form__input"
-            @blur="v$.title.$touch"
-            v-model="title"
-            v-tooltip.right="'Опишите суть задачи'"
-            name="title"
-            type="text"
-          />
-          <transition>
-            <small
-              v-if="v$.title.$dirty && v$.title.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-          </transition>
+          <div class="flex-column center">
+            <h2 class="form__title">Заголовок:</h2>
+            <input
+              class="form__input"
+              @blur="v$.title.$touch"
+              v-model="title"
+              v-tooltip.right="'Опишите суть задачи'"
+              name="title"
+              type="text"
+            />
+            <transition>
+              <small
+                v-if="v$.title.$dirty && v$.title.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+            </transition>
+          </div>
         </div>
-      </div>
-      <div class="flex-column center">
         <div class="flex-column center">
-          <h2 class="form__title">Описание задачи:</h2>
-          <textarea
-            v-tooltip.right="'Дайте подробное описание требований к задаче'"
-            class="form__textbox"
-            @blur="v$.description.$touch"
-            v-model="description"
-            name="task"
-            id="task"
-            cols="25"
-            rows="5"
-          ></textarea>
-          <transition>
-            <small
-              v-if="v$.description.$dirty && v$.description.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-          </transition>
+          <div class="flex-column center">
+            <h2 class="form__title">Подробности:</h2>
+            <textarea
+              v-tooltip.right="'Дайте подробное описание требований к задаче'"
+              class="form__textbox"
+              @blur="v$.description.$touch"
+              v-model="description"
+              name="task"
+              id="task"
+              cols="25"
+              rows="5"
+            ></textarea>
+            <transition>
+              <small
+                v-if="v$.description.$dirty && v$.description.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+            </transition>
+          </div>
         </div>
-      </div>
+      </fieldset>
+
       <div class="flex-column center">
         <button class="button" type="submit">ОК</button>
       </div>

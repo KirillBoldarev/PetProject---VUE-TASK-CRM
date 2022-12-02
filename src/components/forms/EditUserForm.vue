@@ -1,7 +1,7 @@
 <template>
   <section id="EditUserForm" class="form__container">
     <h3 class="form__titile">
-      Персональные данные пользователя:
+      Данные пользователя:
       <strong v-if="!target.firstName">{{ target.login }}</strong>
       <strong v-if="target.firstName"
         >{{ target.firstName }} {{ target.secondName }}</strong
@@ -33,25 +33,55 @@
         </select>
       </div>
 
-      <div class="flex-column center">
-        <label class="form__label" for="login">Логин</label>
-        <input
-          @blur="v$.login.$touch"
-          v-model="login"
-          class="form__input"
-          type="text"
-          name="login"
-        />
-        <div class="flex-row center">
-          <small
-            v-if="v$.login.$dirty && v$.login.required.$invalid"
-            class="form__invalid"
-            >Поле обязательно для заполнения
-          </small>
+      <fieldset class="flex-row center form__block">
+        <legend class="form__title">Аутентификация</legend>
+        <div class="flex-column center">
+          <label class="form__label" for="login">Логин</label>
+          <input
+            @blur="v$.login.$touch"
+            v-model="login"
+            class="form__input"
+            type="text"
+            name="login"
+          />
+          <div class="flex-row center">
+            <small
+              v-if="v$.login.$dirty && v$.login.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </div>
         </div>
-      </div>
+  
+  
+        <div class="flex-column center">
+          <label class="form__label" for="password">Пароль</label>
+          <input
+            @blur="v$.password.$touch"
+            v-model="password"
+            class="form__input"
+            type="password"
+            name="password"
+          />
+          <div class="form__column">
+            <transition-group>
+              <small
+                v-if="v$.password.$dirty && v$.password.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+                class="form__invalid"
+                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+              </small>
+            </transition-group>
+          </div>
+        </div>
+      </fieldset>
 
-      <div class="flex-row center">
+      <fieldset class="flex-row center form__block">
+        <legend class="form__title">Персональные данные</legend>
         <div class="flex-column center">
           <label class="form__label" for="email">Имя</label>
           <input
@@ -73,9 +103,10 @@
             name="secondName"
           />
         </div>
-      </div>
+      </fieldset>
 
-      <div class="flex-row center">
+      <fieldset class="flex-row center form__block">
+        <legend class="form__title">Контакты</legend>
         <div class="flex-column center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
@@ -115,32 +146,9 @@
             </transition>
           </div>
         </div>
-      </div>
+      </fieldset>
 
-      <div class="flex-column center">
-        <label class="form__label" for="password">Пароль</label>
-        <input
-          @blur="v$.password.$touch"
-          v-model="password"
-          class="form__input"
-          type="password"
-          name="password"
-        />
-        <div class="form__column">
-          <transition-group>
-            <small
-              v-if="v$.password.$dirty && v$.password.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-            <small
-              v-if="v$.password.$dirty && v$.password.minLength.$invalid"
-              class="form__invalid"
-              >Введите не менее {{ v$.password.minLength.$params.min }} символов
-            </small>
-          </transition-group>
-        </div>
-      </div>
+      
 
       <div class="flex-column center">
         <button class="button" type="submit">Принять</button>

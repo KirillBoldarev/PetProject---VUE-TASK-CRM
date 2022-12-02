@@ -51,6 +51,7 @@ export default {
     return {
       editUserMode: false,
       showTaskMode: true,
+      authenticated:{},
     };
   },
 
@@ -71,16 +72,13 @@ export default {
       type: Array,
       required: true,
     },
-    authenticated: {
-      type: Object,
-      required: false,
-    },
   },
 
   beforeCreate() {
     if (this.$store.getters.IS_AUTH === false) {
       this.$router.push("/");
     }
+    this.authenticated = this.$store.getters.GET_AUTH;
   },
 
   methods: {},

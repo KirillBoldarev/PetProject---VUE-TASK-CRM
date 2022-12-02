@@ -1,63 +1,67 @@
 <template>
   <section id="registrationForm" class="form__container">
     <h2 class="form__title">Регистрация пользователя!</h2>
-    <strong> Придумайте логин и пароль :</strong>
     <form class="form__body" @submit.prevent="this.registrateUserHandler">
-      <div class="flex-column center">
-        <div class="flex-row space-between">
-          <label class="form__label" for="login">Логин</label>
-          <input
-            @blur="v$.login.$touch"
-            v-tooltip.right="'Введите логин'"
-            v-model="login"
-            class="form__input"
-            type="text"
-            name="login"
-          />
-        </div>
-        <div class="row">
-          <transition-group>
-            <small
-              v-if="v$.login.$dirty && v$.login.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-            <small
-              v-if="v$.login.$dirty && v$.login.minLength.$invalid"
-              class="form__invalid"
-              >Введите не менее {{ v$.password.minLength.$params.min }} символов
-            </small>
-          </transition-group>
-        </div>
-      </div>
 
-      <div class="flex-column center">
-        <div class="flex-row space-between">
-          <label class="form__label" for="password">Пароль</label>
-          <input
-            @blur="v$.password.$touch"
-            v-tooltip.right="'Введите номер мобильного телефона'"
-            v-model="password"
-            class="form__input"
-            type="password"
-            name="password"
-          />
+
+      <fieldset class="flex-column center form__block">
+        <legend class="form__title">Придумайте логин и пароль</legend>
+        <div class="flex-column center">
+          <div class="flex-row space-between">
+            <label class="form__label" for="login">Логин</label>
+            <input
+              @blur="v$.login.$touch"
+              v-tooltip.right="'Введите логин'"
+              v-model="login"
+              class="form__input"
+              type="text"
+              name="login"
+            />
+          </div>
+          <div class="row">
+            <transition-group>
+              <small
+                v-if="v$.login.$dirty && v$.login.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-if="v$.login.$dirty && v$.login.minLength.$invalid"
+                class="form__invalid"
+                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+              </small>
+            </transition-group>
+          </div>
         </div>
-        <div class="form__column">
-          <transition-group>
-            <small
-              v-if="v$.password.$dirty && v$.password.required.$invalid"
-              class="form__invalid"
-              >Поле обязательно для заполнения
-            </small>
-            <small
-              v-if="v$.password.$dirty && v$.password.minLength.$invalid"
-              class="form__invalid"
-              >Введите не менее {{ v$.password.minLength.$params.min }} символов
-            </small>
-          </transition-group>
+  
+        <div class="flex-column center">
+          <div class="flex-row space-between">
+            <label class="form__label" for="password">Пароль</label>
+            <input
+              @blur="v$.password.$touch"
+              v-tooltip.right="'Введите номер мобильного телефона'"
+              v-model="password"
+              class="form__input"
+              type="password"
+              name="password"
+            />
+          </div>
+          <div class="form__column">
+            <transition-group>
+              <small
+                v-if="v$.password.$dirty && v$.password.required.$invalid"
+                class="form__invalid"
+                >Поле обязательно для заполнения
+              </small>
+              <small
+                v-if="v$.password.$dirty && v$.password.minLength.$invalid"
+                class="form__invalid"
+                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+              </small>
+            </transition-group>
+          </div>
         </div>
-      </div>
+      </fieldset>
 
       <div class="flex-column center">
         <button class="button" type="submit">Зарегистрироваться!</button>
