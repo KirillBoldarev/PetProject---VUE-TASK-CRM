@@ -1,7 +1,11 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <img  class="header__logo--icon" src="@/icons/modalBackground.png" alt="">
+      <img
+        class="header__logo--icon"
+        src="@/icons/modalBackground.png"
+        alt=""
+      />
     </div>
     <div class="flex-column center">
       <strong
@@ -10,17 +14,6 @@
       >
         Приветствую! Прошу пройти авторизацию!
       </strong>
-      <strong v-if="this.$store.getters.IS_AUTH === true" class="header__title">
-        Приветствую,  &nbsp;  
-        <strong v-if="this.$store.getters.GET_AUTH.firstName">{{
-          this.$store.getters.GET_AUTH.firstName
-        }}</strong
-        ><span v-if="!this.$store.getters.GET_AUTH.firstName">{{
-          this.$store.getters.GET_AUTH.login
-        }}</span>
-        !
-      </strong>
-
       <div
         class="header__navigation"
         v-if="this.$store.getters.IS_AUTH === true"
@@ -32,33 +25,72 @@
           :to="link.url"
         >
           <img
+            v-if="isMobile"
             v-tooltip.bottom="link.name"
-            class="icon"
+            class="icon--max"
             :src="getImgUrl(link.icon)"
           />
-          <span>{{ link.name }}</span></router-link
+          <span v-if="isDesktop">{{ link.name }}</span></router-link
         >
       </div>
     </div>
 
     <div class="flex-column center" v-if="this.$store.getters.IS_AUTH === true">
-      <button class="button" @click="this.$router.push('/profile')">
+      <template v-if="isMobile">
+        <img
+          class="icon--max"
+          @click="openMenu"
+          src="@/icons/menu.png"
+          alt=""
+        />
+        <Menu
+          id="overlay_menu"
+          ref="menu"
+          :model="authMenuItems"
+          :popup="true"
+        ></Menu>
+      </template>
+
+      <button
+        class="button"
+        @click="this.$router.push('/profile')"
+        v-show="isDesktop"
+      >
         Личный кабинет
       </button>
-      <logout-action></logout-action>
+      <logout-action ref="logout"></logout-action>
     </div>
 
     <div
       class="flex-column center"
       v-if="this.$store.getters.IS_AUTH === false"
     >
-      <button-with-modal-form label="Войти">
+      <template v-if="isMobile">
+        <img
+          class="icon--max"
+          @click="openMenu"
+          src="@/icons/menu.png"
+          alt=""
+        />
+        <Menu
+          id="overlay_menu"
+          ref="menu"
+          :model="guestMenuItems"
+          :popup="true"
+        ></Menu>
+      </template>
+
+      <button-with-modal-form ref="signIn" label="Войти" v-show="isDesktop">
         <template #formSlot="{ closeModal }">
           <login-form @close="closeModal" :userList="userList"></login-form>
         </template>
       </button-with-modal-form>
 
-      <button-with-modal-form label="Зарегистрироваться">
+      <button-with-modal-form
+        ref="signUp"
+        label="Зарегистрироваться"
+        v-show="isDesktop"
+      >
         <template #formSlot="{ closeModal }">
           <regisitration-form @close="closeModal" :userList="userList">
           </regisitration-form>
@@ -74,12 +106,15 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 
+import Menu from "primevue/menu";
+
 export default {
   components: {
     ButtonWithModalForm,
     RegisitrationForm,
     LoginForm,
     LogoutAction,
+    Menu,
   },
   name: "header-layout",
 
@@ -108,10 +143,53 @@ export default {
           icon: "user.png",
         },
       ],
+      authMenuItems: [
+        {
+          label: "Личный кабинет",
+          icon: "pi pi-search",
+          command: () => {
+            this.$router.push("/profile");
+          },
+        },
+        {
+          label: "Выйти из системы",
+          icon: "pi pi-sign-out",
+          command: () => {
+            this.$refs.logout.confirmation();
+          },
+        },
+      ],
+      guestMenuItems: [
+        {
+          label: "Войти",
+          icon: "pi pi-sign-in",
+          command: () => {
+            this.$refs.signIn.openModal();
+          },
+        },
+        {
+          label: "Зарегистрироваться",
+          icon: "pi pi-book",
+          command: () => {
+            this.$refs.signUp.openModal();
+          },
+        },
+      ],
     };
   },
 
+  computed: {
+    isMobile() {
+      return this.$store.getters.IS_MOBILE;
+    },
+    isDesktop() {
+      return this.$store.getters.IS_DESKTOP;
+    },
+  },
   methods: {
+    openMenu(event) {
+      this.$refs.menu.toggle(event);
+    },
     getImgUrl(item) {
       return require(`@/icons/` + item);
     },

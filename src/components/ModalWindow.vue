@@ -31,6 +31,7 @@ export default {
       required: true,
     },
   },
+  emits:['close', 'ok'],
   mounted() {
     document.addEventListener("keydown", this.closeOnKeydown);
   },

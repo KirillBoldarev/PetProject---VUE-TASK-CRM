@@ -1,0 +1,44 @@
+/* Name	Element
+p-menu	Container element. ++
+p-menu-list	List element.
+p-submenu-header	Header of the submenu list element.
+p-menuitem	Menuitem element.
+p-menuitem-active	Active menuitem element.
+p-menuitem-content	Content of menuitem.
+p-menuitem-link	Link element of the menuitem.
+p-menuitem-text	Label of a menuitem.
+p-menuitem-icon	Icon of a menuitem. */
+@import "_var.scss";
+.p-menu.p-component {
+  color: $primary-light !important;
+  background-color: $primary-light !important;
+  width: auto !important;
+}
+
+.p-menu-list {
+  color: $primary-light !important;
+  background-color: $primary-light !important;
+}
+.p-menuitem {
+  color: $primary-light !important;
+  &-active {
+    background-color: $primary-light !important;
+  }
+  &-content {
+    background-color: $primary-light !important;
+  }
+}
+.p-menuitem-link {
+  color: $secondary-light !important;
+  font-weight: 900 !important;
+  margin: 20px 0px !important;
+  &:hover {
+    background-color: $primary-light !important;
+  }
+}
+.p-menuitem-text {
+  color: $primary-dark !important;
+  &:hover {
+    text-decoration: underline $primary-dark !important ;
+  }
+}

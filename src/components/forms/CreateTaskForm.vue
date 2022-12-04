@@ -56,8 +56,8 @@
             v-model="description"
             name="task"
             id="task"
-            cols="30"
-            rows="7"
+            cols="35"
+            rows="10"
           ></textarea>
           <transition>
             <small
@@ -99,6 +99,7 @@ export default {
       required: true,
     },
   },
+  emits:['close'],
   setup() {
     return {
       v$: useVuelidate(),
@@ -141,7 +142,6 @@ export default {
         sender: this.sender.id,
         executor: this.executor.id,
         isCompleted: false,
-        /* dateOfCreation: this.dateOfCreation, */
         dateOfCreation: new Date(),
       };
     },

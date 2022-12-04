@@ -207,6 +207,7 @@ export default {
       required: true,
     },
   },
+  emits:['edited', 'close'],
 
   created() {},
   methods: {

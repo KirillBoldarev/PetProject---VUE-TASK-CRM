@@ -14,8 +14,8 @@
             v-model="text"
             name="comment"
             id="task"
-            cols="30"
-            rows="10"
+            cols="35"
+            rows="15"
           ></textarea>
           <transition>
             <small
@@ -48,6 +48,7 @@ export default {
       required: true,
     },
   },
+  emits:['close'],
   setup() {
     return {
       v$: useVuelidate(),

@@ -4,12 +4,8 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-  
   <main class="main__content">
-    <router-view
-      :taskList="taskList"
-      :userList="userList"
-    ></router-view>
+    <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
 
   <footer-layout
@@ -39,49 +35,34 @@ export default {
       userList: [],
     };
   },
-  methods: {},
+  methods: {
+    initializeWidth() {
+      if (window.innerWidth > 810) {
+        this.$store.dispatch("SET_DESKTOP_ACTION");
+      } else {
+        this.$store.dispatch("SET_MOBILE_ACTION");
+      }
+    },
+  },
 
   computed: {},
+  created() {
+ 
+    this.initializeWidth();
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 810) {
+        this.$store.dispatch("SET_DESKTOP_ACTION");
+      } else {
+        this.$store.dispatch("SET_MOBILE_ACTION");
+      }
+    });
+  },
 
   mounted() {
     this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
     this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
     this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
     this.$store.dispatch("INITIALIZE_INSPECTED_TASK_ACTION");
-
-    // fetch("http://admin-tasks.local/api/users/11", {
-    //   method: "put",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-
-    //   //make sure to serialize your JSON body
-    //   body: JSON.stringify({
-    //     firstName: "ololo",
-    //     secondName: "rtololol",
-    //     email: "welrhw@glswkngs.rtu",
-    //     phone: 12312312,
-    //   }),
-    // }).then((response) => {
-    //   console.log(response);
-    // });
-
-    /*     fetch("http://admin-tasks.local/api/users/11", {
-      method: "delete",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: "ololo",
-        secondName: "rtololol",
-        email: "welrhw@glswkngs.rtu",
-        phone: 12312312,
-      }),
-    }).then((response) => {
-      console.log(response);
-    }); */
   },
 };
 </script>

@@ -23,6 +23,7 @@ export default {
       required: false,
     },
   },
+  emits: ["changeTab"],
   methods: {
     changeTab(tabName) {
       this.$emit("changeTab", tabName);

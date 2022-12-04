@@ -1,5 +1,7 @@
 <template>
-  <button @click="confirmation" class="button">Выйти из системы</button>
+  <button 
+  v-show="this.$store.getters.IS_DESKTOP"
+  @click="confirmation" class="button">Выйти из системы</button>
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
     @confirm="logoutHandler"

@@ -9,9 +9,8 @@
   padding: 10px 20px;
   background-color: #050522;
   box-sizing: border-box;
-  padding: 5px;
+  padding: 5px 15px;
   margin: 0px;
-  gap: 10px;
 
   @media (max-width: 960px) {
     padding: 8px 15px;
@@ -47,13 +46,17 @@
     &--icon {
       width: 100px;
       height: 100px;
+      @media (max-width: 400px) {
+        width: 75px;
+        height: 75px;
+      }
     }
   }
 
   &__navigation {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 35px;
     width: auto;
     text-align: center;
     justify-content: center;
@@ -64,11 +67,11 @@
       inset 2px 0px 0px 0px $secondary-light; */
 
     @media (max-width: 960px) {
-      gap: 10px;
+      gap: 15px;
     }
 
     @media (max-width: 580px) {
-      gap: 5px;
+      gap: 15px;
     }
   }
 
@@ -81,20 +84,13 @@
     padding: 3px;
     text-decoration: none;
     box-sizing: border-box;
-    font-size: 14px;
-    color:$primary-light;
+    font-size: 18px;
+    color: $primary-light;
+    font-weight: 700;
 
     &:hover {
       text-decoration: underline;
       color: $secondary-light;
     }
-
-    @media (max-width: 960px) {
-      font-size: 12px;
-    }
-    @media (max-width: 610px) {
-      font-size: 0px;
-    }
-
   }
 }

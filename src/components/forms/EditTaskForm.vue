@@ -87,8 +87,8 @@
               v-model="description"
               name="task"
               id="task"
-              cols="30"
-              rows="7"
+              cols="35"
+              rows="10"
             ></textarea>
             <transition>
               <small
@@ -141,6 +141,7 @@ export default {
       required: true,
     },
   },
+  emits: ["edited", "close"],
 
   data() {
     return {

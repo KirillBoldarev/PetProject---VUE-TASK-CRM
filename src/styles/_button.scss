@@ -1,16 +1,16 @@
 @import "_var.scss";
 .button {
-  min-width: 100px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   color: $primary-dark;
   padding: 10px 2px;
   display: inline-block;
   float: right;
   text-decoration: none;
   width: auto;
-  height: auto;
-  border: 1px solid $primary-dark;
+  height: 50px;
+  width: 150px;
+  border: 2px solid $primary-dark;
   background: $primary-light;
   -webkit-box-shadow: 5px 5px 0px 0.1px rgba(239, 88, 88, 1);
   -moz-box-shadow: 5px 5px 0px 0.1px rgba(239, 88, 88, 1);
@@ -30,7 +30,7 @@
 
   @media (max-width: 960px) {
     padding: 10px 2px;
-    font-size: 10px;
+    font-size: 12px;
   }
   @media (max-width: 580px) {
     padding: 10px 2px;

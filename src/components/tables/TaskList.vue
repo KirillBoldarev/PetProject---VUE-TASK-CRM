@@ -1,24 +1,27 @@
 <template>
-  <template v-for="page in permittedPages" :key="page.name">
-    <div class="page" v-if="currentPage === page.name">
-      <div class="page__body">
-        <h2 class="page__title">Управление задачами</h2>
+  <div class="page">
+    <h2 class="page__title">Управление задачами</h2>
+    <tabs
+      class="page__toolbar"
+      :tabs="permittedPages"
+      :selectedTab="currentPage"
+      @changeTab="changePage"
+    ></tabs>
+    <template v-for="page in permittedPages" :key="page.name">
+      <div class="page__body" v-if="currentPage === page.name">
         <div class="flex-column center">
-          <tabs
-            :tabs="permittedPages"
-            :selectedTab="currentPage"
-            @changeTab="changePage"
-          ></tabs>
           <div class="form">
             <div class="form__toolbar">
               <div class="flex-row center">
-                <label class="form__label"> Отображать завершенные:</label>
-                <img v-if="includeCompletedTask"
+                <label v-if="this.$store.getters.IS_DESKTOP" class="form__label"> Отображать завершенные:</label>
+                <img
+                  v-if="includeCompletedTask"
                   @click="includeCompletedTask = false"
                   class="icon"
                   src="@/icons/check.png"
                 />
-                <img v-if="!includeCompletedTask"
+                <img
+                  v-if="!includeCompletedTask"
                   @click="includeCompletedTask = true"
                   class="icon"
                   src="@/icons/notСheck.png"
@@ -29,7 +32,7 @@
                 <input class="form__input" v-model="searchValue" type="text" />
               </div>
               <div class="flex-row center">
-                <label class="form__label"> Добавить задачу:</label>
+                <label  v-if="this.$store.getters.IS_DESKTOP" class="form__label"> Добавить задачу:</label>
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
                   :image="require('@/icons/plus.png')"
@@ -78,8 +81,8 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </template>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -125,13 +128,13 @@ export default {
     },
     getGrid() {
       if (this.currentPage === "personal") {
-        return "table__row--4";
+        return "table__row--personal-charged";
       }
       if (this.currentPage === "charged") {
-        return "table__row--4";
+        return "table__row--personal-charged";
       }
       if (this.currentPage === "all") {
-        return "table__row--5";
+        return "table__row--alltask";
       }
     },
     pages() {

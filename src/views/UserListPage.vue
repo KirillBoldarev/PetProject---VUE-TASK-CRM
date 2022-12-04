@@ -3,7 +3,7 @@
     <div class="page__body">
       <h2 class="page__title">Управление пользователями</h2>
       <div class="table">
-        <div class="table__row table__row--6">
+        <div class="table__row table__row--userlist">
           <div class="table__column">Имя</div>
           <div class="table__column">Роль</div>
           <div class="table__column">Электронная почта</div>
@@ -14,7 +14,7 @@
           <div
             v-for="user in userList"
             :key="user.id"
-            class="table__row table__row--6"
+            class="table__row table__row--userlist"
           >
             <div v-if="user.firstName" class="table__column">
               {{ user.firstName }} {{ user.secondName }}
@@ -25,21 +25,18 @@
             <div class="table__column">
               <img
                 v-if="user.role === 'Неавторизованный пользователь'"
-                class="icon"
+                class="icon--mini"
                 src="@/icons/unauthorized.png"
-                alt=""
               />
               <img
                 v-if="user.role === 'Пользователь'"
-                class="icon"
+                class="icon--mini"
                 src="@/icons/user.png"
-                alt=""
               />
               <img
                 v-if="user.role === 'Администратор'"
-                class="icon"
+                class="icon--mini"
                 src="@/icons/admin.png"
-                alt=""
               />
             </div>
             <div class="table__column">{{ user.email }}</div>
@@ -122,8 +119,7 @@ export default {
 
   computed: {},
 
-  methods: {
-  },
+  methods: {},
 
   watch: {},
 };

@@ -4,6 +4,7 @@ import users from "./modules/users";
 import tasks from "./modules/tasks";
 import inspectedTask from "./modules/inspectedTask";
 import comments from "./modules/comments";
+import device from "./modules/device";
 
 export default createStore({
   modules: {
@@ -12,5 +13,6 @@ export default createStore({
     tasks,
     inspectedTask,
     comments,
+    device
   },
 });
