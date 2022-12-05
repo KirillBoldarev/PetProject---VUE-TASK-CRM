@@ -22,7 +22,7 @@ export default {
       state.COMMENTS.splice(index, 1);
     },
     EDIT_COMMENT(state, changedData) {
-      state.COMMENT = state.COMMENT.map((comment) => {
+      state.COMMENTS = state.COMMENTS.map((comment) => {
         return comment.id === changedData.id ? changedData : comment;
       });
     },

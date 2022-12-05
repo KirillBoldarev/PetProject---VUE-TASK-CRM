@@ -2,8 +2,6 @@
   <section id="registrationForm" class="form__container">
     <h2 class="form__title">Регистрация пользователя!</h2>
     <form class="form__body" @submit.prevent="this.registrateUserHandler">
-
-
       <fieldset class="flex-column center form__block">
         <legend class="form__title">Придумайте логин и пароль</legend>
         <div class="flex-column center">
@@ -28,12 +26,13 @@
               <small
                 v-if="v$.login.$dirty && v$.login.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+                >Введите не менее
+                {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
           </div>
         </div>
-  
+
         <div class="flex-column center">
           <div class="flex-row space-between">
             <label class="form__label" for="password">Пароль</label>
@@ -56,7 +55,8 @@
               <small
                 v-if="v$.password.$dirty && v$.password.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее {{ v$.password.minLength.$params.min }} символов
+                >Введите не менее
+                {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
           </div>
@@ -72,7 +72,9 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
+import { required, minLength } from "@vuelidate/validators";
+import { useUsersStore } from "@/store/UsersStore";
+import { mapActions, mapStores } from "pinia";
 
 export default {
   setup() {
@@ -113,6 +115,7 @@ export default {
       }
       this.$store.commit("CREATE_USER", this.newUser);
       this.$store.commit("AUTHENTICATION", this.newUser);
+      this.usersStore.CREATE_USER(this.newUser);
       this.$emit("close");
     },
 
@@ -124,6 +127,7 @@ export default {
   },
 
   computed: {
+    ...mapStores(useUsersStore),
     newUser() {
       return {
         login: this.login,

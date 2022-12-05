@@ -162,6 +162,9 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/validation";
 
+import { useUsersStore } from "@/store/UsersStore";
+import { mapStores } from "pinia";
+
 export default {
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
@@ -217,12 +220,14 @@ export default {
         return;
       }
       this.$store.commit("EDIT_USER", this.changedData);
+      this.usersStore.EDIT_USER(this.changedData);
       this.$emit("edited");
       this.$emit("close");
     },
   },
 
   computed: {
+    ...mapStores(useUsersStore),
     changedData() {
       return {
         login: this.login,

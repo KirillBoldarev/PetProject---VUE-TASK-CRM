@@ -4,10 +4,11 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
+  <div @click="info">ИНФО</div>
+ <!--  <div>{{usersStore.GET_USER_LIST}}</div> -->
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
-
   <footer-layout
     :taskList="taskList"
     :userList="userList"
@@ -22,6 +23,9 @@ import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUse
 import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
 import subscribtionsForCommentsMutationMixin from "./js/mixins/subscribtionsForCommentsMutationMixin";
 
+import { useUsersStore } from "./store/UsersStore";
+import { mapStores } from "pinia";
+
 export default {
   components: { HeaderLayout, FooterLayout },
   mixins: [
@@ -35,9 +39,15 @@ export default {
       userList: [],
     };
   },
-  methods: {},
+  methods: {
+    info() {
+      console.log('this.usersStore', this.usersStore);
+    },
+  },
 
-  computed: {},
+  computed: {
+    ...mapStores(useUsersStore),
+  },
 
   created() {
     const mediaQuery = window.matchMedia("(min-width: 810px)");
@@ -58,6 +68,7 @@ export default {
 
   mounted() {
     this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
+    this.usersStore.INITIALIZE_USER_LIST_ACTION();
     this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
     this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
     this.$store.dispatch("INITIALIZE_INSPECTED_TASK_ACTION");

@@ -2,13 +2,13 @@
   <img
     v-tooltip.bottom="'Удалить пользователя'"
     @click="confirmation"
-    :class=iconClass
+    :class="iconClass"
     src="@/icons/trash.png"
     alt=""
   />
   <confirm-dialog
     :isDialogOpen="isDialogOpen"
-    @confirm="deleteUser"
+    @confirm="deleteUserHandler"
     @close="isDialogOpen = false"
   ></confirm-dialog>
 </template>
@@ -17,6 +17,8 @@
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import localbase from "@/js/localbase";
+import { mapStores } from "pinia";
+import { useUsersStore } from "@/store/UsersStore";
 
 export default {
   name: "DeleteUserButton",
@@ -39,12 +41,15 @@ export default {
   },
 
   methods: {
-    deleteUser() {
+    deleteUserHandler() {
       this.$store.commit("DELETE_USER", this.target);
+      this.usersStore.DELETE_USER(this.target);
       localbase.collection("users").doc({ id: this.target.id }).delete();
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapStores(useUsersStore)
+  },
 };
 </script>

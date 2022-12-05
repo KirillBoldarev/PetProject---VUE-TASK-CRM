@@ -3,18 +3,14 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import filterDate from "./js/filterDate";
+import { createPinia } from "pinia";
 
 
 
 // STYLES
 import "./styles/style.scss";
-import "vue-select/dist/vue-select.css";
 ///
 
-//COMPONENTS
-
-//
 
 // PRIME VUE
 import PrimeVue from "primevue/config";
@@ -24,10 +20,12 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 ///
 
+/* const pinia = createPinia(); */
+
 createApp(App)
   .use(store)
+  .use(createPinia())
   .use(router)
   .use(PrimeVue)
-  .use("filterDate", filterDate)
   .directive("tooltip", Tooltip)
   .mount("#app");
