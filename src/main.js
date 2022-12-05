@@ -13,7 +13,7 @@ import "vue-select/dist/vue-select.css";
 ///
 
 //COMPONENTS
-/* import vSelect from "vue-select"; */
+
 //
 
 // PRIME VUE
@@ -30,5 +30,4 @@ createApp(App)
   .use(PrimeVue)
   .use("filterDate", filterDate)
   .directive("tooltip", Tooltip)
-/*   .component("v-select", vSelect) */
   .mount("#app");

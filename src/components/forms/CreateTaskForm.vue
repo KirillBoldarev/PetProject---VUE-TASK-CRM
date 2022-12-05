@@ -6,11 +6,6 @@
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
 
-<!--         <v-select
-          v-model="executor"
-          :options="userList"
-          label="firstName"
-        ></v-select> -->
 
         <select
           class="form__select"
@@ -86,10 +81,10 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
-/* import vSelect from "vue-select"; */
+
 
 export default {
-  components: { /* vSelect */ },
+  components: { },
   name: "AddTaskForm",
   props: {
     target: {
