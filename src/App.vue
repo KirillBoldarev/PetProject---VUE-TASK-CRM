@@ -35,20 +35,18 @@ export default {
       userList: [],
     };
   },
-  methods: {
-    initializeWidth() {
-      if (window.innerWidth > 810) {
-        this.$store.dispatch("SET_DESKTOP_ACTION");
-      } else {
-        this.$store.dispatch("SET_MOBILE_ACTION");
-      }
-    },
-  },
+  methods: {},
 
   computed: {},
+
   created() {
- 
-    this.initializeWidth();
+    const mediaQuery = window.matchMedia("(min-width: 810px)");
+    if (mediaQuery.matches) {
+      this.$store.dispatch("SET_DESKTOP_ACTION");
+    } else {
+      this.$store.dispatch("SET_MOBILE_ACTION");
+    }
+
     window.addEventListener("resize", () => {
       if (window.innerWidth > 810) {
         this.$store.dispatch("SET_DESKTOP_ACTION");

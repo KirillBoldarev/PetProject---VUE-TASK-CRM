@@ -1,5 +1,5 @@
 <template>
-  <modal-window :isOpen="isDialogOpen" @close="isDialogOpen = false">
+  <modal-window :isOpen="isDialogOpen" @close="close">
     <template #ModalSlot>
       <section id="confirmForm" class="form__container">
         <h2 class="form__title">Вы уверены ?</h2>
@@ -22,7 +22,7 @@ export default {
       required: true,
     },
   },
-  emits:['close','confirm'],
+  emits: ["close", "confirm"],
   data() {
     return {};
   },

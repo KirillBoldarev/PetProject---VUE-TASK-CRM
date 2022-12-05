@@ -5,24 +5,30 @@ import router from "./router";
 import store from "./store";
 import filterDate from "./js/filterDate";
 
-import "./styles/style.scss";
 
+
+// STYLES
+import "./styles/style.scss";
+import "vue-select/dist/vue-select.css";
+///
+
+//COMPONENTS
+/* import vSelect from "vue-select"; */
+//
+
+// PRIME VUE
 import PrimeVue from "primevue/config";
 import Tooltip from "primevue/tooltip";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-
-import Localbase from "localbase";
-
-let localbase = new Localbase("localbase");
-localbase.config.debug = false;
+///
 
 createApp(App)
   .use(store)
   .use(router)
   .use(PrimeVue)
-  .use(localbase)
   .use("filterDate", filterDate)
   .directive("tooltip", Tooltip)
+/*   .component("v-select", vSelect) */
   .mount("#app");

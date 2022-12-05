@@ -1,11 +1,17 @@
 <template>
   <section id="addTaskForm" class="form__container">
-    
     <form class="form__body" @submit.prevent="createTaskHandler">
       <h2 class="form__title">Добавить задачу</h2>
       <fieldset class="flex-row center form__block">
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
+
+<!--         <v-select
+          v-model="executor"
+          :options="userList"
+          label="firstName"
+        ></v-select> -->
+
         <select
           class="form__select"
           v-model="executor"
@@ -80,10 +86,10 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
-import filterDate from "@/js/filterDate";
+/* import vSelect from "vue-select"; */
 
 export default {
-  components: {},
+  components: { /* vSelect */ },
   name: "AddTaskForm",
   props: {
     target: {
@@ -99,7 +105,7 @@ export default {
       required: true,
     },
   },
-  emits:['close'],
+  emits: ["close"],
   setup() {
     return {
       v$: useVuelidate(),
@@ -147,10 +153,6 @@ export default {
     },
     taskId() {
       return Math.random().toString(36).substring(2, 9);
-    },
-    dateOfCreation() {
-      let now = new Date();
-      return filterDate(now, "datetime");
     },
   },
 };

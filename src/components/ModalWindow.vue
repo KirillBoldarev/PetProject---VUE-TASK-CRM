@@ -1,7 +1,7 @@
 <template>
   <teleport to="#modal">
     <transition>
-      <div @click="closeModal" v-if="isOpen === true" class="modal__backdrop">
+      <div @click="closeModal" v-if="isOpen" class="modal__backdrop">
         <div @click.stop class="modal__body">
           <div></div>
           <div class="flex-row center">
