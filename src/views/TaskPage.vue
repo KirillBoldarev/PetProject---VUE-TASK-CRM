@@ -80,7 +80,7 @@ import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
-import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import Comment from "@/components/tables/CommentLine.vue";
 import filterDate from "@/js/libs/filterDate";
 

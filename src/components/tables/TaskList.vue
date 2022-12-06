@@ -96,8 +96,8 @@
 </template>
 
 <script>
-import Tabs from "@/components/Tabs.vue";
-import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import Tabs from "@/components/tools/Tabs.vue";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import TaskListLine from "@/components/tables/TaskListLine.vue";
 

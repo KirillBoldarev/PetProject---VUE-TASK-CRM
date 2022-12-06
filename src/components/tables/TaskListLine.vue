@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";

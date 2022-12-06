@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 

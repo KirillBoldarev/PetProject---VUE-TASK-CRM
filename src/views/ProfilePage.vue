@@ -27,7 +27,7 @@
       <edit-user-form
         v-if="editUserMode"
         @edited="editUserMode = false"
-        :target="this.$store.getters.GET_AUTH"
+        :target="authenticatedStore.GET_AUTH"
         :userList="userList"
         :taskList="taskList"
       ></edit-user-form>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 import TaskList from "@/components/tables/TaskList.vue";

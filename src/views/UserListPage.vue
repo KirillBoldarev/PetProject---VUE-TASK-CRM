@@ -88,7 +88,7 @@
 
 <script>
 import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
-import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 

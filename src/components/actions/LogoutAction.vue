@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 import { useScreenResolutionStore } from "@/store/ScreenResolution";

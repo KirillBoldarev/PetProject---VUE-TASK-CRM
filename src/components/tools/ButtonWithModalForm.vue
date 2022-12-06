@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/ModalWindow.vue";
+import ModalWindow from "@/components/tools/ModalWindow.vue";
 
 export default {
   name: "ButtonWithModalForm",

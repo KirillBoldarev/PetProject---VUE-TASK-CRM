@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { mapStores } from "pinia";
 import { useUsersStore } from "@/store/UsersStore";
