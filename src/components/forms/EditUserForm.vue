@@ -15,7 +15,7 @@
       ></confirm-dialog>
 
       <div
-        v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
+        v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
         class="flex-column center"
       >
         <label class="form__label" for="email"
@@ -163,6 +163,7 @@ import { required, email, minLength } from "@vuelidate/validators";
 import { isPhone } from "@/js/libs/validation";
 
 import { useUsersStore } from "@/store/UsersStore";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {
@@ -201,10 +202,6 @@ export default {
       type: Object,
       required: true,
     },
-    taskList: {
-      type: Array,
-      required: true,
-    },
     userList: {
       type: Array,
       required: true,
@@ -219,16 +216,15 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("EDIT_USER", this.changedData);
-      this.usersStore.EDIT_USER(this.changedData);
+      this.usersStore.EDIT_USER(this.changedUser);
       this.$emit("edited");
       this.$emit("close");
     },
   },
 
   computed: {
-    ...mapStores(useUsersStore),
-    changedData() {
+    ...mapStores(useUsersStore , useAuthenticatedStore),
+    changedUser() {
       return {
         login: this.login,
         id: this.id,

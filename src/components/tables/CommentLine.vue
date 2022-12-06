@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import { useCommentsStore } from "@/store/CommentsStore";
+import { mapStores } from "pinia";
+
 export default {
   props: {
     target: {
@@ -33,10 +36,11 @@ export default {
     return {};
   },
   computed: {
+    ...mapStores(useCommentsStore),
   },
   methods: {
     deleteComment() {
-      this.$store.commit("DELETE_COMMENT", this.target);
+      this.commentsStore.DELETE_COMMENT(this.target);
     },
     getPerson(role) {
       let person = this.userList.find((user) => user.id === role);

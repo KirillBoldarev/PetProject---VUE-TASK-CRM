@@ -4,7 +4,7 @@
       <h2 class="form__title">Редактирование задачи</h2>
       <confirm-dialog
         :isDialogOpen="isDialogOpen"
-        @confirm="editHandler"
+        @confirm="editTaskHandler"
         @close="isDialogOpen = false"
       ></confirm-dialog>
 
@@ -113,7 +113,8 @@ import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { mapMutations } from "vuex";
+import { useTasksStore } from "@/store/TasksStore";
+import { mapStores } from "pinia";
 
 export default {
   setup() {
@@ -157,20 +158,19 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["EDIT_TASK"]),
-
-    editHandler() {
+    editTaskHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.EDIT_TASK(this.changedData);
+      this.tasksStore.EDIT_TASK(this.changedTask)
       this.$emit("edited");
       this.$emit("close");
     },
   },
   computed: {
-    changedData() {
+    ...mapStores(useTasksStore),
+    changedTask() {
       return {
         //all keys from target object
         id: this.id,

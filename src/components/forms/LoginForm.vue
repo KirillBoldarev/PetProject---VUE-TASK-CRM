@@ -67,6 +67,8 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 export default {
   setup() {
@@ -128,7 +130,7 @@ export default {
           }, 3000);
           return;
         }
-        this.$store.commit("AUTHENTICATION", foundedUser);
+        this.authenticatedStore.AUTHENTICATION(foundedUser)
         this.$emit("close");
       }
     },
@@ -139,5 +141,8 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapStores(useAuthenticatedStore)
+  }
 };
 </script>

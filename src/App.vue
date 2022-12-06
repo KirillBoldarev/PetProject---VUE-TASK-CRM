@@ -23,11 +23,11 @@ import FooterLayout from "./components/layouts/FooterLayout.vue";
 import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
 
-
 import { useUsersStore } from "./store/UsersStore";
 import { useAuthenticatedStore } from "./store/AuthenticatedStore";
 import { useInspectedTaskStore } from "./store/InspectedTaskStore";
 import { useTasksStore } from "./store/TasksStore";
+import { useScreenResolutionStore } from "./store/ScreenResolution";
 
 import { mapStores } from "pinia";
 
@@ -54,23 +54,24 @@ export default {
       useUsersStore,
       useAuthenticatedStore,
       useTasksStore,
-      useInspectedTaskStore
+      useInspectedTaskStore,
+      useScreenResolutionStore
     ),
   },
 
   created() {
     const mediaQuery = window.matchMedia("(min-width: 810px)");
     if (mediaQuery.matches) {
-      this.$store.dispatch("SET_DESKTOP_ACTION");
+      this.screenResolutionStore.SET_DESKTOP();
     } else {
-      this.$store.dispatch("SET_MOBILE_ACTION");
+      this.screenResolutionStore.SET_MOBILE();
     }
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 810) {
-        this.$store.dispatch("SET_DESKTOP_ACTION");
+        this.screenResolutionStore.SET_DESKTOP();
       } else {
-        this.$store.dispatch("SET_MOBILE_ACTION");
+        this.screenResolutionStore.SET_MOBILE();
       }
     });
   },

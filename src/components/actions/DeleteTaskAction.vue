@@ -2,7 +2,7 @@
   <img
     v-tooltip.bottom="'Удалить'"
     @click="confirmation"
-    :class=iconClass
+    :class="iconClass"
     src="@/icons/trash.png"
     alt=""
   />
@@ -16,7 +16,9 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { mapMutations } from "vuex";
+import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { useTasksStore } from "@/store/TasksStore";
+import { mapStores } from "pinia";
 
 export default {
   name: "DeleteTaskAction",
@@ -39,22 +41,22 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["DELETE_TASK", "CLEAR_INSPECTED_TASK"]),
-
     deleteHandler() {
       if (
-        this.$store.getters.GET_INSPECTED_TASK &&
-        this.target.id === this.$store.getters.GET_INSPECTED_TASK.id
+        this.inspectedTaskStore.GET_INSPECTED_TASK &&
+        this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
       ) {
         this.$router.push("/tasks");
-        this.CLEAR_INSPECTED_TASK();
-        this.DELETE_TASK(this.target);
+        this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
+        this.tasksStore.DELETE_TASK(this.target);
         return;
       }
-      this.DELETE_TASK(this.target);
+      this.tasksStore.DELETE_TASK(this.target);
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapStores(useInspectedTaskStore, useTasksStore),
+  },
 };
 </script>

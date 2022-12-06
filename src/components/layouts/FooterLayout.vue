@@ -4,8 +4,8 @@
     <div class="footer__main">
       <strong
         v-if="
-          this.$store.getters.IS_AUTH === true &&
-          this.$store.getters.GET_AUTH.role === 'Неавторизованный пользователь'
+          authenticatedStore.IS_AUTH === true &&
+          authenticatedStore.GET_AUTH.role === 'Неавторизованный пользователь'
         "
         class="header__title"
       >
@@ -18,9 +18,13 @@
 </template>
 
 <script>
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
+
 export default {
   methods: {},
   computed: {
+    ...mapStores(useAuthenticatedStore),
     admin() {
       let admin = this.userList.find((user) => user.role === "Администратор");
       return `${admin.firstName} ${admin.secondName}`;

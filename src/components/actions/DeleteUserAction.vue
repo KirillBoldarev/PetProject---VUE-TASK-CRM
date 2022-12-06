@@ -16,7 +16,6 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import localbase from "@/js/libs/localbase";
 import { mapStores } from "pinia";
 import { useUsersStore } from "@/store/UsersStore";
 
@@ -42,9 +41,7 @@ export default {
 
   methods: {
     deleteUserHandler() {
-      this.$store.commit("DELETE_USER", this.target);
       this.usersStore.DELETE_USER(this.target);
-      localbase.collection("users").doc({ id: this.target.id }).delete();
     },
   },
 

@@ -6,7 +6,6 @@
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
 
-
         <select
           class="form__select"
           v-model="executor"
@@ -80,11 +79,12 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { mapMutations } from "vuex";
-
+import { mapStores } from "pinia";
+import { useTasksStore } from "@/store/TasksStore";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 
 export default {
-  components: { },
+  components: {},
   name: "AddTaskForm",
   props: {
     target: {
@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       executor: this.target,
-      sender: this.$store.getters.GET_AUTH,
+      sender: this.authenticatedStore.GET_AUTH,
       title: "",
       description: "",
     };
@@ -122,19 +122,18 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["CREATE_TASK", "BIND_TASK"]),
-
     createTaskHandler() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-      this.CREATE_TASK(this.newTask);
+      this.tasksStore.CREATE_TASK(this.newTask)
       this.$emit("close");
     },
   },
 
   computed: {
+    ...mapStores(useAuthenticatedStore, useTasksStore),
     newTask() {
       return {
         id: this.taskId,

@@ -39,6 +39,10 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import filterDate from "@/js/libs/filterDate";
 
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useCommentsStore } from "@/store/CommentsStore";
+import { mapStores } from "pinia";
+
 export default {
   components: {},
   name: "AddTaskForm",
@@ -57,7 +61,7 @@ export default {
   data() {
     return {
       task: this.target.id,
-      sender: this.$store.getters.GET_AUTH,
+      sender: this.authenticatedStore.GET_AUTH,
       text: "",
     };
   },
@@ -73,12 +77,13 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("CREATE_COMMENT", this.newComment);
+      this.commentsStore.CREATE_COMMENT(this.newComment);
       this.$emit("close");
     },
   },
 
   computed: {
+    ...mapStores(useAuthenticatedStore, useCommentsStore),
     newComment() {
       return {
         id: this.commentId,
@@ -92,8 +97,7 @@ export default {
       return Math.random().toString(36).substring(2, 9);
     },
     dateOfCreation() {
-      let now = new Date();
-      return filterDate(now, "datetime");
+      return filterDate(new Date(), "datetime");
     },
   },
 };

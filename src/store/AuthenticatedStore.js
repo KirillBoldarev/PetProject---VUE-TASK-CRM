@@ -8,7 +8,7 @@ export const useAuthenticatedStore = defineStore("authenticated", {
   }),
   getters: {
     IS_AUTH(state) {
-      return state.IS_AUTH;
+      return state.IS_AUTHENTICATED;
     },
     GET_AUTH(state) {
       return state.AUTHENTICATED;
@@ -22,18 +22,18 @@ export const useAuthenticatedStore = defineStore("authenticated", {
     },
     LOGOUT() {
       this.IS_AUTHENTICATED = false;
-      this.AUTHENTICATED = {};
+      this.AUTHENTICATED = null;
       sessionStorage.removeItem("authID");
     },
 
     async UPDATE_AUTHENTICATED() {
       let id = sessionStorage.getItem("authID");
       let userList = await localbase.collection("users").get();
-      if (id && Array.isArray(userList)) {
+      if (id && userList && Array.isArray(userList)) {
         this.AUTHENTICATED = userList.find((user) => user.id === id);
         this.IS_AUTHENTICATED = true;
       }
-      if (id && !Array.isArray(userList)) {
+      if (id && userList && !Array.isArray(userList)) {
         this.IS_AUTHENTICATED = true;
         this.AUTHENTICATED = userList;
       }

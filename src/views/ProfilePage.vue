@@ -9,14 +9,14 @@
       </h2>
       <div class="page__toolbar flex-row center">
         <img
-          @click=switchEditUserMode
+          @click="switchEditUserMode"
           v-tooltip.bottom="'Редактировать профиль'"
           class="icon"
           src="@/icons/edit.png"
           alt=""
         />
         <img
-          @click=switchShowTaskMode
+          @click="switchShowTaskMode"
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/icons/task.png"
@@ -26,7 +26,7 @@
 
       <edit-user-form
         v-if="editUserMode"
-        @edited="(editUserMode = false)"
+        @edited="editUserMode = false"
         :target="this.$store.getters.GET_AUTH"
         :userList="userList"
         :taskList="taskList"
@@ -46,12 +46,14 @@ import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 import TaskList from "@/components/tables/TaskList.vue";
 
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
 export default {
   data() {
     return {
       editUserMode: false,
       showTaskMode: true,
-      authenticated: this.$store.getters.GET_AUTH,
+      authenticated: null,
     };
   },
 
@@ -74,10 +76,8 @@ export default {
     },
   },
 
-  beforeCreate() {
-    if (this.$store.getters.IS_AUTH === false) {
-      this.$router.push("/");
-    }
+  beforeMount() {
+    this.authenticated = this.authenticatedStore.GET_AUTH;
   },
 
   methods: {
@@ -91,6 +91,8 @@ export default {
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapStores(useAuthenticatedStore),
+  },
 };
 </script>

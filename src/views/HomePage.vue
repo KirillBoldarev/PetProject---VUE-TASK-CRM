@@ -2,7 +2,7 @@
   <div class="page">
     <div class="page__body">
       <h2 class="page__title">Приветствую на главной странице!</h2>
-      <div class="page__text" v-if="this.$store.getters.IS_AUTH === false">
+      <div class="page__text" v-if="!authenticatedStore.IS_AUTH">
         Для начала работы системы , прошу пройти &nbsp;
         <button-with-modal-form label="регистрацию">
           <template #formSlot="{ closeModal }">
@@ -70,6 +70,8 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 export default {
   name: "HomePage",
@@ -92,6 +94,9 @@ export default {
     info() {
       console.log(this.$store);
     },
+  },
+  computed: {
+    ...mapStores(useAuthenticatedStore),
   },
 };
 </script>

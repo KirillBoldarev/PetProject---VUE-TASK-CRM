@@ -68,7 +68,7 @@
 
       <transition-group name="slide-fade">
         <div
-          v-for="comment in this.$store.getters.GET_COMMENTS"
+          v-for="comment in commentsStore.GET_COMMENTS"
           :key="comment.id"
         >
           <comment :target="comment" :userList="userList"></comment>
@@ -153,11 +153,9 @@ export default {
     },
   },
   beforeMount() {
-    this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
     this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id);
   },
   unmounted() {
-    this.$store.commit("CLEAR_COMMENTS");
     this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
     this.commentsStore.CLEAR_COMMENTS();
   },

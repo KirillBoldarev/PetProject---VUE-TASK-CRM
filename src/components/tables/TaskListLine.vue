@@ -34,8 +34,8 @@
     <button-with-modal-form
       v-if="
         task.isCompleted === false &&
-        (task.sender === this.$store.getters.GET_AUTH.id ||
-          this.$store.getters.GET_AUTH.role === 'Администратор')
+        (task.sender === authenticatedStore.GET_AUTH.id ||
+          authenticatedStore.GET_AUTH.role === 'Администратор')
       "
       :image="require('@/icons/edit.png')"
       :iconClass="'icon--mini'"
@@ -66,6 +66,7 @@ import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 
 import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {
@@ -102,7 +103,6 @@ export default {
 
   methods: {
     inspectTask() {
-      this.$store.commit("INSPECT_TASK", this.task);
       this.inspectedTaskStore.INSPECT_TASK(this.task);
     },
 
@@ -119,7 +119,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useInspectedTaskStore),
+    ...mapStores(useInspectedTaskStore, useAuthenticatedStore),
   },
 };
 </script>

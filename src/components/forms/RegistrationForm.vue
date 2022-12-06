@@ -74,6 +74,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import { useUsersStore } from "@/store/UsersStore";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {
@@ -113,9 +114,8 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.$store.commit("CREATE_USER", this.newUser);
-      this.$store.commit("AUTHENTICATION", this.newUser);
       this.usersStore.CREATE_USER(this.newUser);
+      this.authenticatedStore.AUTHENTICATION(this.newUser)
       this.$emit("close");
     },
 
@@ -127,7 +127,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useUsersStore),
+    ...mapStores(useUsersStore, useAuthenticatedStore),
     newUser() {
       return {
         login: this.login,
@@ -137,7 +137,7 @@ export default {
       };
     },
     userRole() {
-      if (this.$store.getters.GET_USER_LIST.length === 0) {
+      if (this.usersStore.GET_USER_LIST.length === 0) {
         return "Администратор";
       }
       return "Неавторизованный пользователь";

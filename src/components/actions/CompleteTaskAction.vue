@@ -27,6 +27,8 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
+import { useTasksStore } from "@/store/TasksStore";
+import { mapStores } from "pinia";
 
 export default {
   name: "CompleteTaskButton",
@@ -46,10 +48,12 @@ export default {
 
   methods: {
     completeTask() {
-      this.$store.commit("COMPLETE_TASK", this.target);
+      this.tasksStore.COMPLETE_TASK(this.target)
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapStores(useTasksStore),
+  },
 };
 </script>

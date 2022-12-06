@@ -2,7 +2,7 @@
   <router-view
     :taskList="taskList"
     :userList="userList"
-    :inspectedTask="this.$store.getters.GET_INSPECTED_TASK"
+    :inspectedTask="inspectedTaskStore.GET_INSPECTED_TASK"
   >
   </router-view>
   <task-list
@@ -13,7 +13,10 @@
 </template>
 
 <script>
-import TaskList from '@/components/tables/TaskList.vue';
+import TaskList from "@/components/tables/TaskList.vue";
+
+import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { mapStores } from "pinia";
 
 export default {
   name: "TaskListPage",
@@ -33,6 +36,9 @@ export default {
 
   data() {
     return {};
+  },
+  computed: {
+    ...mapStores(useInspectedTaskStore),
   },
 };
 </script>

@@ -3,7 +3,7 @@ import localbase from "@/js/libs/localbase";
 
 export const useInspectedTaskStore = defineStore("inspectedTask", {
   state: () => ({
-    INSPECTED_TASK: {},
+    INSPECTED_TASK: null,
   }),
   getters: {
     GET_INSPECTED_TASK(state) {

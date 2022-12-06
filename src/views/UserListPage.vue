@@ -60,7 +60,7 @@
 
               <button-with-modal-form
                 :tooltip="'Редактировать'"
-                v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
+                v-if="authenticatedStore.GET_AUTH.role=== 'Администратор'"
                 :image="require('@/icons/edit.png')"
                 :icon-class="'icon--mini'"
               >
@@ -74,7 +74,7 @@
                 </template>
               </button-with-modal-form>
               <delete-user-action
-                v-if="this.$store.getters.GET_AUTH.role === 'Администратор'"
+                v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
                 :target="user"
                 :iconClass="'icon--mini'"
               ></delete-user-action>
@@ -91,6 +91,10 @@ import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
+
+import { useUsersStore } from "@/store/UsersStore";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 export default {
   components: {
@@ -117,7 +121,9 @@ export default {
 
   created() {},
 
-  computed: {},
+  computed: {
+    ...mapStores(useAuthenticatedStore, useUsersStore),
+  },
 
   methods: {},
 

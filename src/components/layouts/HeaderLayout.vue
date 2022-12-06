@@ -8,15 +8,12 @@
       />
     </div>
     <div class="flex-column center">
-      <strong
-        class="header__title"
-        v-if="this.$store.getters.IS_AUTH === false"
-      >
+      <strong class="header__title" v-if="!authenticatedStore.IS_AUTH">
         Приветствую! Прошу пройти авторизацию!
       </strong>
       <div
         class="header__navigation"
-        v-if="this.$store.getters.IS_AUTH === true"
+        v-if="authenticatedStore.IS_AUTH"
       >
         <router-link
           class="header__link"
@@ -35,7 +32,7 @@
       </div>
     </div>
 
-    <div class="flex-column center" v-if="this.$store.getters.IS_AUTH === true">
+    <div class="flex-column center" v-if="authenticatedStore.IS_AUTH">
       <template v-if="isMobile">
         <img
           class="icon--max"
@@ -61,10 +58,7 @@
       <logout-action ref="logout"></logout-action>
     </div>
 
-    <div
-      class="flex-column center"
-      v-if="this.$store.getters.IS_AUTH === false"
-    >
+    <div class="flex-column center" v-if="!authenticatedStore.IS_AUTH">
       <template v-if="isMobile">
         <img
           class="icon--max"
@@ -105,6 +99,10 @@ import LogoutAction from "@/components/actions/LogoutAction.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
+
+import { useScreenResolutionStore } from "@/store/ScreenResolution";
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 import Menu from "primevue/menu";
 
@@ -179,11 +177,12 @@ export default {
   },
 
   computed: {
+    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
     isMobile() {
-      return this.$store.getters.IS_MOBILE;
+      return this.screenResolutionStore.IS_MOBILE;
     },
     isDesktop() {
-      return this.$store.getters.IS_DESKTOP;
+      return this.screenResolutionStore.IS_DESKTOP;
     },
   },
   methods: {

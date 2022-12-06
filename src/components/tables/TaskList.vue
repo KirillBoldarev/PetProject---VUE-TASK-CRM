@@ -13,7 +13,12 @@
           <div class="form">
             <div class="form__toolbar">
               <div class="flex-row center">
-                <label v-if="this.$store.getters.IS_DESKTOP" class="form__label"> Отображать завершенные:</label>
+                <label
+                  v-if="this.screenResolutionStore.IS_DESKTOP"
+                  class="form__label"
+                >
+                  Отображать завершенные:</label
+                >
                 <img
                   v-if="includeCompletedTask"
                   @click="includeCompletedTask = false"
@@ -32,7 +37,12 @@
                 <input class="form__input" v-model="searchValue" type="text" />
               </div>
               <div class="flex-row center">
-                <label  v-if="this.$store.getters.IS_DESKTOP" class="form__label"> Добавить задачу:</label>
+                <label
+                  v-if="screenResolutionStore.IS_DESKTOP"
+                  class="form__label"
+                >
+                  Добавить задачу:</label
+                >
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
                   :image="require('@/icons/plus.png')"
@@ -43,7 +53,7 @@
                       @close="closeModal"
                       :taskList="taskList"
                       :userList="userList"
-                      :target="this.$store.getters.GET_AUTH"
+                      :target="authenticatedStore.GET_AUTH"
                     ></create-task-form>
                   </template>
                 </button-with-modal-form>
@@ -91,6 +101,10 @@ import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import TaskListLine from "@/components/tables/TaskListLine.vue";
 
+import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useScreenResolutionStore } from "@/store/ScreenResolution";
+import { mapStores } from "pinia";
+
 export default {
   name: "TaskList",
 
@@ -119,8 +133,9 @@ export default {
     };
   },
   computed: {
+    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
     permittedPages() {
-      if (this.$store.getters.GET_AUTH.role === "Администратор") {
+      if (this.authenticatedStore.GET_AUTH.role === "Администратор") {
         return this.pages;
       } else {
         return this.pages.filter((page) => page.name !== "all");
@@ -161,7 +176,7 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.GET_AUTH.id;
+        let currentUserId = this.authenticatedStore.GET_AUTH.id;
         return this.taskList.filter((task) => task.sender === currentUserId);
       }
     },
@@ -170,7 +185,7 @@ export default {
       if (!this.taskList) {
         return [];
       } else {
-        let currentUserId = this.$store.getters.GET_AUTH.id;
+        let currentUserId = this.authenticatedStore.GET_AUTH.id;
         return this.taskList.filter((task) => task.executor === currentUserId);
       }
     },
