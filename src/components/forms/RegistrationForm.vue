@@ -74,7 +74,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import { useUsersStore } from "@/store/UsersStore";
-import { mapActions, mapStores } from "pinia";
+import { mapStores } from "pinia";
 
 export default {
   setup() {

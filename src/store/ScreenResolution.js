@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+
 
 export const useScreenResolutionStore = defineStore("screenResolution", {
   state: () => ({
@@ -19,7 +19,7 @@ export const useScreenResolutionStore = defineStore("screenResolution", {
       this.IS_MOBILE = true;
       this.IS_DESKTOP = false;
     },
-    SET_DESKTOP(state) {
+    SET_DESKTOP() {
       this.IS_DESKTOP = true;
       this.IS_MOBILE = false;
     },

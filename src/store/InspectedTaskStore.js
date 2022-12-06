@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 
 export const useInspectedTaskStore = defineStore("inspectedTask", {
   state: () => ({
@@ -12,7 +12,7 @@ export const useInspectedTaskStore = defineStore("inspectedTask", {
   },
   actions: {
     INSPECT_TASK(payload) {
-      state.INSPECTED_TASK = task;
+      this.INSPECTED_TASK = payload;
       sessionStorage.setItem("inspectedTaskID", payload.id);
     },
     CLEAR_INSPECTED_TASK() {
@@ -23,19 +23,12 @@ export const useInspectedTaskStore = defineStore("inspectedTask", {
       sessionStorage.setItem("inspectedTaskID", payload.id);
       this.INSPECTED_TASK = payload;
     },
-    INITIALIZE_INSPECTED_TASK_ACTION() {
-      localbase
-        .collection("tasks")
-        .get()
-        .then((result) => {
-          let inspected = sessionStorage.getItem("inspectedTaskID");
-          if (inspected) {
-            this.INSPECTED_TASK = result.find(
-              (task) => task.id === inspected
-            );
-          }
-        })
-        .catch((error) => console.log(error));
+    async INITIALIZE_INSPECTED_TASK() {
+      let inspected = sessionStorage.getItem("inspectedTaskID");
+      let taskList = await localbase.collection("tasks").get();
+      if (inspected && taskList) {
+        this.INSPECTED_TASK = taskList.find((task) => task.id === inspected);
+      }
     },
   },
 });

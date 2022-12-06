@@ -5,7 +5,8 @@
     :userList="userList"
   ></header-layout>
   <div @click="info">ИНФО</div>
- <!--  <div>{{usersStore.GET_USER_LIST}}</div> -->
+  <!--   <div>СТОр ЮЗЕРЛИСТ{{usersStore.GET_USER_LIST}}</div>
+  <div> ПРОП ЮЗерлист{{userList}}</div> -->
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
@@ -21,9 +22,13 @@ import HeaderLayout from "./components/layouts/HeaderLayout.vue";
 import FooterLayout from "./components/layouts/FooterLayout.vue";
 import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
-import subscribtionsForCommentsMutationMixin from "./js/mixins/subscribtionsForCommentsMutationMixin";
+
 
 import { useUsersStore } from "./store/UsersStore";
+import { useAuthenticatedStore } from "./store/AuthenticatedStore";
+import { useInspectedTaskStore } from "./store/InspectedTaskStore";
+import { useTasksStore } from "./store/TasksStore";
+
 import { mapStores } from "pinia";
 
 export default {
@@ -31,7 +36,6 @@ export default {
   mixins: [
     subscribtionsForUsersMutationsMixin,
     subscribtionsForTasksMutationsMixin,
-    subscribtionsForCommentsMutationMixin,
   ],
   data() {
     return {
@@ -41,12 +45,17 @@ export default {
   },
   methods: {
     info() {
-      console.log('this.usersStore', this.usersStore);
+      console.log("this.usersStore", this.usersStore);
     },
   },
 
   computed: {
-    ...mapStores(useUsersStore),
+    ...mapStores(
+      useUsersStore,
+      useAuthenticatedStore,
+      useTasksStore,
+      useInspectedTaskStore
+    ),
   },
 
   created() {
@@ -68,7 +77,10 @@ export default {
 
   mounted() {
     this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
-    this.usersStore.INITIALIZE_USER_LIST_ACTION();
+    this.usersStore.INITIALIZE_USER_LIST();
+    this.authenticatedStore.UPDATE_AUTHENTICATED();
+    this.tasksStore.INITIALIZE_TASK_LIST();
+    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK();
     this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
     this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
     this.$store.dispatch("INITIALIZE_INSPECTED_TASK_ACTION");

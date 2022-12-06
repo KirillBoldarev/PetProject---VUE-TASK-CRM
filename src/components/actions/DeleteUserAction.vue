@@ -16,7 +16,7 @@
 <script>
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 import { mapStores } from "pinia";
 import { useUsersStore } from "@/store/UsersStore";
 

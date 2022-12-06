@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 
 export const useUsersStore = defineStore("users", {
   state: () => ({
@@ -28,13 +28,10 @@ export const useUsersStore = defineStore("users", {
         return user.id === payload.id ? payload : user;
       });
     },
-    INITIALIZE_USER_LIST_ACTION() {
-      localbase
+    async INITIALIZE_USER_LIST() {
+      this.USER_LIST = await localbase
         .collection("users")
         .get()
-        .then((result) => {
-          this.USER_LIST = result;
-        })
         .catch((error) => console.log(error));
     },
   },

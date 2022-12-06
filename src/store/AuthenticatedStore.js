@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 
 export const useAuthenticatedStore = defineStore("authenticated", {
   state: () => ({
-    AUTHENTICATED: {},
+    AUTHENTICATED: null,
     IS_AUTHENTICATED: false,
   }),
   getters: {
     IS_AUTH(state) {
       return state.IS_AUTH;
     },
-    AUTHENTICATED(state) {
+    GET_AUTH(state) {
       return state.AUTHENTICATED;
     },
   },
@@ -26,22 +26,17 @@ export const useAuthenticatedStore = defineStore("authenticated", {
       sessionStorage.removeItem("authID");
     },
 
-    UPDATE_AUTHENTICATED() {
-      localbase
-        .collection("users")
-        .get()
-        .then((result) => {
-          let id = sessionStorage.getItem("authID");
-          if (Array.isArray(result)) {
-            this.AUTHENTICATED = result.find((user) => user.id === id);
-            this.IS_AUTHENTICATED = true;
-          }
-          if (!Array.isArray(result)) {
-            this.IS_AUTHENTICATED = true;
-            this.AUTHENTICATED = result;
-          }
-        })
-        .catch((error) => console.log(error));
+    async UPDATE_AUTHENTICATED() {
+      let id = sessionStorage.getItem("authID");
+      let userList = await localbase.collection("users").get();
+      if (id && Array.isArray(userList)) {
+        this.AUTHENTICATED = userList.find((user) => user.id === id);
+        this.IS_AUTHENTICATED = true;
+      }
+      if (id && !Array.isArray(userList)) {
+        this.IS_AUTHENTICATED = true;
+        this.AUTHENTICATED = userList;
+      }
     },
   },
 });

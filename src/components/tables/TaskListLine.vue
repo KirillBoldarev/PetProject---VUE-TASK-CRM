@@ -65,6 +65,9 @@ import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 
+import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { mapStores } from "pinia";
+
 export default {
   components: {
     ButtonWithModalForm,
@@ -100,10 +103,11 @@ export default {
   methods: {
     inspectTask() {
       this.$store.commit("INSPECT_TASK", this.task);
+      this.inspectedTaskStore.INSPECT_TASK(this.task);
     },
 
-    getPerson(role) {
-      let person = this.userList.find((user) => user.id === role);
+    getPerson(id) {
+      let person = this.userList.find((user) => user.id === id);
       if (!person) {
         return "Пользователь удален";
       }
@@ -114,6 +118,8 @@ export default {
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapStores(useInspectedTaskStore),
+  },
 };
 </script>

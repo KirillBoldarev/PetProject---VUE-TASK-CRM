@@ -22,8 +22,10 @@
           src="@/icons/edit.png"
           alt=""
         />
-        <delete-task-action :target="inspectedTask"
-        :iconClass="'icon'"></delete-task-action>
+        <delete-task-action
+          :target="inspectedTask"
+          :iconClass="'icon'"
+        ></delete-task-action>
         <img
           @click="lastPath"
           v-tooltip.bottom="'Назад'"
@@ -83,7 +85,12 @@ import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import Comment from "@/components/tables/CommentLine.vue";
-import filterDate from "@/js/filterDate";
+import filterDate from "@/js/libs/filterDate";
+import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
+
+import { useCommentsStore } from "@/store/CommentsStore";
+import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { mapStores } from "pinia";
 
 export default {
   components: {
@@ -94,11 +101,8 @@ export default {
     ButtonWithModalForm,
     Comment,
   },
+  mixins: [subscribtionsForCommentsMutationMixin],
   props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
     userList: {
       type: Array,
       required: true,
@@ -132,6 +136,7 @@ export default {
     },
   },
   computed: {
+    ...mapStores(useInspectedTaskStore, useCommentsStore),
     filteredDateOfCreation() {
       return filterDate(this.inspectedTask.dateOfCreation, "datetime");
     },
@@ -147,13 +152,14 @@ export default {
       return filterDate(spendedTime, "time");
     },
   },
-  beforeCreate() {
-    if (this.$store.getters.GET_COMMENTS.length < 1) {
-      this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
-    }
+  beforeMount() {
+    this.$store.dispatch("INITIALIZE_COMMENTS_ACTION", this.inspectedTask.id);
+    this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id);
   },
   unmounted() {
     this.$store.commit("CLEAR_COMMENTS");
+    this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
+    this.commentsStore.CLEAR_COMMENTS();
   },
 };
 </script>

@@ -1,4 +1,4 @@
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 export default {
   state: {
     COMMENTS: [],

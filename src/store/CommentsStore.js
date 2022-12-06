@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 
 export const useCommentsStore = defineStore("comments", {
   state: () => ({
-    COMMENTS: [],
+    COMMENTS: null,
   }),
   getters: {
     GET_COMMENTS(state) {
@@ -28,17 +28,15 @@ export const useCommentsStore = defineStore("comments", {
         return comment.id === payload.id ? payload : comment;
       });
     },
-    INITIALIZE_COMMENTS(taskId) {
-      localbase
+    CLEAR_COMMENTS() {
+      this.COMMENTS = null;
+    },
+    async INITIALIZE_COMMENTS(taskId) {
+      let commetsList = await localbase
         .collection("comments")
         .get()
-        .then((result) => {
-          let filteredComments = result.filter(
-            (comment) => comment.task === taskId
-          );
-          this.COMMENTS = filteredComments;
-        })
         .catch((error) => console.log(error));
+      this.COMMENTS = commetsList.filter((comment) => comment.task === taskId);
     },
   },
 });

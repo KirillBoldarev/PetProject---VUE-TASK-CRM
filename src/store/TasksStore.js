@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import localbase from "@/js/localbase";
+import localbase from "@/js/libs/localbase";
 
 export const useTasksStore = defineStore("tasks", {
   state: () => ({
@@ -11,13 +11,10 @@ export const useTasksStore = defineStore("tasks", {
     },
   },
   actions: {
-    INITIALIZE_TASK_LIST() {
-      localbase
+    async INITIALIZE_TASK_LIST() {
+      this.TASK_LIST = await localbase
         .collection("tasks")
         .get()
-        .then((result) => {
-          this.TASK_LIST = result;
-        })
         .catch((error) => console.log(error));
     },
     CREATE_TASK(payload) {

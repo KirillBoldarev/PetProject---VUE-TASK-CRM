@@ -160,7 +160,7 @@ import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { isPhone } from "@/js/validation";
+import { isPhone } from "@/js/libs/validation";
 
 import { useUsersStore } from "@/store/UsersStore";
 import { mapStores } from "pinia";
@@ -210,7 +210,7 @@ export default {
       required: true,
     },
   },
-  emits:['edited', 'close'],
+  emits: ["edited", "close"],
 
   created() {},
   methods: {

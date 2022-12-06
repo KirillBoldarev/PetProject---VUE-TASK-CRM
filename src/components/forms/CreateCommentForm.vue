@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex-column center">
-        <button class="button" type="submit">Оставить комментарий</button>
+        <button class="button" type="submit">Прокомментировать</button>
       </div>
     </form>
   </section>
@@ -37,7 +37,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import filterDate from "@/js/filterDate";
+import filterDate from "@/js/libs/filterDate";
 
 export default {
   components: {},
@@ -48,7 +48,7 @@ export default {
       required: true,
     },
   },
-  emits:['close'],
+  emits: ["close"],
   setup() {
     return {
       v$: useVuelidate(),
