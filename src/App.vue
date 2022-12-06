@@ -77,14 +77,10 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("INITIALIZE_USER_LIST_ACTION");
     this.usersStore.INITIALIZE_USER_LIST();
     this.authenticatedStore.UPDATE_AUTHENTICATED();
     this.tasksStore.INITIALIZE_TASK_LIST();
     this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK();
-    this.$store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-    this.$store.dispatch("UPDATE_AUTHENTICATED_ACTION");
-    this.$store.dispatch("INITIALIZE_INSPECTED_TASK_ACTION");
   },
 };
 </script>

@@ -20,8 +20,11 @@
 <script>
 import { useCommentsStore } from "@/store/CommentsStore";
 import { mapStores } from "pinia";
+import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
+
 
 export default {
+  mixins:[subscribtionsForCommentsMutationMixin],
   props: {
     target: {
       type: Object,

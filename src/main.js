@@ -2,7 +2,6 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
-import store from "./store";
 import { createPinia } from "pinia";
 
 
@@ -23,7 +22,6 @@ import "primeicons/primeicons.css";
 /* const pinia = createPinia(); */
 
 createApp(App)
-  .use(store)
   .use(createPinia())
   .use(router)
   .use(PrimeVue)

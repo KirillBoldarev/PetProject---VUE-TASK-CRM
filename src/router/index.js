@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import store from "@/store";
 
 const routes = [
   {
@@ -25,14 +24,10 @@ const routes = [
         path: "task/:id?",
         name: "InspectedTask",
         component: () => import("@/views/TaskPage.vue"),
-        beforeEnter: (to, from) => {
+        /*         beforeEnter: (to, from) => {
           store.dispatch("INITIALIZE_USER_LIST_ACTION");
           store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-          /* store.commit("INITIALIZE_INSPECTED_TASK");
-                    if (store.getters.GET_USER_LIST.length < 1) {
-            return { path: "/tasks" };
-          } */
-        },
+        }, */
       },
     ],
   },

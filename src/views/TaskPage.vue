@@ -1,5 +1,5 @@
 <template>
-  <div class="page" v-if="inspectedTask && userList.length > 0">
+  <div class="page" v-if="inspectedTask">
     <div class="page__body">
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
@@ -67,10 +67,7 @@
       </div>
 
       <transition-group name="slide-fade">
-        <div
-          v-for="comment in commentsStore.GET_COMMENTS"
-          :key="comment.id"
-        >
+        <div v-for="comment in commentsStore.GET_COMMENTS" :key="comment.id">
           <comment :target="comment" :userList="userList"></comment>
         </div>
       </transition-group>
@@ -86,7 +83,6 @@ import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import ButtonWithModalForm from "@/components/ButtonWithModalForm.vue";
 import Comment from "@/components/tables/CommentLine.vue";
 import filterDate from "@/js/libs/filterDate";
-import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
 
 import { useCommentsStore } from "@/store/CommentsStore";
 import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
@@ -101,7 +97,7 @@ export default {
     ButtonWithModalForm,
     Comment,
   },
-  mixins: [subscribtionsForCommentsMutationMixin],
+  mixins: [],
   props: {
     userList: {
       type: Array,

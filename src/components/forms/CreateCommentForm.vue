@@ -43,8 +43,11 @@ import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
 import { useCommentsStore } from "@/store/CommentsStore";
 import { mapStores } from "pinia";
 
+import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
+
 export default {
   components: {},
+  mixins: [subscribtionsForCommentsMutationMixin],
   name: "AddTaskForm",
   props: {
     target: {
@@ -61,7 +64,7 @@ export default {
   data() {
     return {
       task: this.target.id,
-      sender: this.authenticatedStore.GET_AUTH,
+      author: null,
       text: "",
     };
   },
@@ -89,7 +92,7 @@ export default {
         id: this.commentId,
         dateOfCreation: this.dateOfCreation,
         task: this.task,
-        author: this.sender.id,
+        author: this.author.id,
         text: this.text,
       };
     },
@@ -99,6 +102,11 @@ export default {
     dateOfCreation() {
       return filterDate(new Date(), "datetime");
     },
+  },
+  beforeMount() {
+    this.author = this.authenticatedStore.GET_AUTH;
+    this.commentsStore.INITIALIZE_COMMENTS(this.target.id);
+
   },
 };
 </script>

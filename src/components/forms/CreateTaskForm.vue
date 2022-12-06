@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       executor: this.target,
-      sender: this.authenticatedStore.GET_AUTH,
+      sender: null,
       title: "",
       description: "",
     };
@@ -127,7 +127,7 @@ export default {
         this.v$.$touch();
         return;
       }
-      this.tasksStore.CREATE_TASK(this.newTask)
+      this.tasksStore.CREATE_TASK(this.newTask);
       this.$emit("close");
     },
   },
@@ -148,6 +148,9 @@ export default {
     taskId() {
       return Math.random().toString(36).substring(2, 9);
     },
+  },
+  beforeMount() {
+    this.sender = this.authenticatedStore.GET_AUTH;
   },
 };
 </script>
