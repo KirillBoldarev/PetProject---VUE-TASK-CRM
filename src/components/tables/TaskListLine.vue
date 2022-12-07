@@ -65,8 +65,8 @@ import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
 import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
 import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 
-import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

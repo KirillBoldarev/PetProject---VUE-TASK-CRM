@@ -17,7 +17,7 @@
 import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import { mapStores } from "pinia";
-import { useUsersStore } from "@/store/UsersStore";
+import { useUsersStore } from "@/stores/UsersStore";
 
 export default {
   name: "DeleteUserButton",

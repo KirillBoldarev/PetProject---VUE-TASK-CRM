@@ -67,7 +67,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

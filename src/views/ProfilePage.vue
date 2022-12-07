@@ -46,7 +46,7 @@ import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 import TaskList from "@/components/tables/TaskList.vue";
 
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 export default {
   data() {

@@ -101,8 +101,8 @@ import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import TaskListLine from "@/components/tables/TaskListLine.vue";
 
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
-import { useScreenResolutionStore } from "@/store/ScreenResolution";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { useScreenResolutionStore } from "@/stores/ScreenResolution";
 import { mapStores } from "pinia";
 
 export default {

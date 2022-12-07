@@ -73,8 +73,8 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
-import { useUsersStore } from "@/store/UsersStore";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useUsersStore } from "@/stores/UsersStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

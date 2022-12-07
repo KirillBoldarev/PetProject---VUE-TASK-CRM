@@ -4,7 +4,6 @@
     :taskList="taskList"
     :userList="userList"
   ></header-layout>
-  <div @click="info">ИНФО</div>
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
@@ -21,11 +20,11 @@ import FooterLayout from "./components/layouts/FooterLayout.vue";
 import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUsersMutationsMixin";
 import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
 
-import { useUsersStore } from "./store/UsersStore";
-import { useAuthenticatedStore } from "./store/AuthenticatedStore";
-import { useInspectedTaskStore } from "./store/InspectedTaskStore";
-import { useTasksStore } from "./store/TasksStore";
-import { useScreenResolutionStore } from "./store/ScreenResolution";
+import { useUsersStore } from "./stores/UsersStore";
+import { useAuthenticatedStore } from "./stores/AuthenticatedStore";
+import { useInspectedTaskStore } from "./stores/InspectedTaskStore";
+import { useTasksStore } from "./stores/TasksStore";
+import { useScreenResolutionStore } from "./stores/ScreenResolution";
 
 import { mapStores } from "pinia";
 

@@ -100,8 +100,8 @@ import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 
-import { useScreenResolutionStore } from "@/store/ScreenResolution";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useScreenResolutionStore } from "@/stores/ScreenResolution";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 import Menu from "primevue/menu";

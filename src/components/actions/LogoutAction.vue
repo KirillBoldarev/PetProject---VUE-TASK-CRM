@@ -12,8 +12,8 @@
 <script>
 import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
-import { useScreenResolutionStore } from "@/store/ScreenResolution";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { useScreenResolutionStore } from "@/stores/ScreenResolution";
 
 import { mapStores } from "pinia";
 export default {

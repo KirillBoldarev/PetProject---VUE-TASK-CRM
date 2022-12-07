@@ -70,7 +70,7 @@ import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
 import LoginForm from "@/components/forms/LoginForm.vue";
 
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

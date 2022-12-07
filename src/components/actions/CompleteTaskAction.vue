@@ -27,7 +27,7 @@
 <script>
 import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
 import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useTasksStore } from "@/store/TasksStore";
+import { useTasksStore } from "@/stores/TasksStore";
 import { mapStores } from "pinia";
 
 export default {

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

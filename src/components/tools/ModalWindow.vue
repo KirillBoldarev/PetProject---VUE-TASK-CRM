@@ -1,26 +1,29 @@
 <template>
-  <teleport to="#modal">
-    <transition>
-      <div @click="closeModal" v-if="isOpen" class="modal__backdrop">
-        <div @click.stop class="modal__body">
-          <div></div>
-          <div class="flex-row center">
-            <div class="modal__image"></div>
-            <div class="modal__close">
-              <img @click="closeModal" class="icon" src="@/icons/remove.png" alt="" />
-            </div>
+  <transition>
+    <div @click="closeModal" v-if="isOpen" class="modal__backdrop">
+      <div @click.stop class="modal__body">
+        <div></div>
+        <div class="flex-row center">
+          <div class="modal__image"></div>
+          <div class="modal__close">
+            <img
+              @click="closeModal"
+              class="icon"
+              src="@/icons/remove.png"
+              alt=""
+            />
           </div>
-          <slot
-            class="modal__slot"
-            name="ModalSlot"
-            :closeModal="closeModal"
-            :confirm="confirm"
-          >
-          </slot>
         </div>
+        <slot
+          class="modal__slot"
+          name="ModalSlot"
+          :closeModal="closeModal"
+          :confirm="confirm"
+        >
+        </slot>
       </div>
-    </transition>
-  </teleport>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -31,7 +34,7 @@ export default {
       required: true,
     },
   },
-  emits:['close', 'ok'],
+  emits: ["close", "ok"],
   mounted() {
     document.addEventListener("keydown", this.closeOnKeydown);
   },

@@ -92,8 +92,8 @@ import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
 import EditUserForm from "@/components/forms/EditUserForm.vue";
 
-import { useUsersStore } from "@/store/UsersStore";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useUsersStore } from "@/stores/UsersStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {

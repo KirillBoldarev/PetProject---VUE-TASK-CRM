@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { useCommentsStore } from "@/store/CommentsStore";
+import { useCommentsStore } from "@/stores/CommentsStore";
 import { mapStores } from "pinia";
 import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
 

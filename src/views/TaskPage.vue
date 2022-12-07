@@ -84,8 +84,8 @@ import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
 import Comment from "@/components/tables/CommentLine.vue";
 import filterDate from "@/js/libs/filterDate";
 
-import { useCommentsStore } from "@/store/CommentsStore";
-import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { useCommentsStore } from "@/stores/CommentsStore";
+import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
 import { mapStores } from "pinia";
 
 export default {

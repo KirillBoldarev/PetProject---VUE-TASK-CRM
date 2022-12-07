@@ -39,8 +39,8 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import filterDate from "@/js/libs/filterDate";
 
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
-import { useCommentsStore } from "@/store/CommentsStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { useCommentsStore } from "@/stores/CommentsStore";
 import { mapStores } from "pinia";
 
 import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";

@@ -80,8 +80,8 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapStores } from "pinia";
-import { useTasksStore } from "@/store/TasksStore";
-import { useAuthenticatedStore } from "@/store/AuthenticatedStore";
+import { useTasksStore } from "@/stores/TasksStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 
 export default {
   components: {},

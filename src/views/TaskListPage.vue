@@ -15,7 +15,7 @@
 <script>
 import TaskList from "@/components/tables/TaskList.vue";
 
-import { useInspectedTaskStore } from "@/store/InspectedTaskStore";
+import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
 import { mapStores } from "pinia";
 
 export default {
