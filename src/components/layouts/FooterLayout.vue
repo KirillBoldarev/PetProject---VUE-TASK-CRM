@@ -18,28 +18,28 @@
 </template>
 
 <script>
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { mapStores } from 'pinia'
 
 export default {
   methods: {},
   computed: {
     ...mapStores(useAuthenticatedStore),
-    admin() {
-      let admin = this.userList.find((user) => user.role === "Администратор");
-      return `${admin.firstName} ${admin.secondName}`;
-    },
+    admin () {
+      const admin = this.userList.find((user) => user.role === 'Администратор')
+      return `${admin.firstName} ${admin.secondName}`
+    }
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
-  },
-};
+      required: true
+    }
+  }
+}
 </script>

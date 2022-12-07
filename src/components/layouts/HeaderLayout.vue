@@ -92,16 +92,16 @@
 </template>
 
 <script>
-import LogoutAction from "@/components/actions/LogoutAction.vue";
-import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
-import RegisitrationForm from "@/components/forms/RegistrationForm.vue";
-import LoginForm from "@/components/forms/LoginForm.vue";
+import LogoutAction from '@/components/actions/LogoutAction.vue'
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
+import RegisitrationForm from '@/components/forms/RegistrationForm.vue'
+import LoginForm from '@/components/forms/LoginForm.vue'
 
-import { useScreenResolutionStore } from "@/stores/ScreenResolution";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import { useScreenResolutionStore } from '@/stores/ScreenResolution'
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { mapStores } from 'pinia'
 
-import Menu from "primevue/menu";
+import Menu from 'primevue/menu'
 
 export default {
   components: {
@@ -109,86 +109,86 @@ export default {
     RegisitrationForm,
     LoginForm,
     LogoutAction,
-    Menu,
+    Menu
   },
-  name: "header-layout",
+  name: 'header-layout',
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       headerLinks: [
-        { name: "Главная", url: "/", icon: "home.png" },
+        { name: 'Главная', url: '/', icon: 'home.png' },
         {
-          name: "Управление задачами",
-          url: "/tasks",
-          icon: "task.png",
+          name: 'Управление задачами',
+          url: '/tasks',
+          icon: 'task.png'
         },
         {
-          name: "Список пользователей",
-          url: "/users",
-          icon: "user.png",
-        },
+          name: 'Список пользователей',
+          url: '/users',
+          icon: 'user.png'
+        }
       ],
       authMenuItems: [
         {
-          label: "Личный кабинет",
-          icon: "pi pi-search",
+          label: 'Личный кабинет',
+          icon: 'pi pi-search',
           command: () => {
-            this.$router.push("/profile");
-          },
+            this.$router.push('/profile')
+          }
         },
         {
-          label: "Выйти из системы",
-          icon: "pi pi-sign-out",
+          label: 'Выйти из системы',
+          icon: 'pi pi-sign-out',
           command: () => {
-            this.$refs.logout.confirmation();
-          },
-        },
+            this.$refs.logout.confirmation()
+          }
+        }
       ],
       guestMenuItems: [
         {
-          label: "Войти",
-          icon: "pi pi-sign-in",
+          label: 'Войти',
+          icon: 'pi pi-sign-in',
           command: () => {
-            this.$refs.signIn.openModal();
-          },
+            this.$refs.signIn.openModal()
+          }
         },
         {
-          label: "Зарегистрироваться",
-          icon: "pi pi-book",
+          label: 'Зарегистрироваться',
+          icon: 'pi pi-book',
           command: () => {
-            this.$refs.signUp.openModal();
-          },
-        },
-      ],
-    };
+            this.$refs.signUp.openModal()
+          }
+        }
+      ]
+    }
   },
 
   computed: {
     ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
-    isMobile() {
-      return this.screenResolutionStore.IS_MOBILE;
+    isMobile () {
+      return this.screenResolutionStore.IS_MOBILE
     },
-    isDesktop() {
-      return this.screenResolutionStore.IS_DESKTOP;
-    },
+    isDesktop () {
+      return this.screenResolutionStore.IS_DESKTOP
+    }
   },
   methods: {
-    openMenu(event) {
-      this.$refs.menu.toggle(event);
+    openMenu (event) {
+      this.$refs.menu.toggle(event)
     },
-    getImgUrl(item) {
-      return require(`@/assets/icons/` + item);
-    },
-  },
-};
+    getImgUrl (item) {
+      return require('@/assets/icons/' + item)
+    }
+  }
+}
 </script>

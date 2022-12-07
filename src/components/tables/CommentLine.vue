@@ -18,42 +18,42 @@
 </template>
 
 <script>
-import { useCommentsStore } from "@/stores/CommentsStore";
-import { mapStores } from "pinia";
-import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
+import { useCommentsStore } from '@/stores/CommentsStore'
+import { mapStores } from 'pinia'
+import subscribtionsForCommentsMutationMixin from '@/js/mixins/subscribtionsForCommentsMutationMixin'
 
 export default {
   mixins: [subscribtionsForCommentsMutationMixin],
   props: {
     target: {
       type: Object,
-      required: false,
+      required: false
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
   computed: {
-    ...mapStores(useCommentsStore),
+    ...mapStores(useCommentsStore)
   },
   methods: {
-    deleteComment() {
-      this.commentsStore.DELETE_COMMENT(this.target);
+    deleteComment () {
+      this.commentsStore.DELETE_COMMENT(this.target)
     },
-    getPerson(role) {
-      let person = this.userList.find((user) => user.id === role);
+    getPerson (role) {
+      const person = this.userList.find((user) => user.id === role)
       if (!person) {
-        return "Пользователь удален";
+        return 'Пользователь удален'
       }
       if (!person.firstName || !person.secondName) {
-        return `${person.login}`;
+        return `${person.login}`
       }
-      return `${person.firstName} ${person.secondName}`;
-    },
-  },
-};
+      return `${person.firstName} ${person.secondName}`
+    }
+  }
+}
 </script>

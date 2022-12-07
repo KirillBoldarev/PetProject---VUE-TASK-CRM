@@ -35,78 +35,77 @@
 </template>
 
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import filterDate from "@/js/libs/filterDate";
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import filterDate from '@/js/libs/filterDate'
 
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { useCommentsStore } from "@/stores/CommentsStore";
-import { mapStores } from "pinia";
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { useCommentsStore } from '@/stores/CommentsStore'
+import { mapStores } from 'pinia'
 
-import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
+import subscribtionsForCommentsMutationMixin from '@/js/mixins/subscribtionsForCommentsMutationMixin'
 
 export default {
   components: {},
   mixins: [subscribtionsForCommentsMutationMixin],
-  name: "AddTaskForm",
+  name: 'AddTaskForm',
   props: {
     target: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["close"],
-  setup() {
+  emits: ['close'],
+  setup () {
     return {
-      v$: useVuelidate(),
-    };
+      v$: useVuelidate()
+    }
   },
-  data() {
+  data () {
     return {
       task: this.target.id,
       author: null,
-      text: "",
-    };
+      text: ''
+    }
   },
 
-  validations() {
+  validations () {
     return {
-      text: { required },
-    };
+      text: { required }
+    }
   },
   methods: {
-    createCommentHandler() {
+    createCommentHandler () {
       if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
+        this.v$.$touch()
+        return
       }
-      this.commentsStore.CREATE_COMMENT(this.newComment);
-      this.$emit("close");
-    },
+      this.commentsStore.CREATE_COMMENT(this.newComment)
+      this.$emit('close')
+    }
   },
 
   computed: {
     ...mapStores(useAuthenticatedStore, useCommentsStore),
-    newComment() {
+    newComment () {
       return {
         id: this.commentId,
         dateOfCreation: this.dateOfCreation,
         task: this.task,
         author: this.author.id,
-        text: this.text,
-      };
+        text: this.text
+      }
     },
-    commentId() {
-      return Math.random().toString(36).substring(2, 9);
+    commentId () {
+      return Math.random().toString(36).substring(2, 9)
     },
-    dateOfCreation() {
-      return filterDate(new Date(), "datetime");
-    },
+    dateOfCreation () {
+      return filterDate(new Date(), 'datetime')
+    }
   },
-  beforeMount() {
-    this.author = this.authenticatedStore.GET_AUTH;
-    this.commentsStore.INITIALIZE_COMMENTS(this.target.id);
-
-  },
-};
+  beforeMount () {
+    this.author = this.authenticatedStore.GET_AUTH
+    this.commentsStore.INITIALIZE_COMMENTS(this.target.id)
+  }
+}
 </script>

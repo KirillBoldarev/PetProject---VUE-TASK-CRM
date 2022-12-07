@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="table">
-          <div class="table__row" :class="getGrid">
+          <div class="table__row" :class="getGrid()">
             <div class="table__column">Состояние</div>
             <div v-if="currentPage !== 'charged'" class="table__column">
               Отправитель
@@ -77,7 +77,7 @@
           <transition-group name="slide-fade">
             <div
               class="table__row"
-              :class="getGrid"
+              :class="getGrid()"
               v-for="task in filterSource(page.dataSource)"
               :key="task.id"
             >
@@ -96,131 +96,130 @@
 </template>
 
 <script>
-import Tabs from "@/components/tools/Tabs.vue";
-import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
-import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
-import TaskListLine from "@/components/tables/TaskListLine.vue";
+import Tabs from '@/components/tools/Tabs.vue'
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
+import CreateTaskForm from '@/components/forms/CreateTaskForm.vue'
+import TaskListLine from '@/components/tables/TaskListLine.vue'
 
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { useScreenResolutionStore } from "@/stores/ScreenResolution";
-import { mapStores } from "pinia";
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { useScreenResolutionStore } from '@/stores/ScreenResolution'
+import { mapStores } from 'pinia'
 
 export default {
-  name: "TaskList",
+  name: 'TaskList',
 
   components: {
     Tabs,
     ButtonWithModalForm,
     CreateTaskForm,
-    TaskListLine,
+    TaskListLine
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      currentPage: "personal",
-      searchValue: "",
-      includeCompletedTask: true,
-    };
+      currentPage: 'personal',
+      searchValue: '',
+      includeCompletedTask: true
+    }
   },
   computed: {
     ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
-    permittedPages() {
-      if (this.authenticatedStore.GET_AUTH.role === "Администратор") {
-        return this.pages;
+    permittedPages () {
+      if (this.authenticatedStore.GET_AUTH.role === 'Администратор') {
+        return this.pages
       } else {
-        return this.pages.filter((page) => page.name !== "all");
+        return this.pages.filter((page) => page.name !== 'all')
       }
     },
-    getGrid() {
-      if (this.currentPage === "personal") {
-        return "table__row--personal-charged";
-      }
-      if (this.currentPage === "charged") {
-        return "table__row--personal-charged";
-      }
-      if (this.currentPage === "all") {
-        return "table__row--alltask";
-      }
-    },
-    pages() {
+    pages () {
       return [
         {
-          name: "personal",
-          label: "Полученные",
-          dataSource: this.personalTasks,
+          name: 'personal',
+          label: 'Полученные',
+          dataSource: this.personalTasks
         },
         {
-          name: "charged",
-          label: "Отправленные",
-          dataSource: this.chargedTasks,
+          name: 'charged',
+          label: 'Отправленные',
+          dataSource: this.chargedTasks
         },
         {
-          name: "all",
-          label: "Все задачи",
-          dataSource: this.taskList,
-        },
-      ];
+          name: 'all',
+          label: 'Все задачи',
+          dataSource: this.taskList
+        }
+      ]
     },
 
-    chargedTasks() {
+    chargedTasks () {
       if (!this.taskList) {
-        return [];
+        return []
       } else {
-        let currentUserId = this.authenticatedStore.GET_AUTH.id;
-        return this.taskList.filter((task) => task.sender === currentUserId);
+        const currentUserId = this.authenticatedStore.GET_AUTH.id
+        return this.taskList.filter((task) => task.sender === currentUserId)
       }
     },
 
-    personalTasks() {
+    personalTasks () {
       if (!this.taskList) {
-        return [];
+        return []
       } else {
-        let currentUserId = this.authenticatedStore.GET_AUTH.id;
-        return this.taskList.filter((task) => task.executor === currentUserId);
+        const currentUserId = this.authenticatedStore.GET_AUTH.id
+        return this.taskList.filter((task) => task.executor === currentUserId)
       }
-    },
+    }
   },
 
   methods: {
-    info() {},
-    //НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
-    filterSource(source) {
+    getGrid () {
+      if (this.currentPage === 'personal') {
+        return 'table__row--personal-charged'
+      }
+      if (this.currentPage === 'charged') {
+        return 'table__row--personal-charged'
+      }
+      if (this.currentPage === 'all') {
+        return 'table__row--alltask'
+      }
+    },
+    // НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
+    filterSource (source) {
       if (!this.searchValue && this.includeCompletedTask === true) {
-        return source;
+        return source
       }
       if (!this.searchValue && this.includeCompletedTask === false) {
-        return source.filter((item) => item.isCompleted === false);
+        return source.filter((item) => item.isCompleted === false)
       }
       if (this.searchValue && this.includeCompletedTask === true) {
         return source.filter((item) =>
           item.title.toUpperCase().includes(this.searchValue.toUpperCase())
-        );
+        )
       }
       if (this.searchValue && this.includeCompletedTask === false) {
         return source.filter(
           (item) =>
             item.title.toUpperCase().includes(this.searchValue.toUpperCase()) &&
             item.isCompleted === false
-        );
+        )
       }
     },
 
-    changePage(tabName) {
-      this.currentPage = tabName;
-      this.searchValue = "";
-    },
+    changePage (tabName) {
+      this.currentPage = tabName
+      this.searchValue = ''
+    }
   },
 
-  beforeCreate() {},
-};
+  beforeCreate () {}
+}
 </script>

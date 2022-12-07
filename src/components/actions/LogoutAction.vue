@@ -1,5 +1,5 @@
 <template>
-  <button 
+  <button
   v-show="screenResolutionStore.IS_DESKTOP"
   @click="confirmation" class="button">Выйти из системы</button>
   <confirm-dialog
@@ -10,28 +10,28 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { useScreenResolutionStore } from "@/stores/ScreenResolution";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { useScreenResolutionStore } from '@/stores/ScreenResolution'
 
-import { mapStores } from "pinia";
+import { mapStores } from 'pinia'
 export default {
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
 
   methods: {
-    logoutHandler() {
+    logoutHandler () {
       this.authenticatedStore.LOGOUT()
-      this.$router.push("/");
-    },
+      this.$router.push('/')
+    }
   },
   computed: {
-    ...mapStores(useAuthenticatedStore , useScreenResolutionStore)
-  },
-};
+    ...mapStores(useAuthenticatedStore, useScreenResolutionStore)
+  }
+}
 </script>

@@ -14,49 +14,49 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
-import { useTasksStore } from "@/stores/TasksStore";
-import { mapStores } from "pinia";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
+import { useTasksStore } from '@/stores/TasksStore'
+import { mapStores } from 'pinia'
 
 export default {
-  name: "DeleteTaskAction",
+  name: 'DeleteTaskAction',
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
 
   props: {
     target: {
       type: Object,
-      required: true,
+      required: true
     },
     iconClass: {
       type: String,
-      required: false,
-    },
+      required: false
+    }
   },
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
 
   methods: {
-    deleteHandler() {
+    deleteHandler () {
       if (
         this.inspectedTaskStore.GET_INSPECTED_TASK &&
         this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
       ) {
-        this.$router.push("/tasks");
-        this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
-        this.tasksStore.DELETE_TASK(this.target);
-        return;
+        this.$router.push('/tasks')
+        this.inspectedTaskStore.CLEAR_INSPECTED_TASK()
+        this.tasksStore.DELETE_TASK(this.target)
+        return
       }
-      this.tasksStore.DELETE_TASK(this.target);
-    },
+      this.tasksStore.DELETE_TASK(this.target)
+    }
   },
 
   computed: {
-    ...mapStores(useInspectedTaskStore, useTasksStore),
-  },
-};
+    ...mapStores(useInspectedTaskStore, useTasksStore)
+  }
+}
 </script>

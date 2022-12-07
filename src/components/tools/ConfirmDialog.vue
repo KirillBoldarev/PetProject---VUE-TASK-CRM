@@ -13,28 +13,28 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/tools/ModalWindow.vue";
+import ModalWindow from '@/components/tools/ModalWindow.vue'
 export default {
   components: { ModalWindow },
   props: {
     isDialogOpen: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["close", "confirm"],
-  data() {
-    return {};
+  emits: ['close', 'confirm'],
+  data () {
+    return {}
   },
 
   methods: {
-    confirm() {
-      this.$emit("confirm");
-      this.$emit("close");
+    confirm () {
+      this.$emit('confirm')
+      this.$emit('close')
     },
-    close() {
-      this.$emit("close");
-    },
-  },
-};
+    close () {
+      this.$emit('close')
+    }
+  }
+}
 </script>

@@ -14,39 +14,39 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { mapStores } from "pinia";
-import { useUsersStore } from "@/stores/UsersStore";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { mapStores } from 'pinia'
+import { useUsersStore } from '@/stores/UsersStore'
 
 export default {
-  name: "DeleteUserButton",
+  name: 'DeleteUserButton',
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
 
   props: {
     target: {
       type: Object,
-      required: true,
+      required: true
     },
     iconClass: {
       type: String,
-      required: false,
-    },
+      required: false
+    }
   },
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
 
   methods: {
-    deleteUserHandler() {
-      this.usersStore.DELETE_USER(this.target);
-    },
+    deleteUserHandler () {
+      this.usersStore.DELETE_USER(this.target)
+    }
   },
 
   computed: {
-    ...mapStores(useUsersStore),
-  },
-};
+    ...mapStores(useUsersStore)
+  }
+}
 </script>

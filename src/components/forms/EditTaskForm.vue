@@ -109,70 +109,70 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import { useTasksStore } from "@/stores/TasksStore";
-import { mapStores } from "pinia";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { useTasksStore } from '@/stores/TasksStore'
+import { mapStores } from 'pinia'
 
 export default {
-  setup() {
+  setup () {
     return {
-      v$: useVuelidate(),
-    };
+      v$: useVuelidate()
+    }
   },
 
-  name: "EditTaskForm",
+  name: 'EditTaskForm',
   components: {
-    ConfirmDialog,
+    ConfirmDialog
   },
   mixins: [confirmationDialogMixin],
   props: {
     target: {
       type: Object,
-      required: true,
+      required: true
     },
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["edited", "close"],
+  emits: ['edited', 'close'],
 
-  data() {
+  data () {
     return {
-      ...this.target,
-    };
+      ...this.target
+    }
   },
 
-  validations() {
+  validations () {
     return {
       description: { required },
-      title: { required },
-    };
+      title: { required }
+    }
   },
 
   methods: {
-    editTaskHandler() {
+    editTaskHandler () {
       if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
+        this.v$.$touch()
+        return
       }
       this.tasksStore.EDIT_TASK(this.changedTask)
-      this.$emit("edited");
-      this.$emit("close");
-    },
+      this.$emit('edited')
+      this.$emit('close')
+    }
   },
   computed: {
     ...mapStores(useTasksStore),
-    changedTask() {
+    changedTask () {
       return {
-        //all keys from target object
+        // all keys from target object
         id: this.id,
         title: this.title,
         description: this.description,
@@ -181,9 +181,9 @@ export default {
         isCompleted: this.isCompleted,
         comments: this.comments,
         dateOfCreation: this.dateOfCreation,
-        dateOfCompletion: this.dateOfCompletion,
-      };
-    },
-  },
-};
+        dateOfCompletion: this.dateOfCompletion
+      }
+    }
+  }
+}
 </script>

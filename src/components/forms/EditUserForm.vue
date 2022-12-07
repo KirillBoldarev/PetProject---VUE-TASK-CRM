@@ -156,75 +156,75 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
-import { isPhone } from "@/js/libs/validation";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email, minLength } from '@vuelidate/validators'
+import { isPhone } from '@/js/libs/validation'
 
-import { useUsersStore } from "@/stores/UsersStore";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import { useUsersStore } from '@/stores/UsersStore'
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { mapStores } from 'pinia'
 
 export default {
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
-  name: "EditUserForm",
+  name: 'EditUserForm',
 
-  setup() {
+  setup () {
     return {
-      v$: useVuelidate(),
-    };
+      v$: useVuelidate()
+    }
   },
 
-  data() {
+  data () {
     return {
-      //Get all keys from target(user) object
-      ...this.target,
-    };
+      // Get all keys from target(user) object
+      ...this.target
+    }
   },
 
-  validations() {
+  validations () {
     return {
       login: { required, minLength: minLength(5) },
       firstName: {},
       secondName: {},
       email: { email },
       phone: { isPhone },
-      password: { required, minLength: minLength(5) },
-    };
+      password: { required, minLength: minLength(5) }
+    }
   },
 
-  ROLE: ["Неавторизованный пользователь", "Пользователь", "Администратор"],
+  ROLE: ['Неавторизованный пользователь', 'Пользователь', 'Администратор'],
 
   props: {
     target: {
       type: Object,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["edited", "close"],
+  emits: ['edited', 'close'],
 
-  created() {},
+  created () {},
   methods: {
-    editUser() {
+    editUser () {
       if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
+        this.v$.$touch()
+        return
       }
-      this.usersStore.EDIT_USER(this.changedUser);
-      this.$emit("edited");
-      this.$emit("close");
-    },
+      this.usersStore.EDIT_USER(this.changedUser)
+      this.$emit('edited')
+      this.$emit('close')
+    }
   },
 
   computed: {
-    ...mapStores(useUsersStore , useAuthenticatedStore),
-    changedUser() {
+    ...mapStores(useUsersStore, useAuthenticatedStore),
+    changedUser () {
       return {
         login: this.login,
         id: this.id,
@@ -233,9 +233,9 @@ export default {
         email: this.email,
         phone: this.phone,
         password: this.password,
-        role: this.role,
-      };
-    },
-  },
-};
+        role: this.role
+      }
+    }
+  }
+}
 </script>

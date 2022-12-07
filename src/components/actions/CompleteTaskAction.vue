@@ -25,35 +25,35 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import { useTasksStore } from "@/stores/TasksStore";
-import { mapStores } from "pinia";
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
+import { useTasksStore } from '@/stores/TasksStore'
+import { mapStores } from 'pinia'
 
 export default {
-  name: "CompleteTaskButton",
+  name: 'CompleteTaskButton',
   components: { ConfirmDialog },
   mixins: [confirmationDialogMixin],
 
   props: {
     target: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
 
   methods: {
-    completeTask() {
-      this.tasksStore.COMPLETE_TASK(this.target);
-    },
+    completeTask () {
+      this.tasksStore.COMPLETE_TASK(this.target)
+    }
   },
 
   computed: {
-    ...mapStores(useTasksStore),
-  },
-};
+    ...mapStores(useTasksStore)
+  }
+}
 </script>
