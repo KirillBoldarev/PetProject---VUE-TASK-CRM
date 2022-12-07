@@ -1,16 +1,15 @@
 <template>
   <header-layout
     class="main__header"
-    :taskList="taskList"
-    :userList="userList"
+    :taskList="tasksStore.GET_TASK_LIST"
+    :userList="usersStore.GET_USER_LIST"
   ></header-layout>
-
   <main class="main__content">
-    <router-view :taskList="taskList" :userList="userList"></router-view>
+    <router-view :taskList="tasksStore.GET_TASK_LIST" :userList="usersStore.GET_USER_LIST"></router-view>
   </main>
   <footer-layout
-    :taskList="taskList"
-    :userList="userList"
+    :taskList="tasksStore.GET_TASK_LIST"
+    :userList="usersStore.GET_USER_LIST"
     class="main__footer"
   ></footer-layout>
 </template>
@@ -18,10 +17,6 @@
 <script>
 import HeaderLayout from './components/layouts/HeaderLayout.vue'
 import FooterLayout from './components/layouts/FooterLayout.vue'
-import subscribtionsForUsersMutationsMixin from './js/mixins/subscribtionsForUsersMutationsMixin'
-import subscribtionsForTasksMutationsMixin from './js/mixins/subscribtionsForTasksMutationsMixin'
-import subscribtionsForCommentsMutationMixin from './js/mixins/subscribtionsForCommentsMutationMixin'
-
 import { useUsersStore } from './stores/UsersStore'
 import { useCommentsStore } from './stores/CommentsStore'
 import { useAuthenticatedStore } from './stores/AuthenticatedStore'
@@ -33,15 +28,8 @@ import { mapStores } from 'pinia'
 
 export default {
   components: { HeaderLayout, FooterLayout },
-  mixins: [
-    subscribtionsForUsersMutationsMixin,
-    subscribtionsForTasksMutationsMixin,
-    subscribtionsForCommentsMutationMixin
-  ],
   data () {
     return {
-      taskList: [],
-      userList: []
     }
   },
   methods: {
@@ -80,9 +68,8 @@ export default {
 
   mounted () {
     this.usersStore.INITIALIZE_USER_LIST()
-    this.authenticatedStore.UPDATE_AUTHENTICATED()
+    this.authenticatedStore.INITIALIZE_AUTHENTICATED()
     this.tasksStore.INITIALIZE_TASK_LIST()
-    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK()
   }
 }
 </script>

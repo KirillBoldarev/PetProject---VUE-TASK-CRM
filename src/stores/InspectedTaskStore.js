@@ -19,9 +19,20 @@ export const useInspectedTaskStore = defineStore('inspectedTask', {
       this.INSPECTED_TASK = null
       sessionStorage.removeItem('inspectedTaskID')
     },
-    UPDATE_INSPECTED_TASK (payload) {
+    EDIT_INSPECTED_TASK (payload) {
       sessionStorage.setItem('inspectedTaskID', payload.id)
       this.INSPECTED_TASK = payload
+    },
+    COMPLETE_INSPECTED_TASK (payload) {
+      if (this.INSPECTED_TASK && this.INSPECTED_TASK.isCompleted) {
+        this.INSPECTED_TASK.isCompleted = !this.INSPECTED_TASK.isCompleted
+        delete this.INSPECTED_TASK.dateOfCompletion
+        return
+      }
+      if (this.INSPECTED_TASK && !this.INSPECTED_TASK.isCompleted) {
+        this.INSPECTED_TASK.isCompleted = !this.INSPECTED_TASK.isCompleted
+        this.INSPECTED_TASK.dateOfCompletion = new Date()
+      }
     },
     async INITIALIZE_INSPECTED_TASK () {
       const inspected = sessionStorage.getItem('inspectedTaskID')

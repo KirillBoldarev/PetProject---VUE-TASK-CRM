@@ -37,12 +37,12 @@ export const useTasksStore = defineStore('tasks', {
     COMPLETE_TASK (payload) {
       this.TASK_LIST.forEach((task) => {
         if (task.id === payload.id) {
-          if (task.isCompleted === true) {
+          if (task.isCompleted) {
             task.isCompleted = !payload.isCompleted
             delete task.dateOfCompletion
             return
           }
-          if (task.isCompleted === false) {
+          if (!task.isCompleted) {
             task.isCompleted = !payload.isCompleted
             task.dateOfCompletion = new Date()
           }

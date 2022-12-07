@@ -35,7 +35,7 @@ export default {
                 return user.id === action.args[0].id ? action.args[0] : user
               })
               if (action.args[0].id === this.authenticatedStore.GET_AUTH.id) {
-                this.authenticatedStore.UPDATE_AUTHENTICATED()
+                this.authenticatedStore.INITIALIZE_AUTHENTICATED()
               }
             })
             .catch((error) => console.log(error))

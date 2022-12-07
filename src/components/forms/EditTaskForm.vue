@@ -1,5 +1,5 @@
 <template>
-  <section id="loginForm" class="form__container">
+  <section id="editTaskForm" class="form__container">
     <form class="form__body" @submit.prevent="confirmation">
       <h2 class="form__title">Редактирование задачи</h2>
       <confirm-dialog
@@ -114,6 +114,7 @@ import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { useTasksStore } from '@/stores/TasksStore'
+import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
 import { mapStores } from 'pinia'
 
 export default {
@@ -164,12 +165,16 @@ export default {
         return
       }
       this.tasksStore.EDIT_TASK(this.changedTask)
+      if (this.inspectedTaskStore.GET_INSPECTED_TASK &&
+        this.inspectedTaskStore.GET_INSPECTED_TASK.id === this.changedTask.id) {
+        this.inspectedTaskStore.EDIT_INSPECTED_TASK(this.changedTask)
+      }
       this.$emit('edited')
       this.$emit('close')
     }
   },
   computed: {
-    ...mapStores(useTasksStore),
+    ...mapStores(useTasksStore, useInspectedTaskStore),
     changedTask () {
       return {
         // all keys from target object

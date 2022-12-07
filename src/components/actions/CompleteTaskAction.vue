@@ -28,6 +28,7 @@
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
 import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
 import { useTasksStore } from '@/stores/TasksStore'
+import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
 import { mapStores } from 'pinia'
 
 export default {
@@ -49,11 +50,14 @@ export default {
   methods: {
     completeTask () {
       this.tasksStore.COMPLETE_TASK(this.target)
+      if (this.inspectedTaskStore.GET_INSPECTED_TASK && this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id) {
+        this.inspectedTaskStore.COMPLETE_INSPECTED_TASK()
+      }
     }
   },
 
   computed: {
-    ...mapStores(useTasksStore)
+    ...mapStores(useTasksStore, useInspectedTaskStore)
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div class="page" v-if="inspectedTask">
     <div class="page__body">
-      <p @click="info()">ИНФО</p>
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
@@ -68,9 +67,11 @@
       </div>
 
       <transition-group name="slide-fade">
-        <div v-for="comment in commentsStore.GET_COMMENTS" :key="comment.id">
-          <comment :target="comment" :userList="userList"></comment>
-        </div>
+        <template v-if="!editTaskMode">
+          <div v-for="comment in commentsStore.GET_COMMENTS" :key="comment.id">
+            <comment :target="comment" :userList="userList"></comment>
+          </div>
+        </template>
       </transition-group>
     </div>
   </div>
@@ -116,10 +117,6 @@ export default {
   },
 
   methods: {
-    info () {
-      console.log(this.commentsStore)
-      console.log('this', this)
-    },
     lastPath () {
       const lastPathRoute = this.$router.options.history.state.back
       return this.$router.push(lastPathRoute)
@@ -154,6 +151,7 @@ export default {
     }
   },
   beforeMount () {
+    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK()
     this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id)
   },
   unmounted () {

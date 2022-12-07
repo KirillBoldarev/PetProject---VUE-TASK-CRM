@@ -217,6 +217,9 @@ export default {
         return
       }
       this.usersStore.EDIT_USER(this.changedUser)
+      if (this.changedUser.id === this.authenticatedStore.GET_AUTH.id) {
+        this.authenticatedStore.UPDATE_AUTHENTICATED(this.changedUser)
+      }
       this.$emit('edited')
       this.$emit('close')
     }

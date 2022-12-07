@@ -50,7 +50,7 @@ export default {
                 action.args[0].id ===
                   this.inspectedTaskStore.GET_INSPECTED_TASK.id
               ) {
-                this.inspectedTaskStore.UPDATE_INSPECTED_TASK(action.args[0])
+                this.inspectedTaskStore.EDIT_INSPECTED_TASK(action.args[0])
               }
             })
             .catch((error) => console.log(error))
@@ -72,7 +72,7 @@ export default {
                   this.inspectedTaskStore.GET_INSPECTED_TASK &&
                   action.args[0].id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
                 ) {
-                  this.inspectedTaskStore.UPDATE_INSPECTED_TASK(completedTask)
+                  this.inspectedTaskStore.EDIT_INSPECTED_TASK(completedTask)
                 }
               })
               .catch((error) => console.log(error))

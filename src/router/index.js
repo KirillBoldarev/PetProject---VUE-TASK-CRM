@@ -24,10 +24,10 @@ const routes = [
         path: 'task/:id?',
         name: 'InspectedTask',
         component: () => import('@/views/TaskPage.vue')
-        /*         beforeEnter: (to, from) => {
-          store.dispatch("INITIALIZE_USER_LIST_ACTION");
-          store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-        }, */
+        /* beforeEnter: (to, from) => {
+          store.dispatch('INITIALIZE_USER_LIST_ACTION')
+          store.dispatch('INITIALIZE_TASK_LIST_ACTION')
+        } */
       }
     ]
   },

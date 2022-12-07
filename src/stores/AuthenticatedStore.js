@@ -25,8 +25,11 @@ export const useAuthenticatedStore = defineStore('authenticated', {
       this.AUTHENTICATED = null
       sessionStorage.removeItem('authID')
     },
+    UPDATE_AUTHENTICATED (user) {
+      this.AUTHENTICATED = user
+    },
 
-    async UPDATE_AUTHENTICATED () {
+    async INITIALIZE_AUTHENTICATED () {
       const id = sessionStorage.getItem('authID')
       const userList = await localbase.collection('users').get()
       if (id && userList && Array.isArray(userList)) {
