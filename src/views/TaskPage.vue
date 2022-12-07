@@ -1,6 +1,7 @@
 <template>
   <div class="page" v-if="inspectedTask">
     <div class="page__body">
+      <p @click="info()">ИНФО</p>
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
@@ -115,6 +116,10 @@ export default {
   },
 
   methods: {
+    info () {
+      console.log(this.commentsStore)
+      console.log('this', this)
+    },
     lastPath () {
       const lastPathRoute = this.$router.options.history.state.back
       return this.$router.push(lastPathRoute)

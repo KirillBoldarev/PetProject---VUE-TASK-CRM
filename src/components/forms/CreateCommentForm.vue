@@ -43,11 +43,8 @@ import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
 import { useCommentsStore } from '@/stores/CommentsStore'
 import { mapStores } from 'pinia'
 
-import subscribtionsForCommentsMutationMixin from '@/js/mixins/subscribtionsForCommentsMutationMixin'
-
 export default {
   components: {},
-  mixins: [subscribtionsForCommentsMutationMixin],
   name: 'AddTaskForm',
   props: {
     target: {

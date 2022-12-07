@@ -20,8 +20,10 @@ import HeaderLayout from './components/layouts/HeaderLayout.vue'
 import FooterLayout from './components/layouts/FooterLayout.vue'
 import subscribtionsForUsersMutationsMixin from './js/mixins/subscribtionsForUsersMutationsMixin'
 import subscribtionsForTasksMutationsMixin from './js/mixins/subscribtionsForTasksMutationsMixin'
+import subscribtionsForCommentsMutationMixin from './js/mixins/subscribtionsForCommentsMutationMixin'
 
 import { useUsersStore } from './stores/UsersStore'
+import { useCommentsStore } from './stores/CommentsStore'
 import { useAuthenticatedStore } from './stores/AuthenticatedStore'
 import { useInspectedTaskStore } from './stores/InspectedTaskStore'
 import { useTasksStore } from './stores/TasksStore'
@@ -33,7 +35,8 @@ export default {
   components: { HeaderLayout, FooterLayout },
   mixins: [
     subscribtionsForUsersMutationsMixin,
-    subscribtionsForTasksMutationsMixin
+    subscribtionsForTasksMutationsMixin,
+    subscribtionsForCommentsMutationMixin
   ],
   data () {
     return {
@@ -53,7 +56,8 @@ export default {
       useAuthenticatedStore,
       useTasksStore,
       useInspectedTaskStore,
-      useScreenResolutionStore
+      useScreenResolutionStore,
+      useCommentsStore
     )
   },
 
