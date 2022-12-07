@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <h2 class="page__title">Управление задачами</h2>
-    <tabs
+    <tabs-panel
       class="page__toolbar"
       :tabs="permittedPages"
       :selectedTab="currentPage"
       @changeTab="changePage"
-    ></tabs>
+    ></tabs-panel>
     <template v-for="page in permittedPages" :key="page.name">
       <div class="page__body" v-if="currentPage === page.name">
         <div class="flex-column center">
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import Tabs from '@/components/tools/Tabs.vue'
+import TabsPanel from '@/components/tools/TabsPanel.vue'
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
 import CreateTaskForm from '@/components/forms/CreateTaskForm.vue'
 import TaskListLine from '@/components/tables/TaskListLine.vue'
@@ -109,7 +109,7 @@ export default {
   name: 'TaskList',
 
   components: {
-    Tabs,
+    TabsPanel,
     ButtonWithModalForm,
     CreateTaskForm,
     TaskListLine

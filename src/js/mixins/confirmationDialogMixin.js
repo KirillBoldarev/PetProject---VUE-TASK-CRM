@@ -1,12 +1,12 @@
 export default {
-  data() {
+  data () {
     return {
-      isDialogOpen: false,
-    };
+      isDialogOpen: false
+    }
   },
   methods: {
-    confirmation() {
-      this.isDialogOpen = true;
-    },
-  },
-};
+    confirmation () {
+      this.isDialogOpen = true
+    }
+  }
+}

@@ -13,32 +13,32 @@
 </template>
 
 <script>
-import TaskList from "@/components/tables/TaskList.vue";
+import TaskList from '@/components/tables/TaskList.vue'
 
-import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
-import { mapStores } from "pinia";
+import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
+import { mapStores } from 'pinia'
 
 export default {
-  name: "TaskListPage",
+  name: 'TaskListPage',
 
   components: { TaskList },
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
   computed: {
-    ...mapStores(useInspectedTaskStore),
-  },
-};
+    ...mapStores(useInspectedTaskStore)
+  }
+}
 </script>

@@ -16,35 +16,35 @@
 </template>
 
 <script>
-import HeaderLayout from "./components/layouts/HeaderLayout.vue";
-import FooterLayout from "./components/layouts/FooterLayout.vue";
-import subscribtionsForUsersMutationsMixin from "./js/mixins/subscribtionsForUsersMutationsMixin";
-import subscribtionsForTasksMutationsMixin from "./js/mixins/subscribtionsForTasksMutationsMixin";
+import HeaderLayout from './components/layouts/HeaderLayout.vue'
+import FooterLayout from './components/layouts/FooterLayout.vue'
+import subscribtionsForUsersMutationsMixin from './js/mixins/subscribtionsForUsersMutationsMixin'
+import subscribtionsForTasksMutationsMixin from './js/mixins/subscribtionsForTasksMutationsMixin'
 
-import { useUsersStore } from "./stores/UsersStore";
-import { useAuthenticatedStore } from "./stores/AuthenticatedStore";
-import { useInspectedTaskStore } from "./stores/InspectedTaskStore";
-import { useTasksStore } from "./stores/TasksStore";
-import { useScreenResolutionStore } from "./stores/ScreenResolution";
+import { useUsersStore } from './stores/UsersStore'
+import { useAuthenticatedStore } from './stores/AuthenticatedStore'
+import { useInspectedTaskStore } from './stores/InspectedTaskStore'
+import { useTasksStore } from './stores/TasksStore'
+import { useScreenResolutionStore } from './stores/ScreenResolution'
 
-import { mapStores } from "pinia";
+import { mapStores } from 'pinia'
 
 export default {
   components: { HeaderLayout, FooterLayout },
   mixins: [
     subscribtionsForUsersMutationsMixin,
-    subscribtionsForTasksMutationsMixin,
+    subscribtionsForTasksMutationsMixin
   ],
-  data() {
+  data () {
     return {
       taskList: [],
-      userList: [],
-    };
+      userList: []
+    }
   },
   methods: {
-    info() {
-      console.log("this.usersStore", this.usersStore);
-    },
+    info () {
+      console.log('this.usersStore', this.usersStore)
+    }
   },
 
   computed: {
@@ -54,31 +54,31 @@ export default {
       useTasksStore,
       useInspectedTaskStore,
       useScreenResolutionStore
-    ),
+    )
   },
 
-  created() {
-    const mediaQuery = window.matchMedia("(min-width: 810px)");
+  created () {
+    const mediaQuery = window.matchMedia('(min-width: 810px)')
     if (mediaQuery.matches) {
-      this.screenResolutionStore.SET_DESKTOP();
+      this.screenResolutionStore.SET_DESKTOP()
     } else {
-      this.screenResolutionStore.SET_MOBILE();
+      this.screenResolutionStore.SET_MOBILE()
     }
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       if (window.innerWidth > 810) {
-        this.screenResolutionStore.SET_DESKTOP();
+        this.screenResolutionStore.SET_DESKTOP()
       } else {
-        this.screenResolutionStore.SET_MOBILE();
+        this.screenResolutionStore.SET_MOBILE()
       }
-    });
+    })
   },
 
-  mounted() {
-    this.usersStore.INITIALIZE_USER_LIST();
-    this.authenticatedStore.UPDATE_AUTHENTICATED();
-    this.tasksStore.INITIALIZE_TASK_LIST();
-    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK();
-  },
-};
+  mounted () {
+    this.usersStore.INITIALIZE_USER_LIST()
+    this.authenticatedStore.UPDATE_AUTHENTICATED()
+    this.tasksStore.INITIALIZE_TASK_LIST()
+    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK()
+  }
+}
 </script>

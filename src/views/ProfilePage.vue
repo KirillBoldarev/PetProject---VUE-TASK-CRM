@@ -41,58 +41,55 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/components/tools/ConfirmDialog.vue";
-import confirmationDialogMixin from "@/js/mixins/confirmationDialogMixin";
-import EditUserForm from "@/components/forms/EditUserForm.vue";
-import TaskList from "@/components/tables/TaskList.vue";
 
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import EditUserForm from '@/components/forms/EditUserForm.vue'
+import TaskList from '@/components/tables/TaskList.vue'
+
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { mapStores } from 'pinia'
 export default {
-  data() {
+  data () {
     return {
       editUserMode: false,
       showTaskMode: true,
-      authenticated: null,
-    };
+      authenticated: null
+    }
   },
 
   components: {
-    ConfirmDialog,
-    EditUserForm,
-    TaskList,
-  },
 
-  mixins: [confirmationDialogMixin],
+    EditUserForm,
+    TaskList
+  },
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
 
-  beforeMount() {
-    this.authenticated = this.authenticatedStore.GET_AUTH;
+  beforeMount () {
+    this.authenticated = this.authenticatedStore.GET_AUTH
   },
 
   methods: {
-    switchEditUserMode() {
-      this.editUserMode = !this.editUserMode;
-      this.showTaskMode = false;
+    switchEditUserMode () {
+      this.editUserMode = !this.editUserMode
+      this.showTaskMode = false
     },
-    switchShowTaskMode() {
-      this.showTaskMode = !this.showTaskMode;
-      this.editUserMode = false;
-    },
+    switchShowTaskMode () {
+      this.showTaskMode = !this.showTaskMode
+      this.editUserMode = false
+    }
   },
 
   computed: {
-    ...mapStores(useAuthenticatedStore),
-  },
-};
+    ...mapStores(useAuthenticatedStore)
+  }
+}
 </script>

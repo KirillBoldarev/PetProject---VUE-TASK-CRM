@@ -37,12 +37,12 @@
           src="@/assets/icons/menu.png"
           alt=""
         />
-        <Menu
+        <dropdown-menu
           id="overlay_menu"
           ref="menu"
           :model="authMenuItems"
           :popup="true"
-        ></Menu>
+        ></dropdown-menu>
       </template>
 
       <button
@@ -63,12 +63,12 @@
           src="@/assets/icons/menu.png"
           alt=""
         />
-        <Menu
+        <dropdown-menu
           id="overlay_menu"
           ref="menu"
           :model="guestMenuItems"
           :popup="true"
-        ></Menu>
+        ></dropdown-menu>
       </template>
 
       <button-with-modal-form ref="signIn" label="Войти" v-show="isDesktop">
@@ -101,7 +101,7 @@ import { useScreenResolutionStore } from '@/stores/ScreenResolution'
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
 import { mapStores } from 'pinia'
 
-import Menu from 'primevue/menu'
+import DropdownMenu from 'primevue/menu'
 
 export default {
   components: {
@@ -109,7 +109,7 @@ export default {
     RegisitrationForm,
     LoginForm,
     LogoutAction,
-    Menu
+    DropdownMenu
   },
   name: 'header-layout',
 

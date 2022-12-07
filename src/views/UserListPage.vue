@@ -87,46 +87,46 @@
 </template>
 
 <script>
-import DeleteUserAction from "@/components/actions/DeleteUserAction.vue";
-import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
-import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
-import EditUserForm from "@/components/forms/EditUserForm.vue";
+import DeleteUserAction from '@/components/actions/DeleteUserAction.vue'
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
+import CreateTaskForm from '@/components/forms/CreateTaskForm.vue'
+import EditUserForm from '@/components/forms/EditUserForm.vue'
 
-import { useUsersStore } from "@/stores/UsersStore";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import { useUsersStore } from '@/stores/UsersStore'
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { mapStores } from 'pinia'
 
 export default {
   components: {
     DeleteUserAction,
     ButtonWithModalForm,
     CreateTaskForm,
-    EditUserForm,
+    EditUserForm
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true,
+      required: true
     },
     userList: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
 
-  data() {
-    return {};
+  data () {
+    return {}
   },
 
-  created() {},
+  created () {},
 
   computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore),
+    ...mapStores(useAuthenticatedStore, useUsersStore)
   },
 
   methods: {},
 
-  watch: {},
-};
+  watch: {}
+}
 </script>

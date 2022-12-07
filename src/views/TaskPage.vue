@@ -76,17 +76,17 @@
 </template>
 
 <script>
-import EditTaskForm from "@/components/forms/EditTaskForm.vue";
-import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
-import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
-import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
-import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
-import Comment from "@/components/tables/CommentLine.vue";
-import filterDate from "@/js/libs/filterDate";
+import EditTaskForm from '@/components/forms/EditTaskForm.vue'
+import CompleteTaskAction from '@/components/actions/CompleteTaskAction.vue'
+import DeleteTaskAction from '@/components/actions/DeleteTaskAction.vue'
+import CreateCommentForm from '@/components/forms/CreateCommentForm.vue'
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
+import Comment from '@/components/tables/CommentLine.vue'
+import filterDate from '@/js/libs/filterDate'
 
-import { useCommentsStore } from "@/stores/CommentsStore";
-import { useInspectedTaskStore } from "@/stores/InspectedTaskStore";
-import { mapStores } from "pinia";
+import { useCommentsStore } from '@/stores/CommentsStore'
+import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
+import { mapStores } from 'pinia'
 
 export default {
   components: {
@@ -95,65 +95,65 @@ export default {
     DeleteTaskAction,
     CreateCommentForm,
     ButtonWithModalForm,
-    Comment,
+    Comment
   },
   mixins: [],
   props: {
     userList: {
       type: Array,
-      required: true,
+      required: true
     },
     inspectedTask: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      editTaskMode: false,
-    };
+      editTaskMode: false
+    }
   },
 
   methods: {
-    lastPath() {
-      let lastPathRoute = this.$router.options.history.state.back;
-      return this.$router.push(lastPathRoute);
+    lastPath () {
+      const lastPathRoute = this.$router.options.history.state.back
+      return this.$router.push(lastPathRoute)
     },
 
-    getPerson(role) {
-      let person = this.userList.find((user) => user.id === role);
+    getPerson (role) {
+      const person = this.userList.find((user) => user.id === role)
       if (!person) {
-        return "Пользователь удален";
+        return 'Пользователь удален'
       }
       if (!person.firstName || !person.secondName) {
-        return `${person.login}`;
+        return `${person.login}`
       }
-      return `${person.firstName} ${person.secondName}`;
-    },
+      return `${person.firstName} ${person.secondName}`
+    }
   },
   computed: {
     ...mapStores(useInspectedTaskStore, useCommentsStore),
-    filteredDateOfCreation() {
-      return filterDate(this.inspectedTask.dateOfCreation, "datetime");
+    filteredDateOfCreation () {
+      return filterDate(this.inspectedTask.dateOfCreation, 'datetime')
     },
-    filteredDateOfCompletion() {
-      return filterDate(this.inspectedTask.dateOfCompletion, "datetime");
+    filteredDateOfCompletion () {
+      return filterDate(this.inspectedTask.dateOfCompletion, 'datetime')
     },
-    spendedTime() {
-      //из разницы вычитаем часовой пояс - костыль библиотеки
-      let spendedTime =
+    spendedTime () {
+      // из разницы вычитаем часовой пояс - костыль библиотеки
+      const spendedTime =
         this.inspectedTask.dateOfCompletion -
         this.inspectedTask.dateOfCreation -
-        3 * 60 * 60 * 1000;
-      return filterDate(spendedTime, "time");
-    },
+        3 * 60 * 60 * 1000
+      return filterDate(spendedTime, 'time')
+    }
   },
-  beforeMount() {
-    this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id);
+  beforeMount () {
+    this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id)
   },
-  unmounted() {
-    this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
-    this.commentsStore.CLEAR_COMMENTS();
-  },
-};
+  unmounted () {
+    this.inspectedTaskStore.CLEAR_INSPECTED_TASK()
+    this.commentsStore.CLEAR_COMMENTS()
+  }
+}
 </script>

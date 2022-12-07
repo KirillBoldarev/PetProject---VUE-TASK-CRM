@@ -1,46 +1,46 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("@/views/HomePage.vue"),
+    path: '/',
+    name: 'Home',
+    component: () => import('@/views/HomePage.vue')
   },
   {
-    path: "/404",
-    name: "404",
-    component: () => import("@/views/404.vue"),
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/404Page.vue')
   },
   {
-    path: "/:catchAll(.*)",
-    redirect: "/404",
+    path: '/:catchAll(.*)',
+    redirect: '/404'
   },
   {
-    path: "/tasks",
-    name: "TaskList",
-    component: () => import("@/views/TaskListPage.vue"),
+    path: '/tasks',
+    name: 'TaskList',
+    component: () => import('@/views/TaskListPage.vue'),
     children: [
       {
-        path: "task/:id?",
-        name: "InspectedTask",
-        component: () => import("@/views/TaskPage.vue"),
+        path: 'task/:id?',
+        name: 'InspectedTask',
+        component: () => import('@/views/TaskPage.vue')
         /*         beforeEnter: (to, from) => {
           store.dispatch("INITIALIZE_USER_LIST_ACTION");
           store.dispatch("INITIALIZE_TASK_LIST_ACTION");
         }, */
-      },
-    ],
+      }
+    ]
   },
   {
-    path: "/users",
-    name: "UserList",
-    component: () => import("@/views/UserListPage.vue"),
+    path: '/users',
+    name: 'UserList',
+    component: () => import('@/views/UserListPage.vue')
   },
   {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("@/views/ProfilePage.vue"),
-  },
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/ProfilePage.vue')
+  }
   /*   {
     path: "/task/:id",
     name: "InspectedTask",
@@ -53,11 +53,11 @@ const routes = [
       }
     },
   }, */
-];
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

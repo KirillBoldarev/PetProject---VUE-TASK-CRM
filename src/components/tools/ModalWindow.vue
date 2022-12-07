@@ -1,30 +1,32 @@
 
 <template>
-  <transition>
-    <div @click="closeModal" v-if="isOpen" class="modal__backdrop">
-      <div @click.stop class="modal__body">
-        <div></div>
-        <div class="flex-row center">
-          <div class="modal__image"></div>
-          <div class="modal__close">
-            <img
-              @click="closeModal"
-              class="icon"
-              src="@/assets/icons/remove.png"
-              alt=""
-            />
+  <teleport to="#modal">
+    <transition>
+      <div @click="closeModal" v-if="isOpen" class="modal__backdrop">
+        <div @click.stop class="modal__body">
+          <div></div>
+          <div class="flex-row center">
+            <div class="modal__image"></div>
+            <div class="modal__close">
+              <img
+                @click="closeModal"
+                class="icon"
+                src="@/assets/icons/remove.png"
+                alt=""
+              />
+            </div>
           </div>
+          <slot
+            class="modal__slot"
+            name="ModalSlot"
+            :closeModal="closeModal"
+            :confirm="confirm"
+          >
+          </slot>
         </div>
-        <slot
-          class="modal__slot"
-          name="ModalSlot"
-          :closeModal="closeModal"
-          :confirm="confirm"
-        >
-        </slot>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </teleport>
 </template>
 
 <script>
