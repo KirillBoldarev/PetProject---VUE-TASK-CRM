@@ -24,14 +24,6 @@ export function subscribtionsForActionsUponUsers (context) {
         .collection('users')
         .doc({ id: action.args[0].id })
         .set(action.args[0])
-        /* .then((result) => {
-          this.userList = this.userList.map((user) => {
-            return user.id === action.args[0].id ? action.args[0] : user
-          })
-          if (action.args[0].id === this.authenticatedStore.GET_AUTH.id) {
-            this.authenticatedStore.INITIALIZE_AUTHENTICATED()
-          }
-        }) */
         .catch((error) => console.log(error))
     }
   })
