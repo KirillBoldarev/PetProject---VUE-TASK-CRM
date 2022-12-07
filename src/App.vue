@@ -5,8 +5,6 @@
     :userList="userList"
   ></header-layout>
   <div @click="info">ИНФО</div>
-  <!--   <div>СТОр ЮЗЕРЛИСТ{{usersStore.GET_USER_LIST}}</div>
-  <div> ПРОП ЮЗерлист{{userList}}</div> -->
   <main class="main__content">
     <router-view :taskList="taskList" :userList="userList"></router-view>
   </main>
