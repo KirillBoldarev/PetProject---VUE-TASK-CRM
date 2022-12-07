@@ -23,13 +23,13 @@
                   v-if="includeCompletedTask"
                   @click="includeCompletedTask = false"
                   class="icon"
-                  src="@/icons/check.png"
+                  src="@/assets/icons/check.png"
                 />
                 <img
                   v-if="!includeCompletedTask"
                   @click="includeCompletedTask = true"
                   class="icon"
-                  src="@/icons/notСheck.png"
+                  src="@/assets/icons/notСheck.png"
                 />
               </div>
               <div class="flex-row center">
@@ -45,7 +45,7 @@
                 >
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
-                  :image="require('@/icons/plus.png')"
+                  :image="require('@/assets/icons/plus.png')"
                   :iconClass="'icon'"
                 >
                   <template v-slot:formSlot="{ closeModal }">

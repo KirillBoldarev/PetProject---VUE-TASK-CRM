@@ -12,14 +12,14 @@
           @click="switchEditUserMode"
           v-tooltip.bottom="'Редактировать профиль'"
           class="icon"
-          src="@/icons/edit.png"
+          src="@/assets/icons/edit.png"
           alt=""
         />
         <img
           @click="switchShowTaskMode"
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
-          src="@/icons/task.png"
+          src="@/assets/icons/task.png"
           alt=""
         />
       </div>

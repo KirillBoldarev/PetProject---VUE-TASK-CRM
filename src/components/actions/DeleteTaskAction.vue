@@ -3,7 +3,7 @@
     v-tooltip.bottom="'Удалить'"
     @click="confirmation"
     :class="iconClass"
-    src="@/icons/trash.png"
+    src="@/assets/icons/trash.png"
     alt=""
   />
   <confirm-dialog

@@ -19,7 +19,7 @@
   </div>
   <div class="table__column">
     <button-with-modal-form
-      :image="require('@/icons/comment.png')"
+      :image="require('@/assets/icons/comment.png')"
       :tooltip="'Комментировать'"
       :iconClass="'icon--mini'"
     >
@@ -37,7 +37,7 @@
         (task.sender === authenticatedStore.GET_AUTH.id ||
           authenticatedStore.GET_AUTH.role === 'Администратор')
       "
-      :image="require('@/icons/edit.png')"
+      :image="require('@/assets/icons/edit.png')"
       :iconClass="'icon--mini'"
       :tooltip="'Редактировать'"
     >

@@ -4,7 +4,7 @@
       <div class="page__toolbar flex-row center w-auto">
         <complete-task-action :target="inspectedTask"></complete-task-action>
         <button-with-modal-form
-          :image="require('@/icons/comment.png')"
+          :image="require('@/assets/icons/comment.png')"
           :iconClass="'icon'"
           :tooltip="'Комментировать'"
         >
@@ -19,7 +19,7 @@
           @click="editTaskMode = !editTaskMode"
           v-tooltip.bottom="'Редактировать'"
           class="icon"
-          src="@/icons/edit.png"
+          src="@/assets/icons/edit.png"
           alt=""
         />
         <delete-task-action
@@ -30,7 +30,7 @@
           @click="lastPath"
           v-tooltip.bottom="'Назад'"
           class="icon"
-          src="@/icons/back.png"
+          src="@/assets/icons/back.png"
           alt=""
         />
       </div>

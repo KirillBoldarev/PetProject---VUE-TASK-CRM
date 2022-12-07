@@ -3,7 +3,7 @@
     v-tooltip.bottom="'Удалить пользователя'"
     @click="confirmation"
     :class="iconClass"
-    src="@/icons/trash.png"
+    src="@/assets/icons/trash.png"
     alt=""
   />
   <confirm-dialog
@@ -46,7 +46,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useUsersStore)
+    ...mapStores(useUsersStore),
   },
 };
 </script>

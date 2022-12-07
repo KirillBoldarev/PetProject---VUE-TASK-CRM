@@ -26,17 +26,17 @@
               <img
                 v-if="user.role === 'Неавторизованный пользователь'"
                 class="icon--mini"
-                src="@/icons/unauthorized.png"
+                src="@/assets/icons/unauthorized.png"
               />
               <img
                 v-if="user.role === 'Пользователь'"
                 class="icon--mini"
-                src="@/icons/user.png"
+                src="@/assets/icons/user.png"
               />
               <img
                 v-if="user.role === 'Администратор'"
                 class="icon--mini"
-                src="@/icons/admin.png"
+                src="@/assets/icons/admin.png"
               />
             </div>
             <div class="table__column">{{ user.email }}</div>
@@ -45,7 +45,7 @@
             <div class="table__column">
               <button-with-modal-form
                 :tooltip="'Назначить задачу'"
-                :image="require('@/icons/plus.png')"
+                :image="require('@/assets/icons/plus.png')"
                 :iconClass="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">
@@ -60,8 +60,8 @@
 
               <button-with-modal-form
                 :tooltip="'Редактировать'"
-                v-if="authenticatedStore.GET_AUTH.role=== 'Администратор'"
-                :image="require('@/icons/edit.png')"
+                v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
+                :image="require('@/assets/icons/edit.png')"
                 :icon-class="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">

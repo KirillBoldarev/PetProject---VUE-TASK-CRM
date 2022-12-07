@@ -3,7 +3,7 @@
     <div class="header__logo">
       <img
         class="header__logo--icon"
-        src="@/icons/modalBackground.png"
+        src="@/assets/icons/modalBackground.png"
         alt=""
       />
     </div>
@@ -11,10 +11,7 @@
       <strong class="header__title" v-if="!authenticatedStore.IS_AUTH">
         Приветствую! Прошу пройти авторизацию!
       </strong>
-      <div
-        class="header__navigation"
-        v-if="authenticatedStore.IS_AUTH"
-      >
+      <div class="header__navigation" v-if="authenticatedStore.IS_AUTH">
         <router-link
           class="header__link"
           v-for="link in headerLinks"
@@ -37,7 +34,7 @@
         <img
           class="icon--max"
           @click="openMenu"
-          src="@/icons/menu.png"
+          src="@/assets/icons/menu.png"
           alt=""
         />
         <Menu
@@ -63,7 +60,7 @@
         <img
           class="icon--max"
           @click="openMenu"
-          src="@/icons/menu.png"
+          src="@/assets/icons/menu.png"
           alt=""
         />
         <Menu
@@ -190,7 +187,7 @@ export default {
       this.$refs.menu.toggle(event);
     },
     getImgUrl(item) {
-      return require(`@/icons/` + item);
+      return require(`@/assets/icons/` + item);
     },
   },
 };

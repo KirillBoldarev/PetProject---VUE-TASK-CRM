@@ -9,7 +9,7 @@
       <img
         @click="deleteComment"
         class="icon"
-        src="@/icons/remove.png"
+        src="@/assets/icons/remove.png"
         alt=""
       />
     </div>
@@ -22,9 +22,8 @@ import { useCommentsStore } from "@/stores/CommentsStore";
 import { mapStores } from "pinia";
 import subscribtionsForCommentsMutationMixin from "@/js/mixins/subscribtionsForCommentsMutationMixin";
 
-
 export default {
-  mixins:[subscribtionsForCommentsMutationMixin],
+  mixins: [subscribtionsForCommentsMutationMixin],
   props: {
     target: {
       type: Object,

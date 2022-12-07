@@ -9,7 +9,7 @@
             <img
               @click="closeModal"
               class="icon"
-              src="@/icons/remove.png"
+              src="@/assets/icons/remove.png"
               alt=""
             />
           </div>

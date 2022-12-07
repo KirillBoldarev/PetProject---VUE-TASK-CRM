@@ -4,7 +4,7 @@
     @click="confirmation"
     v-tooltip.bottom="'Отменить выполнение'"
     class="icon"
-    src="@/icons/check.png"
+    src="@/assets/icons/check.png"
     alt=""
   />
 
@@ -13,7 +13,7 @@
     @click="confirmation"
     v-tooltip.bottom="'Выполнить задачу'"
     class="icon"
-    src="@/icons/notСheck.png"
+    src="@/assets/icons/notСheck.png"
     alt=""
   />
 
@@ -48,7 +48,7 @@ export default {
 
   methods: {
     completeTask() {
-      this.tasksStore.COMPLETE_TASK(this.target)
+      this.tasksStore.COMPLETE_TASK(this.target);
     },
   },
 
