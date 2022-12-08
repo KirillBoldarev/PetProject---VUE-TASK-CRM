@@ -1,25 +1,12 @@
 <template>
-  <section
-    id="registrationForm"
-    class="form__container"
-  >
-    <h2 class="form__title">
-      Регистрация пользователя!
-    </h2>
-    <form
-      class="form__body"
-      @submit.prevent="registrateUserHandler"
-    >
+  <section id="registrationForm" class="form__container">
+    <h2 class="form__title">Регистрация пользователя!</h2>
+    <form class="form__body" @submit.prevent="registrateUserHandler">
       <fieldset class="flex-column center form__block">
-        <legend class="form__title">
-          Придумайте логин и пароль
-        </legend>
+        <legend class="form__title">Придумайте логин и пароль</legend>
         <div class="flex-column center">
           <div class="flex-row space-between">
-            <label
-              class="form__label"
-              for="login"
-            >Логин</label>
+            <label class="form__label" for="login">Логин</label>
             <input
               v-model="login"
               v-tooltip.right="'Введите логин'"
@@ -27,19 +14,19 @@
               type="text"
               name="login"
               @blur="v$.login.$touch"
-            >
+            />
           </div>
           <div class="row">
             <transition-group>
               <small
                 v-if="v$.login.$dirty && v$.login.required.$invalid"
                 class="form__invalid"
-              >Поле обязательно для заполнения
+                >Поле обязательно для заполнения
               </small>
               <small
                 v-if="v$.login.$dirty && v$.login.minLength.$invalid"
                 class="form__invalid"
-              >Введите не менее
+                >Введите не менее
                 {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
@@ -48,10 +35,7 @@
 
         <div class="flex-column center">
           <div class="flex-row space-between">
-            <label
-              class="form__label"
-              for="password"
-            >Пароль</label>
+            <label class="form__label" for="password">Пароль</label>
             <input
               v-model="password"
               v-tooltip.right="'Введите номер мобильного телефона'"
@@ -59,19 +43,19 @@
               name="password"
               type="password"
               @blur="v$.password.$touch"
-            >
+            />
           </div>
           <div class="form__column">
             <transition-group>
               <small
                 v-if="v$.password.$dirty && v$.password.required.$invalid"
                 class="form__invalid"
-              >Поле обязательно для заполнения
+                >Поле обязательно для заполнения
               </small>
               <small
                 v-if="v$.password.$dirty && v$.password.minLength.$invalid"
                 class="form__invalid"
-              >Введите не менее
+                >Введите не менее
                 {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
@@ -80,23 +64,18 @@
       </fieldset>
 
       <div class="flex-column center">
-        <button
-          class="button"
-          type="submit"
-        >
-          Зарегистрироваться!
-        </button>
+        <button class="button" type="submit">Зарегистрироваться!</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
-import { useUsersStore } from "@/stores/UsersStore";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { mapStores } from "pinia";
+import { useVuelidate } from '@vuelidate/core';
+import { required, minLength } from '@vuelidate/validators';
+import { useUsersStore } from '@/stores/UsersStore';
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { mapStores } from 'pinia';
 
 export default {
   props: {
@@ -113,8 +92,8 @@ export default {
 
   data() {
     return {
-      login: "",
-      password: "",
+      login: '',
+      password: '',
     };
   },
   validations() {
@@ -124,10 +103,10 @@ export default {
     };
   },
   created() {
-    document.addEventListener("keypress", this.registrateUserOnKeypress);
+    document.addEventListener('keypress', this.registrateUserOnKeypress);
   },
   beforeUnmount() {
-    document.removeEventListener("keypress", this.registrateUserOnKeypress);
+    document.removeEventListener('keypress', this.registrateUserOnKeypress);
   },
   methods: {
     registrateUserHandler() {
@@ -137,11 +116,11 @@ export default {
       }
       this.usersStore.CREATE_USER(this.newUser);
       this.authenticatedStore.AUTHENTICATION(this.newUser);
-      this.$emit("close");
+      this.$emit('close');
     },
 
     registrateUserOnKeypress(event) {
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         this.registrateUserHandler();
       }
     },
@@ -159,9 +138,9 @@ export default {
     },
     userRole() {
       if (this.usersStore.GET_USER_LIST.length === 0) {
-        return "Администратор";
+        return 'Администратор';
       }
-      return "Неавторизованный пользователь";
+      return 'Неавторизованный пользователь';
     },
     userId() {
       return Math.random().toString(36).substring(2, 9);

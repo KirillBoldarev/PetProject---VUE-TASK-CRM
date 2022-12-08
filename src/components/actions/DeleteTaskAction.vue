@@ -5,7 +5,7 @@
     src="@/assets/icons/trash.png"
     alt=""
     @click="confirmation"
-  >
+  />
   <confirm-dialog
     :is-dialog-open="isDialogOpen"
     @confirm="deleteHandler"
@@ -28,12 +28,12 @@ export default {
   props: {
     target: {
       type: Object,
-      required: true
+      required: true,
     },
     iconClass: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
 
   data() {
@@ -43,8 +43,8 @@ export default {
   methods: {
     deleteHandler() {
       if (
-        this.inspectedTaskStore.GET_INSPECTED_TASK
-        && this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
+        this.inspectedTaskStore.GET_INSPECTED_TASK &&
+        this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
       ) {
         this.$router.push('/tasks');
         this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
@@ -52,11 +52,11 @@ export default {
         return;
       }
       this.tasksStore.DELETE_TASK(this.target);
-    }
+    },
   },
 
   computed: {
-    ...mapStores(useInspectedTaskStore, useTasksStore)
-  }
+    ...mapStores(useInspectedTaskStore, useTasksStore),
+  },
 };
 </script>

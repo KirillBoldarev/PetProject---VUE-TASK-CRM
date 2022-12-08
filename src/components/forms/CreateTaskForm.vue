@@ -1,23 +1,10 @@
 <template>
-  <section
-    id="addTaskForm"
-    class="form__container"
-  >
-    <form
-      class="form__body"
-      @submit.prevent="createTaskHandler"
-    >
-      <h2 class="form__title">
-        Добавить задачу
-      </h2>
+  <section id="addTaskForm" class="form__container">
+    <form class="form__body" @submit.prevent="createTaskHandler">
+      <h2 class="form__title">Добавить задачу</h2>
       <fieldset class="flex-row center form__block">
-        <legend class="form__title">
-          Адресат
-        </legend>
-        <label
-          class="form__label"
-          for="email"
-        >Выберите получателя:</label>
+        <legend class="form__title">Адресат</legend>
+        <label class="form__label" for="email">Выберите получателя:</label>
         <select
           id="executor"
           v-model="executor"
@@ -30,21 +17,18 @@
             class="form__option"
             :value="user"
           >
-            <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
+            <span v-if="user.firstName && user.secondName"
+              >{{ user.firstName }} {{ user.secondName }}</span
+            >
             <span v-else>{{ user.login }}</span>
           </option>
         </select>
       </fieldset>
 
       <fieldset class="flex-column center form__block">
-        <legend class="form__title">
-          Описание
-        </legend>
+        <legend class="form__title">Описание</legend>
         <div class="flex-column center">
-          <label
-            class="form__label"
-            for="title"
-          >Заголовок:</label>
+          <label class="form__label" for="title">Заголовок:</label>
           <input
             v-model="title"
             v-tooltip.right="'Опишите суть задачи'"
@@ -52,12 +36,12 @@
             type="text"
             name="title"
             @blur="v$.title.$touch"
-          >
+          />
           <transition>
             <small
               v-if="v$.title.$dirty && v$.title.required.$invalid"
               class="form__invalid"
-            >Поле обязательно для заполнения
+              >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
@@ -78,33 +62,28 @@
             <small
               v-if="v$.description.$dirty && v$.description.required.$invalid"
               class="form__invalid"
-            >Поле обязательно для заполнения
+              >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
       </fieldset>
 
       <div class="flex-column center">
-        <button
-          class="button"
-          type="submit"
-        >
-          Создать задачу
-        </button>
+        <button class="button" type="submit">Создать задачу</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import { mapStores } from "pinia";
-import { useTasksStore } from "@/stores/TasksStore";
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+import { mapStores } from 'pinia';
+import { useTasksStore } from '@/stores/TasksStore';
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 
 export default {
-  name: "AddTaskForm",
+  name: 'AddTaskForm',
   components: {},
   props: {
     target: {
@@ -120,7 +99,7 @@ export default {
       required: true,
     },
   },
-  emits: ["close"],
+  emits: ['close'],
   setup() {
     return {
       v$: useVuelidate(),
@@ -130,8 +109,8 @@ export default {
     return {
       executor: this.target,
       sender: null,
-      title: "",
-      description: "",
+      title: '',
+      description: '',
     };
   },
 
@@ -148,7 +127,7 @@ export default {
         return;
       }
       this.tasksStore.CREATE_TASK(this.newTask);
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 

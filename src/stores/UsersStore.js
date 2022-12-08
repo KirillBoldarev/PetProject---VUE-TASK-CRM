@@ -4,12 +4,12 @@ import localbase from '../js/libs/localbase';
 
 export const useUsersStore = defineStore('users', {
   state: () => ({
-    USER_LIST: []
+    USER_LIST: [],
   }),
   getters: {
     GET_USER_LIST(state) {
       return state.USER_LIST;
-    }
+    },
   },
   actions: {
     CREATE_USER(payload) {
@@ -25,13 +25,15 @@ export const useUsersStore = defineStore('users', {
       this.USER_LIST.splice(index, 1);
     },
     EDIT_USER(payload) {
-      this.USER_LIST = this.USER_LIST.map(user => (user.id === payload.id ? payload : user));
+      this.USER_LIST = this.USER_LIST.map((user) =>
+        user.id === payload.id ? payload : user
+      );
     },
     async INITIALIZE_USER_LIST() {
       this.USER_LIST = await localbase
         .collection('users')
         .get()
-        .catch(error => console.log(error));
-    }
-  }
+        .catch((error) => console.log(error));
+    },
+  },
 });

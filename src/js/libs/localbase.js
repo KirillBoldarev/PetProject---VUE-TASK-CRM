@@ -1,6 +1,6 @@
-import Localbase from 'localbase'
+import Localbase from 'localbase';
 
-const localbase = new Localbase('localbase')
-localbase.config.debug = false
+const localbase = new Localbase('localbase');
+localbase.config.debug = false;
 
-export default localbase
+export default localbase;

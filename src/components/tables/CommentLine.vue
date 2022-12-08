@@ -2,7 +2,8 @@
   <div class="comment__container flex-column">
     <div class="comment__top">
       <div class="comment__title">
-        <strong>{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
+        <strong
+          >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
         </strong>
       </div>
       <img
@@ -10,7 +11,7 @@
         src="@/assets/icons/remove.png"
         alt=""
         @click="deleteComment"
-      >
+      />
     </div>
     <div class="comment__body">
       {{ target.text }}
@@ -19,40 +20,40 @@
 </template>
 
 <script>
-import { useCommentsStore } from '@/stores/CommentsStore'
-import { mapStores } from 'pinia'
+import { useCommentsStore } from '@/stores/CommentsStore';
+import { mapStores } from 'pinia';
 
 export default {
   props: {
     target: {
       type: Object,
-      required: false
+      required: false,
     },
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {
-    ...mapStores(useCommentsStore)
+    ...mapStores(useCommentsStore),
   },
   methods: {
-    deleteComment () {
-      this.commentsStore.DELETE_COMMENT(this.target)
+    deleteComment() {
+      this.commentsStore.DELETE_COMMENT(this.target);
     },
-    getPerson (role) {
-      const person = this.userList.find((user) => user.id === role)
+    getPerson(role) {
+      const person = this.userList.find((user) => user.id === role);
       if (!person) {
-        return 'Пользователь удален'
+        return 'Пользователь удален';
       }
       if (!person.firstName || !person.secondName) {
-        return `${person.login}`
+        return `${person.login}`;
       }
-      return `${person.firstName} ${person.secondName}`
-    }
-  }
-}
+      return `${person.firstName} ${person.secondName}`;
+    },
+  },
+};
 </script>

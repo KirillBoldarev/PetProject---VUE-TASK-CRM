@@ -1,26 +1,14 @@
 <template>
   <div class="page">
     <div class="page__body">
-      <h2 class="page__title">
-        Управление пользователями
-      </h2>
+      <h2 class="page__title">Управление пользователями</h2>
       <div class="table">
         <div class="table__row table__row--userlist">
-          <div class="table__column">
-            Имя
-          </div>
-          <div class="table__column">
-            Роль
-          </div>
-          <div class="table__column">
-            Электронная почта
-          </div>
-          <div class="table__column">
-            Телефон
-          </div>
-          <div class="table__column">
-            Действия
-          </div>
+          <div class="table__column">Имя</div>
+          <div class="table__column">Роль</div>
+          <div class="table__column">Электронная почта</div>
+          <div class="table__column">Телефон</div>
+          <div class="table__column">Действия</div>
         </div>
         <transition-group name="slide-fade">
           <div
@@ -28,16 +16,10 @@
             :key="user.id"
             class="table__row table__row--userlist"
           >
-            <div
-              v-if="user.firstName"
-              class="table__column"
-            >
+            <div v-if="user.firstName" class="table__column">
               {{ user.firstName }} {{ user.secondName }}
             </div>
-            <div
-              v-if="!user.firstName"
-              class="table__column"
-            >
+            <div v-if="!user.firstName" class="table__column">
               {{ user.login }}
             </div>
             <div class="table__column">
@@ -45,17 +27,17 @@
                 v-if="user.role === 'Неавторизованный пользователь'"
                 class="icon--mini"
                 src="@/assets/icons/unauthorized.png"
-              >
+              />
               <img
                 v-if="user.role === 'Пользователь'"
                 class="icon--mini"
                 src="@/assets/icons/user.png"
-              >
+              />
               <img
                 v-if="user.role === 'Администратор'"
                 class="icon--mini"
                 src="@/assets/icons/admin.png"
-              >
+              />
             </div>
             <div class="table__column">
               {{ user.email }}
@@ -109,46 +91,46 @@
 </template>
 
 <script>
-import DeleteUserAction from '@/components/actions/DeleteUserAction.vue'
-import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
-import CreateTaskForm from '@/components/forms/CreateTaskForm.vue'
-import EditUserForm from '@/components/forms/EditUserForm.vue'
+import DeleteUserAction from '@/components/actions/DeleteUserAction.vue';
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
+import CreateTaskForm from '@/components/forms/CreateTaskForm.vue';
+import EditUserForm from '@/components/forms/EditUserForm.vue';
 
-import { useUsersStore } from '@/stores/UsersStore'
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
-import { mapStores } from 'pinia'
+import { useUsersStore } from '@/stores/UsersStore';
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { mapStores } from 'pinia';
 
 export default {
   components: {
     DeleteUserAction,
     ButtonWithModalForm,
     CreateTaskForm,
-    EditUserForm
+    EditUserForm,
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
 
-  data () {
-    return {}
+  data() {
+    return {};
   },
 
-  created () {},
+  created() {},
 
   computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore)
+    ...mapStores(useAuthenticatedStore, useUsersStore),
   },
 
   methods: {},
 
-  watch: {}
-}
+  watch: {},
+};
 </script>

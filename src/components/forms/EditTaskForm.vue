@@ -1,15 +1,7 @@
 <template>
-  <section
-    id="editTaskForm"
-    class="form__container"
-  >
-    <form
-      class="form__body"
-      @submit.prevent="confirmation"
-    >
-      <h2 class="form__title">
-        Редактирование задачи
-      </h2>
+  <section id="editTaskForm" class="form__container">
+    <form class="form__body" @submit.prevent="confirmation">
+      <h2 class="form__title">Редактирование задачи</h2>
       <confirm-dialog
         :is-dialog-open="isDialogOpen"
         @confirm="editTaskHandler"
@@ -17,14 +9,9 @@
       />
 
       <fieldset class="flex-row center form__block">
-        <legend class="form__title">
-          Адресаты
-        </legend>
+        <legend class="form__title">Адресаты</legend>
         <div class="flex-column center">
-          <label
-            class="form__label"
-            for="email"
-          >Отправитель:</label>
+          <label class="form__label" for="email">Отправитель:</label>
           <select
             id="sender"
             v-model="sender"
@@ -37,17 +24,16 @@
               class="form__option"
               :value="user.id"
             >
-              <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
+              <span v-if="user.firstName && user.secondName"
+                >{{ user.firstName }} {{ user.secondName }}</span
+              >
               <span v-else>{{ user.login }}</span>
             </option>
           </select>
         </div>
 
         <div class="flex-column center">
-          <label
-            class="form__label"
-            for="email"
-          >Исполнитель:</label>
+          <label class="form__label" for="email">Исполнитель:</label>
           <select
             id="executor"
             v-model="executor"
@@ -60,7 +46,9 @@
               class="form__option"
               :value="user.id"
             >
-              <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
+              <span v-if="user.firstName && user.secondName"
+                >{{ user.firstName }} {{ user.secondName }}</span
+              >
               <span v-else>{{ user.login }}</span>
             </option>
           </select>
@@ -68,14 +56,10 @@
       </fieldset>
 
       <fieldset class="flex-column center form__block">
-        <legend class="form__title">
-          Описание
-        </legend>
+        <legend class="form__title">Описание</legend>
         <div class="flex-column center">
           <div class="flex-column center">
-            <h2 class="form__title">
-              Заголовок:
-            </h2>
+            <h2 class="form__title">Заголовок:</h2>
             <input
               v-model="title"
               v-tooltip.right="'Опишите суть задачи'"
@@ -83,21 +67,19 @@
               name="title"
               type="text"
               @blur="v$.title.$touch"
-            >
+            />
             <transition>
               <small
                 v-if="v$.title.$dirty && v$.title.required.$invalid"
                 class="form__invalid"
-              >Поле обязательно для заполнения
+                >Поле обязательно для заполнения
               </small>
             </transition>
           </div>
         </div>
         <div class="flex-column center">
           <div class="flex-column center">
-            <h2 class="form__title">
-              Подробности:
-            </h2>
+            <h2 class="form__title">Подробности:</h2>
             <textarea
               id="task"
               v-model="description"
@@ -112,7 +94,7 @@
               <small
                 v-if="v$.description.$dirty && v$.description.required.$invalid"
                 class="form__invalid"
-              >Поле обязательно для заполнения
+                >Поле обязательно для заполнения
               </small>
             </transition>
           </div>
@@ -120,12 +102,7 @@
       </fieldset>
 
       <div class="flex-column center">
-        <button
-          class="button"
-          type="submit"
-        >
-          ОК
-        </button>
+        <button class="button" type="submit">ОК</button>
       </div>
     </form>
   </section>
@@ -141,43 +118,42 @@ import { useTasksStore } from '@/stores/TasksStore';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
 
 export default {
-
   name: 'EditTaskForm',
   components: {
-    ConfirmDialog
+    ConfirmDialog,
   },
   mixins: [confirmationDialogMixin],
   props: {
     target: {
       type: Object,
-      required: true
+      required: true,
     },
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ['edited', 'close'],
   setup() {
     return {
-      v$: useVuelidate()
+      v$: useVuelidate(),
     };
   },
 
   data() {
     return {
-      ...this.target
+      ...this.target,
     };
   },
 
   validations() {
     return {
       description: { required },
-      title: { required }
+      title: { required },
     };
   },
   computed: {
@@ -193,9 +169,9 @@ export default {
         isCompleted: this.isCompleted,
         comments: this.comments,
         dateOfCreation: this.dateOfCreation,
-        dateOfCompletion: this.dateOfCompletion
+        dateOfCompletion: this.dateOfCompletion,
       };
-    }
+    },
   },
   methods: {
     editTaskHandler() {
@@ -205,15 +181,14 @@ export default {
       }
       this.tasksStore.EDIT_TASK(this.changedTask);
       if (
-        this.inspectedTaskStore.GET_INSPECTED_TASK
-        && this.inspectedTaskStore.GET_INSPECTED_TASK.id === this.changedTask.id
+        this.inspectedTaskStore.GET_INSPECTED_TASK &&
+        this.inspectedTaskStore.GET_INSPECTED_TASK.id === this.changedTask.id
       ) {
         this.inspectedTaskStore.EDIT_INSPECTED_TASK(this.changedTask);
       }
       this.$emit('edited');
       this.$emit('close');
-    }
-  }
-
+    },
+  },
 };
 </script>

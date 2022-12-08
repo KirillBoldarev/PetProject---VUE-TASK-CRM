@@ -1,14 +1,8 @@
 <template>
-  <section
-    id="addTaskForm"
-    class="form__container"
-  >
-    <form
-      class="form__body"
-      @submit.prevent="createCommentHandler"
-    >
+  <section id="addTaskForm" class="form__container">
+    <form class="form__body" @submit.prevent="createCommentHandler">
       <h2 class="form__title">
-        Добавить комментарий к задаче <br>
+        Добавить комментарий к задаче <br />
         "{{ target.title }}"
       </h2>
       <div class="flex-column center">
@@ -27,35 +21,30 @@
             <small
               v-if="v$.text.$dirty && v$.text.required.$invalid"
               class="form__invalid"
-            >Поле обязательно для заполнения
+              >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
       </div>
 
       <div class="flex-column center">
-        <button
-          class="button"
-          type="submit"
-        >
-          Прокомментировать
-        </button>
+        <button class="button" type="submit">Прокомментировать</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import filterDate from "@/js/libs/filterDate";
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+import filterDate from '@/js/libs/filterDate';
 
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { useCommentsStore } from "@/stores/CommentsStore";
-import { mapStores } from "pinia";
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { useCommentsStore } from '@/stores/CommentsStore';
+import { mapStores } from 'pinia';
 
 export default {
-  name: "AddTaskForm",
+  name: 'AddTaskForm',
   components: {},
   props: {
     target: {
@@ -63,7 +52,7 @@ export default {
       required: true,
     },
   },
-  emits: ["close"],
+  emits: ['close'],
   setup() {
     return {
       v$: useVuelidate(),
@@ -73,7 +62,7 @@ export default {
     return {
       task: this.target.id,
       author: null,
-      text: "",
+      text: '',
     };
   },
 
@@ -89,7 +78,7 @@ export default {
         return;
       }
       this.commentsStore.CREATE_COMMENT(this.newComment);
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 
@@ -108,7 +97,7 @@ export default {
       return Math.random().toString(36).substring(2, 9);
     },
     dateOfCreation() {
-      return filterDate(new Date(), "datetime");
+      return filterDate(new Date(), 'datetime');
     },
   },
   beforeMount() {

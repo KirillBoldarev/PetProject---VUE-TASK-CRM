@@ -1,22 +1,14 @@
 <template>
   <div class="page">
-    <h2 class="page__title">
-      Управление задачами
-    </h2>
+    <h2 class="page__title">Управление задачами</h2>
     <tabs-panel
       class="page__toolbar"
       :tabs="permittedPages"
       :selected-tab="currentPage"
       @changeTab="changePage"
     />
-    <template
-      v-for="page in permittedPages"
-      :key="page.name"
-    >
-      <div
-        v-if="currentPage === page.name"
-        class="page__body"
-      >
+    <template v-for="page in permittedPages" :key="page.name">
+      <div v-if="currentPage === page.name" class="page__body">
         <div class="flex-column center">
           <div class="form">
             <div class="form__toolbar">
@@ -25,34 +17,32 @@
                   v-if="screenResolutionStore.IS_DESKTOP"
                   class="form__label"
                 >
-                  Отображать завершенные:</label>
+                  Отображать завершенные:</label
+                >
                 <img
                   v-if="includeCompletedTask"
                   class="icon"
                   src="@/assets/icons/check.png"
                   @click="includeCompletedTask = false"
-                >
+                />
                 <img
                   v-if="!includeCompletedTask"
                   class="icon"
                   src="@/assets/icons/notСheck.png"
                   @click="includeCompletedTask = true"
-                >
+                />
               </div>
               <div class="flex-row center">
                 <label class="form__label"> Поиск:</label>
-                <input
-                  v-model="searchValue"
-                  class="form__input"
-                  type="text"
-                >
+                <input v-model="searchValue" class="form__input" type="text" />
               </div>
               <div class="flex-row center">
                 <label
                   v-if="screenResolutionStore.IS_DESKTOP"
                   class="form__label"
                 >
-                  Добавить задачу:</label>
+                  Добавить задачу:</label
+                >
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
                   :image="require('@/assets/icons/plus.png')"
@@ -72,31 +62,16 @@
           </div>
         </div>
         <div class="table">
-          <div
-            class="table__row"
-            :class="getGrid()"
-          >
-            <div class="table__column">
-              Состояние
-            </div>
-            <div
-              v-if="currentPage !== 'charged'"
-              class="table__column"
-            >
+          <div class="table__row" :class="getGrid()">
+            <div class="table__column">Состояние</div>
+            <div v-if="currentPage !== 'charged'" class="table__column">
               Отправитель
             </div>
-            <div
-              v-if="currentPage !== 'personal'"
-              class="table__column"
-            >
+            <div v-if="currentPage !== 'personal'" class="table__column">
               Исполнитель
             </div>
-            <div class="table__column">
-              Описание задачи
-            </div>
-            <div class="table__column">
-              Действия
-            </div>
+            <div class="table__column">Описание задачи</div>
+            <div class="table__column">Действия</div>
           </div>
 
           <transition-group name="slide-fade">
@@ -121,17 +96,17 @@
 </template>
 
 <script>
-import { mapStores } from "pinia";
-import TabsPanel from "@/components/tools/TabsPanel.vue";
-import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
-import CreateTaskForm from "@/components/forms/CreateTaskForm.vue";
-import TaskListLine from "@/components/tables/TaskListLine.vue";
+import { mapStores } from 'pinia';
+import TabsPanel from '@/components/tools/TabsPanel.vue';
+import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
+import CreateTaskForm from '@/components/forms/CreateTaskForm.vue';
+import TaskListLine from '@/components/tables/TaskListLine.vue';
 
-import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
-import { useScreenResolutionStore } from "@/stores/ScreenResolution";
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { useScreenResolutionStore } from '@/stores/ScreenResolution';
 
 export default {
-  name: "TaskList",
+  name: 'TaskList',
   components: {
     TabsPanel,
     ButtonWithModalForm,
@@ -151,34 +126,34 @@ export default {
   },
   data() {
     return {
-      currentPage: "personal",
-      searchValue: "",
+      currentPage: 'personal',
+      searchValue: '',
       includeCompletedTask: true,
     };
   },
   computed: {
     ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
     permittedPages() {
-      if (this.authenticatedStore.GET_AUTH.role === "Администратор") {
+      if (this.authenticatedStore.GET_AUTH.role === 'Администратор') {
         return this.pages;
       }
-      return this.pages.filter((page) => page.name !== "all");
+      return this.pages.filter((page) => page.name !== 'all');
     },
     pages() {
       return [
         {
-          name: "personal",
-          label: "Полученные",
+          name: 'personal',
+          label: 'Полученные',
           dataSource: this.personalTasks,
         },
         {
-          name: "charged",
-          label: "Отправленные",
+          name: 'charged',
+          label: 'Отправленные',
           dataSource: this.chargedTasks,
         },
         {
-          name: "all",
-          label: "Все задачи",
+          name: 'all',
+          label: 'Все задачи',
           dataSource: this.taskList,
         },
       ];
@@ -205,14 +180,14 @@ export default {
 
   methods: {
     getGrid() {
-      if (this.currentPage === "personal") {
-        return "table__row--personal-charged";
+      if (this.currentPage === 'personal') {
+        return 'table__row--personal-charged';
       }
-      if (this.currentPage === "charged") {
-        return "table__row--personal-charged";
+      if (this.currentPage === 'charged') {
+        return 'table__row--personal-charged';
       }
-      if (this.currentPage === "all") {
-        return "table__row--alltask";
+      if (this.currentPage === 'all') {
+        return 'table__row--alltask';
       }
     },
     // НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
@@ -239,7 +214,7 @@ export default {
 
     changePage(tabName) {
       this.currentPage = tabName;
-      this.searchValue = "";
+      this.searchValue = '';
     },
   },
 };

@@ -5,7 +5,7 @@
     src="@/assets/icons/trash.png"
     alt=""
     @click="confirmation"
-  >
+  />
   <confirm-dialog
     :is-dialog-open="isDialogOpen"
     @confirm="deleteUserHandler"
@@ -27,12 +27,12 @@ export default {
   props: {
     target: {
       type: Object,
-      required: true
+      required: true,
     },
     iconClass: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
 
   data() {
@@ -42,11 +42,11 @@ export default {
   methods: {
     deleteUserHandler() {
       this.usersStore.DELETE_USER(this.target);
-    }
+    },
   },
 
   computed: {
-    ...mapStores(useUsersStore)
-  }
+    ...mapStores(useUsersStore),
+  },
 };
 </script>

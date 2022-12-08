@@ -6,16 +6,10 @@
       :class="iconClass"
       alt=""
       @click="openModal"
-    >
-    <modal-window
-      :is-open="isModalOpen"
-      @close="isModalOpen = false"
-    >
+    />
+    <modal-window :is-open="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
-        <slot
-          name="formSlot"
-          :close-modal="closeModal"
-        />
+        <slot name="formSlot" :close-modal="closeModal" />
       </template>
     </modal-window>
   </template>
@@ -27,25 +21,19 @@
     @click="openModal"
   >
     {{ label }}
-    <modal-window
-      :is-open="isModalOpen"
-      @close="isModalOpen = false"
-    >
+    <modal-window :is-open="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
-        <slot
-          name="formSlot"
-          :close-modal="closeModal"
-        />
+        <slot name="formSlot" :close-modal="closeModal" />
       </template>
     </modal-window>
   </button>
 </template>
 
 <script>
-import ModalWindow from "@/components/tools/ModalWindow.vue";
+import ModalWindow from '@/components/tools/ModalWindow.vue';
 
 export default {
-  name: "ButtonWithModalForm",
+  name: 'ButtonWithModalForm',
   components: { ModalWindow },
   props: {
     label: {

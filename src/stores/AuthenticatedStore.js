@@ -4,7 +4,7 @@ import localbase from '@/js/libs/localbase';
 export const useAuthenticatedStore = defineStore('authenticated', {
   state: () => ({
     AUTHENTICATED: null,
-    IS_AUTHENTICATED: false
+    IS_AUTHENTICATED: false,
   }),
   getters: {
     IS_AUTH(state) {
@@ -12,7 +12,7 @@ export const useAuthenticatedStore = defineStore('authenticated', {
     },
     GET_AUTH(state) {
       return state.AUTHENTICATED;
-    }
+    },
   },
   actions: {
     AUTHENTICATION(user) {
@@ -33,13 +33,13 @@ export const useAuthenticatedStore = defineStore('authenticated', {
       const id = sessionStorage.getItem('authID');
       const userList = await localbase.collection('users').get();
       if (id && userList && Array.isArray(userList)) {
-        this.AUTHENTICATED = userList.find(user => user.id === id);
+        this.AUTHENTICATED = userList.find((user) => user.id === id);
         this.IS_AUTHENTICATED = true;
       }
       if (id && userList && !Array.isArray(userList)) {
         this.IS_AUTHENTICATED = true;
         this.AUTHENTICATED = userList;
       }
-    }
-  }
+    },
+  },
 });

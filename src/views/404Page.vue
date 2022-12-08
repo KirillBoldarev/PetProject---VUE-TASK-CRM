@@ -9,17 +9,17 @@
         src="@/assets/icons/home.png"
         alt=""
         @click="$router.push('/')"
-      >
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
 
-  methods: {}
-}
+  methods: {},
+};
 </script>

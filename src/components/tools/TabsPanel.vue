@@ -6,7 +6,8 @@
       class="tab__navigation-item"
       :class="{ tab__selected: tab.name === selectedTab }"
       @click="changeTab(tab.name)"
-    >{{ tab.label }}</span>
+      >{{ tab.label }}</span
+    >
   </div>
 </template>
 
@@ -23,10 +24,10 @@ export default {
       required: false,
     },
   },
-  emits: ["changeTab"],
+  emits: ['changeTab'],
   methods: {
     changeTab(tabName) {
-      this.$emit("changeTab", tabName);
+      this.$emit('changeTab', tabName);
     },
   },
 };

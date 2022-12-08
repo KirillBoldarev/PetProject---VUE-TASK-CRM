@@ -3,12 +3,12 @@ import localbase from '@/js/libs/localbase';
 
 export const useCommentsStore = defineStore('comments', {
   state: () => ({
-    COMMENTS: null
+    COMMENTS: null,
   }),
   getters: {
     GET_COMMENTS(state) {
       return state.COMMENTS;
-    }
+    },
   },
   actions: {
     CREATE_COMMENT(payload) {
@@ -24,7 +24,9 @@ export const useCommentsStore = defineStore('comments', {
       this.COMMENTS.splice(index, 1);
     },
     EDIT_COMMENT(payload) {
-      this.COMMENTS = this.COMMENTS.map(comment => (comment.id === payload.id ? payload : comment));
+      this.COMMENTS = this.COMMENTS.map((comment) =>
+        comment.id === payload.id ? payload : comment
+      );
     },
     CLEAR_COMMENTS() {
       this.COMMENTS = null;
@@ -33,8 +35,8 @@ export const useCommentsStore = defineStore('comments', {
       const commetsList = await localbase
         .collection('comments')
         .get()
-        .catch(error => console.log(error));
-      this.COMMENTS = commetsList.filter(comment => comment.task === taskId);
-    }
-  }
+        .catch((error) => console.log(error));
+      this.COMMENTS = commetsList.filter((comment) => comment.task === taskId);
+    },
+  },
 });

@@ -1,19 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/HomePage.vue')
+    component: () => import('@/views/HomePage.vue'),
   },
   {
     path: '/404',
     name: '404',
-    component: () => import('@/views/404Page.vue')
+    component: () => import('@/views/404Page.vue'),
   },
   {
     path: '/:catchAll(.*)',
-    redirect: '/404'
+    redirect: '/404',
   },
   {
     path: '/tasks',
@@ -23,23 +23,23 @@ const routes = [
       {
         path: 'task/:id?',
         name: 'InspectedTask',
-        component: () => import('@/views/TaskPage.vue')
+        component: () => import('@/views/TaskPage.vue'),
         /* beforeEnter: (to, from) => {
 
         } */
-      }
-    ]
+      },
+    ],
   },
   {
     path: '/users',
     name: 'UserList',
-    component: () => import('@/views/UserListPage.vue')
+    component: () => import('@/views/UserListPage.vue'),
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('@/views/ProfilePage.vue')
-  }
+    component: () => import('@/views/ProfilePage.vue'),
+  },
   /*   {
     path: "/task/:id",
     name: "InspectedTask",
@@ -52,11 +52,11 @@ const routes = [
       }
     },
   }, */
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

@@ -4,7 +4,8 @@
       <h2 class="page__title">
         Профиль пользователя : {{ authenticated.login }}
         <span v-if="authenticated.firstName && authenticated.secondName">
-          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span>
+          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span
+        >
       </h2>
       <div class="page__toolbar flex-row center">
         <img
@@ -13,14 +14,14 @@
           src="@/assets/icons/edit.png"
           alt=""
           @click="switchEditUserMode"
-        >
+        />
         <img
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/assets/icons/task.png"
           alt=""
           @click="switchShowTaskMode"
-        >
+        />
       </div>
 
       <edit-user-form
@@ -40,55 +41,52 @@
 </template>
 
 <script>
+import EditUserForm from '@/components/forms/EditUserForm.vue';
+import TaskList from '@/components/tables/TaskList.vue';
 
-import EditUserForm from '@/components/forms/EditUserForm.vue'
-import TaskList from '@/components/tables/TaskList.vue'
-
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
-import { mapStores } from 'pinia'
+import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { mapStores } from 'pinia';
 export default {
-
   components: {
-
     EditUserForm,
-    TaskList
+    TaskList,
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       editUserMode: false,
       showTaskMode: true,
-      authenticated: null
-    }
+      authenticated: null,
+    };
   },
 
-  beforeMount () {
-    this.authenticated = this.authenticatedStore.GET_AUTH
+  beforeMount() {
+    this.authenticated = this.authenticatedStore.GET_AUTH;
   },
 
   methods: {
-    switchEditUserMode () {
-      this.editUserMode = !this.editUserMode
-      this.showTaskMode = false
+    switchEditUserMode() {
+      this.editUserMode = !this.editUserMode;
+      this.showTaskMode = false;
     },
-    switchShowTaskMode () {
-      this.showTaskMode = !this.showTaskMode
-      this.editUserMode = false
-    }
+    switchShowTaskMode() {
+      this.showTaskMode = !this.showTaskMode;
+      this.editUserMode = false;
+    },
   },
 
   computed: {
-    ...mapStores(useAuthenticatedStore)
-  }
-}
+    ...mapStores(useAuthenticatedStore),
+  },
+};
 </script>

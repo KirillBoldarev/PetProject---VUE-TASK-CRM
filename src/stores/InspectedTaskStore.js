@@ -3,12 +3,12 @@ import localbase from '@/js/libs/localbase';
 
 export const useInspectedTaskStore = defineStore('inspectedTask', {
   state: () => ({
-    INSPECTED_TASK: null
+    INSPECTED_TASK: null,
   }),
   getters: {
     GET_INSPECTED_TASK(state) {
       return state.INSPECTED_TASK;
-    }
+    },
   },
   actions: {
     INSPECT_TASK(payload) {
@@ -38,8 +38,8 @@ export const useInspectedTaskStore = defineStore('inspectedTask', {
       const inspected = sessionStorage.getItem('inspectedTaskID');
       const taskList = await localbase.collection('tasks').get();
       if (inspected && taskList) {
-        this.INSPECTED_TASK = taskList.find(task => task.id === inspected);
+        this.INSPECTED_TASK = taskList.find((task) => task.id === inspected);
       }
-    }
-  }
+    },
+  },
 });

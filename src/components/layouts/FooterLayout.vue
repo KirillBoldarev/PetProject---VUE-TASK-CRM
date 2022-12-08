@@ -5,7 +5,7 @@
       <strong
         v-if="
           authenticatedStore.IS_AUTH === true &&
-            authenticatedStore.GET_AUTH.role === 'Неавторизованный пользователь'
+          authenticatedStore.GET_AUTH.role === 'Неавторизованный пользователь'
         "
         class="header__title"
       >
@@ -26,20 +26,20 @@ export default {
   computed: {
     ...mapStores(useAuthenticatedStore),
     admin() {
-      const admin = this.userList.find(user => user.role === 'Администратор');
+      const admin = this.userList.find((user) => user.role === 'Администратор');
       return `${admin.firstName} ${admin.secondName}`;
-    }
+    },
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
