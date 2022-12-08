@@ -1,60 +1,70 @@
 <template>
   <div class="page">
-    <h2 class="page__title">Управление задачами</h2>
+    <h2 class="page__title">
+      Управление задачами
+    </h2>
     <tabs-panel
       class="page__toolbar"
       :tabs="permittedPages"
-      :selectedTab="currentPage"
+      :selected-tab="currentPage"
       @changeTab="changePage"
-    ></tabs-panel>
-    <template v-for="page in permittedPages" :key="page.name">
-      <div class="page__body" v-if="currentPage === page.name">
+    />
+    <template
+      v-for="page in permittedPages"
+      :key="page.name"
+    >
+      <div
+        v-if="currentPage === page.name"
+        class="page__body"
+      >
         <div class="flex-column center">
           <div class="form">
             <div class="form__toolbar">
               <div class="flex-row center">
                 <label
-                  v-if="this.screenResolutionStore.IS_DESKTOP"
+                  v-if="screenResolutionStore.IS_DESKTOP"
                   class="form__label"
                 >
-                  Отображать завершенные:</label
-                >
+                  Отображать завершенные:</label>
                 <img
                   v-if="includeCompletedTask"
-                  @click="includeCompletedTask = false"
                   class="icon"
                   src="@/assets/icons/check.png"
-                />
+                  @click="includeCompletedTask = false"
+                >
                 <img
                   v-if="!includeCompletedTask"
-                  @click="includeCompletedTask = true"
                   class="icon"
                   src="@/assets/icons/notСheck.png"
-                />
+                  @click="includeCompletedTask = true"
+                >
               </div>
               <div class="flex-row center">
                 <label class="form__label"> Поиск:</label>
-                <input class="form__input" v-model="searchValue" type="text" />
+                <input
+                  v-model="searchValue"
+                  class="form__input"
+                  type="text"
+                >
               </div>
               <div class="flex-row center">
                 <label
                   v-if="screenResolutionStore.IS_DESKTOP"
                   class="form__label"
                 >
-                  Добавить задачу:</label
-                >
+                  Добавить задачу:</label>
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
                   :image="require('@/assets/icons/plus.png')"
-                  :iconClass="'icon'"
+                  :icon-class="'icon'"
                 >
-                  <template v-slot:formSlot="{ closeModal }">
+                  <template #formSlot="{ closeModal }">
                     <create-task-form
-                      @close="closeModal"
-                      :taskList="taskList"
-                      :userList="userList"
+                      :task-list="taskList"
+                      :user-list="userList"
                       :target="authenticatedStore.GET_AUTH"
-                    ></create-task-form>
+                      @close="closeModal"
+                    />
                   </template>
                 </button-with-modal-form>
               </div>
@@ -62,31 +72,46 @@
           </div>
         </div>
         <div class="table">
-          <div class="table__row" :class="getGrid()">
-            <div class="table__column">Состояние</div>
-            <div v-if="currentPage !== 'charged'" class="table__column">
+          <div
+            class="table__row"
+            :class="getGrid()"
+          >
+            <div class="table__column">
+              Состояние
+            </div>
+            <div
+              v-if="currentPage !== 'charged'"
+              class="table__column"
+            >
               Отправитель
             </div>
-            <div v-if="currentPage !== 'personal'" class="table__column">
+            <div
+              v-if="currentPage !== 'personal'"
+              class="table__column"
+            >
               Исполнитель
             </div>
-            <div class="table__column">Описание задачи</div>
-            <div class="table__column">Действия</div>
+            <div class="table__column">
+              Описание задачи
+            </div>
+            <div class="table__column">
+              Действия
+            </div>
           </div>
 
           <transition-group name="slide-fade">
             <div
-              class="table__row"
-              :class="getGrid()"
               v-for="task in filterSource(page.dataSource)"
               :key="task.id"
+              class="table__row"
+              :class="getGrid()"
             >
               <task-list-line
-                :taskList="taskList"
-                :userList="userList"
+                :task-list="taskList"
+                :user-list="userList"
                 :task="task"
-                :currentPage="currentPage"
-              ></task-list-line>
+                :current-page="currentPage"
+              />
             </div>
           </transition-group>
         </div>
@@ -176,6 +201,8 @@ export default {
     },
   },
 
+  beforeCreate() {},
+
   methods: {
     getGrid() {
       if (this.currentPage === "personal") {
@@ -215,7 +242,5 @@ export default {
       this.searchValue = "";
     },
   },
-
-  beforeCreate() {},
 };
 </script>

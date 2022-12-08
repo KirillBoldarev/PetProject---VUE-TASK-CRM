@@ -1,32 +1,45 @@
 <template>
-  <section id="registrationForm" class="form__container">
-    <h2 class="form__title">Регистрация пользователя!</h2>
-    <form class="form__body" @submit.prevent="this.registrateUserHandler">
+  <section
+    id="registrationForm"
+    class="form__container"
+  >
+    <h2 class="form__title">
+      Регистрация пользователя!
+    </h2>
+    <form
+      class="form__body"
+      @submit.prevent="registrateUserHandler"
+    >
       <fieldset class="flex-column center form__block">
-        <legend class="form__title">Придумайте логин и пароль</legend>
+        <legend class="form__title">
+          Придумайте логин и пароль
+        </legend>
         <div class="flex-column center">
           <div class="flex-row space-between">
-            <label class="form__label" for="login">Логин</label>
+            <label
+              class="form__label"
+              for="login"
+            >Логин</label>
             <input
-              @blur="v$.login.$touch"
-              v-tooltip.right="'Введите логин'"
               v-model="login"
+              v-tooltip.right="'Введите логин'"
               class="form__input"
               type="text"
               name="login"
-            />
+              @blur="v$.login.$touch"
+            >
           </div>
           <div class="row">
             <transition-group>
               <small
                 v-if="v$.login.$dirty && v$.login.required.$invalid"
                 class="form__invalid"
-                >Поле обязательно для заполнения
+              >Поле обязательно для заполнения
               </small>
               <small
                 v-if="v$.login.$dirty && v$.login.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее
+              >Введите не менее
                 {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
@@ -35,27 +48,30 @@
 
         <div class="flex-column center">
           <div class="flex-row space-between">
-            <label class="form__label" for="password">Пароль</label>
+            <label
+              class="form__label"
+              for="password"
+            >Пароль</label>
             <input
-              @blur="v$.password.$touch"
-              v-tooltip.right="'Введите номер мобильного телефона'"
               v-model="password"
+              v-tooltip.right="'Введите номер мобильного телефона'"
               class="form__input"
               name="password"
               type="password"
-            />
+              @blur="v$.password.$touch"
+            >
           </div>
           <div class="form__column">
             <transition-group>
               <small
                 v-if="v$.password.$dirty && v$.password.required.$invalid"
                 class="form__invalid"
-                >Поле обязательно для заполнения
+              >Поле обязательно для заполнения
               </small>
               <small
                 v-if="v$.password.$dirty && v$.password.minLength.$invalid"
                 class="form__invalid"
-                >Введите не менее
+              >Введите не менее
                 {{ v$.password.minLength.$params.min }} символов
               </small>
             </transition-group>
@@ -64,7 +80,12 @@
       </fieldset>
 
       <div class="flex-column center">
-        <button class="button" type="submit">Зарегистрироваться!</button>
+        <button
+          class="button"
+          type="submit"
+        >
+          Зарегистрироваться!
+        </button>
       </div>
     </form>
   </section>
@@ -78,6 +99,12 @@ import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 import { mapStores } from "pinia";
 
 export default {
+  props: {
+    userList: {
+      type: Array,
+      required: true,
+    },
+  },
   setup() {
     return {
       v$: useVuelidate(),
@@ -95,12 +122,6 @@ export default {
       login: { required, minLength: minLength(5) },
       password: { required, minLength: minLength(5) },
     };
-  },
-  props: {
-    userList: {
-      type: Array,
-      required: true,
-    },
   },
   created() {
     document.addEventListener("keypress", this.registrateUserOnKeypress);

@@ -1,15 +1,14 @@
 <template>
   <router-view
-    :taskList="taskList"
-    :userList="userList"
-    :inspectedTask="inspectedTaskStore.GET_INSPECTED_TASK"
-  >
-  </router-view>
+    :task-list="taskList"
+    :user-list="userList"
+    :inspected-task="inspectedTaskStore.GET_INSPECTED_TASK"
+  />
   <task-list
-    v-if="this.$route.name === 'TaskList'"
-    :userList="userList"
-    :taskList="taskList"
-  ></task-list>
+    v-if="$route.name === 'TaskList'"
+    :user-list="userList"
+    :task-list="taskList"
+  />
 </template>
 
 <script>

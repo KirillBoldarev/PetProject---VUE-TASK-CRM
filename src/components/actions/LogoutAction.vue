@@ -1,12 +1,16 @@
 <template>
   <button
-  v-show="screenResolutionStore.IS_DESKTOP"
-  @click="confirmation" class="button">Выйти из системы</button>
+    v-show="screenResolutionStore.IS_DESKTOP"
+    class="button"
+    @click="confirmation"
+  >
+    Выйти из системы
+  </button>
   <confirm-dialog
-    :isDialogOpen="isDialogOpen"
+    :is-dialog-open="isDialogOpen"
     @confirm="logoutHandler"
     @close="isDialogOpen = false"
-  ></confirm-dialog>
+  />
 </template>
 
 <script>

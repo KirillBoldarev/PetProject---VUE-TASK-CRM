@@ -4,38 +4,37 @@
       <h2 class="page__title">
         Профиль пользователя : {{ authenticated.login }}
         <span v-if="authenticated.firstName && authenticated.secondName">
-          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span
-        >
+          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span>
       </h2>
       <div class="page__toolbar flex-row center">
         <img
-          @click="switchEditUserMode"
           v-tooltip.bottom="'Редактировать профиль'"
           class="icon"
           src="@/assets/icons/edit.png"
           alt=""
-        />
+          @click="switchEditUserMode"
+        >
         <img
-          @click="switchShowTaskMode"
           v-tooltip.bottom="'Показать/скрыть задачи'"
           class="icon"
           src="@/assets/icons/task.png"
           alt=""
-        />
+          @click="switchShowTaskMode"
+        >
       </div>
 
       <edit-user-form
         v-if="editUserMode"
-        @edited="editUserMode = false"
         :target="authenticatedStore.GET_AUTH"
-        :userList="userList"
-        :taskList="taskList"
-      ></edit-user-form>
+        :user-list="userList"
+        :task-list="taskList"
+        @edited="editUserMode = false"
+      />
       <task-list
         v-if="showTaskMode"
-        :taskList="taskList"
-        :userList="userList"
-      ></task-list>
+        :task-list="taskList"
+        :user-list="userList"
+      />
     </div>
   </div>
 </template>
@@ -48,13 +47,6 @@ import TaskList from '@/components/tables/TaskList.vue'
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
 import { mapStores } from 'pinia'
 export default {
-  data () {
-    return {
-      editUserMode: false,
-      showTaskMode: true,
-      authenticated: null
-    }
-  },
 
   components: {
 
@@ -70,6 +62,13 @@ export default {
     userList: {
       type: Array,
       required: true
+    }
+  },
+  data () {
+    return {
+      editUserMode: false,
+      showTaskMode: true,
+      authenticated: null
     }
   },
 

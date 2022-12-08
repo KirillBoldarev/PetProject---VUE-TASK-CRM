@@ -6,13 +6,13 @@
       class="tab__navigation-item"
       :class="{ tab__selected: tab.name === selectedTab }"
       @click="changeTab(tab.name)"
-      >{{ tab.label }}</span
-    >
+    >{{ tab.label }}</span>
   </div>
 </template>
 
 <script>
 export default {
+  components: {},
   props: {
     tabs: {
       type: Array,
@@ -29,6 +29,5 @@ export default {
       this.$emit("changeTab", tabName);
     },
   },
-  components: {},
 };
 </script>

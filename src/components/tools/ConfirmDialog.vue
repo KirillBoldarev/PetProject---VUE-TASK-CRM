@@ -1,11 +1,29 @@
 <template>
-  <modal-window :isOpen="isDialogOpen" @close="close">
+  <modal-window
+    :is-open="isDialogOpen"
+    @close="close"
+  >
     <template #ModalSlot>
-      <section id="confirmForm" class="form__container">
-        <h2 class="form__title">Вы уверены ?</h2>
+      <section
+        id="confirmForm"
+        class="form__container"
+      >
+        <h2 class="form__title">
+          Вы уверены ?
+        </h2>
         <div class="flex-row center">
-          <button @click="confirm" class="button--accept">Да</button>
-          <button @click="close" class="button--decline">Нет</button>
+          <button
+            class="button--accept"
+            @click="confirm"
+          >
+            Да
+          </button>
+          <button
+            class="button--decline"
+            @click="close"
+          >
+            Нет
+          </button>
         </div>
       </section>
     </template>

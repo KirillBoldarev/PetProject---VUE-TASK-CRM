@@ -1,101 +1,115 @@
 <template>
-    <header class="header">
-        <div class="header__logo">
-            <img
-                class="header__logo--icon"
-                src="@/assets/icons/modalBackground.png"
-                alt=""
-            >
-        </div>
-        <div class="flex-column center">
-            <strong class="header__title"
-                    v-if="!authenticatedStore.IS_AUTH">
-                Приветствую! Прошу пройти авторизацию!
-            </strong>
-            <div class="header__navigation"
-                 v-if="authenticatedStore.IS_AUTH">
-                <router-link
-                    class="header__link"
-                    v-for="link in headerLinks"
-                    :key="link.name"
-                    :to="link.url"
-                >
-                    <img
-                        v-if="isMobile"
-                        v-tooltip.bottom="link.name"
-                        class="icon--max"
-                        :src="getImgUrl(link.icon)"
-                    >
-                    <span v-if="isDesktop">{{ link.name }}</span></router-link
-                >
-            </div>
-        </div>
+  <header class="header">
+    <div class="header__logo">
+      <img
+        class="header__logo--icon"
+        src="@/assets/icons/modalBackground.png"
+        alt=""
+      >
+    </div>
+    <div class="flex-column center">
+      <strong
+        v-if="!authenticatedStore.IS_AUTH"
+        class="header__title"
+      >
+        Приветствую! Прошу пройти авторизацию!
+      </strong>
+      <div
+        v-if="authenticatedStore.IS_AUTH"
+        class="header__navigation"
+      >
+        <router-link
+          v-for="link in headerLinks"
+          :key="link.name"
+          class="header__link"
+          :to="link.url"
+        >
+          <img
+            v-if="isMobile"
+            v-tooltip.bottom="link.name"
+            class="icon--max"
+            :src="getImgUrl(link.icon)"
+          >
+          <span v-if="isDesktop">{{ link.name }}</span>
+        </router-link>
+      </div>
+    </div>
 
-        <div class="flex-column center"
-             v-if="authenticatedStore.IS_AUTH">
-            <template v-if="isMobile">
-                <img
-                    class="icon--max"
-                    @click="openMenu"
-                    src="@/assets/icons/menu.png"
-                    alt=""
-                >
-                <dropdown-menu
-                    id="overlay_menu"
-                    ref="menu"
-                    :model="authMenuItems"
-                    :popup="true"
-                />
-            </template>
+    <div
+      v-if="authenticatedStore.IS_AUTH"
+      class="flex-column center"
+    >
+      <template v-if="isMobile">
+        <img
+          class="icon--max"
+          src="@/assets/icons/menu.png"
+          alt=""
+          @click="openMenu"
+        >
+        <dropdown-menu
+          id="overlay_menu"
+          ref="menu"
+          :model="authMenuItems"
+          :popup="true"
+        />
+      </template>
 
-            <button
-                class="button"
-                @click="this.$router.push('/profile')"
-                v-show="isDesktop"
-            >
-                Личный кабинет
-            </button>
-            <logout-action ref="logout"/>
-        </div>
+      <button
+        v-show="isDesktop"
+        class="button"
+        @click="$router.push('/profile')"
+      >
+        Личный кабинет
+      </button>
+      <logout-action ref="logout" />
+    </div>
 
-        <div class="flex-column center"
-             v-if="!authenticatedStore.IS_AUTH">
-            <template v-if="isMobile">
-                <img
-                    class="icon--max"
-                    @click="openMenu"
-                    src="@/assets/icons/menu.png"
-                    alt=""
-                >
-                <dropdown-menu
-                    id="overlay_menu"
-                    ref="menu"
-                    :model="guestMenuItems"
-                    :popup="true"
-                />
-            </template>
+    <div
+      v-if="!authenticatedStore.IS_AUTH"
+      class="flex-column center"
+    >
+      <template v-if="isMobile">
+        <img
+          class="icon--max"
+          src="@/assets/icons/menu.png"
+          alt=""
+          @click="openMenu"
+        >
+        <dropdown-menu
+          id="overlay_menu"
+          ref="menu"
+          :model="guestMenuItems"
+          :popup="true"
+        />
+      </template>
 
-            <button-with-modal-form ref="signIn"
-                                    label="Войти"
-                                    v-show="isDesktop">
-                <template #formSlot="{ closeModal }">
-                    <login-form @close="closeModal"
-                                :userList="userList"/>
-                </template>
-            </button-with-modal-form>
+      <button-with-modal-form
+        v-show="isDesktop"
+        ref="signIn"
+        label="Войти"
+      >
+        <template #formSlot="{ closeModal }">
+          <login-form
+            :user-list="userList"
+            @close="closeModal"
+          />
+        </template>
+      </button-with-modal-form>
 
-            <button-with-modal-form
-                ref="signUp"
-                label="Зарегистрироваться"
-                v-show="isDesktop"
-            >
-                <template #formSlot="{ closeModal }">
-                    <regisitration-form @close="closeModal"
-                                        :userList="userList"/>
-                </template>
-            </button-with-modal-form>
-        </div>
-    </header>
+      <button-with-modal-form
+        v-show="isDesktop"
+        ref="signUp"
+        label="Зарегистрироваться"
+      >
+        <template #formSlot="{ closeModal }">
+          <regisitration-form
+            :user-list="userList"
+            @close="closeModal"
+          />
+        </template>
+      </button-with-modal-form>
+    </div>
+  </header>
 </template>
 
 <script>

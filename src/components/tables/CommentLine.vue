@@ -2,18 +2,19 @@
   <div class="comment__container flex-column">
     <div class="comment__top">
       <div class="comment__title">
-        <strong
-          >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
+        <strong>{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
         </strong>
       </div>
       <img
-        @click="deleteComment"
         class="icon"
         src="@/assets/icons/remove.png"
         alt=""
-      />
+        @click="deleteComment"
+      >
     </div>
-    <div class="comment__body">{{ target.text }}</div>
+    <div class="comment__body">
+      {{ target.text }}
+    </div>
   </div>
 </template>
 

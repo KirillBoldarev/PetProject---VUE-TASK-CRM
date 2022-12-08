@@ -1,75 +1,96 @@
 <template>
-  <section id="addTaskForm" class="form__container">
-    <form class="form__body" @submit.prevent="createTaskHandler">
-      <h2 class="form__title">Добавить задачу</h2>
+  <section
+    id="addTaskForm"
+    class="form__container"
+  >
+    <form
+      class="form__body"
+      @submit.prevent="createTaskHandler"
+    >
+      <h2 class="form__title">
+        Добавить задачу
+      </h2>
       <fieldset class="flex-row center form__block">
-        <legend class="form__title">Адресат</legend>
-        <label class="form__label" for="email">Выберите получателя:</label>
+        <legend class="form__title">
+          Адресат
+        </legend>
+        <label
+          class="form__label"
+          for="email"
+        >Выберите получателя:</label>
         <select
-          class="form__select"
-          v-model="executor"
-          name="executor"
           id="executor"
+          v-model="executor"
+          class="form__select"
+          name="executor"
         >
           <option
-            class="form__option"
             v-for="user in userList"
             :key="user.id"
+            class="form__option"
             :value="user"
           >
-            <span v-if="user.firstName && user.secondName"
-              >{{ user.firstName }} {{ user.secondName }}</span
-            >
+            <span v-if="user.firstName && user.secondName">{{ user.firstName }} {{ user.secondName }}</span>
             <span v-else>{{ user.login }}</span>
           </option>
         </select>
       </fieldset>
 
       <fieldset class="flex-column center form__block">
-        <legend class="form__title">Описание</legend>
+        <legend class="form__title">
+          Описание
+        </legend>
         <div class="flex-column center">
-          <label class="form__label" for="title">Заголовок:</label>
+          <label
+            class="form__label"
+            for="title"
+          >Заголовок:</label>
           <input
-            v-tooltip.right="'Опишите суть задачи'"
-            @blur="v$.title.$touch"
             v-model="title"
+            v-tooltip.right="'Опишите суть задачи'"
             class="form__input"
             type="text"
             name="title"
-          />
+            @blur="v$.title.$touch"
+          >
           <transition>
             <small
               v-if="v$.title.$dirty && v$.title.required.$invalid"
               class="form__invalid"
-              >Поле обязательно для заполнения
+            >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
         <div class="flex-column center">
           <label class="form__label">Подробности:</label>
           <textarea
+            id="task"
+            v-model="description"
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
-            @blur="v$.description.$touch"
-            @keyup.ctrl.enter="createTaskHandler"
-            v-model="description"
             name="task"
-            id="task"
             cols="35"
             rows="10"
-          ></textarea>
+            @blur="v$.description.$touch"
+            @keyup.ctrl.enter="createTaskHandler"
+          />
           <transition>
             <small
               v-if="v$.description.$dirty && v$.description.required.$invalid"
               class="form__invalid"
-              >Поле обязательно для заполнения
+            >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
       </fieldset>
 
       <div class="flex-column center">
-        <button class="button" type="submit">Создать задачу</button>
+        <button
+          class="button"
+          type="submit"
+        >
+          Создать задачу
+        </button>
       </div>
     </form>
   </section>
@@ -83,8 +104,8 @@ import { useTasksStore } from "@/stores/TasksStore";
 import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 
 export default {
-  components: {},
   name: "AddTaskForm",
+  components: {},
   props: {
     target: {
       type: Object,

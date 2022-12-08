@@ -1,19 +1,29 @@
 <template>
   <div class="page">
     <div class="page__body">
-      <h2 class="page__title">Приветствую на главной странице!</h2>
-      <div class="page__text" v-if="!authenticatedStore.IS_AUTH">
+      <h2 class="page__title">
+        Приветствую на главной странице!
+      </h2>
+      <div
+        v-if="!authenticatedStore.IS_AUTH"
+        class="page__text"
+      >
         Для начала работы системы , прошу пройти &nbsp;
         <button-with-modal-form label="регистрацию">
           <template #formSlot="{ closeModal }">
-            <regisitration-form @close="closeModal" :userList="userList">
-            </regisitration-form>
+            <regisitration-form
+              :user-list="userList"
+              @close="closeModal"
+            />
           </template>
         </button-with-modal-form>
         &nbsp; или же &nbsp;
         <button-with-modal-form label="войти в систему">
           <template #formSlot="{ closeModal }">
-            <login-form @close="closeModal" :userList="userList"></login-form>
+            <login-form
+              :user-list="userList"
+              @close="closeModal"
+            />
           </template>
         </button-with-modal-form>
         &nbsp;, если у вас есть учетная запись.
@@ -22,7 +32,9 @@
       <div>
         <ul class="page__list">
           Данный Pet-проект реализовывает:
-          <li class="page__list-item">CRUD-операции над пользователями</li>
+          <li class="page__list-item">
+            CRUD-операции над пользователями
+          </li>
           <li class="page__list-item">
             CRUD-операции над задачами, котороми обмениваются пользователи
             системы
@@ -32,7 +44,9 @@
       <div>
         <ul class="page__list">
           В процессе разработки были применены инструменты:
-          <li class="page__list-item">VUE v.3 - как основной фреймворк</li>
+          <li class="page__list-item">
+            VUE v.3 - как основной фреймворк
+          </li>
           <li class="page__list-item">
             VUE-Router - для маршрутизации страниц приложения
           </li>
@@ -44,7 +58,9 @@
           <li class="page__list-item">
             Библиотека VUElidate - для реактивной валидации полей различных форм
           </li>
-          <li class="page__list-item">VUE-CLI - для сборки всего проекта</li>
+          <li class="page__list-item">
+            VUE-CLI - для сборки всего проекта
+          </li>
           <li class="page__list-item">
             Библиотека компонентов Prime-VUE - для заимстовования некоторого
             функционала

@@ -1,12 +1,18 @@
 <template>
   <div class="table__column">
-    <complete-task-action :target="task"></complete-task-action>
+    <complete-task-action :target="task" />
   </div>
-  <div v-if="currentPage !== 'charged'" class="table__column">
+  <div
+    v-if="currentPage !== 'charged'"
+    class="table__column"
+  >
     <span>{{ getPerson(task.sender) }}</span>
   </div>
 
-  <div v-if="currentPage !== 'personal'" class="table__column">
+  <div
+    v-if="currentPage !== 'personal'"
+    class="table__column"
+  >
     <span>{{ getPerson(task.executor) }}</span>
   </div>
 
@@ -14,8 +20,9 @@
     <router-link
       :to="{ name: 'InspectedTask', params: { id: task.id } }"
       @click="inspectTask"
-      >{{ task.title }}</router-link
     >
+      {{ task.title }}
+    </router-link>
   </div>
   <div class="table__column">
     <button-with-modal-form
@@ -27,15 +34,15 @@
         <create-comment-form
           :target="task"
           @close="closeModal"
-        ></create-comment-form>
+        />
       </template>
     </button-with-modal-form>
 
     <button-with-modal-form
       v-if="
         task.isCompleted === false &&
-        (task.sender === authenticatedStore.GET_AUTH.id ||
-          authenticatedStore.GET_AUTH.role === 'Администратор')
+          (task.sender === authenticatedStore.GET_AUTH.id ||
+            authenticatedStore.GET_AUTH.role === 'Администратор')
       "
       :image="require('@/assets/icons/edit.png')"
       :icon-class="'icon--mini'"
@@ -47,14 +54,14 @@
           :user-list="userList"
           :target="task"
           @close="closeModal"
-        ></edit-task-form>
+        />
       </template>
     </button-with-modal-form>
 
     <delete-task-action
       :target="task"
       :icon-class="'icon--mini'"
-    ></delete-task-action>
+    />
   </div>
 </template>
 

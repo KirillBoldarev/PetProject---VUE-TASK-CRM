@@ -1,29 +1,41 @@
 <template>
-  <template v-if="this.image">
+  <template v-if="image">
     <img
       v-tooltip.bottom="tooltip"
-      @click="openModal"
-      :src="this.image"
+      :src="image"
       :class="iconClass"
       alt=""
-    />
-    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
+      @click="openModal"
+    >
+    <modal-window
+      :is-open="isModalOpen"
+      @close="isModalOpen = false"
+    >
       <template #ModalSlot>
-        <slot name="formSlot" :closeModal="closeModal"></slot>
+        <slot
+          name="formSlot"
+          :close-modal="closeModal"
+        />
       </template>
     </modal-window>
   </template>
 
   <button
+    v-else-if="label"
     v-tooltip.bottom="tooltip"
-    v-else-if="this.label"
     class="button"
     @click="openModal"
   >
     {{ label }}
-    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
+    <modal-window
+      :is-open="isModalOpen"
+      @close="isModalOpen = false"
+    >
       <template #ModalSlot>
-        <slot name="formSlot" :closeModal="closeModal"></slot>
+        <slot
+          name="formSlot"
+          :close-modal="closeModal"
+        />
       </template>
     </modal-window>
   </button>
@@ -60,6 +72,8 @@ export default {
     };
   },
 
+  computed: {},
+
   methods: {
     openModal() {
       this.isModalOpen = true;
@@ -68,7 +82,5 @@ export default {
       this.isModalOpen = false;
     },
   },
-
-  computed: {},
 };
 </script>

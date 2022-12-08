@@ -1,75 +1,87 @@
 <template>
-  <div class="page" v-if="inspectedTask">
+  <div
+    v-if="inspectedTask"
+    class="page"
+  >
     <div class="page__body">
       <div class="page__toolbar flex-row center w-auto">
-        <complete-task-action :target="inspectedTask"></complete-task-action>
+        <complete-task-action :target="inspectedTask" />
         <button-with-modal-form
           :image="require('@/assets/icons/comment.png')"
-          :iconClass="'icon'"
+          :icon-class="'icon'"
           :tooltip="'Комментировать'"
         >
           <template #formSlot="{ closeModal }">
             <create-comment-form
-              @close="closeModal"
               :target="inspectedTask"
-            ></create-comment-form>
+              @close="closeModal"
+            />
           </template>
         </button-with-modal-form>
         <img
-          @click="editTaskMode = !editTaskMode"
           v-tooltip.bottom="'Редактировать'"
           class="icon"
           src="@/assets/icons/edit.png"
           alt=""
-        />
+          @click="editTaskMode = !editTaskMode"
+        >
         <delete-task-action
           :target="inspectedTask"
-          :iconClass="'icon'"
-        ></delete-task-action>
+          :icon-class="'icon'"
+        />
         <img
-          @click="lastPath"
           v-tooltip.bottom="'Назад'"
           class="icon"
           src="@/assets/icons/back.png"
           alt=""
-        />
+          @click="lastPath"
+        >
       </div>
-      <h2 class="page__title">Задача:{{ inspectedTask.title }}</h2>
+      <h2 class="page__title">
+        Задача:{{ inspectedTask.title }}
+      </h2>
       <div class="flex-row center">
-        <strong
-          >Отправитель:
+        <strong>Отправитель:
           <span>{{ getPerson(inspectedTask.sender) }}</span>
         </strong>
-        <strong
-          >Исполнитель:
+        <strong>Исполнитель:
           <span>{{ getPerson(inspectedTask.executor) }}</span>
         </strong>
       </div>
       <div class="flex-row center">
         <strong>Дата создания: {{ filteredDateOfCreation }}</strong>
-        <strong v-if="inspectedTask.isCompleted"
-          >Дата завершения: {{ filteredDateOfCompletion }}</strong
-        >
-        <strong v-if="inspectedTask.isCompleted"
-          >Затраченное время: {{ spendedTime }}</strong
-        >
+        <strong v-if="inspectedTask.isCompleted">Дата завершения: {{ filteredDateOfCompletion }}</strong>
+        <strong v-if="inspectedTask.isCompleted">Затраченное время: {{ spendedTime }}</strong>
       </div>
       <edit-task-form
-        @edited="editTaskMode = !editTaskMode"
         v-if="editTaskMode"
-        :taskList="taskList"
-        :userList="userList"
+        :task-list="taskList"
+        :user-list="userList"
         :target="inspectedTask"
-      ></edit-task-form>
-      <div v-if="!editTaskMode" class="flex-column center">
-        <h3 class="page__title">Описание задачи:</h3>
-        <div class="page__text">{{ inspectedTask.description }}</div>
+        @edited="editTaskMode = !editTaskMode"
+      />
+      <div
+        v-if="!editTaskMode"
+        class="flex-column center"
+      >
+        <h3 class="page__title">
+          Описание задачи:
+        </h3>
+        <div class="page__text">
+          {{ inspectedTask.description }}
+        </div>
       </div>
 
       <transition-group name="slide-fade">
         <template v-if="!editTaskMode">
-          <div v-for="comment in commentsStore.GET_COMMENTS" :key="comment.id">
-            <comment :target="comment" :userList="userList"></comment>
+          <div
+            v-for="comment in commentsStore.GET_COMMENTS"
+            :key="comment.id"
+          >
+            <comment
+              :target="comment"
+              :user-list="userList"
+            />
           </div>
         </template>
       </transition-group>

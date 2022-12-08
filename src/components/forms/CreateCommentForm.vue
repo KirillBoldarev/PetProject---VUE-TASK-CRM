@@ -1,34 +1,45 @@
 <template>
-  <section id="addTaskForm" class="form__container">
-    <form class="form__body" @submit.prevent="createCommentHandler">
+  <section
+    id="addTaskForm"
+    class="form__container"
+  >
+    <form
+      class="form__body"
+      @submit.prevent="createCommentHandler"
+    >
       <h2 class="form__title">
-        Добавить комментарий к задаче <br />
+        Добавить комментарий к задаче <br>
         "{{ target.title }}"
       </h2>
       <div class="flex-column center">
         <div class="flex-column center">
           <textarea
-            class="form__textbox"
-            @blur="v$.text.$touch"
-            @keyup.ctrl.enter="createCommentHandler"
-            v-model="text"
-            name="comment"
             id="task"
+            v-model="text"
+            class="form__textbox"
+            name="comment"
             cols="35"
             rows="15"
-          ></textarea>
+            @blur="v$.text.$touch"
+            @keyup.ctrl.enter="createCommentHandler"
+          />
           <transition>
             <small
               v-if="v$.text.$dirty && v$.text.required.$invalid"
               class="form__invalid"
-              >Поле обязательно для заполнения
+            >Поле обязательно для заполнения
             </small>
           </transition>
         </div>
       </div>
 
       <div class="flex-column center">
-        <button class="button" type="submit">Прокомментировать</button>
+        <button
+          class="button"
+          type="submit"
+        >
+          Прокомментировать
+        </button>
       </div>
     </form>
   </section>
@@ -44,8 +55,8 @@ import { useCommentsStore } from "@/stores/CommentsStore";
 import { mapStores } from "pinia";
 
 export default {
-  components: {},
   name: "AddTaskForm",
+  components: {},
   props: {
     target: {
       type: Object,

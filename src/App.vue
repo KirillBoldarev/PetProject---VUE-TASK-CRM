@@ -1,17 +1,20 @@
 <template>
   <header-layout
     class="main__header"
-    :taskList="tasksStore.GET_TASK_LIST"
-    :userList="usersStore.GET_USER_LIST"
-  ></header-layout>
+    :task-list="tasksStore.GET_TASK_LIST"
+    :user-list="usersStore.GET_USER_LIST"
+  />
   <main class="main__content">
-    <router-view :taskList="tasksStore.GET_TASK_LIST" :userList="usersStore.GET_USER_LIST"></router-view>
+    <router-view
+      :task-list="tasksStore.GET_TASK_LIST"
+      :user-list="usersStore.GET_USER_LIST"
+    />
   </main>
   <footer-layout
-    :taskList="tasksStore.GET_TASK_LIST"
-    :userList="usersStore.GET_USER_LIST"
+    :task-list="tasksStore.GET_TASK_LIST"
+    :user-list="usersStore.GET_USER_LIST"
     class="main__footer"
-  ></footer-layout>
+  />
 </template>
 
 <script>

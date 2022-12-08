@@ -1,27 +1,27 @@
 <template>
   <img
     v-if="target.isCompleted === true"
-    @click="confirmation"
     v-tooltip.bottom="'Отменить выполнение'"
     class="icon"
     src="@/assets/icons/check.png"
     alt=""
-  />
+    @click="confirmation"
+  >
 
   <img
     v-if="target.isCompleted === false"
-    @click="confirmation"
     v-tooltip.bottom="'Выполнить задачу'"
     class="icon"
     src="@/assets/icons/notСheck.png"
     alt=""
-  />
+    @click="confirmation"
+  >
 
   <confirm-dialog
-    :isDialogOpen="isDialogOpen"
+    :is-dialog-open="isDialogOpen"
     @confirm="completeTask"
     @close="isDialogOpen = false"
-  ></confirm-dialog>
+  />
 </template>
 
 <script>

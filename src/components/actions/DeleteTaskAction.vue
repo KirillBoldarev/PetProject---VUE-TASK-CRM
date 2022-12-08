@@ -1,16 +1,16 @@
 <template>
-    <img
-        v-tooltip.bottom="'Удалить'"
-        @click="confirmation"
-        :class="iconClass"
-        src="@/assets/icons/trash.png"
-        alt=""
-    >
-    <confirm-dialog
-        :isDialogOpen="isDialogOpen"
-        @confirm="deleteHandler"
-        @close="isDialogOpen = false"
-    />
+  <img
+    v-tooltip.bottom="'Удалить'"
+    :class="iconClass"
+    src="@/assets/icons/trash.png"
+    alt=""
+    @click="confirmation"
+  >
+  <confirm-dialog
+    :is-dialog-open="isDialogOpen"
+    @confirm="deleteHandler"
+    @close="isDialogOpen = false"
+  />
 </template>
 
 <script>
