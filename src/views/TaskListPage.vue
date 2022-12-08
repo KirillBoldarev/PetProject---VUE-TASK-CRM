@@ -1,6 +1,6 @@
 <template>
   <router-view
-    :task-list="taskList"
+    :taskList="taskList"
     :user-list="userList"
     :inspected-task="inspectedTaskStore.GET_INSPECTED_TASK"
   />
