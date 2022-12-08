@@ -15,4 +15,8 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {},
+  globals: {
+    process: 'readonly',
+    module: 'writable',
+  },
 };
