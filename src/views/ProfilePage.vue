@@ -27,7 +27,7 @@
       <edit-user-form
         v-if="editUserMode"
         :target="authenticatedStore.GET_AUTH"
-        :user-list="userList"
+        :userList="userList"
         :task-list="taskList"
         @edited="editUserMode = false"
       />
