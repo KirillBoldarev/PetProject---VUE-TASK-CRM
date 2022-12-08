@@ -76,64 +76,64 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { mapStores } from 'pinia'
-import { useTasksStore } from '@/stores/TasksStore'
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import { mapStores } from "pinia";
+import { useTasksStore } from "@/stores/TasksStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
 
 export default {
   components: {},
-  name: 'AddTaskForm',
+  name: "AddTaskForm",
   props: {
     target: {
       type: Object,
-      required: true
+      required: true,
     },
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  emits: ['close'],
-  setup () {
+  emits: ["close"],
+  setup() {
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
-  data () {
+  data() {
     return {
       executor: this.target,
       sender: null,
-      title: '',
-      description: ''
-    }
+      title: "",
+      description: "",
+    };
   },
 
-  validations () {
+  validations() {
     return {
       description: { required },
-      title: { required }
-    }
+      title: { required },
+    };
   },
   methods: {
-    createTaskHandler () {
+    createTaskHandler() {
       if (this.v$.$invalid) {
-        this.v$.$touch()
-        return
+        this.v$.$touch();
+        return;
       }
-      this.tasksStore.CREATE_TASK(this.newTask)
-      this.$emit('close')
-    }
+      this.tasksStore.CREATE_TASK(this.newTask);
+      this.$emit("close");
+    },
   },
 
   computed: {
     ...mapStores(useAuthenticatedStore, useTasksStore),
-    newTask () {
+    newTask() {
       return {
         id: this.taskId,
         title: this.title,
@@ -141,15 +141,15 @@ export default {
         sender: this.sender.id,
         executor: this.executor.id,
         isCompleted: false,
-        dateOfCreation: new Date()
-      }
+        dateOfCreation: new Date(),
+      };
     },
-    taskId () {
-      return Math.random().toString(36).substring(2, 9)
-    }
+    taskId() {
+      return Math.random().toString(36).substring(2, 9);
+    },
   },
-  beforeMount () {
-    this.sender = this.authenticatedStore.GET_AUTH
-  }
-}
+  beforeMount() {
+    this.sender = this.authenticatedStore.GET_AUTH;
+  },
+};
 </script>

@@ -41,8 +41,8 @@
               v-tooltip.right="'Введите номер мобильного телефона'"
               v-model="password"
               class="form__input"
-              type="password"
               name="password"
+              type="password"
             />
           </div>
           <div class="form__column">
@@ -71,80 +71,80 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required, minLength } from '@vuelidate/validators'
-import { useUsersStore } from '@/stores/UsersStore'
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
-import { mapStores } from 'pinia'
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength } from "@vuelidate/validators";
+import { useUsersStore } from "@/stores/UsersStore";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 export default {
-  setup () {
+  setup() {
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
 
-  data () {
+  data() {
     return {
-      login: '',
-      password: ''
-    }
+      login: "",
+      password: "",
+    };
   },
-  validations () {
+  validations() {
     return {
       login: { required, minLength: minLength(5) },
-      password: { required, minLength: minLength(5) }
-    }
+      password: { required, minLength: minLength(5) },
+    };
   },
   props: {
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  created () {
-    document.addEventListener('keypress', this.registrateUserOnKeypress)
+  created() {
+    document.addEventListener("keypress", this.registrateUserOnKeypress);
   },
-  beforeUnmount () {
-    document.removeEventListener('keypress', this.registrateUserOnKeypress)
+  beforeUnmount() {
+    document.removeEventListener("keypress", this.registrateUserOnKeypress);
   },
   methods: {
-    registrateUserHandler () {
+    registrateUserHandler() {
       if (this.v$.$invalid) {
-        this.v$.$touch()
-        return
+        this.v$.$touch();
+        return;
       }
-      this.usersStore.CREATE_USER(this.newUser)
-      this.authenticatedStore.AUTHENTICATION(this.newUser)
-      this.$emit('close')
+      this.usersStore.CREATE_USER(this.newUser);
+      this.authenticatedStore.AUTHENTICATION(this.newUser);
+      this.$emit("close");
     },
 
-    registrateUserOnKeypress (event) {
-      if (event.key === 'Enter') {
-        this.registrateUserHandler()
+    registrateUserOnKeypress(event) {
+      if (event.key === "Enter") {
+        this.registrateUserHandler();
       }
-    }
+    },
   },
 
   computed: {
     ...mapStores(useUsersStore, useAuthenticatedStore),
-    newUser () {
+    newUser() {
       return {
         login: this.login,
         password: this.password,
         id: this.userId,
-        role: this.userRole
-      }
+        role: this.userRole,
+      };
     },
-    userRole () {
+    userRole() {
       if (this.usersStore.GET_USER_LIST.length === 0) {
-        return 'Администратор'
+        return "Администратор";
       }
-      return 'Неавторизованный пользователь'
+      return "Неавторизованный пользователь";
     },
-    userId () {
-      return Math.random().toString(36).substring(2, 9)
-    }
-  }
-}
+    userId() {
+      return Math.random().toString(36).substring(2, 9);
+    },
+  },
+};
 </script>

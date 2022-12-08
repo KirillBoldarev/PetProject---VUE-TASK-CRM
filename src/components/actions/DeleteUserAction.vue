@@ -1,23 +1,23 @@
 <template>
-  <img
-    v-tooltip.bottom="'Удалить пользователя'"
-    @click="confirmation"
-    :class="iconClass"
-    src="@/assets/icons/trash.png"
-    alt=""
-  />
-  <confirm-dialog
-    :isDialogOpen="isDialogOpen"
-    @confirm="deleteUserHandler"
-    @close="isDialogOpen = false"
-  ></confirm-dialog>
+    <img
+        v-tooltip.bottom="'Удалить пользователя'"
+        @click="confirmation"
+        :class="iconClass"
+        src="@/assets/icons/trash.png"
+        alt=""
+    >
+    <confirm-dialog
+        :isDialogOpen="isDialogOpen"
+        @confirm="deleteUserHandler"
+        @close="isDialogOpen = false"
+    />
 </template>
 
 <script>
-import ConfirmDialog from '@/components/tools/ConfirmDialog.vue'
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin'
-import { mapStores } from 'pinia'
-import { useUsersStore } from '@/stores/UsersStore'
+import { mapStores } from 'pinia';
+import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
+import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { useUsersStore } from '@/stores/UsersStore';
 
 export default {
   name: 'DeleteUserButton',
@@ -35,18 +35,18 @@ export default {
     }
   },
 
-  data () {
-    return {}
+  data() {
+    return {};
   },
 
   methods: {
-    deleteUserHandler () {
-      this.usersStore.DELETE_USER(this.target)
+    deleteUserHandler() {
+      this.usersStore.DELETE_USER(this.target);
     }
   },
 
   computed: {
     ...mapStores(useUsersStore)
   }
-}
+};
 </script>

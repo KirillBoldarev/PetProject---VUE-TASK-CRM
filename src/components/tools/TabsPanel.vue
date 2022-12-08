@@ -16,19 +16,19 @@ export default {
   props: {
     tabs: {
       type: Array,
-      required: true
+      required: true,
     },
     selectedTab: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
-  emits: ['changeTab'],
+  emits: ["changeTab"],
   methods: {
-    changeTab (tabName) {
-      this.$emit('changeTab', tabName)
-    }
+    changeTab(tabName) {
+      this.$emit("changeTab", tabName);
+    },
   },
-  components: {}
-}
+  components: {},
+};
 </script>

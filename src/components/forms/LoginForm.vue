@@ -65,83 +65,84 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
-import { mapStores } from 'pinia'
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore";
+import { mapStores } from "pinia";
 
 export default {
-  setup () {
+  setup() {
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
 
   components: {},
-  name: 'LoginForm',
+  name: "LoginForm",
 
   props: {
     userList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      login: '',
-      password: '',
-      incorrectData: false
-    }
+      login: "",
+      password: "",
+      incorrectData: false,
+    };
   },
-  validations () {
+  validations() {
     return {
       login: { required },
-      password: { required }
-    }
+      password: { required },
+    };
   },
 
-  created () {
-    document.addEventListener('keypress', this.authenticateUserOnKeypress)
+  created() {
+    document.addEventListener("keypress", this.authenticateUserOnKeypress);
   },
-  beforeUnmount () {
-    document.removeEventListener('keypress', this.authenticateUserOnKeypress)
+  beforeUnmount() {
+    document.removeEventListener("keypress", this.authenticateUserOnKeypress);
   },
 
   methods: {
-    authenticateUserHandler () {
+    authenticateUserHandler() {
       if (this.v$.$invalid) {
-        this.v$.$touch()
+        this.v$.$touch();
       } else {
         const foundedUser = this.userList.find(
           (user) => user.login === this.login
-        )
+        );
         if (foundedUser === undefined) {
-          this.incorrectData = true
+          this.incorrectData = true;
           setTimeout(() => {
-            this.incorrectData = false
-          }, 3000)
-          return
+            this.incorrectData = false;
+          }, 3000);
+          return;
         }
         if (foundedUser.password !== this.password) {
-          this.incorrectData = true
+          this.incorrectData = true;
           setTimeout(() => {
-            this.incorrectData = false
-          }, 3000)
-          return
+            this.incorrectData = false;
+          }, 3000);
+          return;
         }
-        this.authenticatedStore.AUTHENTICATION(foundedUser)
-        this.$emit('close')
+        this.authenticatedStore.AUTHENTICATION(foundedUser);
+        this.$emit("close");
       }
     },
 
-    authenticateUserOnKeypress (event) {
-      if (event.key === 'Enter') {
-        this.authenticateUserHandler()
+    authenticateUserOnKeypress(event) {
+      if (event.key == "Enter") {
+        this.authenticateUserHandler();
+        console.log(someVariable);
       }
-    }
+    },
   },
   computed: {
-    ...mapStores(useAuthenticatedStore)
-  }
-}
+    ...mapStores(useAuthenticatedStore),
+  },
+};
 </script>

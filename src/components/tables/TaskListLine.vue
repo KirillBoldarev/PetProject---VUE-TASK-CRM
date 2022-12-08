@@ -12,8 +12,8 @@
 
   <div class="table__column">
     <router-link
-      @click="inspectTask"
       :to="{ name: 'InspectedTask', params: { id: task.id } }"
+      @click="inspectTask"
       >{{ task.title }}</router-link
     >
   </div>
@@ -21,12 +21,12 @@
     <button-with-modal-form
       :image="require('@/assets/icons/comment.png')"
       :tooltip="'Комментировать'"
-      :iconClass="'icon--mini'"
+      :icon-class="'icon--mini'"
     >
       <template #formSlot="{ closeModal }">
         <create-comment-form
-          @close="closeModal"
           :target="task"
+          @close="closeModal"
         ></create-comment-form>
       </template>
     </button-with-modal-form>
@@ -38,36 +38,36 @@
           authenticatedStore.GET_AUTH.role === 'Администратор')
       "
       :image="require('@/assets/icons/edit.png')"
-      :iconClass="'icon--mini'"
+      :icon-class="'icon--mini'"
       :tooltip="'Редактировать'"
     >
       <template #formSlot="{ closeModal }">
         <edit-task-form
-          @close="closeModal"
-          :taskList="taskList"
-          :userList="userList"
+          :task-list="taskList"
+          :user-list="userList"
           :target="task"
+          @close="closeModal"
         ></edit-task-form>
       </template>
     </button-with-modal-form>
 
     <delete-task-action
       :target="task"
-      :iconClass="'icon--mini'"
+      :icon-class="'icon--mini'"
     ></delete-task-action>
   </div>
 </template>
 
 <script>
-import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue'
-import EditTaskForm from '@/components/forms/EditTaskForm.vue'
-import CreateCommentForm from '@/components/forms/CreateCommentForm.vue'
-import DeleteTaskAction from '@/components/actions/DeleteTaskAction.vue'
-import CompleteTaskAction from '@/components/actions/CompleteTaskAction.vue'
+import { mapStores } from "pinia";
+import ButtonWithModalForm from "@/components/tools/ButtonWithModalForm.vue";
+import EditTaskForm from "@/components/forms/EditTaskForm.vue";
+import CreateCommentForm from "@/components/forms/CreateCommentForm.vue";
+import DeleteTaskAction from "@/components/actions/DeleteTaskAction.vue";
+import CompleteTaskAction from "@/components/actions/CompleteTaskAction.vue";
 
-import { useInspectedTaskStore } from '@/stores/InspectedTaskStore'
-import { useAuthenticatedStore } from '@/stores/AuthenticatedStore'
-import { mapStores } from 'pinia'
+import { useInspectedTaskStore } from "@/stores/InspectedTaskStore.js";
+import { useAuthenticatedStore } from "@/stores/AuthenticatedStore.js";
 
 export default {
   components: {
@@ -75,51 +75,51 @@ export default {
     EditTaskForm,
     CreateCommentForm,
     DeleteTaskAction,
-    CompleteTaskAction
+    CompleteTaskAction,
   },
 
   props: {
     taskList: {
       type: Array,
-      required: true
+      required: true,
     },
     userList: {
       type: Array,
-      required: true
+      required: true,
     },
     task: {
       type: Object,
-      required: true
+      required: true,
     },
     currentPage: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
-  data () {
-    return {}
+  data() {
+    return {};
   },
 
   methods: {
-    inspectTask () {
-      this.inspectedTaskStore.INSPECT_TASK(this.task)
+    inspectTask() {
+      this.inspectedTaskStore.INSPECT_TASK(this.task);
     },
 
-    getPerson (id) {
-      const person = this.userList.find((user) => user.id === id)
+    getPerson(id) {
+      const person = this.userList.find((user) => user.id === id);
       if (!person) {
-        return 'Пользователь удален'
+        return "Пользователь удален";
       }
       if (!person.firstName || !person.secondName) {
-        return `${person.login}`
+        return `${person.login}`;
       }
-      return `${person.firstName} ${person.secondName}`
-    }
+      return `${person.firstName} ${person.secondName}`;
+    },
   },
 
   computed: {
-    ...mapStores(useInspectedTaskStore, useAuthenticatedStore)
-  }
-}
+    ...mapStores(useInspectedTaskStore, useAuthenticatedStore),
+  },
+};
 </script>

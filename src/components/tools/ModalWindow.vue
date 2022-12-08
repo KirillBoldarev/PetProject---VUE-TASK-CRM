@@ -1,4 +1,3 @@
-
 <template>
   <teleport to="#modal">
     <transition>
@@ -34,33 +33,33 @@ export default {
   props: {
     isOpen: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
-  emits: ['close', 'ok'],
-  mounted () {
-    document.addEventListener('keydown', this.closeOnKeydown)
+  emits: ["close", "ok"],
+  mounted() {
+    document.addEventListener("keydown", this.closeOnKeydown);
   },
-  beforeUnmount () {
-    document.removeEventListener('keydown', this.closeOnKeydown)
+  beforeUnmount() {
+    document.removeEventListener("keydown", this.closeOnKeydown);
   },
   // eslint-disable-next-line no-dupe-keys
   emits: {
     ok: null,
-    close: null
+    close: null,
   },
   methods: {
-    closeModal () {
-      this.$emit('close')
+    closeModal() {
+      this.$emit("close");
     },
-    confirm () {
-      this.$emit('ok')
+    confirm() {
+      this.$emit("ok");
     },
-    closeOnKeydown (event) {
-      if (this.isOpen === true && event.key === 'Escape') {
-        this.closeModal()
+    closeOnKeydown(event) {
+      if (this.isOpen === true && event.key === "Escape") {
+        this.closeModal();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
