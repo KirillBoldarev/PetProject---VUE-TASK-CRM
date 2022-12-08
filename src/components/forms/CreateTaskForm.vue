@@ -12,7 +12,7 @@
           name="executor"
         >
           <option
-            v-for="user in userList"
+            v-for="user in usersStore.GET_USER_LIST"
             :key="user.id"
             class="form__option"
             :value="user"
@@ -81,6 +81,7 @@ import { required } from '@vuelidate/validators';
 import { mapStores } from 'pinia';
 import { useTasksStore } from '@/stores/TasksStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { useUsersStore } from '@/stores/UsersStore';
 
 export default {
   name: 'AddTaskForm',
@@ -88,14 +89,6 @@ export default {
   props: {
     target: {
       type: Object,
-      required: true,
-    },
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
       required: true,
     },
   },
@@ -121,7 +114,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useAuthenticatedStore, useTasksStore),
+    ...mapStores(useAuthenticatedStore, useTasksStore, useUsersStore),
     newTask() {
       return {
         id: this.taskId,

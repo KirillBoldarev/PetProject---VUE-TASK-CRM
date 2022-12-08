@@ -176,10 +176,6 @@ export default {
       type: Object,
       required: true,
     },
-    userList: {
-      type: Array,
-      required: true,
-    },
   },
   emits: ['edited', 'close'],
 

@@ -19,7 +19,7 @@
             name="sender"
           >
             <option
-              v-for="user in userList"
+              v-for="user in usersStore.GET_USER_LIST"
               :key="user.id"
               class="form__option"
               :value="user.id"
@@ -41,7 +41,7 @@
             name="executor"
           >
             <option
-              v-for="user in userList"
+              v-for="user in usersStore.GET_USER_LIST"
               :key="user.id"
               class="form__option"
               :value="user.id"
@@ -116,6 +116,7 @@ import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
 import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
 import { useTasksStore } from '@/stores/TasksStore';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
+import { useUsersStore } from '@/stores/UsersStore';
 
 export default {
   name: 'EditTaskForm',
@@ -126,14 +127,6 @@ export default {
   props: {
     target: {
       type: Object,
-      required: true,
-    },
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
       required: true,
     },
   },
@@ -157,7 +150,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useTasksStore, useInspectedTaskStore),
+    ...mapStores(useTasksStore, useInspectedTaskStore, useUsersStore),
     changedTask() {
       return {
         // all keys from target object
