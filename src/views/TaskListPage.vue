@@ -1,8 +1,8 @@
 <template>
   <router-view
     :taskList="taskList"
-    :user-list="userList"
-    :inspected-task="inspectedTaskStore.GET_INSPECTED_TASK"
+    :userList="userList"
+    :inspectedTask="inspectedTaskStore.GET_INSPECTED_TASK"
   />
   <task-list
     v-if="$route.name === 'TaskList'"
