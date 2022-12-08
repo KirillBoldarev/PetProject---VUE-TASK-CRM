@@ -22,15 +22,6 @@ import { mapStores } from 'pinia';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 
 export default {
-  methods: {},
-  computed: {
-    ...mapStores(useAuthenticatedStore),
-    admin() {
-      const admin = this.userList.find((user) => user.role === 'Администратор');
-      return `${admin.firstName} ${admin.secondName}`;
-    },
-  },
-
   props: {
     taskList: {
       type: Array,
@@ -41,5 +32,13 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapStores(useAuthenticatedStore),
+    admin() {
+      const admin = this.userList.find((user) => user.role === 'Администратор');
+      return `${admin.firstName} ${admin.secondName}`;
+    },
+  },
+  methods: {},
 };
 </script>

@@ -111,24 +111,6 @@ export default {
       editTaskMode: false,
     };
   },
-
-  methods: {
-    lastPath() {
-      const lastPathRoute = this.$router.options.history.state.back;
-      return this.$router.push(lastPathRoute);
-    },
-
-    getPerson(role) {
-      const person = this.userList.find((user) => user.id === role);
-      if (!person) {
-        return 'Пользователь удален';
-      }
-      if (!person.firstName || !person.secondName) {
-        return `${person.login}`;
-      }
-      return `${person.firstName} ${person.secondName}`;
-    },
-  },
   computed: {
     ...mapStores(useInspectedTaskStore, useCommentsStore),
     filteredDateOfCreation() {
@@ -146,6 +128,7 @@ export default {
       return filterDate(spendedTime, 'time');
     },
   },
+
   beforeMount() {
     this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK();
     this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id);
@@ -153,6 +136,23 @@ export default {
   unmounted() {
     this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
     this.commentsStore.CLEAR_COMMENTS();
+  },
+  methods: {
+    lastPath() {
+      const lastPathRoute = this.$router.options.history.state.back;
+      return this.$router.push(lastPathRoute);
+    },
+
+    getPerson(role) {
+      const person = this.userList.find((user) => user.id === role);
+      if (!person) {
+        return 'Пользователь удален';
+      }
+      if (!person.firstName || !person.secondName) {
+        return `${person.login}`;
+      }
+      return `${person.firstName} ${person.secondName}`;
+    },
   },
 };
 </script>

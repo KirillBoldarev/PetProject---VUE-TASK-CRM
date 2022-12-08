@@ -88,14 +88,13 @@ export default {
   date() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useAuthenticatedStore),
+  },
   methods: {
     info() {
       console.log(this.$store);
     },
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore),
   },
 };
 </script>

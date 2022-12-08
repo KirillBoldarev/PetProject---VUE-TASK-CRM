@@ -68,6 +68,7 @@
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { useUsersStore } from '@/stores/UsersStore';
 import { mapStores } from 'pinia';
 
 export default {
@@ -75,12 +76,8 @@ export default {
 
   components: {},
 
-  props: {
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
+  emits: ['close'],
   setup() {
     return {
       v$: useVuelidate(),
@@ -99,10 +96,14 @@ export default {
       password: { required },
     };
   },
+  computed: {
+    ...mapStores(useAuthenticatedStore, useUsersStore),
+  },
 
   created() {
     document.addEventListener('keypress', this.authenticateUserOnKeypress);
   },
+
   beforeUnmount() {
     document.removeEventListener('keypress', this.authenticateUserOnKeypress);
   },
@@ -112,7 +113,7 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch();
       } else {
-        const foundedUser = this.userList.find(
+        const foundedUser = this.usersStore.GET_USER_LIST.find(
           (user) => user.login === this.login
         );
         if (foundedUser === undefined) {
@@ -137,12 +138,8 @@ export default {
     authenticateUserOnKeypress(event) {
       if (event.key == 'Enter') {
         this.authenticateUserHandler();
-        console.log(someVariable);
       }
     },
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore),
   },
 };
 </script>

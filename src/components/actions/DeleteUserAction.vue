@@ -32,21 +32,20 @@ export default {
     iconClass: {
       type: String,
       required: false,
+      default: '',
     },
   },
 
   data() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useUsersStore),
+  },
   methods: {
     deleteUserHandler() {
       this.usersStore.DELETE_USER(this.target);
     },
-  },
-
-  computed: {
-    ...mapStores(useUsersStore),
   },
 };
 </script>

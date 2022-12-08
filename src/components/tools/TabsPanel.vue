@@ -22,6 +22,7 @@ export default {
     selectedTab: {
       type: String,
       required: false,
+      default: '',
     },
   },
   emits: ['changeTab'],

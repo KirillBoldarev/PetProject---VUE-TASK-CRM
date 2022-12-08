@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/v-on-event-hyphenation -->
 <template>
   <div class="page">
     <h2 class="page__title">Управление задачами</h2>

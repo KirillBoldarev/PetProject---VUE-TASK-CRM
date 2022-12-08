@@ -1,11 +1,11 @@
-@import '_var.scss';
+
 .button {
   font-size: 14px;
   font-weight: 700;
   color: $primary-dark;
   padding: 10px 2px;
   display: inline-block;
-  float: right;
+  /* float: right; */
   text-decoration: none;
   width: auto;
   height: 50px;

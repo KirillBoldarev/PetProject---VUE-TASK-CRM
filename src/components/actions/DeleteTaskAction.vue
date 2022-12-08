@@ -33,13 +33,16 @@ export default {
     iconClass: {
       type: String,
       required: false,
+      default: '',
     },
   },
 
   data() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useInspectedTaskStore, useTasksStore),
+  },
   methods: {
     deleteHandler() {
       if (
@@ -53,10 +56,6 @@ export default {
       }
       this.tasksStore.DELETE_TASK(this.target);
     },
-  },
-
-  computed: {
-    ...mapStores(useInspectedTaskStore, useTasksStore),
   },
 };
 </script>

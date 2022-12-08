@@ -39,18 +39,22 @@ export default {
     label: {
       type: String,
       required: false,
+      default: '',
     },
     image: {
       type: String,
       required: false,
+      default: '',
     },
     iconClass: {
       type: String,
       required: false,
+      default: '',
     },
     tooltip: {
       type: String,
       required: false,
+      default: '',
     },
   },
 

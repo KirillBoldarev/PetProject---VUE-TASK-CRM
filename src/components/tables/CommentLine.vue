@@ -27,7 +27,7 @@ export default {
   props: {
     target: {
       type: Object,
-      required: false,
+      required: true,
     },
     userList: {
       type: Array,

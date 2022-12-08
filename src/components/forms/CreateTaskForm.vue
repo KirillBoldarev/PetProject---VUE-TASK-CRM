@@ -120,17 +120,6 @@ export default {
       title: { required },
     };
   },
-  methods: {
-    createTaskHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.tasksStore.CREATE_TASK(this.newTask);
-      this.$emit('close');
-    },
-  },
-
   computed: {
     ...mapStores(useAuthenticatedStore, useTasksStore),
     newTask() {
@@ -148,8 +137,19 @@ export default {
       return Math.random().toString(36).substring(2, 9);
     },
   },
+
   beforeMount() {
     this.sender = this.authenticatedStore.GET_AUTH;
+  },
+  methods: {
+    createTaskHandler() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+      this.tasksStore.CREATE_TASK(this.newTask);
+      this.$emit('close');
+    },
   },
 };
 </script>

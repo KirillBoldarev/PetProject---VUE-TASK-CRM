@@ -84,6 +84,7 @@ export default {
       required: true,
     },
   },
+  emits: ['close'],
   setup() {
     return {
       v$: useVuelidate(),
@@ -102,30 +103,6 @@ export default {
       password: { required, minLength: minLength(5) },
     };
   },
-  created() {
-    document.addEventListener('keypress', this.registrateUserOnKeypress);
-  },
-  beforeUnmount() {
-    document.removeEventListener('keypress', this.registrateUserOnKeypress);
-  },
-  methods: {
-    registrateUserHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.usersStore.CREATE_USER(this.newUser);
-      this.authenticatedStore.AUTHENTICATION(this.newUser);
-      this.$emit('close');
-    },
-
-    registrateUserOnKeypress(event) {
-      if (event.key === 'Enter') {
-        this.registrateUserHandler();
-      }
-    },
-  },
-
   computed: {
     ...mapStores(useUsersStore, useAuthenticatedStore),
     newUser() {
@@ -144,6 +121,30 @@ export default {
     },
     userId() {
       return Math.random().toString(36).substring(2, 9);
+    },
+  },
+  created() {
+    document.addEventListener('keypress', this.registrateUserOnKeypress);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keypress', this.registrateUserOnKeypress);
+  },
+
+  methods: {
+    registrateUserHandler() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+      this.usersStore.CREATE_USER(this.newUser);
+      this.authenticatedStore.AUTHENTICATION(this.newUser);
+      this.$emit('close');
+    },
+
+    registrateUserOnKeypress(event) {
+      if (event.key === 'Enter') {
+        this.registrateUserHandler();
+      }
     },
   },
 };

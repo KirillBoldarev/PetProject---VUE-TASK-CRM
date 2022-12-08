@@ -46,7 +46,9 @@ export default {
   data() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useTasksStore, useInspectedTaskStore),
+  },
   methods: {
     completeTask() {
       this.tasksStore.COMPLETE_TASK(this.target);
@@ -57,10 +59,6 @@ export default {
         this.inspectedTaskStore.COMPLETE_INSPECTED_TASK();
       }
     },
-  },
-
-  computed: {
-    ...mapStores(useTasksStore, useInspectedTaskStore),
   },
 };
 </script>

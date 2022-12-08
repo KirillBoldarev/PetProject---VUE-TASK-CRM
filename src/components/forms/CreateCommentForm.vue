@@ -71,16 +71,6 @@ export default {
       text: { required },
     };
   },
-  methods: {
-    createCommentHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.commentsStore.CREATE_COMMENT(this.newComment);
-      this.$emit('close');
-    },
-  },
 
   computed: {
     ...mapStores(useAuthenticatedStore, useCommentsStore),
@@ -100,9 +90,21 @@ export default {
       return filterDate(new Date(), 'datetime');
     },
   },
+
   beforeMount() {
     this.author = this.authenticatedStore.GET_AUTH;
     this.commentsStore.INITIALIZE_COMMENTS(this.target.id);
+  },
+
+  methods: {
+    createCommentHandler() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+      this.commentsStore.CREATE_COMMENT(this.newComment);
+      this.$emit('close');
+    },
   },
 };
 </script>

@@ -122,15 +122,13 @@ export default {
   data() {
     return {};
   },
-
-  created() {},
-
   computed: {
     ...mapStores(useAuthenticatedStore, useUsersStore),
   },
 
-  methods: {},
-
   watch: {},
+  created() {},
+
+  methods: {},
 };
 </script>

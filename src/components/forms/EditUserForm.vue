@@ -208,23 +208,6 @@ export default {
   },
 
   ROLE: ['Неавторизованный пользователь', 'Пользователь', 'Администратор'],
-
-  created() {},
-  methods: {
-    editUser() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.usersStore.EDIT_USER(this.changedUser);
-      if (this.changedUser.id === this.authenticatedStore.GET_AUTH.id) {
-        this.authenticatedStore.UPDATE_AUTHENTICATED(this.changedUser);
-      }
-      this.$emit('edited');
-      this.$emit('close');
-    },
-  },
-
   computed: {
     ...mapStores(useUsersStore, useAuthenticatedStore),
     changedUser() {
@@ -238,6 +221,21 @@ export default {
         password: this.password,
         role: this.role,
       };
+    },
+  },
+  created() {},
+  methods: {
+    editUser() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+      this.usersStore.EDIT_USER(this.changedUser);
+      if (this.changedUser.id === this.authenticatedStore.GET_AUTH.id) {
+        this.authenticatedStore.UPDATE_AUTHENTICATED(this.changedUser);
+      }
+      this.$emit('edited');
+      this.$emit('close');
     },
   },
 };

@@ -69,11 +69,12 @@ export default {
       authenticated: null,
     };
   },
-
+  computed: {
+    ...mapStores(useAuthenticatedStore),
+  },
   beforeMount() {
     this.authenticated = this.authenticatedStore.GET_AUTH;
   },
-
   methods: {
     switchEditUserMode() {
       this.editUserMode = !this.editUserMode;
@@ -83,10 +84,6 @@ export default {
       this.showTaskMode = !this.showTaskMode;
       this.editUserMode = false;
     },
-  },
-
-  computed: {
-    ...mapStores(useAuthenticatedStore),
   },
 };
 </script>

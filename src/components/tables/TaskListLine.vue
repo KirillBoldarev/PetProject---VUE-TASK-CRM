@@ -95,7 +95,9 @@ export default {
   data() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useInspectedTaskStore, useAuthenticatedStore),
+  },
   methods: {
     inspectTask() {
       this.inspectedTaskStore.INSPECT_TASK(this.task);
@@ -111,10 +113,6 @@ export default {
       }
       return `${person.firstName} ${person.secondName}`;
     },
-  },
-
-  computed: {
-    ...mapStores(useInspectedTaskStore, useAuthenticatedStore),
   },
 };
 </script>

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-/* import localbase from '@/js/libs/localbase'; */
-import localbase from '../js/libs/localbase';
+import localbase from '@/js/libs/localbase';
 
 export const useUsersStore = defineStore('users', {
   state: () => ({

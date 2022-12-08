@@ -1,25 +1,9 @@
 <template>
-  <header-layout
-    class="main__header"
-    :task-list="tasksStore.GET_TASK_LIST"
-    :user-list="usersStore.GET_USER_LIST"
-  />
-  <main class="main__content">
-    <router-view
-      :task-list="tasksStore.GET_TASK_LIST"
-      :user-list="usersStore.GET_USER_LIST"
-    />
-  </main>
-  <footer-layout
-    :task-list="tasksStore.GET_TASK_LIST"
-    :user-list="usersStore.GET_USER_LIST"
-    class="main__footer"
-  />
+  <main-layout v-if="requireDataReceived"></main-layout>
 </template>
 
 <script>
-import HeaderLayout from './components/layouts/HeaderLayout.vue';
-import FooterLayout from './components/layouts/FooterLayout.vue';
+import MainLayout from './components/layouts/MainLayout.vue';
 import { useUsersStore } from './stores/UsersStore';
 import { useCommentsStore } from './stores/CommentsStore';
 import { useAuthenticatedStore } from './stores/AuthenticatedStore';
@@ -30,16 +14,12 @@ import { useScreenResolutionStore } from './stores/ScreenResolution';
 import { mapStores } from 'pinia';
 
 export default {
-  components: { HeaderLayout, FooterLayout },
+  components: { MainLayout },
   data() {
-    return {};
+    return {
+      requireDataReceived: false,
+    };
   },
-  methods: {
-    info() {
-      console.log('this.usersStore', this.usersStore);
-    },
-  },
-
   computed: {
     ...mapStores(
       useUsersStore,
@@ -50,7 +30,6 @@ export default {
       useCommentsStore
     ),
   },
-
   created() {
     const mediaQuery = window.matchMedia('(min-width: 810px)');
     if (mediaQuery.matches) {
@@ -69,9 +48,14 @@ export default {
   },
 
   mounted() {
-    this.usersStore.INITIALIZE_USER_LIST();
-    this.authenticatedStore.INITIALIZE_AUTHENTICATED();
-    this.tasksStore.INITIALIZE_TASK_LIST();
+    Promise.allSettled([
+      this.usersStore.INITIALIZE_USER_LIST(),
+      this.authenticatedStore.INITIALIZE_AUTHENTICATED(),
+      this.tasksStore.INITIALIZE_TASK_LIST(),
+    ]).then(() => {
+      this.requireDataReceived = true;
+    });
   },
+  methods: {},
 };
 </script>

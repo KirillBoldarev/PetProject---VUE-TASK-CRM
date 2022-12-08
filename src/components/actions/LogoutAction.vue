@@ -27,15 +27,14 @@ export default {
   data() {
     return {};
   },
-
+  computed: {
+    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
+  },
   methods: {
     logoutHandler() {
       this.authenticatedStore.LOGOUT();
       this.$router.push('/');
     },
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
   },
 };
 </script>
