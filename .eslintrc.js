@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    browser: true,
+    commonjs: true,
+    node: true,
     es2021: true,
   },
   extends: [
@@ -15,8 +16,4 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {},
-  globals: {
-    process: 'readonly',
-    module: 'writable',
-  },
 };
