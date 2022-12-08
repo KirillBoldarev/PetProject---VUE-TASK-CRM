@@ -6,7 +6,7 @@
   />
   <task-list
     v-if="$route.name === 'TaskList'"
-    :user-list="userList"
+    :userList="userList"
     :task-list="taskList"
   />
 </template>
