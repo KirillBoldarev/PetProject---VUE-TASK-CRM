@@ -9,9 +9,13 @@
   min-width: 100%;
   width: 100%;
   max-height: 100%;
-  padding: 5px;
+  padding: 5px 15px;
   border-radius: 40px 40px 30px 30px;
   background: #ffecaa;
+
+  @media (max-width:880px) {
+      padding: 5px;
+  }
 
   //Скрытие скроллбара
   overflow-y: auto;

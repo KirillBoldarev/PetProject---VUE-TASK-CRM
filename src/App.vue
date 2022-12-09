@@ -9,7 +9,6 @@ import { useCommentsStore } from './stores/CommentsStore';
 import { useAuthenticatedStore } from './stores/AuthenticatedStore';
 import { useInspectedTaskStore } from './stores/InspectedTaskStore';
 import { useTasksStore } from './stores/TasksStore';
-import { useScreenResolutionStore } from './stores/ScreenResolution';
 
 import { mapStores } from 'pinia';
 
@@ -26,26 +25,10 @@ export default {
       useAuthenticatedStore,
       useTasksStore,
       useInspectedTaskStore,
-      useScreenResolutionStore,
       useCommentsStore
     ),
   },
-  created() {
-    const mediaQuery = window.matchMedia('(min-width: 810px)');
-    if (mediaQuery.matches) {
-      this.screenResolutionStore.SET_DESKTOP();
-    } else {
-      this.screenResolutionStore.SET_MOBILE();
-    }
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 810) {
-        this.screenResolutionStore.SET_DESKTOP();
-      } else {
-        this.screenResolutionStore.SET_MOBILE();
-      }
-    });
-  },
+  created() {},
 
   mounted() {
     Promise.allSettled([

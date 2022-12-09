@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
+import { Vue3Mq } from 'vue3-mq';
 
 // STYLES
 import './styles/style.scss';
@@ -14,7 +15,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
-// PINIA
+// PINIA - вынести в отдельный файл
 import { createPinia } from 'pinia';
 import { subscribtionsForActionsUponComments } from './stores/plugins/subscribtionsForActionsUponComments';
 import { subscribtionsForActionsUponTasks } from './stores/plugins/subscribtionsForActionsUponTasks';
@@ -28,5 +29,8 @@ createApp(App)
   .use(pinia)
   .use(router)
   .use(PrimeVue)
+  .use(Vue3Mq, {
+    preset: 'devices',
+  })
   .directive('tooltip', Tooltip)
   .mount('#app');

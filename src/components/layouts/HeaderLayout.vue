@@ -18,19 +18,22 @@
           class="header__link"
           :to="link.url"
         >
-          <img
-            v-if="isMobile"
-            v-tooltip.bottom="link.name"
-            class="icon--max"
-            :src="getImgUrl(link.icon)"
-          />
-          <span v-if="isDesktop">{{ link.name }}</span>
+          <mq-responsive target="tablet-">
+            <img
+              v-tooltip.bottom="link.name"
+              class="icon--max"
+              :src="getImgUrl(link.icon)"
+            />
+          </mq-responsive>
+          <mq-responsive target="laptop+"
+            ><span>{{ link.name }}</span></mq-responsive
+          >
         </router-link>
       </div>
     </div>
 
     <div v-if="authenticatedStore.IS_AUTH" class="flex-column center">
-      <template v-if="isMobile">
+      <mq-responsive target="phone">
         <img
           class="icon--max"
           src="@/assets/icons/menu.png"
@@ -43,20 +46,18 @@
           :model="authMenuItems"
           :popup="true"
         />
-      </template>
+      </mq-responsive>
 
-      <button
-        v-show="isDesktop"
-        class="button"
-        @click="$router.push('/profile')"
-      >
-        Личный кабинет
-      </button>
-      <logout-action ref="logout" />
+      <mq-responsive target="tablet+">
+        <button class="button" @click="$router.push('/profile')">
+          Личный кабинет
+        </button>
+        <logout-action ref="logout" />
+      </mq-responsive>
     </div>
 
     <div v-if="!authenticatedStore.IS_AUTH" class="flex-column center">
-      <template v-if="isMobile">
+      <mq-responsive target="phone">
         <img
           class="icon--max"
           src="@/assets/icons/menu.png"
@@ -69,37 +70,37 @@
           :model="guestMenuItems"
           :popup="true"
         />
-      </template>
+      </mq-responsive>
 
-      <button-with-modal-form v-show="isDesktop" ref="signIn" label="Войти">
-        <template #formSlot="{ closeModal }">
-          <login-form @close="closeModal" />
-        </template>
-      </button-with-modal-form>
+      <mq-responsive target="tablet+">
+        <button-with-modal-form ref="signIn" label="Войти">
+          <template #formSlot="{ closeModal }">
+            <login-form @close="closeModal" />
+          </template>
+        </button-with-modal-form>
+      </mq-responsive>
 
-      <button-with-modal-form
-        v-show="isDesktop"
-        ref="signUp"
-        label="Зарегистрироваться"
-      >
-        <template #formSlot="{ closeModal }">
-          <regisitration-form @close="closeModal" />
-        </template>
-      </button-with-modal-form>
+      <mq-responsive target="tablet+">
+        <button-with-modal-form ref="signUp" label="Зарегистрироваться">
+          <template #formSlot="{ closeModal }">
+            <regisitration-form @close="closeModal" />
+          </template>
+        </button-with-modal-form>
+      </mq-responsive>
     </div>
   </header>
 </template>
 
 <script>
-import { mapStores } from 'pinia';
 import DropdownMenu from 'primevue/menu';
 import LogoutAction from '@/components/actions/LogoutAction.vue';
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import RegisitrationForm from '@/components/forms/RegistrationForm.vue';
 import LoginForm from '@/components/forms/LoginForm.vue';
+import { MqResponsive } from 'vue3-mq';
 
-import { useScreenResolutionStore } from '@/stores/ScreenResolution';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { mapStores } from 'pinia';
 
 export default {
   name: 'HeaderLayout',
@@ -109,6 +110,7 @@ export default {
     LoginForm,
     LogoutAction,
     DropdownMenu,
+    MqResponsive,
   },
 
   props: {},
@@ -163,13 +165,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
-    isMobile() {
-      return this.screenResolutionStore.IS_MOBILE;
-    },
-    isDesktop() {
-      return this.screenResolutionStore.IS_DESKTOP;
-    },
+    ...mapStores(useAuthenticatedStore),
   },
   methods: {
     openMenu(event) {

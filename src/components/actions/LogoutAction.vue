@@ -1,11 +1,5 @@
 <template>
-  <button
-    v-show="screenResolutionStore.IS_DESKTOP"
-    class="button"
-    @click="confirmation"
-  >
-    Выйти из системы
-  </button>
+  <button class="button" @click="confirmation">Выйти из системы</button>
   <confirm-dialog
     :is-dialog-open="isDialogOpen"
     @confirm="logoutHandler"
@@ -17,7 +11,6 @@
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
 import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { useScreenResolutionStore } from '@/stores/ScreenResolution';
 
 import { mapStores } from 'pinia';
 export default {
@@ -28,7 +21,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
+    ...mapStores(useAuthenticatedStore),
   },
   methods: {
     logoutHandler() {
