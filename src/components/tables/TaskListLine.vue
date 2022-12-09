@@ -59,6 +59,7 @@ import CompleteTaskAction from '@/components/actions/CompleteTaskAction.vue';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore.js';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore.js';
 import { useUsersStore } from '@/stores/UsersStore';
+import { useCommentsStore } from '@/stores/CommentsStore';
 
 export default {
   components: {
@@ -84,11 +85,17 @@ export default {
     return {};
   },
   computed: {
-    ...mapStores(useInspectedTaskStore, useAuthenticatedStore, useUsersStore),
+    ...mapStores(
+      useInspectedTaskStore,
+      useAuthenticatedStore,
+      useUsersStore,
+      useCommentsStore
+    ),
   },
   methods: {
     inspectTask() {
       this.inspectedTaskStore.INSPECT_TASK(this.task);
+      this.commentsStore.INITIALIZE_COMMENTS(this.task.id);
     },
 
     getPerson(id) {

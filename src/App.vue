@@ -54,6 +54,11 @@ export default {
       this.tasksStore.INITIALIZE_TASK_LIST(),
       this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK(),
     ]).then(() => {
+      if (this.inspectedTaskStore.GET_INSPECTED_TASK) {
+        this.commentsStore.INITIALIZE_COMMENTS(
+          this.inspectedTaskStore.GET_INSPECTED_TASK.id
+        );
+      }
       this.dataReceived = true;
     });
   },

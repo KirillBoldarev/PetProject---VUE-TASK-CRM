@@ -6,7 +6,7 @@
           >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
         </strong>
       </div>
-      <button @click="deleteComment">
+      <button class="button--none" @click="deleteComment">
         <img class="icon" src="@/assets/icons/remove.png" alt="" />
       </button>
     </div>

@@ -12,21 +12,23 @@
             <create-comment-form :target="inspectedTask" @close="closeModal" />
           </template>
         </button-with-modal-form>
-        <img
-          v-tooltip.bottom="'Редактировать'"
-          class="icon"
-          src="@/assets/icons/edit.png"
-          alt=""
-          @click="editTaskMode = !editTaskMode"
-        />
+        <button class="button--none" @click="editTaskMode = !editTaskMode">
+          <img
+            v-tooltip.bottom="'Редактировать'"
+            class="icon"
+            src="@/assets/icons/edit.png"
+            alt=""
+          />
+        </button>
         <delete-task-action :target="inspectedTask" :icon-class="'icon'" />
-        <img
-          v-tooltip.bottom="'Назад'"
-          class="icon"
-          src="@/assets/icons/back.png"
-          alt=""
-          @click="lastPath"
-        />
+        <button class="button--none" @click="lastPath">
+          <img
+            v-tooltip.bottom="'Назад'"
+            class="icon"
+            src="@/assets/icons/back.png"
+            alt=""
+          />
+        </button>
       </div>
       <h2 class="page__title">Задача:{{ inspectedTask.title }}</h2>
       <div class="flex-row center">
