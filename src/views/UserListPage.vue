@@ -12,7 +12,7 @@
         </div>
         <transition-group name="slide-fade">
           <div
-            v-for="user in userList"
+            v-for="user in usersStore.GET_USER_LIST"
             :key="user.id"
             class="table__row table__row--userlist"
           >
@@ -53,12 +53,7 @@
                 :icon-class="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">
-                  <create-task-form
-                    :task-list="taskList"
-                    :user-list="userList"
-                    :target="user"
-                    @close="closeModal"
-                  />
+                  <create-task-form :target="user" @close="closeModal" />
                 </template>
               </button-with-modal-form>
 
@@ -69,12 +64,7 @@
                 :icon-class="'icon--mini'"
               >
                 <template #formSlot="{ closeModal }">
-                  <edit-user-form
-                    :task-list="taskList"
-                    :user-list="userList"
-                    :target="user"
-                    @close="closeModal"
-                  />
+                  <edit-user-form :target="user" @close="closeModal" />
                 </template>
               </button-with-modal-form>
               <delete-user-action

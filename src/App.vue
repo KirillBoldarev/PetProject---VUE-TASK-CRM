@@ -1,5 +1,5 @@
 <template>
-  <main-layout v-if="requireDataReceived"></main-layout>
+  <main-layout v-if="dataReceived"></main-layout>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
   components: { MainLayout },
   data() {
     return {
-      requireDataReceived: false,
+      dataReceived: false,
     };
   },
   computed: {
@@ -52,8 +52,9 @@ export default {
       this.usersStore.INITIALIZE_USER_LIST(),
       this.authenticatedStore.INITIALIZE_AUTHENTICATED(),
       this.tasksStore.INITIALIZE_TASK_LIST(),
+      this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK(),
     ]).then(() => {
-      this.requireDataReceived = true;
+      this.dataReceived = true;
     });
   },
   methods: {},

@@ -50,8 +50,6 @@
       </div>
       <edit-task-form
         v-if="editTaskMode"
-        :task-list="taskList"
-        :user-list="userList"
         :target="inspectedTask"
         @edited="editTaskMode = !editTaskMode"
       />
@@ -65,7 +63,7 @@
       <transition-group name="slide-fade">
         <template v-if="!editTaskMode">
           <div v-for="comment in commentsStore.GET_COMMENTS" :key="comment.id">
-            <comment :target="comment" :user-list="userList" />
+            <comment :target="comment" />
           </div>
         </template>
       </transition-group>
@@ -84,6 +82,7 @@ import filterDate from '@/js/libs/filterDate';
 
 import { useCommentsStore } from '@/stores/CommentsStore';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
+import { useUsersStore } from '@/stores/UsersStore';
 import { mapStores } from 'pinia';
 
 export default {
@@ -96,28 +95,28 @@ export default {
     Comment,
   },
   mixins: [],
-  props: {
-    userList: {
-      type: Array,
-      required: true,
-    },
-    inspectedTask: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       editTaskMode: false,
     };
   },
   computed: {
-    ...mapStores(useInspectedTaskStore, useCommentsStore),
+    ...mapStores(useInspectedTaskStore, useCommentsStore, useUsersStore),
+    inspectedTask() {
+      return this.inspectedTaskStore.GET_INSPECTED_TASK;
+    },
     filteredDateOfCreation() {
-      return filterDate(this.inspectedTask.dateOfCreation, 'datetime');
+      return filterDate(
+        this.inspectedTaskStore.GET_INSPECTED_TASK.dateOfCreation,
+        'datetime'
+      );
     },
     filteredDateOfCompletion() {
-      return filterDate(this.inspectedTask.dateOfCompletion, 'datetime');
+      return filterDate(
+        this.inspectedTaskStore.GET_INSPECTED_TASK.dateOfCompletion,
+        'datetime'
+      );
     },
     spendedTime() {
       // из разницы вычитаем часовой пояс - костыль библиотеки
@@ -129,10 +128,7 @@ export default {
     },
   },
 
-  beforeMount() {
-    this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK();
-    this.commentsStore.INITIALIZE_COMMENTS(this.inspectedTask.id);
-  },
+  beforeMount() {},
   unmounted() {
     this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
     this.commentsStore.CLEAR_COMMENTS();
@@ -144,7 +140,9 @@ export default {
     },
 
     getPerson(role) {
-      const person = this.userList.find((user) => user.id === role);
+      const person = this.usersStore.GET_USER_LIST.find(
+        (user) => user.id === role
+      );
       if (!person) {
         return 'Пользователь удален';
       }

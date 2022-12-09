@@ -39,7 +39,9 @@ export const useInspectedTaskStore = defineStore('inspectedTask', {
       const taskList = await localbase.collection('tasks').get();
       if (inspected && taskList) {
         this.INSPECTED_TASK = taskList.find((task) => task.id === inspected);
+        return;
       }
+      return;
     },
   },
 });

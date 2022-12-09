@@ -78,12 +78,7 @@ import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { mapStores } from 'pinia';
 
 export default {
-  props: {
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
   emits: ['close'],
   setup() {
     return {

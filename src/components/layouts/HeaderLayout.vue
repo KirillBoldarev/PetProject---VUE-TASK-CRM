@@ -73,7 +73,7 @@
 
       <button-with-modal-form v-show="isDesktop" ref="signIn" label="Войти">
         <template #formSlot="{ closeModal }">
-          <login-form :user-list="userList" @close="closeModal" />
+          <login-form @close="closeModal" />
         </template>
       </button-with-modal-form>
 
@@ -83,7 +83,7 @@
         label="Зарегистрироваться"
       >
         <template #formSlot="{ closeModal }">
-          <regisitration-form :user-list="userList" @close="closeModal" />
+          <regisitration-form @close="closeModal" />
         </template>
       </button-with-modal-form>
     </div>
@@ -111,16 +111,7 @@ export default {
     DropdownMenu,
   },
 
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       headerLinks: [

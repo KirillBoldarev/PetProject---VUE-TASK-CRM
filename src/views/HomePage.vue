@@ -6,13 +6,13 @@
         Для начала работы системы , прошу пройти &nbsp;
         <button-with-modal-form label="регистрацию">
           <template #formSlot="{ closeModal }">
-            <regisitration-form :user-list="userList" @close="closeModal" />
+            <regisitration-form @close="closeModal" />
           </template>
         </button-with-modal-form>
         &nbsp; или же &nbsp;
         <button-with-modal-form label="войти в систему">
           <template #formSlot="{ closeModal }">
-            <login-form :user-list="userList" @close="closeModal" />
+            <login-form @close="closeModal" />
           </template>
         </button-with-modal-form>
         &nbsp;, если у вас есть учетная запись.

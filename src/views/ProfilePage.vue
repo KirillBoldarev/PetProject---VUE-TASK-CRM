@@ -2,9 +2,15 @@
   <div class="page">
     <div class="page__body">
       <h2 class="page__title">
-        Профиль пользователя : {{ authenticated.login }}
-        <span v-if="authenticated.firstName && authenticated.secondName">
-          - {{ authenticated.firstName }} {{ authenticated.secondName }}</span
+        Профиль пользователя : {{ authenticatedStore.GET_AUTH.login }}
+        <span
+          v-if="
+            authenticatedStore.GET_AUTH.firstName &&
+            authenticatedStore.GET_AUTH.secondName
+          "
+        >
+          - {{ authenticatedStore.GET_AUTH.firstName }}
+          {{ authenticatedStore.GET_AUTH.secondName }}</span
         >
       </h2>
       <div class="page__toolbar flex-row center">
@@ -27,15 +33,9 @@
       <edit-user-form
         v-if="editUserMode"
         :target="authenticatedStore.GET_AUTH"
-        :user-list="userList"
-        :task-list="taskList"
         @edited="editUserMode = false"
       />
-      <task-list
-        v-if="showTaskMode"
-        :task-list="taskList"
-        :user-list="userList"
-      />
+      <task-list v-if="showTaskMode" />
     </div>
   </div>
 </template>
@@ -43,25 +43,18 @@
 <script>
 import EditUserForm from '@/components/forms/EditUserForm.vue';
 import TaskList from '@/components/tables/TaskList.vue';
-
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { mapStores } from 'pinia';
+import { useUsersStore } from '@/stores/UsersStore';
+import { useTasksStore } from '@/stores/TasksStore';
+
 export default {
   components: {
     EditUserForm,
     TaskList,
   },
 
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       editUserMode: false,
@@ -70,7 +63,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useAuthenticatedStore),
+    ...mapStores(useAuthenticatedStore, useUsersStore, useTasksStore),
   },
   beforeMount() {
     this.authenticated = this.authenticatedStore.GET_AUTH;

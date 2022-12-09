@@ -51,8 +51,6 @@
                 >
                   <template #formSlot="{ closeModal }">
                     <create-task-form
-                      :task-list="taskList"
-                      :user-list="userList"
                       :target="authenticatedStore.GET_AUTH"
                       @close="closeModal"
                     />
@@ -82,12 +80,7 @@
               class="table__row"
               :class="getGrid()"
             >
-              <task-list-line
-                :task-list="taskList"
-                :user-list="userList"
-                :task="task"
-                :current-page="currentPage"
-              />
+              <task-list-line :task="task" :current-page="currentPage" />
             </div>
           </transition-group>
         </div>
@@ -105,6 +98,8 @@ import TaskListLine from '@/components/tables/TaskListLine.vue';
 
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useScreenResolutionStore } from '@/stores/ScreenResolution';
+import { useUsersStore } from '@/stores/UsersStore';
+import { useTasksStore } from '@/stores/TasksStore';
 
 export default {
   name: 'TaskList',
@@ -115,16 +110,7 @@ export default {
     TaskListLine,
   },
 
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       currentPage: 'personal',
@@ -133,7 +119,12 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useAuthenticatedStore, useScreenResolutionStore),
+    ...mapStores(
+      useAuthenticatedStore,
+      useScreenResolutionStore,
+      useUsersStore,
+      useTasksStore
+    ),
     permittedPages() {
       if (this.authenticatedStore.GET_AUTH.role === 'Администратор') {
         return this.pages;
@@ -155,25 +146,29 @@ export default {
         {
           name: 'all',
           label: 'Все задачи',
-          dataSource: this.taskList,
+          dataSource: this.tasksStore.GET_TASK_LIST,
         },
       ];
     },
 
     chargedTasks() {
-      if (!this.taskList) {
+      if (!this.tasksStore.GET_TASK_LIST) {
         return [];
       }
       const currentUserId = this.authenticatedStore.GET_AUTH.id;
-      return this.taskList.filter((task) => task.sender === currentUserId);
+      return this.tasksStore.GET_TASK_LIST.filter(
+        (task) => task.sender === currentUserId
+      );
     },
 
     personalTasks() {
-      if (!this.taskList) {
+      if (!this.tasksStore.GET_TASK_LIST) {
         return [];
       }
       const currentUserId = this.authenticatedStore.GET_AUTH.id;
-      return this.taskList.filter((task) => task.executor === currentUserId);
+      return this.tasksStore.GET_TASK_LIST.filter(
+        (task) => task.executor === currentUserId
+      );
     },
   },
 

@@ -6,12 +6,9 @@
           >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
         </strong>
       </div>
-      <img
-        class="icon"
-        src="@/assets/icons/remove.png"
-        alt=""
-        @click="deleteComment"
-      />
+      <button @click="deleteComment">
+        <img class="icon" src="@/assets/icons/remove.png" alt="" />
+      </button>
     </div>
     <div class="comment__body">
       {{ target.text }}
@@ -21,6 +18,7 @@
 
 <script>
 import { useCommentsStore } from '@/stores/CommentsStore';
+import { useUsersStore } from '@/stores/UsersStore';
 import { mapStores } from 'pinia';
 
 export default {
@@ -29,23 +27,21 @@ export default {
       type: Object,
       required: true,
     },
-    userList: {
-      type: Array,
-      required: true,
-    },
   },
   data() {
     return {};
   },
   computed: {
-    ...mapStores(useCommentsStore),
+    ...mapStores(useCommentsStore, useUsersStore),
   },
   methods: {
     deleteComment() {
       this.commentsStore.DELETE_COMMENT(this.target);
     },
     getPerson(role) {
-      const person = this.userList.find((user) => user.id === role);
+      const person = this.usersStore.GET_USER_LIST.find(
+        (user) => user.id === role
+      );
       if (!person) {
         return 'Пользователь удален';
       }

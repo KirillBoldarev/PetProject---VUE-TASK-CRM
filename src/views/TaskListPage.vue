@@ -1,14 +1,6 @@
 <template>
-  <router-view
-    :task-list="taskList"
-    :user-list="userList"
-    :inspected-task="inspectedTaskStore.GET_INSPECTED_TASK"
-  />
-  <task-list
-    v-if="$route.name === 'TaskList'"
-    :user-list="userList"
-    :task-list="taskList"
-  />
+  <router-view />
+  <task-list v-if="$route.name === 'TaskList'" />
 </template>
 
 <script>
@@ -22,16 +14,7 @@ export default {
 
   components: { TaskList },
 
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
 
   data() {
     return {};

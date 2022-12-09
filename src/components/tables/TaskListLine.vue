@@ -40,12 +40,7 @@
       :tooltip="'Редактировать'"
     >
       <template #formSlot="{ closeModal }">
-        <edit-task-form
-          :task-list="taskList"
-          :user-list="userList"
-          :target="task"
-          @close="closeModal"
-        />
+        <edit-task-form :target="task" @close="closeModal" />
       </template>
     </button-with-modal-form>
 
@@ -63,6 +58,7 @@ import CompleteTaskAction from '@/components/actions/CompleteTaskAction.vue';
 
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore.js';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore.js';
+import { useUsersStore } from '@/stores/UsersStore';
 
 export default {
   components: {
@@ -74,14 +70,6 @@ export default {
   },
 
   props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
     task: {
       type: Object,
       required: true,
@@ -96,7 +84,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapStores(useInspectedTaskStore, useAuthenticatedStore),
+    ...mapStores(useInspectedTaskStore, useAuthenticatedStore, useUsersStore),
   },
   methods: {
     inspectTask() {
@@ -104,7 +92,9 @@ export default {
     },
 
     getPerson(id) {
-      const person = this.userList.find((user) => user.id === id);
+      const person = this.usersStore.GET_USER_LIST.find(
+        (user) => user.id === id
+      );
       if (!person) {
         return 'Пользователь удален';
       }
