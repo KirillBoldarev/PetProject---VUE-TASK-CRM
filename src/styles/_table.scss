@@ -60,7 +60,7 @@
         minmax(90px, 1fr)
         minmax(90px, 1fr)
         minmax(90px, 3fr)
-        minmax(110px, 110px);
+        minmax(95px, 95px);
 
       @media (max-width: 800px) {
         grid-template-columns:
@@ -68,7 +68,7 @@
           minmax(80px, 1fr)
           minmax(80px, 1fr)
           minmax(90px, 3fr)
-          minmax(110px, 110px);
+          minmax(95px, 95px);
         gap: 3px;
       }
       @media (max-width: 600px) {
@@ -77,7 +77,7 @@
           minmax(70px, 1fr)
           minmax(70px, 1fr)
           minmax(80px, 3fr)
-          minmax(110px, 110px);
+          minmax(95px, 95px);
         gap: 2px;
       }
     }

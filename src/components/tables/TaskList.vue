@@ -14,11 +14,10 @@
           <div class="form">
             <div class="form__toolbar">
               <div class="flex-row center">
-                <label
-                  v-if="screenResolutionStore.IS_DESKTOP"
-                  class="form__label"
-                >
-                  Отображать завершенные:</label
+                <mq-responsive target="tablet+"
+                  ><label class="form__label">
+                    Отображать завершенные:</label
+                  ></mq-responsive
                 >
                 <img
                   v-if="includeCompletedTask"
@@ -34,15 +33,14 @@
                 />
               </div>
               <div class="flex-row center">
-                <label class="form__label"> Поиск:</label>
+                <label class="form__label"> Фильтр:</label>
                 <input v-model="searchValue" class="form__input" type="text" />
               </div>
               <div class="flex-row center">
-                <label
-                  v-if="screenResolutionStore.IS_DESKTOP"
-                  class="form__label"
-                >
-                  Добавить задачу:</label
+                <mq-responsive target="tablet+"
+                  ><label class="form__label">
+                    Добавить задачу:</label
+                  ></mq-responsive
                 >
                 <button-with-modal-form
                   :tooltip="'Добавить задачу'"
@@ -95,9 +93,9 @@ import TabsPanel from '@/components/tools/TabsPanel.vue';
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import CreateTaskForm from '@/components/forms/CreateTaskForm.vue';
 import TaskListLine from '@/components/tables/TaskListLine.vue';
+import { MqResponsive } from 'vue3-mq';
 
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { useScreenResolutionStore } from '@/stores/ScreenResolution';
 import { useUsersStore } from '@/stores/UsersStore';
 import { useTasksStore } from '@/stores/TasksStore';
 
@@ -108,6 +106,7 @@ export default {
     ButtonWithModalForm,
     CreateTaskForm,
     TaskListLine,
+    MqResponsive,
   },
 
   props: {},
@@ -119,12 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(
-      useAuthenticatedStore,
-      useScreenResolutionStore,
-      useUsersStore,
-      useTasksStore
-    ),
+    ...mapStores(useAuthenticatedStore, useUsersStore, useTasksStore),
     permittedPages() {
       if (this.authenticatedStore.GET_AUTH.role === 'Администратор') {
         return this.pages;

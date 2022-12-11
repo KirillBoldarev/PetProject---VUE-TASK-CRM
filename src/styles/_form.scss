@@ -8,6 +8,17 @@
   gap: 10px;
   margin: 5px;
 
+    //Скрытие скроллбара
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  }
+  ///
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -38,6 +49,18 @@
     gap: 10px;
     box-sizing: border-box;
     width: auto;
+    
+    //Скрытие скроллбара
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  }
+  ///
+
   }
 
   &__block {
