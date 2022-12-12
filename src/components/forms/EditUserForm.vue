@@ -19,16 +19,18 @@
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
         >
-        <select id="role" v-model="role" class="form__select" name="role">
-          <option
-            v-for="role in $options.ROLE"
-            :key="role"
-            class="form__option"
-            :value="role"
-          >
-            {{ role }}
-          </option>
-        </select>
+        <v-select
+          v-model="role"
+          :options="$options.ROLE"
+          label="role"
+        ></v-select>
+        <transition>
+          <small
+            v-if="v$.role.$dirty && v$.role.required.$invalid"
+            class="form__invalid"
+            >Поле обязательно для заполнения
+          </small>
+        </transition>
       </div>
 
       <fieldset class="flex-row center form__block">
@@ -185,6 +187,7 @@ export default {
       email: { email },
       phone: { isPhone },
       password: { required, minLength: minLength(5) },
+      role: { required },
     };
   },
 

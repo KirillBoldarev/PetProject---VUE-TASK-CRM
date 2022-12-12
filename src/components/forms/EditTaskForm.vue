@@ -7,16 +7,24 @@
         @confirm="editTaskHandler"
         @close="isDialogOpen = false"
       />
-      <fieldset class="flex-row center form__block">
+      <fieldset class="flex-column center form__block">
         <legend class="form__title">Адресаты</legend>
         <div class="flex-column center">
           <label class="form__label" for="email">Отправитель:</label>
           <v-select
             v-model="sender"
+            class="customStyle"
             :options="usersStore.GET_USER_LIST"
-            label="fullName"
+            :get-option-label="(option) => getOptionsList(option)"
             :reduce="(option) => option.id"
           ></v-select>
+          <transition>
+            <small
+              v-if="v$.sender.$dirty && v$.sender.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
 
         <div class="flex-column center">
@@ -24,9 +32,16 @@
           <v-select
             v-model="executor"
             :options="usersStore.GET_USER_LIST"
-            label="fullName"
+            :get-option-label="(option) => getOptionsList(option)"
             :reduce="(option) => option.id"
           ></v-select>
+          <transition>
+            <small
+              v-if="v$.executor.$dirty && v$.executor.required.$invalid"
+              class="form__invalid"
+              >Поле обязательно для заполнения
+            </small>
+          </transition>
         </div>
       </fieldset>
 
@@ -122,6 +137,8 @@ export default {
     return {
       description: { required },
       title: { required },
+      sender: { required },
+      executor: { required },
     };
   },
   computed: {
@@ -156,6 +173,12 @@ export default {
       }
       this.$emit('edited');
       this.$emit('close');
+    },
+    getOptionsList(option) {
+      if (option.fullName) {
+        return option.fullName;
+      }
+      return option.login;
     },
   },
 };
