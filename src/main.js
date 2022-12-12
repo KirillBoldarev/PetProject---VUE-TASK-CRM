@@ -25,7 +25,11 @@ pinia.use(subscribtionsForActionsUponComments);
 pinia.use(subscribtionsForActionsUponTasks);
 pinia.use(subscribtionsForActionsUponUsers);
 
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
 createApp(App)
+  .component('v-select', vSelect)
   .use(pinia)
   .use(router)
   .use(PrimeVue)

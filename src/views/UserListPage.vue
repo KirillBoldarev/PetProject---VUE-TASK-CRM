@@ -16,10 +16,10 @@
             :key="user.id"
             class="table__row table__row--userlist"
           >
-            <div v-if="user.firstName" class="table__column">
-              {{ user.firstName }} {{ user.secondName }}
+            <div v-if="user.fullName" class="table__column">
+              {{ user.fullName }}
             </div>
-            <div v-if="!user.firstName" class="table__column">
+            <div v-else class="table__column">
               {{ user.login }}
             </div>
             <div class="table__column">

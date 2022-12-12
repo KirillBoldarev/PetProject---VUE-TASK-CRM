@@ -1,28 +1,25 @@
+<!-- eslint-disable vue/require-default-prop -->
+<!-- eslint-disable vue/attribute-hyphenation -->
 <template>
   <section id="addTaskForm" class="form__container">
     <form class="form__body" @submit.prevent="createTaskHandler">
       <h2 class="form__title">Добавить задачу</h2>
-      <fieldset class="flex-row center form__block">
+      <fieldset class="flex-column center form__block">
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
-        <select
-          id="executor"
+        <v-select
           v-model="executor"
-          class="form__select"
-          name="executor"
-        >
-          <option
-            v-for="user in usersStore.GET_USER_LIST"
-            :key="user.id"
-            class="form__option"
-            :value="user"
-          >
-            <span v-if="user.firstName && user.secondName"
-              >{{ user.firstName }} {{ user.secondName }}</span
-            >
-            <span v-else>{{ user.login }}</span>
-          </option>
-        </select>
+          :options="usersStore.GET_USER_LIST"
+          :getOptionLabel="(option) => getOptionsList(option)"
+          :reduce="(option) => option.id"
+        ></v-select>
+        <transition>
+          <small
+            v-if="v$.executor.$dirty && v$.executor.required.$invalid"
+            class="form__invalid"
+            >Поле обязательно для заполнения
+          </small>
+        </transition>
       </fieldset>
 
       <fieldset class="flex-column center form__block">
@@ -89,7 +86,8 @@ export default {
   props: {
     target: {
       type: Object,
-      required: true,
+      required: false,
+      default: null,
     },
   },
   emits: ['close'],
@@ -100,7 +98,7 @@ export default {
   },
   data() {
     return {
-      executor: this.target,
+      executor: null,
       sender: null,
       title: '',
       description: '',
@@ -111,6 +109,7 @@ export default {
     return {
       description: { required },
       title: { required },
+      executor: { required },
     };
   },
   computed: {
@@ -120,8 +119,8 @@ export default {
         id: this.taskId,
         title: this.title,
         description: this.description,
-        sender: this.sender.id,
-        executor: this.executor.id,
+        sender: this.sender,
+        executor: this.executor,
         isCompleted: false,
         dateOfCreation: new Date(),
       };
@@ -132,7 +131,7 @@ export default {
   },
 
   beforeMount() {
-    this.sender = this.authenticatedStore.GET_AUTH;
+    this.sender = this.authenticatedStore.GET_AUTH.id;
   },
   methods: {
     createTaskHandler() {
@@ -140,8 +139,15 @@ export default {
         this.v$.$touch();
         return;
       }
+      console.log(this.newTask);
       this.tasksStore.CREATE_TASK(this.newTask);
       this.$emit('close');
+    },
+    getOptionsList(option) {
+      if (option.fullName) {
+        return option.fullName;
+      }
+      return option.login;
     },
   },
 };

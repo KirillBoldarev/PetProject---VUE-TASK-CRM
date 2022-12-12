@@ -105,10 +105,10 @@ export default {
       if (!person) {
         return 'Пользователь удален';
       }
-      if (!person.firstName || !person.secondName) {
+      if (!person.fullName) {
         return `${person.login}`;
       }
-      return `${person.firstName} ${person.secondName}`;
+      return person.fullName;
     },
   },
 };

@@ -3,14 +3,8 @@
     <div class="page__body">
       <h2 class="page__title">
         Профиль пользователя : {{ authenticatedStore.GET_AUTH.login }}
-        <span
-          v-if="
-            authenticatedStore.GET_AUTH.firstName &&
-            authenticatedStore.GET_AUTH.secondName
-          "
-        >
-          - {{ authenticatedStore.GET_AUTH.firstName }}
-          {{ authenticatedStore.GET_AUTH.secondName }}</span
+        <span v-if="authenticatedStore.GET_AUTH.fullName">
+          - {{ authenticatedStore.GET_AUTH.fullName }}</span
         >
       </h2>
       <div class="page__toolbar flex-row center">

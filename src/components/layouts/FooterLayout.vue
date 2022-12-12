@@ -27,10 +27,10 @@ export default {
   computed: {
     ...mapStores(useAuthenticatedStore, useUsersStore),
     admin() {
-      const admin = this.usersStore.GET_USER_LIST.find(
+      let admin = this.usersStore.GET_USER_LIST.find(
         (user) => user.role === 'Администратор'
       );
-      return `${admin.firstName} ${admin.secondName}`;
+      return admin.fullName;
     },
   },
   methods: {},

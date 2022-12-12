@@ -141,17 +141,17 @@ export default {
       return this.$router.push(lastPathRoute);
     },
 
-    getPerson(role) {
+    getPerson(id) {
       const person = this.usersStore.GET_USER_LIST.find(
-        (user) => user.id === role
+        (user) => user.id === id
       );
       if (!person) {
         return 'Пользователь удален';
       }
-      if (!person.firstName || !person.secondName) {
+      if (!person.fullName) {
         return `${person.login}`;
       }
-      return `${person.firstName} ${person.secondName}`;
+      return person.fullName;
     },
   },
 };

@@ -7,51 +7,26 @@
         @confirm="editTaskHandler"
         @close="isDialogOpen = false"
       />
-
       <fieldset class="flex-row center form__block">
         <legend class="form__title">Адресаты</legend>
         <div class="flex-column center">
           <label class="form__label" for="email">Отправитель:</label>
-          <select
-            id="sender"
+          <v-select
             v-model="sender"
-            class="form__select"
-            name="sender"
-          >
-            <option
-              v-for="user in usersStore.GET_USER_LIST"
-              :key="user.id"
-              class="form__option"
-              :value="user.id"
-            >
-              <span v-if="user.firstName && user.secondName"
-                >{{ user.firstName }} {{ user.secondName }}</span
-              >
-              <span v-else>{{ user.login }}</span>
-            </option>
-          </select>
+            :options="usersStore.GET_USER_LIST"
+            label="fullName"
+            :reduce="(option) => option.id"
+          ></v-select>
         </div>
 
         <div class="flex-column center">
           <label class="form__label" for="email">Исполнитель:</label>
-          <select
-            id="executor"
+          <v-select
             v-model="executor"
-            class="form__select"
-            name="executor"
-          >
-            <option
-              v-for="user in usersStore.GET_USER_LIST"
-              :key="user.id"
-              class="form__option"
-              :value="user.id"
-            >
-              <span v-if="user.firstName && user.secondName"
-                >{{ user.firstName }} {{ user.secondName }}</span
-              >
-              <span v-else>{{ user.login }}</span>
-            </option>
-          </select>
+            :options="usersStore.GET_USER_LIST"
+            label="fullName"
+            :reduce="(option) => option.id"
+          ></v-select>
         </div>
       </fieldset>
 

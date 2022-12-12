@@ -3,10 +3,8 @@
     <form class="form__body" @submit.prevent="confirmation">
       <h2 class="form__title">
         Данные пользователя:
-        <strong v-if="!target.firstName">{{ target.login }}</strong>
-        <strong v-if="target.firstName"
-          >{{ target.firstName }} {{ target.secondName }}</strong
-        >
+        <strong v-if="!target.fullName">{{ target.login }}</strong>
+        <strong v-if="target.fullName">{{ target.fullName }}</strong>
       </h2>
       <confirm-dialog
         :is-dialog-open="isDialogOpen"
@@ -83,24 +81,12 @@
       <fieldset class="flex-row center form__block">
         <legend class="form__title">Персональные данные</legend>
         <div class="flex-column center">
-          <label class="form__label" for="email">Имя</label>
+          <label class="form__label" for="email">Имя и фамилия</label>
           <input
-            v-model="firstName"
+            v-model="fullName"
             class="form__input"
-            type="firtstName"
-            name="firstName"
-            @blur="v$.firstName.$touch"
-          />
-        </div>
-
-        <div class="flex-column center">
-          <label class="form__label" for="secondName">Фамилия</label>
-          <input
-            v-model="secondName"
-            class="form__input"
-            type="text"
-            name="secondName"
-            @blur="v$.secondName.$touch"
+            name="fullName"
+            @blur="v$.fullName.$touch"
           />
         </div>
       </fieldset>
@@ -195,8 +181,7 @@ export default {
   validations() {
     return {
       login: { required, minLength: minLength(5) },
-      firstName: {},
-      secondName: {},
+      fullName: {},
       email: { email },
       phone: { isPhone },
       password: { required, minLength: minLength(5) },
@@ -210,8 +195,7 @@ export default {
       return {
         login: this.login,
         id: this.id,
-        firstName: this.firstName,
-        secondName: this.secondName,
+        fullName: this.fullName,
         email: this.email,
         phone: this.phone,
         password: this.password,
