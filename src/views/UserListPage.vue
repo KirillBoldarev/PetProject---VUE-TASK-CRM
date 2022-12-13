@@ -12,7 +12,7 @@
         </div>
         <transition-group name="slide-fade">
           <div
-            v-for="user in usersStore.GET_USER_LIST"
+            v-for="user in usersStore.USER_LIST"
             :key="user.id"
             class="table__row table__row--userlist"
           >

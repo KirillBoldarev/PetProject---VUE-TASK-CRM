@@ -15,12 +15,9 @@ export const useCommentsStore = defineStore('comments', {
       this.COMMENTS.push(payload);
     },
     DELETE_COMMENT(payload) {
-      let index;
-      this.COMMENTS.forEach((comment, idx) => {
-        if (comment.id === payload.id) {
-          index = idx;
-        }
-      });
+      let index = this.COMMENTS.findIndex(
+        (comment) => comment.id === payload.id
+      );
       this.COMMENTS.splice(index, 1);
     },
     EDIT_COMMENT(payload) {

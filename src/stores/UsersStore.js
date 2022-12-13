@@ -15,12 +15,7 @@ export const useUsersStore = defineStore('users', {
       this.USER_LIST.push(payload);
     },
     DELETE_USER(payload) {
-      let index;
-      this.USER_LIST.forEach((user, idx) => {
-        if (user.id === payload.id) {
-          index = idx;
-        }
-      });
+      let index = this.USER_LIST.findIndex((user) => user.id === payload.id);
       this.USER_LIST.splice(index, 1);
     },
     EDIT_USER(payload) {

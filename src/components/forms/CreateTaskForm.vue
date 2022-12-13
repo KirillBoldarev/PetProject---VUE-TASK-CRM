@@ -139,7 +139,6 @@ export default {
         this.v$.$touch();
         return;
       }
-      console.log(this.newTask);
       this.tasksStore.CREATE_TASK(this.newTask);
       this.$emit('close');
     },

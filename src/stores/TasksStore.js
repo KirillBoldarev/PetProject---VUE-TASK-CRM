@@ -21,12 +21,7 @@ export const useTasksStore = defineStore('tasks', {
       this.TASK_LIST.push(payload);
     },
     DELETE_TASK(payload) {
-      let index;
-      this.TASK_LIST.forEach((task, idx) => {
-        if (task.id === payload.id) {
-          index = idx;
-        }
-      });
+      let index = this.TASK_LIST.findIndex((task) => task.id === payload.id);
       this.TASK_LIST.splice(index, 1);
     },
     EDIT_TASK(payload) {

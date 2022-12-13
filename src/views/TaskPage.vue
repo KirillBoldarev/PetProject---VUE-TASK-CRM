@@ -130,7 +130,6 @@ export default {
     },
   },
 
-  beforeMount() {},
   unmounted() {
     this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
     this.commentsStore.CLEAR_COMMENTS();
