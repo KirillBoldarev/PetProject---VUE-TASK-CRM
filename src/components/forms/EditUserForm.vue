@@ -206,7 +206,6 @@ export default {
       };
     },
   },
-  created() {},
   methods: {
     editUser() {
       if (this.v$.$invalid) {

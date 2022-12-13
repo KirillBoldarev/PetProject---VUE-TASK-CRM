@@ -28,9 +28,8 @@ export default {
       useCommentsStore
     ),
   },
-  created() {},
 
-  mounted() {
+  created() {
     Promise.allSettled([
       this.usersStore.INITIALIZE_USER_LIST(),
       this.authenticatedStore.INITIALIZE_AUTHENTICATED(),

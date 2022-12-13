@@ -48,12 +48,10 @@
         />
       </mq-responsive>
 
-      <mq-responsive target="tablet+">
-        <button class="button" @click="$router.push('/profile')">
-          Личный кабинет
-        </button>
-        <logout-action ref="logout" />
-      </mq-responsive>
+      <button class="button mobileOnly" @click="$router.push('/profile')">
+        Личный кабинет
+      </button>
+      <logout-action ref="logout" />
     </div>
 
     <div v-if="!authenticatedStore.IS_AUTH" class="flex-column center">
@@ -72,21 +70,21 @@
         />
       </mq-responsive>
 
-      <mq-responsive target="tablet+">
-        <button-with-modal-form ref="signIn" label="Войти">
-          <template #formSlot="{ closeModal }">
-            <login-form @close="closeModal" />
-          </template>
-        </button-with-modal-form>
-      </mq-responsive>
+      <button-with-modal-form ref="signIn" class="mobileOnly" label="Войти">
+        <template #formSlot="{ closeModal }">
+          <login-form @close="closeModal" />
+        </template>
+      </button-with-modal-form>
 
-      <mq-responsive target="tablet+">
-        <button-with-modal-form ref="signUp" label="Зарегистрироваться">
-          <template #formSlot="{ closeModal }">
-            <regisitration-form @close="closeModal" />
-          </template>
-        </button-with-modal-form>
-      </mq-responsive>
+      <button-with-modal-form
+        ref="signUp"
+        class="mobileOnly"
+        label="Зарегистрироваться"
+      >
+        <template #formSlot="{ closeModal }">
+          <regisitration-form @close="closeModal" />
+        </template>
+      </button-with-modal-form>
     </div>
   </header>
 </template>

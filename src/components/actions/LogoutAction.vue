@@ -1,5 +1,7 @@
 <template>
-  <button class="button" @click="confirmation">Выйти из системы</button>
+  <button class="button mobileOnly" @click="confirmation">
+    Выйти из системы
+  </button>
   <confirm-dialog
     :is-dialog-open="isDialogOpen"
     @confirm="logoutHandler"

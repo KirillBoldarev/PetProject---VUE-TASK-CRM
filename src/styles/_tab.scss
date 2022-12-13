@@ -24,7 +24,7 @@
     justify-content: center;
     cursor: pointer;
     box-sizing: border-box;
-    max-width: 125px;
+    max-width: 150px;
     color: $primary-dark;
     position: relative;
 
@@ -38,12 +38,12 @@
 
     @media (max-width: 960px) {
       padding: 12px;
-      max-width: 100px;
+      max-width: 125px;
     }
     @media (max-width: 580px) {
       padding: 10px;
       font-size: 10px;
-      max-width: 75px;
+      max-width: 100px;
     }
   }
 
