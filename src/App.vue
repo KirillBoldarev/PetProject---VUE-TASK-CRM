@@ -9,41 +9,33 @@ import { useCommentsStore } from './stores/CommentsStore';
 import { useAuthenticatedStore } from './stores/AuthenticatedStore';
 import { useInspectedTaskStore } from './stores/InspectedTaskStore';
 import { useTasksStore } from './stores/TasksStore';
-
-import { mapStores } from 'pinia';
+import { ref } from 'vue';
 
 export default {
   components: { MainLayout },
-  data() {
+  setup() {
+    const dataReceived = ref(false);
+    const usersStore = useUsersStore();
+    const tasksStore = useTasksStore();
+    const authenticatedStore = useAuthenticatedStore();
+    const inspectedTaskStore = useInspectedTaskStore();
+    const commentsStore = useCommentsStore();
+
+    Promise.allSettled([
+      usersStore.INITIALIZE_USER_LIST(),
+      tasksStore.INITIALIZE_TASK_LIST(),
+      authenticatedStore.INITIALIZE_AUTHENTICATED(),
+      inspectedTaskStore.INITIALIZE_INSPECTED_TASK(),
+    ]).then(() => {
+      if (inspectedTaskStore.INSPECTED_TASK) {
+        commentsStore.INITIALIZE_COMMENTS(inspectedTaskStore.INSPECTED_TASK.id);
+      }
+      dataReceived.value = true;
+    });
+
     return {
-      dataReceived: false,
+      dataReceived,
     };
   },
-  computed: {
-    ...mapStores(
-      useUsersStore,
-      useAuthenticatedStore,
-      useTasksStore,
-      useInspectedTaskStore,
-      useCommentsStore
-    ),
-  },
-
-  created() {
-    Promise.allSettled([
-      this.usersStore.INITIALIZE_USER_LIST(),
-      this.authenticatedStore.INITIALIZE_AUTHENTICATED(),
-      this.tasksStore.INITIALIZE_TASK_LIST(),
-      this.inspectedTaskStore.INITIALIZE_INSPECTED_TASK(),
-    ]).then(() => {
-      if (this.inspectedTaskStore.GET_INSPECTED_TASK) {
-        this.commentsStore.INITIALIZE_COMMENTS(
-          this.inspectedTaskStore.GET_INSPECTED_TASK.id
-        );
-      }
-      this.dataReceived = true;
-    });
-  },
-  methods: {},
 };
 </script>

@@ -17,22 +17,18 @@
   </footer>
 </template>
 
-<script>
-import { mapStores } from 'pinia';
+<script setup>
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useUsersStore } from '@/stores/UsersStore';
+import { computed } from 'vue';
 
-export default {
-  props: {},
-  computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore),
-    admin() {
-      let admin = this.usersStore.GET_USER_LIST.find(
-        (user) => user.role === 'Администратор'
-      );
-      return admin.fullName;
-    },
-  },
-  methods: {},
-};
+const authenticatedStore = useAuthenticatedStore();
+const usersStore = useUsersStore();
+
+const admin = computed(() => {
+  let person = usersStore.USER_LIST.find(
+    (user) => user.role === 'Администратор'
+  );
+  return person.fullname;
+});
 </script>

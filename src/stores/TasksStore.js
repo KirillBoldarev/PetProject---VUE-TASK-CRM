@@ -1,48 +1,55 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import localbase from '@/js/libs/localbase';
 
-export const useTasksStore = defineStore('tasks', {
-  state: () => ({
-    TASK_LIST: [],
-  }),
-  getters: {
-    GET_TASK_LIST(state) {
-      return state.TASK_LIST;
-    },
-  },
-  actions: {
-    async INITIALIZE_TASK_LIST() {
-      this.TASK_LIST = await localbase
+export const useTasksStore = defineStore('tasks', () => {
+  const TASK_LIST = ref([]);
+
+  function CREATE_TASK(payload) {
+    TASK_LIST.value.push(payload);
+  }
+
+  function DELETE_TASK(payload) {
+    let index = TASK_LIST.value.findIndex((task) => task.id === payload.id);
+    TASK_LIST.value.splice(index, 1);
+  }
+
+  function EDIT_TASK(payload) {
+    TASK_LIST.value = TASK_LIST.value.map((task) => {
+      return task.id === payload.id ? payload : task;
+    });
+  }
+
+  function COMPLETE_TASK(payload) {
+    TASK_LIST.value.forEach((task) => {
+      if (task.id === payload.id) {
+        if (task.isCompleted) {
+          task.isCompleted = !payload.isCompleted;
+          delete task.dateOfCompletion;
+          return;
+        }
+        if (!task.isCompleted) {
+          task.isCompleted = !payload.isCompleted;
+          task.dateOfCompletion = new Date();
+        }
+      }
+    });
+  }
+
+  async function INITIALIZE_TASK_LIST() {
+    TASK_LIST.value ==
+      (await localbase
         .collection('tasks')
         .get()
-        .catch((error) => console.log(error));
-    },
-    CREATE_TASK(payload) {
-      this.TASK_LIST.push(payload);
-    },
-    DELETE_TASK(payload) {
-      let index = this.TASK_LIST.findIndex((task) => task.id === payload.id);
-      this.TASK_LIST.splice(index, 1);
-    },
-    EDIT_TASK(payload) {
-      this.TASK_LIST = this.TASK_LIST.map((task) => {
-        return task.id === payload.id ? payload : task;
-      });
-    },
-    COMPLETE_TASK(payload) {
-      this.TASK_LIST.forEach((task) => {
-        if (task.id === payload.id) {
-          if (task.isCompleted) {
-            task.isCompleted = !payload.isCompleted;
-            delete task.dateOfCompletion;
-            return;
-          }
-          if (!task.isCompleted) {
-            task.isCompleted = !payload.isCompleted;
-            task.dateOfCompletion = new Date();
-          }
-        }
-      });
-    },
-  },
+        .catch((error) => console.log(error)));
+  }
+
+  return {
+    TASK_LIST,
+    CREATE_TASK,
+    DELETE_TASK,
+    EDIT_TASK,
+    COMPLETE_TASK,
+    INITIALIZE_TASK_LIST,
+  };
 });

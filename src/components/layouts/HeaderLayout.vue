@@ -96,9 +96,8 @@ import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import RegisitrationForm from '@/components/forms/RegistrationForm.vue';
 import LoginForm from '@/components/forms/LoginForm.vue';
 import { MqResponsive } from 'vue3-mq';
-
+import { ref } from 'vue';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
 
 export default {
   name: 'HeaderLayout',
@@ -111,67 +110,82 @@ export default {
     MqResponsive,
   },
 
-  props: {},
-  data() {
-    return {
-      headerLinks: [
-        { name: 'Главная', url: '/', icon: 'home.png' },
-        {
-          name: 'Управление задачами',
-          url: '/tasks',
-          icon: 'task.png',
-        },
-        {
-          name: 'Список пользователей',
-          url: '/users',
-          icon: 'user.png',
-        },
-      ],
-      authMenuItems: [
-        {
-          label: 'Личный кабинет',
-          icon: 'pi pi-search',
-          command: () => {
-            this.$router.push('/profile');
-          },
-        },
-        {
-          label: 'Выйти из системы',
-          icon: 'pi pi-sign-out',
-          command: () => {
-            this.$refs.logout.confirmation();
-          },
-        },
-      ],
-      guestMenuItems: [
-        {
-          label: 'Войти',
-          icon: 'pi pi-sign-in',
-          command: () => {
-            this.$refs.signIn.openModal();
-          },
-        },
-        {
-          label: 'Зарегистрироваться',
-          icon: 'pi pi-book',
-          command: () => {
-            this.$refs.signUp.openModal();
-          },
-        },
-      ],
-    };
-  },
+  setup() {
+    const authenticatedStore = useAuthenticatedStore();
+    //Refs to menuItems
+    const menu = ref(null);
+    const signIn = ref(null);
+    const signUp = ref(null);
+    const logout = ref(null);
 
-  computed: {
-    ...mapStores(useAuthenticatedStore),
-  },
-  methods: {
-    openMenu(event) {
-      this.$refs.menu.toggle(event);
-    },
-    getImgUrl(item) {
+    const headerLinks = [
+      { name: 'Главная', url: '/', icon: 'home.png' },
+      {
+        name: 'Управление задачами',
+        url: '/tasks',
+        icon: 'task.png',
+      },
+      {
+        name: 'Список пользователей',
+        url: '/users',
+        icon: 'user.png',
+      },
+    ];
+
+    const authMenuItems = [
+      {
+        label: 'Личный кабинет',
+        icon: 'pi pi-search',
+        command: () => {
+          this.$router.push('/profile');
+        },
+      },
+      {
+        label: 'Выйти из системы',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          logout.value.confirmation();
+        },
+      },
+    ];
+
+    const guestMenuItems = [
+      {
+        label: 'Войти',
+        icon: 'pi pi-sign-in',
+        command: () => {
+          signIn.value.openModal();
+        },
+      },
+      {
+        label: 'Зарегистрироваться',
+        icon: 'pi pi-book',
+        command: () => {
+          signUp.value.openModal();
+        },
+      },
+    ];
+
+    function getImgUrl(item) {
       return require(`@/assets/icons/${item}`);
-    },
+    }
+
+    function openMenu(event) {
+      menu.value.toggle(event);
+    }
+
+    return {
+      headerLinks,
+      authMenuItems,
+      guestMenuItems,
+      authenticatedStore,
+      openMenu,
+      getImgUrl,
+      menu,
+      signIn,
+      signUp,
+      logout,
+    };
   },
 };
 </script>

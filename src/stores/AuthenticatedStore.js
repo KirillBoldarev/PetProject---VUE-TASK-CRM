@@ -1,45 +1,46 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import localbase from '@/js/libs/localbase';
 
-export const useAuthenticatedStore = defineStore('authenticated', {
-  state: () => ({
-    AUTHENTICATED: null,
-    IS_AUTHENTICATED: false,
-  }),
-  getters: {
-    IS_AUTH(state) {
-      return state.IS_AUTHENTICATED;
-    },
-    GET_AUTH(state) {
-      return state.AUTHENTICATED;
-    },
-  },
-  actions: {
-    AUTHENTICATION(user) {
-      this.AUTHENTICATED = user;
-      this.IS_AUTHENTICATED = true;
-      sessionStorage.setItem('authID', this.AUTHENTICATED.id);
-    },
-    LOGOUT() {
-      this.IS_AUTHENTICATED = false;
-      this.AUTHENTICATED = null;
-      sessionStorage.removeItem('authID');
-    },
-    UPDATE_AUTHENTICATED(user) {
-      this.AUTHENTICATED = user;
-    },
+export const useAuthenticatedStore = defineStore('authenticated', () => {
+  const AUTHENTICATED = ref();
+  const IS_AUTHENTICATED = ref(false);
 
-    async INITIALIZE_AUTHENTICATED() {
-      const id = sessionStorage.getItem('authID');
-      const userList = await localbase.collection('users').get();
-      if (id && userList && Array.isArray(userList)) {
-        this.AUTHENTICATED = userList.find((user) => user.id === id);
-        this.IS_AUTHENTICATED = true;
-      }
-      if (id && userList && !Array.isArray(userList)) {
-        this.IS_AUTHENTICATED = true;
-        this.AUTHENTICATED = userList;
-      }
-    },
-  },
+  function AUTHENTICATION(user) {
+    AUTHENTICATED.value = user;
+    IS_AUTHENTICATED.value = true;
+    sessionStorage.setItem('authID', AUTHENTICATED.value.id);
+  }
+
+  function LOGOUT() {
+    IS_AUTHENTICATED.value = false;
+    AUTHENTICATED.value = null;
+    sessionStorage.removeItem('authID');
+  }
+
+  function UPDATE_AUTHENTICATED(user) {
+    AUTHENTICATED.value = user;
+  }
+
+  async function INITIALIZE_AUTHENTICATED() {
+    const id = sessionStorage.getItem('authID');
+    const userList = await localbase.collection('users').get();
+    if (id && userList && Array.isArray(userList)) {
+      AUTHENTICATED.value = userList.find((user) => user.id === id);
+      IS_AUTHENTICATED.value = true;
+    }
+    if (id && userList && !Array.isArray(userList)) {
+      IS_AUTHENTICATED.value = true;
+      AUTHENTICATED.value = userList;
+    }
+  }
+
+  return {
+    AUTHENTICATED,
+    IS_AUTHENTICATED,
+    AUTHENTICATION,
+    LOGOUT,
+    UPDATE_AUTHENTICATED,
+    INITIALIZE_AUTHENTICATED,
+  };
 });

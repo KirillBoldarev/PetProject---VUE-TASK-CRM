@@ -8,7 +8,7 @@
           <div class="flex-row space-between">
             <label class="form__label" for="login">Логин</label>
             <input
-              v-model="login"
+              v-model="formData.login"
               v-tooltip.right="'Введите логин'"
               class="form__input"
               type="text"
@@ -37,7 +37,7 @@
           <div class="flex-row space-between">
             <label class="form__label" for="password">Пароль</label>
             <input
-              v-model="password"
+              v-model="formData.password"
               v-tooltip.right="'Введите номер мобильного телефона'"
               class="form__input"
               name="password"
@@ -75,72 +75,70 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useUsersStore } from '@/stores/UsersStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
+import { computed, reactive, onBeforeUnmount } from 'vue';
 
 export default {
   props: {},
   emits: ['close'],
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
 
-  data() {
-    return {
+  setup(props, context) {
+    const usersStore = useUsersStore();
+    const authenticatedStore = useAuthenticatedStore();
+
+    const formData = reactive({
       login: '',
       password: '',
-    };
-  },
-  validations() {
-    return {
+    });
+    const rules = {
       login: { required, minLength: minLength(5) },
       password: { required, minLength: minLength(5) },
     };
-  },
-  computed: {
-    ...mapStores(useUsersStore, useAuthenticatedStore),
-    newUser() {
-      return {
-        login: this.login,
-        password: this.password,
-        id: this.userId,
-        role: this.userRole,
-      };
-    },
-    userRole() {
-      if (this.usersStore.GET_USER_LIST.length === 0) {
+    const v$ = useVuelidate(rules, formData);
+
+    const userRole = computed(() => {
+      if (usersStore.USER_LIST.length === 0) {
         return 'Администратор';
       }
       return 'Неавторизованный пользователь';
-    },
-    userId() {
+    });
+    const userId = computed(() => {
       return Math.random().toString(36).substring(2, 9);
-    },
-  },
-  created() {
-    document.addEventListener('keypress', this.registrateUserOnKeypress);
-  },
-  beforeUnmount() {
-    document.removeEventListener('keypress', this.registrateUserOnKeypress);
-  },
+    });
+    const newUser = computed(() => {
+      return {
+        login: formData.login,
+        password: formData.password,
+        id: userId.value,
+        role: userRole.value,
+      };
+    });
 
-  methods: {
-    registrateUserHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
+    function registrateUserHandler() {
+      if (v$.value.$invalid) {
+        v$.value.$touch();
         return;
       }
-      this.usersStore.CREATE_USER(this.newUser);
-      this.authenticatedStore.AUTHENTICATION(this.newUser);
-      this.$emit('close');
-    },
-
-    registrateUserOnKeypress(event) {
+      usersStore.CREATE_USER(newUser.value);
+      authenticatedStore.AUTHENTICATION(newUser.value);
+      context.emit('close');
+    }
+    //RegistrateOnKeyPress
+    function registrateUserOnKeypress(event) {
       if (event.key === 'Enter') {
-        this.registrateUserHandler();
+        registrateUserHandler();
       }
-    },
+    }
+    document.addEventListener('keypress', registrateUserOnKeypress);
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keypress', registrateUserOnKeypress);
+    });
+
+    return {
+      formData,
+      v$,
+      registrateUserHandler,
+    };
   },
 };
 </script>
