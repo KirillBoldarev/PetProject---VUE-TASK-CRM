@@ -128,10 +128,10 @@ export default {
         registrateUserHandler();
       }
     }
-    document.addEventListener('keypress', registrateUserOnKeypress);
+    document.addEventListener('keypress', registrateUserOnKeypress());
 
     onBeforeUnmount(() => {
-      document.removeEventListener('keypress', registrateUserOnKeypress);
+      document.removeEventListener('keypress', registrateUserOnKeypress());
     });
 
     return {

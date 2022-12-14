@@ -9,7 +9,7 @@
           <div class="flex-row space-between">
             <label class="form__label" for="login">Логин</label>
             <input
-              v-model="login"
+              v-model="formData.login"
               class="form__input"
               type="text"
               name="login"
@@ -29,7 +29,7 @@
           <div class="flex-row space-between">
             <label class="form__label" for="password">Пароль</label>
             <input
-              v-model="password"
+              v-model="formData.password"
               class="form__input"
               type="password"
               name="password"
@@ -69,77 +69,67 @@ import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useUsersStore } from '@/stores/UsersStore';
-import { mapStores } from 'pinia';
+import { ref, reactive, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'LoginForm',
-
-  components: {},
-
   props: {},
   emits: ['close'],
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
-  data() {
-    return {
+  setup(props, context) {
+    const usersStore = useUsersStore();
+    const authenticatedStore = useAuthenticatedStore();
+    const formData = reactive({
       login: '',
       password: '',
-      incorrectData: false,
-    };
-  },
-  validations() {
-    return {
+    });
+    const rules = {
       login: { required },
       password: { required },
     };
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore),
-  },
+    const incorrectData = ref(false);
+    const v$ = useVuelidate(rules, formData);
 
-  created() {
-    document.addEventListener('keypress', this.authenticateUserOnKeypress);
-  },
-
-  beforeUnmount() {
-    document.removeEventListener('keypress', this.authenticateUserOnKeypress);
-  },
-
-  methods: {
-    authenticateUserHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
+    function authenticateUserHandler() {
+      if (v$.value.$invalid) {
+        v$.value.$touch();
       } else {
-        const foundedUser = this.usersStore.GET_USER_LIST.find(
+        const foundedUser = usersStore.USER_LIST.find(
           (user) => user.login === this.login
         );
         if (foundedUser === undefined) {
-          this.incorrectData = true;
+          incorrectData.value = true;
           setTimeout(() => {
-            this.incorrectData = false;
+            incorrectData.value = false;
           }, 3000);
           return;
         }
-        if (foundedUser.password !== this.password) {
-          this.incorrectData = true;
+        if (foundedUser.password !== formData.password) {
+          incorrectData.value = true;
           setTimeout(() => {
-            this.incorrectData = false;
+            incorrectData.value = false;
           }, 3000);
           return;
         }
-        this.authenticatedStore.AUTHENTICATION(foundedUser);
-        this.$emit('close');
+        authenticatedStore.AUTHENTICATION(foundedUser);
+        context.emit('close');
       }
-    },
+    }
 
-    authenticateUserOnKeypress(event) {
+    function authenticateUserOnKeypress(event) {
       if (event.key == 'Enter') {
-        this.authenticateUserHandler();
+        authenticateUserHandler();
       }
-    },
+    }
+    document.addEventListener('keypress', authenticateUserOnKeypress());
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keypress', authenticateUserOnKeypress());
+    });
+
+    return {
+      v$,
+      authenticateUserHandler,
+    };
   },
 };
 </script>
