@@ -64,72 +64,62 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useUsersStore } from '@/stores/UsersStore';
 import { ref, reactive, onBeforeUnmount } from 'vue';
 
-export default {
-  name: 'LoginForm',
-  props: {},
-  emits: ['close'],
-  setup(props, context) {
-    const usersStore = useUsersStore();
-    const authenticatedStore = useAuthenticatedStore();
-    const formData = reactive({
-      login: '',
-      password: '',
-    });
-    const rules = {
-      login: { required },
-      password: { required },
-    };
-    const incorrectData = ref(false);
-    const v$ = useVuelidate(rules, formData);
+const emit = defineEmits(['close']);
 
-    function authenticateUserHandler() {
-      if (v$.value.$invalid) {
-        v$.value.$touch();
-      } else {
-        const foundedUser = usersStore.USER_LIST.find(
-          (user) => user.login === this.login
-        );
-        if (foundedUser === undefined) {
-          incorrectData.value = true;
-          setTimeout(() => {
-            incorrectData.value = false;
-          }, 3000);
-          return;
-        }
-        if (foundedUser.password !== formData.password) {
-          incorrectData.value = true;
-          setTimeout(() => {
-            incorrectData.value = false;
-          }, 3000);
-          return;
-        }
-        authenticatedStore.AUTHENTICATION(foundedUser);
-        context.emit('close');
-      }
-    }
+const usersStore = useUsersStore();
+const authenticatedStore = useAuthenticatedStore();
 
-    function authenticateUserOnKeypress(event) {
-      if (event.key == 'Enter') {
-        authenticateUserHandler();
-      }
-    }
-    document.addEventListener('keypress', authenticateUserOnKeypress());
-
-    onBeforeUnmount(() => {
-      document.removeEventListener('keypress', authenticateUserOnKeypress());
-    });
-
-    return {
-      v$,
-      authenticateUserHandler,
-    };
-  },
+const formData = reactive({
+  login: '',
+  password: '',
+});
+const rules = {
+  login: { required },
+  password: { required },
 };
+const incorrectData = ref(false);
+const v$ = useVuelidate(rules, formData);
+
+function authenticateUserHandler() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+    return;
+  } else {
+    const foundedUser = usersStore.USER_LIST.find(
+      (user) => user.login === formData.login
+    );
+    if (foundedUser === undefined) {
+      incorrectData.value = true;
+      setTimeout(() => {
+        incorrectData.value = false;
+      }, 3000);
+      return;
+    }
+    if (foundedUser.password !== formData.password) {
+      incorrectData.value = true;
+      setTimeout(() => {
+        incorrectData.value = false;
+      }, 3000);
+      return;
+    }
+    authenticatedStore.AUTHENTICATION(foundedUser);
+    emit('close');
+  }
+}
+document.addEventListener('keypress', authenticateUserOnKeypress(event));
+function authenticateUserOnKeypress(event) {
+  if (event.key == 'Enter') {
+    authenticateUserHandler();
+  }
+}
+onBeforeUnmount(() => {
+  document.removeEventListener('keypress', authenticateUserOnKeypress(event));
+});
 </script>

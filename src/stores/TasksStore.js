@@ -37,11 +37,10 @@ export const useTasksStore = defineStore('tasks', () => {
   }
 
   async function INITIALIZE_TASK_LIST() {
-    TASK_LIST.value ==
-      (await localbase
-        .collection('tasks')
-        .get()
-        .catch((error) => console.log(error)));
+    TASK_LIST.value = await localbase
+      .collection('tasks')
+      .get()
+      .catch((error) => console.log(error));
   }
 
   return {

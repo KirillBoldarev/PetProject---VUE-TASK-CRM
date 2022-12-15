@@ -4,8 +4,9 @@
     <div class="footer__main">
       <strong
         v-if="
-          authenticatedStore.IS_AUTH === true &&
-          authenticatedStore.GET_AUTH.role === 'Неавторизованный пользователь'
+          authenticatedStore.IS_AUTHENTICATED === true &&
+          authenticatedStore.AUTHENTICATED.role ===
+            'Неавторизованный пользователь'
         "
         class="header__title"
       >

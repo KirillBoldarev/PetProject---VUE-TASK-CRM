@@ -58,7 +58,7 @@
               </button-with-modal-form>
 
               <button-with-modal-form
-                v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
+                v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
                 :tooltip="'Редактировать'"
                 :image="require('@/assets/icons/edit.png')"
                 :icon-class="'icon--mini'"
@@ -68,7 +68,7 @@
                 </template>
               </button-with-modal-form>
               <delete-user-action
-                v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
+                v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
                 :target="user"
                 :icon-class="'icon--mini'"
               />
@@ -80,45 +80,14 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import DeleteUserAction from '@/components/actions/DeleteUserAction.vue';
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import CreateTaskForm from '@/components/forms/CreateTaskForm.vue';
 import EditUserForm from '@/components/forms/EditUserForm.vue';
-
 import { useUsersStore } from '@/stores/UsersStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
 
-export default {
-  components: {
-    DeleteUserAction,
-    ButtonWithModalForm,
-    CreateTaskForm,
-    EditUserForm,
-  },
-
-  props: {
-    taskList: {
-      type: Array,
-      required: true,
-    },
-    userList: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore),
-  },
-
-  watch: {},
-  created() {},
-
-  methods: {},
-};
+const usersStore = useUsersStore();
+const authenticatedStore = useAuthenticatedStore();
 </script>

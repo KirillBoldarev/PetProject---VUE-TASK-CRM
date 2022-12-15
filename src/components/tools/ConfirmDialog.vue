@@ -1,5 +1,5 @@
 <template>
-  <modal-window :is-open="isDialogOpen" @close="close">
+  <modal-window :isOpen="props.isDialogOpen" @close="close">
     <template #ModalSlot>
       <section id="confirmForm" class="form__container">
         <h2 class="form__title">Вы уверены ?</h2>
@@ -12,29 +12,22 @@
   </modal-window>
 </template>
 
-<script>
+<script setup>
 import ModalWindow from '@/components/tools/ModalWindow.vue';
-export default {
-  components: { ModalWindow },
-  props: {
-    isDialogOpen: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ['close', 'confirm'],
-  data() {
-    return {};
-  },
 
-  methods: {
-    confirm() {
-      this.$emit('confirm');
-      this.$emit('close');
-    },
-    close() {
-      this.$emit('close');
-    },
+const props = defineProps({
+  isDialogOpen: {
+    type: Boolean,
+    required: true,
   },
-};
+});
+const emits = defineEmits(['close', 'confirm']);
+
+function confirm() {
+  emits('confirm');
+  emits('close');
+}
+function close() {
+  emits('close');
+}
 </script>

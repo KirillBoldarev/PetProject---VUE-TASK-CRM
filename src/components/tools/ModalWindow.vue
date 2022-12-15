@@ -36,11 +36,7 @@ export default {
     },
   },
   emits: ['close', 'ok'],
-  // eslint-disable-next-line no-dupe-keys
-  emits: {
-    ok: null,
-    close: null,
-  },
+
   mounted() {
     document.addEventListener('keydown', this.closeOnKeydown);
   },

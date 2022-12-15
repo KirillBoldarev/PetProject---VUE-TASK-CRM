@@ -1,15 +1,14 @@
 @import '_var.scss';
-.v-select{
-   min-width: 250px;
+.v-select {
+  min-width: 250px;
 }
 
-.vs__dropdown-menu{
-   background-color: $primary-light !important;
+.vs__dropdown-menu {
+  background-color: $primary-light !important;
 }
 
-.vs__dropdown-option{
-
-   &--highlight{
-      background-color: $secondary-light !important;
-   }
+.vs__dropdown-option {
+  &--highlight {
+    background-color: $secondary-light !important;
+  }
 }

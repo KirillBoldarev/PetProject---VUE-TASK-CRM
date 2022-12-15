@@ -1,5 +1,3 @@
-
-
 .form {
   display: flex;
   flex-direction: row;
@@ -10,7 +8,7 @@
   font-family: 'Segoe UI';
   font-style: normal;
 
-    //Скрытие скроллбара
+  //Скрытие скроллбара
   overflow-y: auto;
   overflow-x: hidden;
   -ms-overflow-style: none; /* IE и Edge */
@@ -51,18 +49,17 @@
     gap: 10px;
     box-sizing: border-box;
     width: auto;
-    
-    //Скрытие скроллбара
-  overflow-y: auto;
-  overflow-x: hidden;
-  -ms-overflow-style: none; /* IE и Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    width: 0px;
-    display: none;
-  }
-  ///
 
+    //Скрытие скроллбара
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      width: 0px;
+      display: none;
+    }
+    ///
   }
 
   &__block {

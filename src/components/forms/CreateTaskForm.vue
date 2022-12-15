@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <!-- eslint-disable vue/attribute-hyphenation -->
 <template>
   <section id="addTaskForm" class="form__container">
@@ -8,8 +7,8 @@
         <legend class="form__title">Адресат</legend>
         <label class="form__label" for="email">Выберите получателя:</label>
         <v-select
-          v-model="executor"
-          :options="usersStore.GET_USER_LIST"
+          v-model="formData.executor"
+          :options="usersStore.USER_LIST"
           :getOptionLabel="(option) => getOptionsList(option)"
           :reduce="(option) => option.id"
         ></v-select>
@@ -27,7 +26,7 @@
         <div class="flex-column center">
           <label class="form__label" for="title">Заголовок:</label>
           <input
-            v-model="title"
+            v-model="formData.title"
             v-tooltip.right="'Опишите суть задачи'"
             class="form__input"
             type="text"
@@ -46,7 +45,7 @@
           <label class="form__label">Подробности:</label>
           <textarea
             id="task"
-            v-model="description"
+            v-model="formData.description"
             v-tooltip.right="'Дайте подробное описание требований к задаче'"
             class="form__textbox"
             name="task"
@@ -72,82 +71,69 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
-import { mapStores } from 'pinia';
 import { useTasksStore } from '@/stores/TasksStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useUsersStore } from '@/stores/UsersStore';
+import { computed, reactive } from 'vue';
 
-export default {
-  name: 'AddTaskForm',
-  components: {},
-  props: {
-    target: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-  },
-  emits: ['close'],
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
-  data() {
-    return {
-      executor: null,
-      sender: null,
-      title: '',
-      description: '',
-    };
-  },
+const usersStore = useUsersStore();
+const authenticatedStore = useAuthenticatedStore();
+const tasksStore = useTasksStore();
 
-  validations() {
-    return {
-      description: { required },
-      title: { required },
-      executor: { required },
-    };
+const props = defineProps({
+  target: {
+    type: Object,
+    required: false,
+    default: null,
   },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useTasksStore, useUsersStore),
-    newTask() {
-      return {
-        id: this.taskId,
-        title: this.title,
-        description: this.description,
-        sender: this.sender,
-        executor: this.executor,
-        isCompleted: false,
-        dateOfCreation: new Date(),
-      };
-    },
-    taskId() {
-      return Math.random().toString(36).substring(2, 9);
-    },
-  },
+});
+const emits = defineEmits(['close']);
 
-  beforeMount() {
-    this.sender = this.authenticatedStore.GET_AUTH.id;
-  },
-  methods: {
-    createTaskHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.tasksStore.CREATE_TASK(this.newTask);
-      this.$emit('close');
-    },
-    getOptionsList(option) {
-      if (option.fullName) {
-        return option.fullName;
-      }
-      return option.login;
-    },
-  },
+const formData = reactive({
+  title: '',
+  description: '',
+  sender: authenticatedStore.AUTHENTICATED.id,
+  executor: props.target.id,
+});
+const rules = {
+  description: { required },
+  title: { required },
+  executor: { required },
 };
+const v$ = useVuelidate(rules, formData);
+
+const taskId = computed(() => {
+  return Math.random().toString(36).substring(2, 9);
+});
+
+const newTask = computed(() => {
+  return {
+    id: taskId.value,
+    title: formData.title,
+    description: formData.description,
+    sender: formData.sender,
+    executor: formData.executor,
+    isCompleted: false,
+    dateOfCreation: new Date(),
+  };
+});
+
+function createTaskHandler() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+    return;
+  }
+  tasksStore.CREATE_TASK(newTask.value);
+  emits('close');
+}
+
+function getOptionsList(option) {
+  if (option.fullName) {
+    return option.fullName;
+  }
+  return option.login;
+}
 </script>

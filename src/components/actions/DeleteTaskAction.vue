@@ -7,55 +7,42 @@
     @click="confirmation"
   />
   <confirm-dialog
-    :is-dialog-open="isDialogOpen"
+    :isDialogOopen="isDialogOpen"
     @confirm="deleteHandler"
     @close="isDialogOpen = false"
   />
 </template>
 
-<script>
-import { mapStores } from 'pinia';
+<script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
 import { useTasksStore } from '@/stores/TasksStore';
+const tasksStore = useTasksStore();
+const inspectedTaskStore = useInspectedTaskStore();
 
-export default {
-  name: 'DeleteTaskAction',
-  components: { ConfirmDialog },
-  mixins: [confirmationDialogMixin],
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
+  },
+  iconClass: {
+    type: String,
+    required: false,
+    default: '',
+  },
+});
 
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
-    iconClass: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useInspectedTaskStore, useTasksStore),
-  },
-  methods: {
-    deleteHandler() {
-      if (
-        this.inspectedTaskStore.GET_INSPECTED_TASK &&
-        this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
-      ) {
-        this.$router.push('/tasks');
-        this.inspectedTaskStore.CLEAR_INSPECTED_TASK();
-        this.tasksStore.DELETE_TASK(this.target);
-        return;
-      }
-      this.tasksStore.DELETE_TASK(this.target);
-    },
-  },
-};
+function deleteHandler() {
+  if (
+    inspectedTaskStore.INSPECTED_TASK &&
+    props.target.id === inspectedTaskStore.INSPECTED_TASK.id
+  ) {
+    this.$router.push('/tasks');
+    inspectedTaskStore.CLEAR_INSPECTED_TASK();
+    tasksStore.DELETE_TASK(props.target);
+    return;
+  }
+  tasksStore.DELETE_TASK(props.target);
+}
 </script>

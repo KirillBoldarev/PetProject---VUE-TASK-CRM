@@ -13,39 +13,25 @@
   />
 </template>
 
-<script>
-import { mapStores } from 'pinia';
+<script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
 import { useUsersStore } from '@/stores/UsersStore';
 
-export default {
-  name: 'DeleteUserButton',
-  components: { ConfirmDialog },
-  mixins: [confirmationDialogMixin],
+const usersStore = useUsersStore();
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
+  },
+  iconClass: {
+    type: String,
+    required: false,
+    default: '',
+  },
+});
 
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
-    iconClass: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useUsersStore),
-  },
-  methods: {
-    deleteUserHandler() {
-      this.usersStore.DELETE_USER(this.target);
-    },
-  },
-};
+function deleteUserHandler() {
+  usersStore.DELETE_USER(props.target);
+}
 </script>

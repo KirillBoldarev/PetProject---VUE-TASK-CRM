@@ -13,15 +13,15 @@
       />
 
       <div
-        v-if="authenticatedStore.GET_AUTH.role === 'Администратор'"
+        v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
         class="flex-column center"
       >
         <label class="form__label" for="email"
           >Выберите роль пользователя:</label
         >
         <v-select
-          v-model="role"
-          :options="$options.ROLE"
+          v-model="formData.role"
+          :options="ROLE"
           label="role"
         ></v-select>
         <transition>
@@ -38,7 +38,7 @@
         <div class="flex-column center">
           <label class="form__label" for="login">Логин</label>
           <input
-            v-model="login"
+            v-model="formData.login"
             class="form__input"
             type="text"
             name="login"
@@ -56,7 +56,7 @@
         <div class="flex-column center">
           <label class="form__label" for="password">Пароль</label>
           <input
-            v-model="password"
+            v-model="formData.password"
             class="form__input"
             type="password"
             name="password"
@@ -85,7 +85,7 @@
         <div class="flex-column center">
           <label class="form__label" for="email">Имя и фамилия</label>
           <input
-            v-model="fullName"
+            v-model="formData.fullName"
             class="form__input"
             name="fullName"
             @blur="v$.fullName.$touch"
@@ -98,7 +98,7 @@
         <div class="flex-column center">
           <label class="form__label" for="email">Электронная почта</label>
           <input
-            v-model="email"
+            v-model="formData.email"
             class="form__input"
             type="email"
             name="email"
@@ -118,7 +118,7 @@
         <div class="flex-column center">
           <label class="form__label" for="phone">Номер телефона</label>
           <input
-            v-model="phone"
+            v-model="formData.phone"
             class="form__input"
             type="text"
             name="phone"
@@ -143,82 +143,66 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
 import { isPhone } from '@/js/libs/validation';
-
+import { reactive, computed } from 'vue';
 import { useUsersStore } from '@/stores/UsersStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
 
-export default {
-  name: 'EditUserForm',
-  components: { ConfirmDialog },
-  mixins: [confirmationDialogMixin],
+const authenticatedStore = useAuthenticatedStore();
+const usersStore = useUsersStore();
 
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
   },
-  emits: ['edited', 'close'],
+});
 
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+const emits = defineEmits(['edited', 'close']);
 
-  data() {
-    return {
-      // Get all keys from target(user) object
-      ...this.target,
-    };
-  },
+const formData = reactive({
+  ...props.target,
+});
 
-  validations() {
-    return {
-      login: { required, minLength: minLength(5) },
-      fullName: {},
-      email: { email },
-      phone: { isPhone },
-      password: { required, minLength: minLength(5) },
-      role: { required },
-    };
-  },
-
-  ROLE: ['Неавторизованный пользователь', 'Пользователь', 'Администратор'],
-  computed: {
-    ...mapStores(useUsersStore, useAuthenticatedStore),
-    changedUser() {
-      return {
-        login: this.login,
-        id: this.id,
-        fullName: this.fullName,
-        email: this.email,
-        phone: this.phone,
-        password: this.password,
-        role: this.role,
-      };
-    },
-  },
-  methods: {
-    editUser() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.usersStore.EDIT_USER(this.changedUser);
-      if (this.changedUser.id === this.authenticatedStore.GET_AUTH.id) {
-        this.authenticatedStore.UPDATE_AUTHENTICATED(this.changedUser);
-      }
-      this.$emit('edited');
-      this.$emit('close');
-    },
-  },
+const rules = {
+  login: { required, minLength: minLength(5) },
+  fullName: {},
+  email: { email },
+  phone: { isPhone },
+  password: { required, minLength: minLength(5) },
+  role: { required },
 };
+
+const v$ = useVuelidate(rules, formData);
+
+const ROLE = ['Неавторизованный пользователь', 'Пользователь', 'Администратор'];
+
+const changedUser = computed(() => {
+  return {
+    login: formData.login,
+    id: formData.id,
+    fullName: formData.fullName,
+    email: formData.email,
+    phone: formData.phone,
+    password: formData.password,
+    role: formData.role,
+  };
+});
+
+function editUser() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+  }
+  usersStore.EDIT_USER(changedUser.value);
+  if (changedUser.value.id === authenticatedStore.AUTHENTICATED.id) {
+    authenticatedStore.UPDATE_AUTHENTICATED(changedUser.value);
+  }
+  emits('edited');
+  emits('close');
+}
 </script>

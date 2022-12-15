@@ -6,15 +6,7 @@
   <footer-layout class="main__footer" />
 </template>
 
-<script>
+<script setup>
 import HeaderLayout from './HeaderLayout.vue';
 import FooterLayout from './FooterLayout.vue';
-
-export default {
-  components: { HeaderLayout, FooterLayout },
-  data() {
-    return {};
-  },
-  computed: {},
-};
 </script>

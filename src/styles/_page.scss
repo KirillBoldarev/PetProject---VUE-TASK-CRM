@@ -1,4 +1,3 @@
-
 .page {
   display: flex;
   flex-direction: column;
@@ -15,8 +14,8 @@
   font-family: 'Segoe UI';
   font-style: normal;
 
-  @media (max-width:880px) {
-      padding: 5px;
+  @media (max-width: 880px) {
+    padding: 5px;
   }
 
   //Скрытие скроллбара

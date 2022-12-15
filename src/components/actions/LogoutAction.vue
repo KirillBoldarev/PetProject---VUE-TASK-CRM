@@ -9,27 +9,15 @@
   />
 </template>
 
-<script>
+<script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 
-import { mapStores } from 'pinia';
-export default {
-  components: { ConfirmDialog },
-  mixins: [confirmationDialogMixin],
+const authenticatedStore = useAuthenticatedStore();
 
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore),
-  },
-  methods: {
-    logoutHandler() {
-      this.authenticatedStore.LOGOUT();
-      this.$router.push('/');
-    },
-  },
-};
+function logoutHandler() {
+  authenticatedStore.LOGOUT();
+  this.$router.push('/');
+}
 </script>

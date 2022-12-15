@@ -34,77 +34,58 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import filterDate from '@/js/libs/filterDate';
-
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useCommentsStore } from '@/stores/CommentsStore';
-import { mapStores } from 'pinia';
+import { reactive, computed, onBeforeMount } from 'vue';
 
-export default {
-  name: 'AddTaskForm',
-  components: {},
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['close'],
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
-  data() {
-    return {
-      task: this.target.id,
-      author: null,
-      text: '',
-    };
-  },
+const authenticatedStore = useAuthenticatedStore();
+const commentsStore = useCommentsStore();
 
-  validations() {
-    return {
-      text: { required },
-    };
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
   },
+});
+const emit = defineEmits(['close']);
 
-  computed: {
-    ...mapStores(useAuthenticatedStore, useCommentsStore),
-    newComment() {
-      return {
-        id: this.commentId,
-        dateOfCreation: this.dateOfCreation,
-        task: this.task,
-        author: this.author.id,
-        text: this.text,
-      };
-    },
-    commentId() {
-      return Math.random().toString(36).substring(2, 9);
-    },
-    dateOfCreation() {
-      return filterDate(new Date(), 'datetime');
-    },
-  },
-
-  beforeMount() {
-    this.author = this.authenticatedStore.GET_AUTH;
-    this.commentsStore.INITIALIZE_COMMENTS(this.target.id);
-  },
-
-  methods: {
-    createCommentHandler() {
-      if (this.v$.$invalid) {
-        this.v$.$touch();
-        return;
-      }
-      this.commentsStore.CREATE_COMMENT(this.newComment);
-      this.$emit('close');
-    },
-  },
+const formData = reactive({
+  taxt: '',
+});
+const rules = {
+  text: { required },
 };
+const v$ = useVuelidate(rules, formData);
+
+const dateOfCreation = computed(() => {
+  return filterDate(new Date(), 'datetime');
+});
+
+const commentId = computed(() => {
+  return Math.random().toString(36).substring(2, 9);
+});
+const newComment = computed(() => {
+  return {
+    id: commentId.value,
+    dateOfCreation: dateOfCreation.value,
+    task: props.target.id,
+    author: authenticatedStore.AUTHENTICATED.id,
+    text: formData.text,
+  };
+});
+onBeforeMount(() => {
+  commentsStore.INITIALIZE_COMMENTS(props.target.id);
+}),
+  function createCommentHandler() {
+    if (v$.value.$invalid) {
+      v$.value.$touch();
+      return;
+    }
+    commentsStore.CREATE_COMMENT(newComment.value);
+    emit('close');
+  };
 </script>

@@ -18,47 +18,35 @@
   />
 
   <confirm-dialog
-    :is-dialog-open="isDialogOpen"
+    :isDialogOpen="isDialogOpen"
     @confirm="completeTask"
     @close="isDialogOpen = false"
   />
 </template>
 
-<script>
+<script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import confirmationDialogMixin from '@/js/mixins/confirmationDialogMixin';
+import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
 import { useTasksStore } from '@/stores/TasksStore';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
-import { mapStores } from 'pinia';
 
-export default {
-  name: 'CompleteTaskButton',
-  components: { ConfirmDialog },
-  mixins: [confirmationDialogMixin],
+const tasksStore = useTasksStore();
+const inspectedTaskStore = useInspectedTaskStore();
 
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
   },
+});
 
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useTasksStore, useInspectedTaskStore),
-  },
-  methods: {
-    completeTask() {
-      this.tasksStore.COMPLETE_TASK(this.target);
-      if (
-        this.inspectedTaskStore.GET_INSPECTED_TASK &&
-        this.target.id === this.inspectedTaskStore.GET_INSPECTED_TASK.id
-      ) {
-        this.inspectedTaskStore.COMPLETE_INSPECTED_TASK();
-      }
-    },
-  },
-};
+function completeTask() {
+  tasksStore.COMPLETE_TASK(props.target);
+  if (
+    inspectedTaskStore.INSPECTED_TASK &&
+    props.target.id === inspectedTaskStore.INSPECTED_TASK.id
+  ) {
+    inspectedTaskStore.COMPLETE_INSPECTED_TASK();
+  }
+}
 </script>

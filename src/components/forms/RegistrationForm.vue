@@ -70,75 +70,63 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useUsersStore } from '@/stores/UsersStore';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { computed, reactive, onBeforeUnmount } from 'vue';
 
-export default {
-  props: {},
-  emits: ['close'],
+const usersStore = useUsersStore();
+const authenticatedStore = useAuthenticatedStore();
 
-  setup(props, context) {
-    const usersStore = useUsersStore();
-    const authenticatedStore = useAuthenticatedStore();
+const emit = defineEmits(['close']);
 
-    const formData = reactive({
-      login: '',
-      password: '',
-    });
-    const rules = {
-      login: { required, minLength: minLength(5) },
-      password: { required, minLength: minLength(5) },
-    };
-    const v$ = useVuelidate(rules, formData);
-
-    const userRole = computed(() => {
-      if (usersStore.USER_LIST.length === 0) {
-        return 'Администратор';
-      }
-      return 'Неавторизованный пользователь';
-    });
-    const userId = computed(() => {
-      return Math.random().toString(36).substring(2, 9);
-    });
-    const newUser = computed(() => {
-      return {
-        login: formData.login,
-        password: formData.password,
-        id: userId.value,
-        role: userRole.value,
-      };
-    });
-
-    function registrateUserHandler() {
-      if (v$.value.$invalid) {
-        v$.value.$touch();
-        return;
-      }
-      usersStore.CREATE_USER(newUser.value);
-      authenticatedStore.AUTHENTICATION(newUser.value);
-      context.emit('close');
-    }
-    //RegistrateOnKeyPress
-    function registrateUserOnKeypress(event) {
-      if (event.key === 'Enter') {
-        registrateUserHandler();
-      }
-    }
-    document.addEventListener('keypress', registrateUserOnKeypress());
-
-    onBeforeUnmount(() => {
-      document.removeEventListener('keypress', registrateUserOnKeypress());
-    });
-
-    return {
-      formData,
-      v$,
-      registrateUserHandler,
-    };
-  },
+const formData = reactive({
+  login: '',
+  password: '',
+});
+const rules = {
+  login: { required, minLength: minLength(5) },
+  password: { required, minLength: minLength(5) },
 };
+const v$ = useVuelidate(rules, formData);
+
+const userRole = computed(() => {
+  if (usersStore.USER_LIST.length === 0) {
+    return 'Администратор';
+  }
+  return 'Неавторизованный пользователь';
+});
+const userId = computed(() => {
+  return Math.random().toString(36).substring(2, 9);
+});
+const newUser = computed(() => {
+  return {
+    login: formData.login,
+    password: formData.password,
+    id: userId.value,
+    role: userRole.value,
+  };
+});
+
+function registrateUserHandler() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+    return;
+  }
+  usersStore.CREATE_USER(newUser.value);
+  authenticatedStore.AUTHENTICATION(newUser.value);
+  emit('close');
+}
+document.addEventListener('keypress', registrateUserOnKeypress(event));
+function registrateUserOnKeypress(event) {
+  if (event.key === 'Enter') {
+    registrateUserHandler();
+  }
+}
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keypress', registrateUserOnKeypress(event));
+});
 </script>
