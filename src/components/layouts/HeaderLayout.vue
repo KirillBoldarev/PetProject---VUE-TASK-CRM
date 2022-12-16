@@ -101,12 +101,21 @@ import LoginForm from '@/components/forms/LoginForm.vue';
 import { MqResponsive } from 'vue3-mq';
 import { ref } from 'vue';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
+import { useRouter } from 'vue-router';
 
 const authenticatedStore = useAuthenticatedStore();
 const menu = ref(null);
 const signIn = ref(null);
 const signUp = ref(null);
 const logout = ref(null);
+
+const router = useRouter();
+defineExpose({
+  menu,
+  signIn,
+  signUp,
+  logout,
+});
 
 const headerLinks = [
   { name: 'Главная', url: '/', icon: 'home.png' },
@@ -127,7 +136,7 @@ const authMenuItems = [
     label: 'Личный кабинет',
     icon: 'pi pi-search',
     command: () => {
-      this.$router.push('/profile');
+      router.push('/profile');
     },
   },
   {

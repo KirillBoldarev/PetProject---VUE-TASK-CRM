@@ -7,7 +7,7 @@
     @click="confirmation"
   />
   <confirm-dialog
-    :is-dialog-open="isDialogOpen"
+    :isDialogOpen="isDialogOpen"
     @confirm="deleteUserHandler"
     @close="isDialogOpen = false"
   />
@@ -32,6 +32,7 @@ const props = defineProps({
 });
 
 function deleteUserHandler() {
+  console.log('сработал делетЮзерХендлер');
   usersStore.DELETE_USER(props.target);
 }
 </script>

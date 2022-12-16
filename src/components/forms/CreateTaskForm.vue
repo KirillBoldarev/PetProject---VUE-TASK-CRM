@@ -90,7 +90,7 @@ const props = defineProps({
     default: null,
   },
 });
-const emits = defineEmits(['close']);
+const emit = defineEmits(['close']);
 
 const formData = reactive({
   title: '',
@@ -127,7 +127,7 @@ function createTaskHandler() {
     return;
   }
   tasksStore.CREATE_TASK(newTask.value);
-  emits('close');
+  emit('close');
 }
 
 function getOptionsList(option) {

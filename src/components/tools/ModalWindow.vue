@@ -1,7 +1,7 @@
 <template>
   <teleport to="#modal">
     <transition>
-      <div v-if="isOpen" class="modal__backdrop" @click="closeModal">
+      <div v-if="props.isOpen" class="modal__backdrop" @click="closeModal">
         <div class="modal__body" @click.stop>
           <div />
           <div class="flex-row center">
@@ -27,34 +27,37 @@
   </teleport>
 </template>
 
-<script>
-export default {
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ['close', 'ok'],
+<script setup>
+import { onMounted, onBeforeUnmount } from 'vue';
 
-  mounted() {
-    document.addEventListener('keydown', this.closeOnKeydown);
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true,
   },
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.closeOnKeydown);
-  },
-  methods: {
-    closeModal() {
-      this.$emit('close');
-    },
-    confirm() {
-      this.$emit('ok');
-    },
-    closeOnKeydown(event) {
-      if (this.isOpen === true && event.key === 'Escape') {
-        this.closeModal();
-      }
-    },
-  },
-};
+});
+const emit = defineEmits(['close', 'ok']);
+
+onMounted(() => {
+  document.addEventListener('keydown', () => {
+    closeOnKeydown(event);
+  });
+});
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', () => {
+    closeOnKeydown(event);
+  });
+});
+
+function closeModal() {
+  emit('close');
+}
+function confirm() {
+  emit('ok');
+}
+function closeOnKeydown(event) {
+  if (props.isOpen === true && event.key === 'Escape') {
+    closeModal();
+  }
+}
 </script>

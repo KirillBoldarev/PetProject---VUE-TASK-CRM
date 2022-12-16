@@ -3,7 +3,7 @@
     <img
       v-tooltip.bottom="tooltip"
       :src="image"
-      :class="iconClass"
+      :class="props.iconClass"
       alt=""
       @click="openModal"
     />
@@ -29,50 +29,42 @@
   </button>
 </template>
 
-<script>
+<script setup>
 import ModalWindow from '@/components/tools/ModalWindow.vue';
-
-export default {
-  name: 'ButtonWithModalForm',
-  components: { ModalWindow },
-  props: {
-    label: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    image: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    iconClass: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    tooltip: {
-      type: String,
-      required: false,
-      default: '',
-    },
+import { ref } from 'vue';
+const props = defineProps({
+  label: {
+    type: String,
+    required: false,
+    default: '',
   },
-
-  data() {
-    return {
-      isModalOpen: false,
-    };
+  image: {
+    type: String,
+    required: false,
+    default: '',
   },
-
-  computed: {},
-
-  methods: {
-    openModal() {
-      this.isModalOpen = true;
-    },
-    closeModal() {
-      this.isModalOpen = false;
-    },
+  iconClass: {
+    type: String,
+    required: false,
+    default: '',
   },
-};
+  tooltip: {
+    type: String,
+    required: false,
+    default: '',
+  },
+});
+const isModalOpen = ref(false);
+
+function openModal() {
+  isModalOpen.value = true;
+}
+function closeModal() {
+  isModalOpen.value = false;
+}
+
+defineExpose({
+  openModal,
+  closeModal,
+});
 </script>

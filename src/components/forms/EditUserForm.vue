@@ -163,7 +163,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(['edited', 'close']);
+const emit = defineEmits(['edited', 'close']);
 
 const formData = reactive({
   ...props.target,
@@ -202,7 +202,7 @@ function editUser() {
   if (changedUser.value.id === authenticatedStore.AUTHENTICATED.id) {
     authenticatedStore.UPDATE_AUTHENTICATED(changedUser.value);
   }
-  emits('edited');
-  emits('close');
+  emit('edited');
+  emit('close');
 }
 </script>

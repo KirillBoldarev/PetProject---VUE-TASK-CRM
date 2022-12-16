@@ -118,7 +118,7 @@ const props = defineProps({
     required: true,
   },
 });
-const emits = defineEmits(['edited', 'close']);
+const emit = defineEmits(['edited', 'close']);
 
 const formData = reactive({
   ...props.target,
@@ -157,8 +157,8 @@ function editTaskHandler() {
   ) {
     inspectedTaskStore.EDIT_INSPECTED_TASK(changedTask.value);
   }
-  emits('edited');
-  emits('close');
+  emit('edited');
+  emit('close');
 }
 
 function getOptionsList(option) {

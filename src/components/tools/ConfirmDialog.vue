@@ -21,13 +21,13 @@ const props = defineProps({
     required: true,
   },
 });
-const emits = defineEmits(['close', 'confirm']);
+const emit = defineEmits(['close', 'confirm']);
 
 function confirm() {
-  emits('confirm');
-  emits('close');
+  emit('confirm');
+  emit('close');
 }
 function close() {
-  emits('close');
+  emit('close');
 }
 </script>
