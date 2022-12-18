@@ -7,7 +7,7 @@
       alt=""
       @click="openModal"
     />
-    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
+    <modal-window :is-open="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
         <slot name="formSlot" :close-modal="closeModal" />
       </template>
@@ -21,7 +21,7 @@
     @click="openModal"
   >
     {{ label }}
-    <modal-window :isOpen="isModalOpen" @close="isModalOpen = false">
+    <modal-window :is-open="isModalOpen" @close="isModalOpen = false">
       <template #ModalSlot>
         <slot name="formSlot" :close-modal="closeModal" />
       </template>

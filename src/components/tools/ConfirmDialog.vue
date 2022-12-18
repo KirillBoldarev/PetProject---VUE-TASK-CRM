@@ -1,5 +1,5 @@
 <template>
-  <modal-window :isOpen="props.isDialogOpen" @close="close">
+  <modal-window :is-open="props.isDialogOpen" @close="close">
     <template #ModalSlot>
       <section id="confirmForm" class="form__container">
         <h2 class="form__title">Вы уверены ?</h2>

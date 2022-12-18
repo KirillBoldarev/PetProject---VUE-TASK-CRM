@@ -8,18 +8,14 @@
         class="icon"
         src="@/assets/icons/home.png"
         alt=""
-        @click="$router.push('/')"
+        @click="router.push('/')"
       />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {};
-  },
+<script setup>
+import { useRouter } from 'vue-router';
 
-  methods: {},
-};
+const router = useRouter();
 </script>

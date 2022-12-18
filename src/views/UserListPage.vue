@@ -58,7 +58,7 @@
               </button-with-modal-form>
 
               <button-with-modal-form
-                v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
+                v-if="authenticatedStore.AUTH.role === 'Администратор'"
                 :tooltip="'Редактировать'"
                 :image="require('@/assets/icons/edit.png')"
                 :icon-class="'icon--mini'"
@@ -68,7 +68,7 @@
                 </template>
               </button-with-modal-form>
               <delete-user-action
-                v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
+                v-if="authenticatedStore.AUTH.role === 'Администратор'"
                 :target="user"
                 :icon-class="'icon--mini'"
               />

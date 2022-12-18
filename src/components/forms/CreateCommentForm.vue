@@ -9,7 +9,7 @@
         <div class="flex-column center">
           <textarea
             id="task"
-            v-model="text"
+            v-model="formData.text"
             class="form__textbox"
             name="comment"
             cols="35"
@@ -37,7 +37,7 @@
 <script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
-import filterDate from '@/js/libs/filterDate';
+import filterDate from '@/js/composables/filterDate';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useCommentsStore } from '@/stores/CommentsStore';
 import { reactive, computed, onBeforeMount } from 'vue';
@@ -54,7 +54,7 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const formData = reactive({
-  taxt: '',
+  text: '',
 });
 const rules = {
   text: { required },
@@ -73,19 +73,22 @@ const newComment = computed(() => {
     id: commentId.value,
     dateOfCreation: dateOfCreation.value,
     task: props.target.id,
-    author: authenticatedStore.AUTHENTICATED.id,
+    author: authenticatedStore.AUTH.id,
     text: formData.text,
   };
 });
 onBeforeMount(() => {
   commentsStore.INITIALIZE_COMMENTS(props.target.id);
-}),
-  function createCommentHandler() {
-    if (v$.value.$invalid) {
-      v$.value.$touch();
-      return;
-    }
-    commentsStore.CREATE_COMMENT(newComment.value);
-    emit('close');
-  };
+});
+
+function createCommentHandler() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+    console.log('валидация не пройдена');
+    return;
+  }
+  console.log('валидация  пройдена');
+  commentsStore.CREATE_COMMENT(newComment.value);
+  emit('close');
+}
 </script>

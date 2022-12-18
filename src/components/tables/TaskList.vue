@@ -49,7 +49,7 @@
                 >
                   <template #formSlot="{ closeModal }">
                     <create-task-form
-                      :target="authenticatedStore.GET_AUTH"
+                      :target="authenticatedStore.AUTH"
                       @close="closeModal"
                     />
                   </template>
@@ -87,125 +87,104 @@
   </div>
 </template>
 
-<script>
-import { mapStores } from 'pinia';
+<script setup>
 import TabsPanel from '@/components/tools/TabsPanel.vue';
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import CreateTaskForm from '@/components/forms/CreateTaskForm.vue';
 import TaskListLine from '@/components/tables/TaskListLine.vue';
 import { MqResponsive } from 'vue3-mq';
-
+import { ref, computed } from 'vue';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { useUsersStore } from '@/stores/UsersStore';
 import { useTasksStore } from '@/stores/TasksStore';
 
-export default {
-  name: 'TaskList',
-  components: {
-    TabsPanel,
-    ButtonWithModalForm,
-    CreateTaskForm,
-    TaskListLine,
-    MqResponsive,
-  },
+const authenticatedStore = useAuthenticatedStore();
 
-  props: {},
-  data() {
-    return {
-      currentPage: 'personal',
-      searchValue: '',
-      includeCompletedTask: true,
-    };
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore, useTasksStore),
-    permittedPages() {
-      if (this.authenticatedStore.GET_AUTH.role === 'Администратор') {
-        return this.pages;
-      }
-      return this.pages.filter((page) => page.name !== 'all');
-    },
-    pages() {
-      return [
-        {
-          name: 'personal',
-          label: 'Полученные',
-          dataSource: this.personalTasks,
-        },
-        {
-          name: 'charged',
-          label: 'Отправленные',
-          dataSource: this.chargedTasks,
-        },
-        {
-          name: 'all',
-          label: 'Все задачи',
-          dataSource: this.tasksStore.GET_TASK_LIST,
-        },
-      ];
-    },
+const tasksStore = useTasksStore();
 
-    chargedTasks() {
-      if (!this.tasksStore.GET_TASK_LIST) {
-        return [];
-      }
-      const currentUserId = this.authenticatedStore.GET_AUTH.id;
-      return this.tasksStore.GET_TASK_LIST.filter(
-        (task) => task.sender === currentUserId
-      );
-    },
+const currentPage = ref('personal');
+const searchValue = ref('');
+const includeCompletedTask = ref(false);
 
-    personalTasks() {
-      if (!this.tasksStore.GET_TASK_LIST) {
-        return [];
-      }
-      const currentUserId = this.authenticatedStore.GET_AUTH.id;
-      return this.tasksStore.GET_TASK_LIST.filter(
-        (task) => task.executor === currentUserId
-      );
+const pages = computed(() => {
+  return [
+    {
+      name: 'personal',
+      label: 'Полученные',
+      dataSource: personalTasks.value,
     },
-  },
+    {
+      name: 'charged',
+      label: 'Отправленные',
+      dataSource: chargedTasks.value,
+    },
+    {
+      name: 'all',
+      label: 'Все задачи',
+      dataSource: tasksStore.TASK_LIST,
+    },
+  ];
+});
 
-  beforeCreate() {},
+const permittedPages = computed(() => {
+  if (authenticatedStore.AUTH.role === 'Администратор') {
+    return pages.value;
+  }
+  return pages.value.filter((page) => page.name !== 'all');
+});
 
-  methods: {
-    getGrid() {
-      if (this.currentPage === 'personal') {
-        return 'table__row--personal-charged';
-      }
-      if (this.currentPage === 'charged') {
-        return 'table__row--personal-charged';
-      }
-      if (this.currentPage === 'all') {
-        return 'table__row--alltask';
-      }
-    },
-    // НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
-    filterSource(source) {
-      if (!this.searchValue && this.includeCompletedTask === true) {
-        return source;
-      }
-      if (!this.searchValue && this.includeCompletedTask === false) {
-        return source.filter((item) => item.isCompleted === false);
-      }
-      if (this.searchValue && this.includeCompletedTask === true) {
-        return source.filter((item) =>
-          item.title.toUpperCase().includes(this.searchValue.toUpperCase())
-        );
-      }
-      if (this.searchValue && this.includeCompletedTask === false) {
-        return source.filter(
-          (item) =>
-            item.title.toUpperCase().includes(this.searchValue.toUpperCase()) &&
-            item.isCompleted === false
-        );
-      }
-    },
+const chargedTasks = computed(() => {
+  if (!tasksStore.TASK_LIST) {
+    return [];
+  }
+  return tasksStore.TASK_LIST.filter(
+    (task) => task.sender === authenticatedStore.AUTH.id
+  );
+});
+const personalTasks = computed(() => {
+  if (!tasksStore.TASK_LIST) {
+    return [];
+  }
+  return tasksStore.TASK_LIST.filter(
+    (task) => task.executor === authenticatedStore.AUTH.id
+  );
+});
 
-    changePage(tabName) {
-      this.currentPage = tabName;
-      this.searchValue = '';
-    },
-  },
-};
+function getGrid() {
+  if (currentPage.value === 'personal') {
+    return 'table__row--personal-charged';
+  }
+  if (currentPage.value === 'charged') {
+    return 'table__row--personal-charged';
+  }
+  if (currentPage.value === 'all') {
+    return 'table__row--alltask';
+  }
+}
+
+// НЕ НРАВИТСЯ! ПЕРЕДЕЛАТЬ!
+function filterSource(source) {
+  if (!searchValue.value && includeCompletedTask.value === true) {
+    return source;
+  }
+  if (!searchValue.value && includeCompletedTask.value === false) {
+    return source.filter((item) => item.isCompleted === false);
+  }
+  if (searchValue.value && includeCompletedTask.value === true) {
+    return source.filter((item) =>
+      item.title.toUpperCase().includes(searchValue.value.toUpperCase())
+    );
+  }
+  if (searchValue.value && includeCompletedTask.value === false) {
+    return source.filter(
+      (item) =>
+        item.title.toUpperCase().includes(searchValue.value.toUpperCase()) &&
+        item.isCompleted === false
+    );
+  }
+}
+
+function changePage(tabName) {
+  currentPage.value = tabName;
+  searchValue.value = '';
+}
 </script>

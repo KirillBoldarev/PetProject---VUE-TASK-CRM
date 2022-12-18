@@ -16,6 +16,6 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {
-    'vue/attribute-hyphenation': 'off',
+    /* 'vue/attribute-hyphenation': 'off', */
   },
 };

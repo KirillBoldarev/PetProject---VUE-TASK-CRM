@@ -95,7 +95,7 @@ const emit = defineEmits(['close']);
 const formData = reactive({
   title: '',
   description: '',
-  sender: authenticatedStore.AUTHENTICATED.id,
+  sender: authenticatedStore.AUTH.id,
   executor: props.target.id,
 });
 const rules = {

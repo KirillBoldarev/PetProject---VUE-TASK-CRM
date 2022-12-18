@@ -3,7 +3,7 @@
     <form class="form__body" @submit.prevent="confirmation">
       <h2 class="form__title">Редактирование задачи</h2>
       <confirm-dialog
-        :isDialogOpen="isDialogOpen"
+        :is-dialog-open="isDialogOpen"
         @confirm="editTaskHandler"
         @close="isDialogOpen = false"
       />
@@ -12,10 +12,10 @@
         <div class="flex-column center">
           <label class="form__label" for="email">Отправитель:</label>
           <v-select
-            v-model="sender"
+            v-model="formData.sender"
             class="customStyle"
             :options="usersStore.USER_LIST"
-            :getOptionLabel="(option) => getOptionsList(option)"
+            :get-option-label="(option) => getOptionsList(option)"
             :reduce="(option) => option.id"
           ></v-select>
           <transition>
@@ -30,9 +30,9 @@
         <div class="flex-column center">
           <label class="form__label" for="email">Исполнитель:</label>
           <v-select
-            v-model="executor"
+            v-model="formData.executor"
             :options="usersStore.USER_LIST"
-            :getOptionLabel="(option) => getOptionsList(option)"
+            :get-option-label="(option) => getOptionsList(option)"
             :reduce="(option) => option.id"
           ></v-select>
           <transition>
@@ -51,7 +51,7 @@
           <div class="flex-column center">
             <h2 class="form__title">Заголовок:</h2>
             <input
-              v-model="title"
+              v-model="formData.title"
               v-tooltip.right="'Опишите суть задачи'"
               class="form__input"
               name="title"
@@ -72,7 +72,7 @@
             <h2 class="form__title">Подробности:</h2>
             <textarea
               id="task"
-              v-model="description"
+              v-model="formData.description"
               v-tooltip.right="'Дайте подробное описание требований к задаче'"
               class="form__textbox"
               name="task"
@@ -102,7 +102,7 @@
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
+import { useConfirmation } from '@/js/composables/confirmation';
 import { useTasksStore } from '@/stores/TasksStore';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
 import { useUsersStore } from '@/stores/UsersStore';
@@ -111,6 +111,7 @@ import { reactive, computed } from 'vue';
 const tasksStore = useTasksStore();
 const inspectedTaskStore = useInspectedTaskStore();
 const usersStore = useUsersStore();
+const { isDialogOpen, confirmation } = useConfirmation();
 
 const props = defineProps({
   target: {
@@ -153,7 +154,7 @@ function editTaskHandler() {
   tasksStore.EDIT_TASK(changedTask.value);
   if (
     inspectedTaskStore.INSPECTED_TASK &&
-    this.inspectedTaskStore.INSPECTED_TASK.id === changedTask.value.id
+    inspectedTaskStore.INSPECTED_TASK.id === changedTask.value.id
   ) {
     inspectedTaskStore.EDIT_INSPECTED_TASK(changedTask.value);
   }

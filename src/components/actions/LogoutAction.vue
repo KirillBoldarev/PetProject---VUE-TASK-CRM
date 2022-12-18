@@ -11,12 +11,13 @@
 
 <script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
+import { useConfirmation } from '@/js/composables/confirmation';
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 import { useRouter } from 'vue-router';
 
 const authenticatedStore = useAuthenticatedStore();
 const router = useRouter();
+const { isDialogOpen, confirmation } = useConfirmation();
 
 function logoutHandler() {
   console.log('сработал логаутХендлер');

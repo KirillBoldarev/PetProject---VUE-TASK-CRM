@@ -2,9 +2,9 @@
   <div class="page">
     <div class="page__body">
       <h2 class="page__title">
-        Профиль пользователя : {{ authenticatedStore.GET_AUTH.login }}
-        <span v-if="authenticatedStore.GET_AUTH.fullName">
-          - {{ authenticatedStore.GET_AUTH.fullName }}</span
+        Профиль пользователя : {{ authenticatedStore.AUTH.login }}
+        <span v-if="authenticatedStore.AUTH.fullName">
+          - {{ authenticatedStore.AUTH.fullName }}</span
         >
       </h2>
       <div class="page__toolbar flex-row center">
@@ -26,7 +26,7 @@
 
       <edit-user-form
         v-if="editUserMode"
-        :target="authenticatedStore.GET_AUTH"
+        :target="authenticatedStore.AUTH"
         @edited="editUserMode = false"
       />
       <task-list v-if="showTaskMode" />
@@ -34,43 +34,25 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import EditUserForm from '@/components/forms/EditUserForm.vue';
 import TaskList from '@/components/tables/TaskList.vue';
+
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
-import { useUsersStore } from '@/stores/UsersStore';
-import { useTasksStore } from '@/stores/TasksStore';
 
-export default {
-  components: {
-    EditUserForm,
-    TaskList,
-  },
+import { ref } from 'vue';
 
-  props: {},
-  data() {
-    return {
-      editUserMode: false,
-      showTaskMode: true,
-      authenticated: null,
-    };
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore, useUsersStore, useTasksStore),
-  },
-  beforeMount() {
-    this.authenticated = this.authenticatedStore.GET_AUTH;
-  },
-  methods: {
-    switchEditUserMode() {
-      this.editUserMode = !this.editUserMode;
-      this.showTaskMode = false;
-    },
-    switchShowTaskMode() {
-      this.showTaskMode = !this.showTaskMode;
-      this.editUserMode = false;
-    },
-  },
-};
+const authenticatedStore = useAuthenticatedStore();
+
+const editUserMode = ref(false);
+const showTaskMode = ref(true);
+
+function switchEditUserMode() {
+  editUserMode.value = !editUserMode.value;
+  showTaskMode.value = false;
+}
+function switchShowTaskMode() {
+  showTaskMode.value = !showTaskMode.value;
+  editUserMode.value = false;
+}
 </script>

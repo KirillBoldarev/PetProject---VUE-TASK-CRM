@@ -3,7 +3,7 @@
     <div class="comment__top">
       <div class="comment__title">
         <strong
-          >{{ target.dateOfCreation }} от {{ getPerson(target.author) }}
+          >{{ target.dateOfCreation }} от {{ getPersonById(target.author) }}
         </strong>
       </div>
       <button class="button--none" @click="deleteComment">
@@ -16,40 +16,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useCommentsStore } from '@/stores/CommentsStore';
-import { useUsersStore } from '@/stores/UsersStore';
-import { mapStores } from 'pinia';
+import { getPersonById } from '@/js/composables/getPersonById';
 
-export default {
-  props: {
-    target: {
-      type: Object,
-      required: true,
-    },
+const commentsStore = useCommentsStore();
+
+const props = defineProps({
+  target: {
+    type: Object,
+    required: true,
   },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useCommentsStore, useUsersStore),
-  },
-  methods: {
-    deleteComment() {
-      this.commentsStore.DELETE_COMMENT(this.target);
-    },
-    getPerson(id) {
-      const person = this.usersStore.GET_USER_LIST.find(
-        (user) => user.id === id
-      );
-      if (!person) {
-        return 'Пользователь удален';
-      }
-      if (!person.fullName) {
-        return `${person.login}`;
-      }
-      return person.fullName;
-    },
-  },
-};
+});
+
+function deleteComment() {
+  commentsStore.DELETE_COMMENT(props.target);
+}
 </script>

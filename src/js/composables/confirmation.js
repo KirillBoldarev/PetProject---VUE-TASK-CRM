@@ -1,6 +1,10 @@
 import { ref } from 'vue';
 
-export const isDialogOpen = ref(false);
-export function confirmation() {
-  isDialogOpen.value = true;
+export function useConfirmation() {
+  const isDialogOpen = ref(false);
+
+  function confirmation() {
+    isDialogOpen.value = true;
+  }
+  return { isDialogOpen, confirmation };
 }

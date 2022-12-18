@@ -64,37 +64,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ButtonWithModalForm from '@/components/tools/ButtonWithModalForm.vue';
 import RegisitrationForm from '@/components/forms/RegistrationForm.vue';
 import LoginForm from '@/components/forms/LoginForm.vue';
 
 import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
-import { mapStores } from 'pinia';
 
-export default {
-  name: 'HomePage',
-  components: { ButtonWithModalForm, RegisitrationForm, LoginForm },
-  props: {
-    userList: {
-      type: Array,
-      required: true,
-    },
-    taskList: {
-      type: Array,
-      required: true,
-    },
-  },
-  date() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useAuthenticatedStore),
-  },
-  methods: {
-    info() {
-      console.log(this.$store);
-    },
-  },
-};
+const authenticatedStore = useAuthenticatedStore();
 </script>

@@ -30,7 +30,7 @@ export function subscribtionsForActionsUponTasks(context) {
     }
     // COMPLETE
     if (action.name === 'COMPLETE_TASK') {
-      const completedTask = action.store.GET_TASK_LIST.find(
+      const completedTask = action.store.TASK_LIST.find(
         (task) => task.id === action.args[0].id
       );
       localbase

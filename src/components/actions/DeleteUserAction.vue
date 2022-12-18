@@ -7,7 +7,7 @@
     @click="confirmation"
   />
   <confirm-dialog
-    :isDialogOpen="isDialogOpen"
+    :is-dialog-open="isDialogOpen"
     @confirm="deleteUserHandler"
     @close="isDialogOpen = false"
   />
@@ -15,10 +15,11 @@
 
 <script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
+import { useConfirmation } from '@/js/composables/confirmation';
 import { useUsersStore } from '@/stores/UsersStore';
 
 const usersStore = useUsersStore();
+const { isDialogOpen, confirmation } = useConfirmation();
 const props = defineProps({
   target: {
     type: Object,
@@ -35,4 +36,7 @@ function deleteUserHandler() {
   console.log('сработал делетЮзерХендлер');
   usersStore.DELETE_USER(props.target);
 }
+defineExpose({
+  confirmation,
+});
 </script>

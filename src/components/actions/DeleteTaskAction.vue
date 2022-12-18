@@ -7,7 +7,7 @@
     @click="confirmation"
   />
   <confirm-dialog
-    :isDialogOopen="isDialogOpen"
+    :is-dialog-open="isDialogOpen"
     @confirm="deleteHandler"
     @close="isDialogOpen = false"
   />
@@ -15,12 +15,12 @@
 
 <script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
+import { useConfirmation } from '@/js/composables/confirmation';
 import { useInspectedTaskStore } from '@/stores/InspectedTaskStore';
 import { useTasksStore } from '@/stores/TasksStore';
 const tasksStore = useTasksStore();
 const inspectedTaskStore = useInspectedTaskStore();
-
+const { isDialogOpen, confirmation } = useConfirmation();
 const props = defineProps({
   target: {
     type: Object,

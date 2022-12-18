@@ -8,13 +8,10 @@
       />
     </div>
     <div class="flex-column center">
-      <strong v-if="!authenticatedStore.IS_AUTHENTICATED" class="header__title">
+      <strong v-if="!authenticatedStore.IS_AUTH" class="header__title">
         Приветствую! Прошу пройти авторизацию!
       </strong>
-      <div
-        v-if="authenticatedStore.IS_AUTHENTICATED"
-        class="header__navigation"
-      >
+      <div v-if="authenticatedStore.IS_AUTH" class="header__navigation">
         <router-link
           v-for="link in headerLinks"
           :key="link.name"
@@ -35,7 +32,7 @@
       </div>
     </div>
 
-    <div v-if="authenticatedStore.IS_AUTHENTICATED" class="flex-column center">
+    <div v-if="authenticatedStore.IS_AUTH" class="flex-column center">
       <mq-responsive target="phone">
         <img
           class="icon--max"
@@ -57,7 +54,7 @@
       <logout-action ref="logout" />
     </div>
 
-    <div v-if="!authenticatedStore.IS_AUTHENTICATED" class="flex-column center">
+    <div v-if="!authenticatedStore.IS_AUTH" class="flex-column center">
       <mq-responsive target="phone">
         <img
           class="icon--max"

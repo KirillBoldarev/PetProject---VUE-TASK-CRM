@@ -13,7 +13,7 @@
       />
 
       <div
-        v-if="authenticatedStore.AUTHENTICATED.role === 'Администратор'"
+        v-if="authenticatedStore.AUTH.role === 'Администратор'"
         class="flex-column center"
       >
         <label class="form__label" for="email"
@@ -145,7 +145,7 @@
 
 <script setup>
 import ConfirmDialog from '@/components/tools/ConfirmDialog.vue';
-import { confirmation, isDialogOpen } from '@/js/composables/confirmation';
+import { useConfirmation } from '@/js/composables/confirmation';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
 import { isPhone } from '@/js/libs/validation';
@@ -155,7 +155,7 @@ import { useAuthenticatedStore } from '@/stores/AuthenticatedStore';
 
 const authenticatedStore = useAuthenticatedStore();
 const usersStore = useUsersStore();
-
+const { isDialogOpen, confirmation } = useConfirmation();
 const props = defineProps({
   target: {
     type: Object,
@@ -199,7 +199,7 @@ function editUser() {
     v$.value.$touch();
   }
   usersStore.EDIT_USER(changedUser.value);
-  if (changedUser.value.id === authenticatedStore.AUTHENTICATED.id) {
+  if (changedUser.value.id === authenticatedStore.AUTH.id) {
     authenticatedStore.UPDATE_AUTHENTICATED(changedUser.value);
   }
   emit('edited');
