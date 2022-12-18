@@ -105,8 +105,8 @@ const editTaskMode = ref(false);
 
 const spendedTime = computed(() => {
   const spendedTime =
-    this.inspectedTask.dateOfCompletion -
-    this.inspectedTask.dateOfCreation -
+    INSPECTED_TASK.value.dateOfCompletion -
+    INSPECTED_TASK.value.dateOfCreation -
     3 * 60 * 60 * 1000;
   return filterDate(spendedTime, 'time');
 });
