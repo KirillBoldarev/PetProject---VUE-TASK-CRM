@@ -47,7 +47,9 @@ function completeTask() {
     inspectedTaskStore.INSPECTED_TASK &&
     props.target.id === inspectedTaskStore.INSPECTED_TASK.id
   ) {
-    inspectedTaskStore.COMPLETE_INSPECTED_TASK();
+    inspectedTaskStore.UPDATE_INSPECTED_TASK(
+      tasksStore.TASK_LIST.find((task) => task.id === props.target.id)
+    );
   }
 }
 </script>

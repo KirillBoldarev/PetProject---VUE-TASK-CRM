@@ -20,16 +20,8 @@ export const useInspectedTaskStore = defineStore('inspectedTask', () => {
     INSPECTED_TASK.value = payload;
   }
 
-  function COMPLETE_INSPECTED_TASK() {
-    if (INSPECTED_TASK.value && INSPECTED_TASK.value.isCompleted) {
-      INSPECTED_TASK.value.isCompleted = !INSPECTED_TASK.value.isCompleted;
-      delete INSPECTED_TASK.value.dateOfCompletion;
-      return;
-    }
-    if (INSPECTED_TASK.value && !INSPECTED_TASK.value.isCompleted) {
-      INSPECTED_TASK.value.isCompleted = !INSPECTED_TASK.value.isCompleted;
-      INSPECTED_TASK.value.dateOfCompletion = new Date();
-    }
+  function UPDATE_INSPECTED_TASK(task) {
+    INSPECTED_TASK.value = task;
   }
 
   async function INITIALIZE_INSPECTED_TASK() {
@@ -46,8 +38,8 @@ export const useInspectedTaskStore = defineStore('inspectedTask', () => {
     INSPECTED_TASK,
     INSPECT_TASK,
     EDIT_INSPECTED_TASK,
-    COMPLETE_INSPECTED_TASK,
     INITIALIZE_INSPECTED_TASK,
     CLEAR_INSPECTED_TASK,
+    UPDATE_INSPECTED_TASK,
   };
 });
