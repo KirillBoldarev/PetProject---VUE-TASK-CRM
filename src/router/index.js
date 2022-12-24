@@ -24,9 +24,6 @@ const routes = [
         path: 'task/:id?',
         name: 'InspectedTask',
         component: () => import('@/views/TaskPage.vue'),
-        /* beforeEnter: (to, from) => {
-
-        } */
       },
     ],
   },
@@ -40,18 +37,6 @@ const routes = [
     name: 'Profile',
     component: () => import('@/views/ProfilePage.vue'),
   },
-  /*   {
-    path: "/task/:id",
-    name: "InspectedTask",
-    component: () => import("@/views/TaskPage.vue"),
-    beforeEnter: (to, from) => {
-      store.dispatch("INITIALIZE_USER_LIST_ACTION");
-      store.dispatch("INITIALIZE_TASK_LIST_ACTION");
-      if (store.getters.GET_USER_LIST.length < 1) {
-        return { path: "/tasks" };
-      }
-    },
-  }, */
 ];
 
 const router = createRouter({
